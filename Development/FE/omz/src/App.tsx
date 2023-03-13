@@ -11,6 +11,7 @@ import MiniRoomPage from "./pages/MiniRoomPage";
 import CommunityPage from "./pages/CommunityPage";
 import ChattingPage from "./pages/ChattingPage";
 import ErrorPage from "./pages/ErrorPage";
+import SignUp from "./pages/SignUp";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +21,6 @@ const queryClient = new QueryClient({
     },
   },
 });
-
 
 const router = createBrowserRouter([
   {
@@ -59,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "redirect",
         element: <KakaoRedirectPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUp />,
       },
     ],
   },
