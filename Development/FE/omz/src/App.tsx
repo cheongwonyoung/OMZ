@@ -11,6 +11,7 @@ import MiniRoomPage from "./pages/MiniRoomPage";
 import CommunityPage from "./pages/CommunityPage";
 import ChattingPage from "./pages/ChattingPage";
 import ErrorPage from "./pages/ErrorPage";
+import SignUp from "./pages/SignUp";
 import LikeCommunityPage from "./pages/LikeCommunityPage";
 import CommunityMyPage from "./pages/CommunityMyPage";
 import MainPage from "./pages/MainPage";
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "redirect",
         element: <KakaoRedirectPage />,
+      },
+      {
+        path: "signup",
+        element: <SignUp />,
       },
       {
         path: "community/like/",

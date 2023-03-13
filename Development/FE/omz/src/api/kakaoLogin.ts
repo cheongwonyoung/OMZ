@@ -1,4 +1,5 @@
 import axios from "axios";
+import { instance } from ".";
 
 export const getKakaoToken = (code: string) => {
   const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
@@ -12,3 +13,7 @@ export const getKakaoToken = (code: string) => {
     data: `grant_type=authorization_code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&code=${code}`,
   });
 };
+
+// export const getServerToken = (token:string) => {
+//   return instance
+// }
