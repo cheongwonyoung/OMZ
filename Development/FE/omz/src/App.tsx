@@ -1,8 +1,9 @@
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import KakaoRedirectPage from "./pages/KakaoRedirectPage";
+import LoginPage from "./pages/LoginPage";
 import Root from "./pages/Root";
-
 import NewFriendsPage from "./pages/NewFriendsPage";
 import MyPage from "./pages/MyPage";
 import MyFriendsPage from "./pages/MyFriendsPage";
@@ -11,7 +12,15 @@ import CommunityPage from "./pages/CommunityPage";
 import ChattingPage from "./pages/ChattingPage";
 import ErrorPage from "./pages/ErrorPage";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 3,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 
 const router = createBrowserRouter([
   {
@@ -42,6 +51,14 @@ const router = createBrowserRouter([
       {
         path: "/chatting",
         element: <ChattingPage />,
+      },
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "redirect",
+        element: <KakaoRedirectPage />,
       },
     ],
   },
