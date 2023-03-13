@@ -12,6 +12,10 @@ import CommunityPage from "./pages/CommunityPage";
 import ChattingPage from "./pages/ChattingPage";
 import ErrorPage from "./pages/ErrorPage";
 import SignUp from "./pages/SignUp";
+import LikeCommunityPage from "./pages/LikeCommunityPage";
+import CommunityMyPage from "./pages/CommunityMyPage";
+import MainPage from "./pages/MainPage";
+import "./App.css";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,27 +33,31 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        path: "",
+        element: <MainPage />,
+      },
+      {
         path: "/newfriends",
         element: <NewFriendsPage />,
       },
       {
-        path: "/mypage",
+        path: "mypage",
         element: <MyPage />,
       },
       {
-        path: "/myfriends",
+        path: "myfriends",
         element: <MyFriendsPage />,
       },
       {
-        path: "/miniroom",
+        path: "miniroom",
         element: <MiniRoomPage />,
       },
       {
-        path: "/community",
+        path: "community",
         element: <CommunityPage />,
       },
       {
-        path: "/chatting",
+        path: "chatting",
         element: <ChattingPage />,
       },
       {
@@ -64,6 +72,14 @@ const router = createBrowserRouter([
         path: "signup",
         element: <SignUp />,
       },
+      {
+        path: "community/like/",
+        element: <LikeCommunityPage />,
+      },
+      {
+        path: "community/mypage",
+        element: <CommunityMyPage />,
+      },
     ],
   },
 ]);
@@ -71,8 +87,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <ReactQueryDevtools initialIsOpen={false} />
+      <div className="App">
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </div>
     </QueryClientProvider>
   );
 }

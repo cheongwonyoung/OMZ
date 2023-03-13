@@ -2,7 +2,14 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    screens: {
+      'sm': '396px',
+      'md': '700px',
+      'lg': '1024px',  
+    },
   },
-  plugins: [],
+ 
+  plugins: [
+    require('tailwindcss-gradients')
+  ],
 };
