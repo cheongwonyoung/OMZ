@@ -19,12 +19,11 @@ export default function StepMbti({
       <MbtiList handlePickedMbti={handlePickedMbti} />
 
       {pickedMbti && (
-        <div onClick={plusPage} className="cursor-pointer">
-          <NextBtn
-            comment={"다음 스텝으로"}
-            icon={<FontAwesomeIcon icon={faArrowRight} />}
-          />
-        </div>
+        <NextBtn
+          comment={"다음 스텝으로"}
+          icon={<FontAwesomeIcon icon={faArrowRight} />}
+          logic={plusPage}
+        />
       )}
     </div>
   );

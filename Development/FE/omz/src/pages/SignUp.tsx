@@ -1,6 +1,7 @@
 import { useState } from "react";
 import StepFaceResult from "../components/signUp/StepFaceResult";
 import StepImgUpload from "../components/signUp/StepImgUpload";
+import StepLikeAnimal from "../components/signUp/StepLikeAnimal";
 import StepMbti from "../components/signUp/StepMbti";
 
 export default function SignUp() {
@@ -21,6 +22,11 @@ export default function SignUp() {
     className: string;
     probability: number;
   }[];
+  // 닉네임 정보
+  const [nickname, setNickname] = useState("");
+  const getNickname = (e: any) => {
+    setNickname(e.target.value);
+  };
 
   const getFaceResult = (result: Result) => {
     setFace(result);
@@ -49,9 +55,18 @@ export default function SignUp() {
           <StepImgUpload getFaceResult={getFaceResult} plusPage={plusPage} />
         );
       case 2:
-        return <StepFaceResult animal={animal} />;
+        return (
+          <StepFaceResult
+            animal={animal}
+            getNickname={getNickname}
+            nickname={nickname}
+            plusPage={plusPage}
+          />
+        );
+      case 3:
+        return <StepLikeAnimal plusPage={plusPage} />;
     }
   };
 
-  return <div>{stepPage()} </div>;
+  return <div className="pt-32">{stepPage()} </div>;
 }
