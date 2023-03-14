@@ -1,10 +1,15 @@
 import CommunityBanner from "../components/communityPage/CommunityBanner";
 import CommunityNavbar from "../components/communityPage/CommunityNavbar";
-import { useRef } from "react";
+import ImageUploader from "../components/common/ImageUploader";
+import { useRef, useState } from "react";
 import { images } from "../assets/images";
 
 export default function CommunityCreatePage() {
   const contentInputRef = useRef<HTMLTextAreaElement>(null);
+  const [file, setFile] = useState([]);
+  const onFile = (f: []): void => {
+    setFile(f);
+  };
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -15,6 +20,7 @@ export default function CommunityCreatePage() {
     }
     const communityData = {
       content: enteredContent,
+      image: file[0],
     };
     console.log(communityData);
   };
@@ -31,6 +37,7 @@ export default function CommunityCreatePage() {
           placeholder="나는 지금..."
           ref={contentInputRef}
         />
+        <ImageUploader file={file} onFile={onFile} shape={false} />
 
         <button>생성</button>
       </form>
