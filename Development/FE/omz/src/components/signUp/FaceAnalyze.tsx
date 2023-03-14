@@ -1,7 +1,12 @@
 import * as tmImage from "@teachablemachine/image";
 import { useState } from "react";
 
-export default function FaceAnalyze() {
+type Props = {
+  getFaceResult([]): void;
+  plusPage(): void;
+};
+
+export default function FaceAnalyze({ getFaceResult, plusPage }: Props) {
   const URL = "https://teachablemachine.withgoogle.com/models/bhQALUaBi/";
 
   let model: any;
@@ -15,12 +20,19 @@ export default function FaceAnalyze() {
     const image = document.getElementById("face-image");
     const prediction = await model.predict(image, false);
     setLoding(false);
-    console.log(prediction);
+    getFaceResult(prediction);
+    plusPage();
   }
   if (loding) return <p>loading....</p>;
   return (
     <>
-      <button onClick={getAnalysis}>분석</button>
+      <button
+        onClick={() => {
+          getAnalysis();
+        }}
+      >
+        분석
+      </button>
     </>
   );
 }
