@@ -12,10 +12,12 @@ import CommunityPage from "./pages/CommunityPage";
 import ChattingPage from "./pages/ChattingPage";
 import ErrorPage from "./pages/ErrorPage";
 import SignUp from "./pages/SignUp";
-import LikeCommunityPage from "./pages/LikeCommunityPage";
+import CommunityLikePage from "./pages/CommunityLikePage";
 import CommunityMyPage from "./pages/CommunityMyPage";
 import MainPage from "./pages/MainPage";
 import "./App.css";
+import CommunitySearchPage from "./pages/CommunitySearchPage";
+import CommunityCreatePage from "./pages/CommunityCreatePage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -74,11 +76,19 @@ const router = createBrowserRouter([
       },
       {
         path: "community/like/",
-        element: <LikeCommunityPage />,
+        element: <CommunityLikePage />,
       },
       {
         path: "community/mypage",
         element: <CommunityMyPage />,
+      },
+      {
+        path: "community/search",
+        element: <CommunitySearchPage />,
+      },
+      {
+        path: "community/create",
+        element: <CommunityCreatePage />,
       },
     ],
   },
