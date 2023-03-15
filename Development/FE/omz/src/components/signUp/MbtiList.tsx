@@ -2,9 +2,10 @@ import MbtiItems from "./MbtiItem";
 
 type Props = {
   handlePickedMbti(i: any): void;
+  pickedMbti: string;
 };
 
-export default function MbtiList({ handlePickedMbti }: Props) {
+export default function MbtiList({ handlePickedMbti, pickedMbti }: Props) {
   const mbtiList = [
     "INFP",
     "INFJ",
@@ -25,9 +26,14 @@ export default function MbtiList({ handlePickedMbti }: Props) {
   ];
 
   return (
-    <div className="w-10/12 grid grid-cols-4 gap-2 mb-4">
+    <div className="w-full grid grid-cols-4 gap-2">
       {mbtiList.map((item) => (
-        <MbtiItems mbti={item} key={item} handlePickedMbti={handlePickedMbti} />
+        <MbtiItems
+          mbti={item}
+          key={item}
+          handlePickedMbti={handlePickedMbti}
+          pickedMbti={pickedMbti}
+        />
       ))}
     </div>
   );

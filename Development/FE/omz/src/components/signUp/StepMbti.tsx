@@ -14,17 +14,18 @@ export default function StepMbti({
   plusPage,
 }: Props) {
   return (
-    <div className="flex justify-center items-center flex-col pt-32">
+    <div className="flex justify-center items-center flex-col w-11/12">
       <h1 className="mb-10 text-2xl font-bold">MBTI를 선택해주세요</h1>
-      <MbtiList handlePickedMbti={handlePickedMbti} />
-
-      {pickedMbti && (
-        <NextBtn
-          comment={"다음 스텝으로"}
-          icon={<FontAwesomeIcon icon={faArrowRight} />}
-          logic={plusPage}
-        />
-      )}
+      <MbtiList handlePickedMbti={handlePickedMbti} pickedMbti={pickedMbti} />
+      <div className="mt-8">
+        {pickedMbti && (
+          <NextBtn
+            comment={"다음 스텝으로"}
+            icon={<FontAwesomeIcon icon={faArrowRight} />}
+            logic={plusPage}
+          />
+        )}
+      </div>
     </div>
   );
 }

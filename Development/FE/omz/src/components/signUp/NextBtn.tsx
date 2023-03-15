@@ -8,12 +8,10 @@ export default function NextBtn({ comment, icon, logic }: Props) {
   return (
     <div
       onClick={logic}
-      className="flex justify-center items-center px-6 py-2 border-solid border border-black rounded-md bg-orange-200 opacity-90 cursor-pointer"
+      className="flex justify-center items-center px-6 py-2 font-bold shadow-xl text-purple-500 rounded-md bg-white opacity-90 cursor-pointer"
     >
-      <p className="text-black">
-        {comment}
-        {icon}
-      </p>
+      <p>{comment}</p>
+      <p className="ml-2">{icon}</p>
     </div>
   );
 }

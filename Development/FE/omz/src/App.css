@@ -1,5 +1,10 @@
 .App {
   background: conic-gradient(
-    #E2EDFF, rgba(255, 214, 233, 0.81), #fdffae94, rgba(229, 255, 240, 0.88)
-  )#FFFFFF; 
-} 
+      #e2edff,
+      rgba(255, 214, 233, 0.81),
+      #fdffae94,
+      rgba(229, 255, 240, 0.88)
+    )
+    #ffffff;
+  height: 100vh;
+}
