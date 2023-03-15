@@ -41,7 +41,7 @@ export default function ImageUploader({ file, onFile, shape }: Props) {
 
   const square_img = "object-cover w-full h-full";
   return (
-    <section className="container w-full">
+    <section className="container w-full flex justify-center">
       <div
         {...getRootProps({
           className: `${shape ? circle : square}`,

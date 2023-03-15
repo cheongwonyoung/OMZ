@@ -1,4 +1,5 @@
 import { useState } from "react";
+import StepEnd from "../components/signUp/StepEnd";
 import StepFaceResult from "../components/signUp/StepFaceResult";
 import StepImgUpload from "../components/signUp/StepImgUpload";
 import StepLikeAnimal from "../components/signUp/StepLikeAnimal";
@@ -34,7 +35,6 @@ export default function SignUp() {
     let maxVal = 0;
     for (const res of result) {
       if (maxVal < res.probability) {
-        // maxVal = res.probability;
         maxAni = res.className;
       }
     }
@@ -65,8 +65,10 @@ export default function SignUp() {
         );
       case 3:
         return <StepLikeAnimal plusPage={plusPage} />;
+      case 4:
+        return <StepEnd />;
     }
   };
 
-  return <div className="pt-32">{stepPage()} </div>;
+  return <div className="pt-32 flex justify-center w-full">{stepPage()} </div>;
 }

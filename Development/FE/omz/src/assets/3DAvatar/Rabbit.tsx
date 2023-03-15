@@ -102,4 +102,4 @@ export function Model(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload("/rabbit.glb");
+useGLTF.preload("/3D/rabbit.glb");
