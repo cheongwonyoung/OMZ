@@ -12,12 +12,12 @@ export default function Camera3D({ Avatar, MiniRoom }: Props) {
       camera={{ position: [-15, 15, 15], fov: 60 }}
       className="w-full h-full"
     >
-      <ambientLight intensity={1} />
+      <ambientLight intensity={0.4} />
       {/* <ambientLight intensity={0.1} /> */}
-      <directionalLight intensity={0.2} />
+      <directionalLight intensity={0.8} />
       {Avatar}
       {MiniRoom}
-      {/* <OrbitControls /> */}
+      <OrbitControls />
     </Canvas>
   );
 }
