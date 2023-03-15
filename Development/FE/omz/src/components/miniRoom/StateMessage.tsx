@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-export default function StateMessage() {
-  const [message, setMessage] = useState("");
-  const [update, setUpdate] = useState(true);
 
-  useEffect(() => {
-    setMessage("gogogogo");
-  }, []);
+type Props = {
+  handleMessage(e: any): void;
+  message: string;
+};
+export default function StateMessage({ handleMessage, message }: Props) {
+  const [update, setUpdate] = useState(true);
 
   const btn = update ? (
     <FontAwesomeIcon icon={faPen} />
@@ -28,7 +28,7 @@ export default function StateMessage() {
         type="text"
         className="w-10/12 h-11/12 outline-none ml-2"
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        onChange={(e) => handleMessage(e)}
         readOnly={update}
         maxLength={20}
       />
