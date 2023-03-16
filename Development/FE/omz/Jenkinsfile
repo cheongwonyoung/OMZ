@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+
+    environment {
+        BRANCH = 'main'
+    }
+
+    stages {
+        stage ('Git Clone'){
+            steps {
+                git branch: BRANCH,
+                credentialsId: 'omz_gitlab_token'
+                url:'https://lab.ssafy.com/s08-bigdata-recom-sub2/S08P22A705.git'
+            }
+        }
+
+        stage('Npm Build'){
+            steps {
+                sh "npm install"
+                sh "npm run dev"
+            }
+        }
+
+    }
+}
