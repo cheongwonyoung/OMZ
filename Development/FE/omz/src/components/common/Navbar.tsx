@@ -53,7 +53,7 @@ export default function NavBar() {
                 <Link to="/myfriends">My Friends</Link>
               </li>
               <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/chatting">Chatting</Link>
+                <Link to="/chatting/1">Chatting</Link>
               </li>
               <li className="text-gray-600 hover:text-blue-600">
                 <Link to="/community">Community</Link>
