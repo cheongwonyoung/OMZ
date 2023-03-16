@@ -19,6 +19,8 @@ import "./App.css";
 import CommunitySearchPage from "./pages/CommunitySearchPage";
 import CommunityCreatePage from "./pages/CommunityCreatePage";
 import ChattingDetailPage from "./pages/ChattingDetailPage";
+import MiniRoomUpdatePage from "./pages/MiniRoomUpdatePage";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -96,6 +98,10 @@ const router = createBrowserRouter([
       {
         path: "community/create",
         element: <CommunityCreatePage />,
+      },
+      {
+        path: "miniroom/update",
+        element: <MiniRoomUpdatePage />,
       },
     ],
   },
