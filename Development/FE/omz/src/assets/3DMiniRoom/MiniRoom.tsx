@@ -64,6 +64,7 @@ type GLTFResult = GLTF & {
 
 export function MiniRoom(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/MiniRoom/myroom.glb") as GLTFResult;
+  console.log(props);
   return (
     <group {...props} dispose={null}>
       <mesh

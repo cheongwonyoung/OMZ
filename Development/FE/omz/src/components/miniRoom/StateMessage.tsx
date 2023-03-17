@@ -31,6 +31,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
         onChange={(e) => handleMessage(e)}
         readOnly={update}
         maxLength={20}
+        placeholder="상태메시지를 입력해주세요."
       />
       <button
         className="text-[15px] rounded-full w-[30px] h-[30px] mr-2"

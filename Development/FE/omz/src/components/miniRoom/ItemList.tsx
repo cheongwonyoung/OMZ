@@ -2,8 +2,9 @@ import { images } from "../../assets/images";
 
 type Props = {
   showedItem: string;
+  handleItems(v: any): void;
 };
-export default function ItemList({ showedItem }: Props) {
+export default function ItemList({ showedItem, handleItems }: Props) {
   const bedList = ["bed_1", "bed_2"];
   const tableList = ["table_1", "table_2"];
   const lampList = ["lamp_1", "lamp_2"];
@@ -27,11 +28,13 @@ export default function ItemList({ showedItem }: Props) {
     };
 
     return structure().map((item) => (
-      <div key={item}>
+      <div key={item} id={item} onClick={() => handleItems(item)}>
         <img src={images[item + "_img"]} alt="" id={item} />
       </div>
     ));
   };
 
-  return <div className="flex">{itemList()}</div>;
+  return (
+    <div className="w-11/12 grid grid-cols-3 gap-4 mb-4">{itemList()}</div>
+  );
 }
