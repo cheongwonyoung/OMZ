@@ -1,7 +1,10 @@
 import { useState } from "react";
 import ItemList from "./ItemList";
 
-export default function ItemBox() {
+type Props = {
+  handleItems(v: any): void;
+};
+export default function ItemBox({ handleItems }: Props) {
   const itemNames: string[] = ["침대", "서랍", "시계", "조명", "책상"];
   const [showedItem, setShowedItem] = useState("침대");
   const handleShowedItem = (e: any) => {
@@ -33,7 +36,7 @@ export default function ItemBox() {
     <div className="w-full h-full bg-slate-100/50 flex flex-col items-center">
       <div className="w-11/12 mt-2">{itemTitle}</div>
       <div className="w-11/12 bg-purple-500 h-0.5 my-2"></div>
-      <ItemList showedItem={showedItem} />
+      <ItemList showedItem={showedItem} handleItems={handleItems} />
     </div>
   );
 }
