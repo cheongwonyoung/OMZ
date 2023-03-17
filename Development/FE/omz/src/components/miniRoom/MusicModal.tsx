@@ -5,7 +5,7 @@ type Props = {
 };
 export default function MusicModal({ closeMusic }: Props) {
   return (
-    <div className="w-10/12 h-1/2 z-50 border-solid border border-gray-500 rounded-lg absolute bg-white  ">
+    <div className="w-10/12 h-1/2 z-50 border-solid border border-gray-500 rounded-lg absolute bg-white mt-8">
       <div className="relative w-full h-full flex flex-col items-center pt-8">
         <FontAwesomeIcon
           icon={faXmark}
