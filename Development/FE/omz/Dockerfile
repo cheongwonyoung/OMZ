@@ -17,7 +17,7 @@ RUN npm run build
 FROM nginx:stable-alpine as production-stage
 
 # 컨테이너가 리스닝할 포트
-EXPOSE 5173
+EXPOSE 5136
 
 # nginx.conf를 default.conf로 복사
 COPY  ./nginx/nginx.conf /etc/nginx/conf.d/default.conf 
