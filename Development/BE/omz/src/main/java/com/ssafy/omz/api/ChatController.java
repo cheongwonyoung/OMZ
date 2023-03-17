@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Api("ChatController API v1")
 @RequiredArgsConstructor
 @Controller
-public class ChatController {
+public class ChatController { // stomp chat controller
 
     private final RedisPublisher redisPublisher;
 

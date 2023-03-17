@@ -148,6 +148,8 @@ public class StompHandler implements ChannelInterceptor {
                     (String) message.getHeaders().get(SIMP_SESSION_ID)
             ).orElse(null);
 
+            //  **** 예외 처리 ****
+            // sessionId null이면 Failed to send message to ExecutorSubscribableChannel 발생
             long roomId = Long.parseLong(chatRoomService.disconnectWebsocket(sessionId));
 
             redisPublisher.publish(topic,
