@@ -18,6 +18,9 @@ import MainPage from "./pages/MainPage";
 import "./App.css";
 import CommunitySearchPage from "./pages/CommunitySearchPage";
 import CommunityCreatePage from "./pages/CommunityCreatePage";
+import ChattingDetailPage from "./pages/ChattingDetailPage";
+import MiniRoomUpdatePage from "./pages/MiniRoomUpdatePage";
+
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,8 +62,14 @@ const router = createBrowserRouter([
         element: <CommunityPage />,
       },
       {
-        path: "chatting",
+        // 아마 useId
+        path: "chatting/1",
         element: <ChattingPage />,
+      },
+      {
+        // 나중에 룸 넘버로?
+        path: "chatting/1/1",
+        element: <ChattingDetailPage />,
       },
       {
         path: "login",
@@ -89,6 +98,10 @@ const router = createBrowserRouter([
       {
         path: "community/create",
         element: <CommunityCreatePage />,
+      },
+      {
+        path: "miniroom/update",
+        element: <MiniRoomUpdatePage />,
       },
     ],
   },
