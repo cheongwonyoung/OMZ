@@ -5,10 +5,15 @@ import {
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
+import { useNavigate } from "react-router-dom";
 
 const CommunityArticleItem: React.FC<{ content: string }> = (props) => {
+  const navigate = useNavigate();
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    navigate("/community/1");
+  };
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center" onClick={handleClick}>
       <div className="flex justify-center items-start w-10/12 relative py-2 my-1 bg-white/70 rounded-xl">
         <img
           className="flex-grow-0 flex-shrink-0 w-1/12"
@@ -29,7 +34,7 @@ const CommunityArticleItem: React.FC<{ content: string }> = (props) => {
 
               <div className="flex justify-start items-start self-stretch flex-grow-0 flex-shrink-0 relative gap-2.5 py-2.5">
                 <p className="flex-grow-0 flex-shrink-0 text-sm text-left text-black">
-                  내용내용내용
+                  {props.content}
                 </p>
               </div>
             </div>
