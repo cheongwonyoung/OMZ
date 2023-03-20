@@ -20,7 +20,9 @@ import CommunitySearchPage from "./pages/CommunitySearchPage";
 import CommunityCreatePage from "./pages/CommunityCreatePage";
 import ChattingDetailPage from "./pages/ChattingDetailPage";
 import MiniRoomUpdatePage from "./pages/MiniRoomUpdatePage";
-
+import CommunityDetailPage from "./pages/CommunityDetailPage";
+import MyPageUpdatePage from "./pages/MyPageUpdatePage";
+import MyPageCustomPage from "./pages/MyPageCustomPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -84,7 +86,7 @@ const router = createBrowserRouter([
         element: <SignUp />,
       },
       {
-        path: "community/like/",
+        path: "community/like",
         element: <CommunityLikePage />,
       },
       {
@@ -102,6 +104,18 @@ const router = createBrowserRouter([
       {
         path: "miniroom/update",
         element: <MiniRoomUpdatePage />,
+      },
+      {
+        path: "community/1",
+        element: <CommunityDetailPage />,
+      },
+      {
+        path: "mypage/1",
+        element: <MyPageUpdatePage />,
+      },
+      {
+        path: "mypage/custom/1",
+        element: <MyPageCustomPage />,
       },
     ],
   },

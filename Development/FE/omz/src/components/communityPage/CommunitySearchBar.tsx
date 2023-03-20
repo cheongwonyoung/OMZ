@@ -3,9 +3,9 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default function CommunitySearchBar() {
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-full flex justify-around">
-        <select name="검색" className="w-[20%] relative">
+    <div className="w-full flex justify-center items-center">
+      <div className="w-full flex justify-around items-center">
+        <select name="검색" className="w-[20%] relative h-[30px] m-2">
           <option value="">제목</option>
           <option value="">내용</option>
           <option value="">닉네임</option>
@@ -16,7 +16,7 @@ export default function CommunitySearchBar() {
           </button>
           <input
             type="text"
-            placeholder="제목, 내용, 닉네임을 검색해보세요."
+            // placeholder="제목, 내용, 닉네임을 검색해보세요."
             className="w-full h-[40px] border text-[14px] border-slate-500 rounded-xl pl-4 focus:outline-none focus:ring focus:ring-E2EDFF"
           />
         </div>
