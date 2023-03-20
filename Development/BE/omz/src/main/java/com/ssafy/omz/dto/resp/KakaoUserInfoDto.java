@@ -1,4 +1,4 @@
-package com.ssafy.omz.dto.res;
+package com.ssafy.omz.dto.resp;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.ssafy.omz.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ssafy.omz.dto.res.TokenDto;
+import com.ssafy.omz.dto.resp.TokenDto;
 import org.springframework.stereotype.Service;
 
 @Service
