@@ -26,12 +26,14 @@ public class MemberController {
 
     @ApiOperation(value = "카카오 로그인", notes = "kakao token을 받아 유효성 검사 후 access, refresh token 발급")
     @ApiImplicitParam(
-            name = "login"
-            , value = "카카오 로그인 정보"
+            name = "access_token"
+            , required = true
+            , value = "카카오 토큰"
             , defaultValue = "None")
     @PostMapping("/login")
     public ResponseEntity<TokenDto> kakaoLogin(@RequestHeader(value = "access_token") String token) throws JsonProcessingException {
 
+        // access, refresh token을 담을 response dto
         TokenDto tokenDto = null;
         try {
             // 카카오 유효성 확인 후 acceess token, refresh token 발급
@@ -43,7 +45,12 @@ public class MemberController {
 
     }
 
-    // access token 재발급
+    @ApiOperation(value = "access token 재발급", notes = "refresh token을 받아 access token 발급")
+    @ApiImplicitParam(
+            name = "refresh_token"
+            , required = true
+            , value = "access token 재발급 용도"
+            , defaultValue = "None")
     @PostMapping("/refresh")
     public ResponseEntity<TokenDto> refreshToken(@RequestHeader(value = "refresh_token") String token) throws Exception {
         TokenDto tokenDto = null;
@@ -56,24 +63,15 @@ public class MemberController {
                 String newToken = jwtService.createAccessToken("userEmail", memberService.memberEmail(token));
                 logger.info("new_tokesadan : {}", memberService.memberEmail(token));
                 logger.info("new_token : {}", newToken);
-//                tokenDto.setAccessToken(newToken);
-//                tokenDto.setRefreshToken(token);
                 tokenDto = new TokenDto(newToken,null);
             }
         } catch (Exception e) {
             logger.debug("여긴 ??????????");
             e.printStackTrace();
         }
-//        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
+
         return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
 
     }
 
-    // test
-    @PostMapping("/test")
-    public String test(@RequestHeader(value = "access_token") String access_token) throws JsonProcessingException {
-
-        return access_token;
-
-    }
 }

@@ -99,6 +99,7 @@ public class MemberServiceImpl implements MemberService{
                 String.class
         );
 
+        // 카카오에서 반환해준 유저 정보
         // responseBody에 있는 정보를 꺼냄
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();

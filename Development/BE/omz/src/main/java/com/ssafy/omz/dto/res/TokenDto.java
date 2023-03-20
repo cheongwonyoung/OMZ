@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 public class TokenDto {
+    // 유저의 access, refresh token
     private String accessToken;
     private String refreshToken;
 
