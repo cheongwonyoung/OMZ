@@ -5,9 +5,9 @@ type Props = {
   handleItems(v: any): void;
 };
 export default function ItemList({ showedItem, handleItems }: Props) {
-  const bedList = ["bed_1", "bed_2"];
-  const tableList = ["table_1", "table_2"];
-  const lampList = ["lamp_1", "lamp_2"];
+  const bedList = ["bed_1", "bed_2", "bed_3"];
+  const tableList = ["table_1", "table_2", "table_3"];
+  const lampList = ["lamp_1", "lamp_2", "lamp_3"];
   const drawerList = ["drawer_1", "drawer_2"];
   const clockList = ["clock_1", "clock_2"];
 
