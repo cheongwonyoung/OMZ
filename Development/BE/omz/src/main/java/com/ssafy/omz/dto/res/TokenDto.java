@@ -1,4 +1,4 @@
-package com.ssafy.omz.dto;
+package com.ssafy.omz.dto.res;
 
 import lombok.Builder;
 import lombok.Data;

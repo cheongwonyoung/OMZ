@@ -68,6 +68,7 @@ public class JwtServiceImpl implements JwtService{
             // charset 설정 안하면 사용자 플랫폼의 기본 인코딩 설정으로 인코딩 됨.
             key = SECRET_KEY.getBytes("UTF-8");
 
+
         } catch (UnsupportedEncodingException e) {
             if (logger.isInfoEnabled()) {
                 e.printStackTrace();
@@ -82,11 +83,18 @@ public class JwtServiceImpl implements JwtService{
     //	전달 받은 토큰이 제대로 생성된것인지 확인 하고 문제가 있다면 UnauthorizedException을 발생.
     @Override
     public boolean checkToken(String jwt) {
+        logger.info("checkToken : {}", jwt);
         try {
+
+
 //			Json Web Signature? 서버에서 인증을 근거로 인증정보를 서버의 private key로 서명 한것을 토큰화 한것
 //			setSigningKey : JWS 서명 검증을 위한  secret key 세팅
 //			parseClaimsJws : 파싱하여 원본 jws 만들기
+            logger.info("1111111111111111111");
+
             Jws<Claims> claims = Jwts.parser().setSigningKey(this.generateKey()).parseClaimsJws(jwt);
+
+            logger.info("222222222222222222222");
 
             // 만료가 되었는지 확인
             if(!claims.getBody().getExpiration().before(new Date())){

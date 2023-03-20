@@ -17,6 +17,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
                 .excludePathPatterns("/member/login") // /member/login 경로는 kakao access token이 오기 때문에 제외
-                .excludePathPatterns("/member/refresh"); // /member/refresh 경로는 access token 재발급 용도
+                .excludePathPatterns("/member/refresh") // /member/refresh 경로는 access token 재발급 용도
+                .excludePathPatterns("/v2/api-docs") // swagger 관련
+                .excludePathPatterns("/swagger-resources/**") // swagger 관련
+                .excludePathPatterns("/swagger-ui.html") // swagger 관련
+                .excludePathPatterns("/webjars/**"); // /swagger 관련
     }
 }

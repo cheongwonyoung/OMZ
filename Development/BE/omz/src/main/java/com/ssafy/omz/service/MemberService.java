@@ -1,10 +1,9 @@
 package com.ssafy.omz.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ssafy.omz.dto.TokenDto;
+import com.ssafy.omz.dto.res.TokenDto;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
 @Service
 public interface MemberService{
     // 카카오 유저 정보 확인 후 token 발급

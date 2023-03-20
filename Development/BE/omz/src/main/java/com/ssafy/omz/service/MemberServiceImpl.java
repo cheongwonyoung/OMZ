@@ -3,8 +3,8 @@ package com.ssafy.omz.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.omz.dto.KakaoUserInfoDto;
-import com.ssafy.omz.dto.TokenDto;
+import com.ssafy.omz.dto.res.KakaoUserInfoDto;
+import com.ssafy.omz.dto.res.TokenDto;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-
-import javax.servlet.http.HttpServletResponse;
 
 
 @RequiredArgsConstructor
