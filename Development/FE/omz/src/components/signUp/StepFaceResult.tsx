@@ -3,6 +3,7 @@ import Camera3D from "../common/Camera3D";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NextBtn from "./NextBtn";
+import CameraAvatar from "../common/CameraAvatar";
 
 type Props = {
   animal: string;
@@ -20,7 +21,7 @@ export default function StepFaceResult({
   const showAvatar = () => {
     switch (animal) {
       case "rabbit":
-        return <Camera3D Avatar={<Model position={[0, -2, 0]} />} />;
+        return <CameraAvatar Avatar={<Model position={[0, -2, 0]} />} />;
     }
   };
 
