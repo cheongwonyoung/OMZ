@@ -38,7 +38,9 @@ export default function MiniRoomPage() {
   return (
     <div className="w-full flex flex-col items-center">
       {isMusic && (
-        <ModalBlackBg modal={<MusicModal closeMusic={closeMusic} />} />
+        <ModalBlackBg
+          modal={<MusicModal message={message} closeMusic={closeMusic} />}
+        />
       )}
       {isGuestBook && (
         <ModalBlackBg
