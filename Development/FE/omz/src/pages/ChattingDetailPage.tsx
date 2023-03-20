@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import MyChatting from "../components/chatting/MyChatting";
 import YourChatting from "../components/chatting/YourChatting";
 // import { StompConfig } from "@stomp/stompjs";
-
+// TODO: uuid는 이거 보고 하기
 export default function ChattingDetailPage() {
   type chat = { memberId?: number; message?: string };
   const [chatList, setChatList] = useState<chat[]>([
