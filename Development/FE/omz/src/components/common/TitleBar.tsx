@@ -8,7 +8,7 @@ type Props = {
 };
 // icon으로 페이지 아이콘, title 페이지 제목, backBtn으로 버튼 유무 Props로 내려줌
 {
-  /* <TitleBar icon={images.mini_room_img} title={"000님의 MiniRoom"} backBtn={true}/> */
+  /* TODO <TitleBar icon={images.mini_room_img} title={"000님의 MiniRoom"} backBtn={true}/> */
 }
 export default function TitleBar({ icon, title, backBtn }: Props) {
   const navigate = useNavigate();
