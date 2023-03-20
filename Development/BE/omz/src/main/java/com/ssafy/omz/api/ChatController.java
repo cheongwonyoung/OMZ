@@ -1,73 +1,78 @@
 package com.ssafy.omz.api;
 
-import com.ssafy.omz.dto.req.ChatMessage;
-import com.ssafy.omz.service.ChatRedisCacheService;
-import com.ssafy.omz.service.RedisPublisher;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
+import com.ssafy.omz.dto.resp.ChatRoomDto;
+import com.ssafy.omz.service.ChatRoomService;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.listener.ChannelTopic;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Api("ChatController API v1")
-@RequiredArgsConstructor
-@Controller
-public class ChatController { // stomp chat controller
+//@RequiredArgsConstructor
+@RequestMapping("/api/chatting")
+@RestController
+public class ChatController {
 
-    private final RedisPublisher redisPublisher;
+    private final ChatRoomService chatRoomService;
 
-    private final ChannelTopic topic; // GitHub for publisher
-
-    private final ChatRedisCacheService chatRedisCacheService;
-
-    /**
-     * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
-     */
-
-//    @MessageMapping("/chat/join")
-//    public void testForJoin(ChatMessage message){
-//        System.out.println("[ChatController Join] message : " + message);
-//    }
-
-
-
-    @ApiOperation(value = "채팅 메세지 송신", notes = "WebSocket /pub/chat/message로 들어오는 메세징 처리")
-//    @ApiResponses({
-//            @ApiResponse(code = 200, message = "OK"),
-//            @ApiResponse(code = 404, message = "No param")
-//            //Other Http Status code..
-//    })
-    @ApiImplicitParam(
-            name = "message"
-            , value = "채팅 메세지 정보"
-            , defaultValue = "None")
-    @MessageMapping("/chat/message")
-    public void sendMessage(ChatMessage message){  // @Header("token") String token @Header("Authorization") String token
-
-//        GitHub 예시
-//        UserInfo userInfo = jwtDecoder.decodeUsername(headerTokenExtractor.extract(token));
-
-//        Header에서 토큰 꺼내서 보낸 사람 누군지 확인 (member_id)
-//        message.setMemberId();
-//        message.setNickName();
-        message.setCreatedTime(LocalDateTime.now());
-//        "createdTime":[2023,3,16,14,41,59,51216100] 이렇게 Message 넘어옴
-
-        message.setType(ChatMessage.MessageType.TALK);
-
-        //  Redis Cache에 채팅 메세지 저장
-        chatRedisCacheService.addChatToRedisCache(message);
-
-        // Topic에 pub 보내주기
-        // 해당 채팅방에 메세지 보내주기
-
-        System.out.println("[ChatController message] Topic : " + topic.getTopic()); // chatroom
-
-        redisPublisher.publish(topic, message);
+    @Autowired
+    public ChatController(ChatRoomService chatRoomService){
+        this.chatRoomService = chatRoomService;
     }
 
+    @ApiOperation(value = "채팅방 목록 조회", notes = "사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 204, message = "No Content"),
+            @ApiResponse(code = 404, message = "Not Found")
+            //Other Http Status code..
+    })
+    @GetMapping()
+    public ResponseEntity<List<ChatRoomDto>> getChatRoomList(){
+
+        HttpStatus status = HttpStatus.OK;
+        List<ChatRoomDto> chatRoomList = new ArrayList<>();
+        try {
+        //  Token 기반 사용자 정보 추출
+            // Member member = ?
+          long memberId = 1;
+            //  service
+            chatRoomList = chatRoomService.getChatRoomList(memberId);
+            if (chatRoomList.isEmpty()) // || chatRoomList == null
+                status = HttpStatus.NO_CONTENT;
+
+        } catch (Exception e){
+            e.printStackTrace();
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<List<ChatRoomDto>>(chatRoomList, status);
+    }
+
+    //  굳이 API 없어도 채팅방 목록에서 닉네임, 아바타 이미지, 채팅방 번호(roomId) 있어서
+    //  세가지만 들고 채팅방 페이지로 넘어가면 바로 연결됨 아마도...? -> 이부분은 소켓 ChatStompControlller 부분
+    //  근데 채팅 읽었는지 안 읽었는지 부분은 false -> true로 바꾸어줘야하는데
+    //  이 부분을 어떻게 잡아주죠...^^?
+//    @ApiOperation(value = "채팅방 불러오기", notes = "채팅방 번호(roomId)에 해당하는 채팅방을 불러온다.")
+//        @ApiResponses({
+//            @ApiResponse(code = 200, message = "OK"),
+//            @ApiResponse(code = 404, message = "Not Found")
+//            //Other Http Status code..
+//    })
+//    @ApiImplicitParam(
+//            name = "roomId"
+//            , value = "채팅방 번호"
+////            , defaultValue = "None"
+//    )
+//    @GetMapping("/{roomId}")
+//    public ResponseEntity<?> getChatRoomByRoomId(@PathVariable("roomId") long roomId){
+//        //  roomId에 해당하는 채팅방 연결
+//        //  해당 데이터 조회 및 소켓 통신 시작
+//        //  이제까지의 채팅 데이터 넘겨주면 됨 ...
+//        return new ResponseEntity<>();
+//    }
 }

@@ -26,13 +26,12 @@ public class RedisSubscriber { //  implements MessageListener
     public void sendMessage(String publishMessage){
 
         try{
+            // SUBSCRIBE일 경우 nickName null로 들어옴
 //            [RedisSubscriber sendMessage] messasge : {"roomId":1,"memberId":0,"nickName":null,"type":"ENTER","message":null,"createdTime":null}
             System.out.println("[RedisSubscriber sendMessage] messasge : " + publishMessage);
 
             //redis에서 발행된 데이터를 받아 deserialize
             ChatMessage roomMessage = objectMapper.readValue(publishMessage, ChatMessage.class);
-
-            System.out.println("[RedisSubscriber sendMessage] Afterr Deserialize Messasge : " + roomMessage.getCreatedTime());
 
             //WebSocket 구독자에게 채팅 메시지 Send
             messagingTemplate.convertAndSend("/sub/chat/room/"+roomMessage.getRoomId(), roomMessage);

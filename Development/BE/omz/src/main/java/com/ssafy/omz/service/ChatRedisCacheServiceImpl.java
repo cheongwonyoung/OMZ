@@ -21,6 +21,8 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
     private final ChatUtils chatUtils;
 
     private final RedisTemplate<String, Object> redisTemplate;
+    //  username에 해당하는 nickname 넣어둠
+//    private final RedisTemplate<String, String> roomRedisTemplate;
 
     private final RedisTemplate<String, ChatMessage> chatRedisTemplate;
 
@@ -49,4 +51,46 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         redisTemplate.opsForZSet().add(CHAT_SORTED_SET_ + message.getRoomId(), message, chatUtils.changeLocalDateTimeToDouble(message.getCreatedTime()));
 
     }
+
+    //  이거 왜 하는? MySql -> Redis
+//    public void cachingDBDataToRedis(Chat chat) {
+//        ChatMessage chatMessage = ChatMessage.of(chat);
+//        redisTemplate.opsForZSet()
+//                .add(
+//                        CHAT_SORTED_SET_ + chatMessage.getRoomId(),
+//                        chatMessage,
+//                        chatUtils.changeLocalDateTimeToDouble(chatMessage.getCreatedTime()));
+//    }
+
+
+    //redis 회원 닉네임 조회
+//    public String findUserNicknameByUsername(String username) {
+//
+//        String nickname = (String) roomRedisTemplate.opsForHash().get(USERNAME_NICKNAME, username);
+//
+//        if (nickname != null)
+//            return nickname;
+//
+//        //redis 닉네임이 존재하지 않는다면, MYSQL에서 데이터 불러오기
+//        User user = userRepository.findByUsername(username)
+//                .orElse(null);
+//
+//        if (user == null) return OUT_USER;
+//
+//        // redis nickname_data insert
+//        roomRedisTemplate.opsForHash().put(USERNAME_NICKNAME, username, user.getNickname());
+//
+//        return user.getNickname();
+//    }
+//
+//    public void changeUserCachingNickname(String username, String changedNickname) {
+//        roomRedisTemplate.opsForHash().put(USERNAME_NICKNAME, username, changedNickname);
+//    }
+//
+//    public void deleteUserCahchingNickname(String username) {
+//        roomRedisTemplate.opsForHash().delete(USERNAME_NICKNAME, username);
+//    }
+
+    //  Cursor Pagination 사용 부분
+
 }

@@ -99,8 +99,10 @@ public class StompHandler implements ChannelInterceptor {
             String roomId = chatUtils.getRoodIdFromDestination(destination);
 
             // for Test를 위해 token 값 일단 넣어주기
-            String username = token; // null값 들어가는게 맞긴 한데 확인을 못해보내 ㅈ금 ...
+//            String username = token; // null값 들어가는게 맞긴 한데 확인을 못해보내 ㅈ금 ...
 
+            // ***********TEST*****************
+            String username = "sunheeTestStompHandler";
             //redis에  key(roomId) :  Value( sessionId , nickname ) 저장
             chatRoomService.enterChatRoom(roomId, sessionId, username); // 닉네임으로? 아니면 memberId로?
             //  SESSION_ID - sessionId - roomId
@@ -111,6 +113,7 @@ public class StompHandler implements ChannelInterceptor {
 
             redisPublisher.publish(topic,
                     ChatMessage.builder()
+//                            .memberId()
                             .type(ChatMessage.MessageType.ENTER)
                             .roomId(Long.valueOf(roomId))
 //                            .userList(chatRoomService.findUser(roomId, sessionId))
@@ -144,22 +147,34 @@ public class StompHandler implements ChannelInterceptor {
 //                // HashOperations에서 delete(sessionId)
 //            }
 
+            //  채팅방 나가면 Disconnect 되고 세션 아이디까지 잘 출력되는데
+            //  이걸 두번을 해서 두번째에서 null 발생해서 ExceptionWebSocketHandlerDecorator
+            //  왜 ㅅㅂ 2번 하는겨?;;;;;
+            //  걍 화면 꺼버리고 나가면 에러 안 나는데
+            //  그 뒤로 가기 버튼 누르면 2번 먹힘ㅋㅋㅋ ㅜ 후ㅜ -> 프론트 뒤로가기 버튼 때문인가..?
+            //  참고 깃허브 보고 뒤로 가기 버튼을 UNSUBSCRIBE로 바꿔줌
+            //  근데 이게 맞나..? 그리고 프론트 부분 sub-0으로 바꿨는데 이부분은 맞는 부분으로 가야하는디
+
             String sessionId = Optional.ofNullable(
                     (String) message.getHeaders().get(SIMP_SESSION_ID)
             ).orElse(null);
 
-            //  **** 예외 처리 ****
-            // sessionId null이면 Failed to send message to ExecutorSubscribableChannel 발생
-            long roomId = Long.parseLong(chatRoomService.disconnectWebsocket(sessionId));
+            //  **** 예외 처리 해줘야함****
+            // sessionId null이면 (위에서 null) Failed to send message to ExecutorSubscribableChannel 발생
+
+            String roomId = chatRoomService.disconnectWebsocket(sessionId);
+//            long roomIdLong = 0;
+//            if(roomId != null)
+//                roomIdLong = Long.parseLong(roomId);
 
             redisPublisher.publish(topic,
                     ChatMessage.builder()
                             .type(ChatMessage.MessageType.QUIT)
-                            .roomId(roomId)
+                            .roomId(roomId != null ? Long.parseLong(roomId) : null)
 //                            .userList(chatRoomService.findUser(roomId, sessionId))
                             .build()
             );
-            System.out.println("[StompHandler preSend] : DISCONNECT sessionId : " + sessionId +", roomId : "+roomId);
+            System.out.println("[StompHandler preSend] : DISCONNECT After publish QUIT sessionId : " + sessionId +", roomId : "+roomId);
 
         }
         //reids SubScribe 해제
