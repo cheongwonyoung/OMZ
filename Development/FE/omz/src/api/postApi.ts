@@ -1,3 +1,4 @@
+export{}
 // import { instance } from '.';
 // import { IPostResponse, IPostsResponse } from './types';
 
