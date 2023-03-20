@@ -2,7 +2,7 @@
 FROM openjdk:11-jdk
 
 # 해당 경로의 모든 jar파일을 변수로 담기
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=./build/libs/*.jar
 
 # 빌드된 jar파일을 api.jar파일 이라는 이름으로 생성
 COPY ${JAR_FILE} app.jar
