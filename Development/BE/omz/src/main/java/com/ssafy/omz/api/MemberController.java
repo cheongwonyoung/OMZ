@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 @Api("memberController API v1")
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
@@ -71,6 +71,13 @@ public class MemberController {
         }
 
         return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
+
+    }
+
+    @PostMapping("/{aa}")
+    public String test(@PathVariable("aa") String aa) throws JsonProcessingException {
+
+        return aa;
 
     }
 
