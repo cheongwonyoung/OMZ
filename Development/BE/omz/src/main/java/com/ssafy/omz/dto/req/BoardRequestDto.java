@@ -1,5 +1,6 @@
 package com.ssafy.omz.dto.req;
 
+import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.ReplyResponseDto;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 public class BoardRequestDto {
     @Data
@@ -26,19 +28,22 @@ public class BoardRequestDto {
 
     @Data
     @Builder
+//    @Schema
     public static class Info {
-        private Long replyId;
+        private Long boardId;
         private String content;
-        private boolean isDeleted;
+        private String file;
         private LocalDateTime registeredTime;
+        private LocalDateTime modifiedTime;
         private MemberResponseDto.Community member;
-        public static ReplyResponseDto.Info fromEntity(com.ssafy.omz.entity.Reply replyEntity) {
-            return ReplyResponseDto.Info.builder()
-                    .replyId(replyEntity.getReplyId())
-                    .content(replyEntity.getContent())
-                    .isDeleted(replyEntity.isDeleted())
-                    .registeredTime(replyEntity.getRegisteredTime())
-                    .member(MemberResponseDto.Community.fromEntity(replyEntity.getMember()))
+        public static BoardResponseDto.Info fromEntity(com.ssafy.omz.entity.Board boardEntity) {
+            return BoardResponseDto.Info.builder()
+                    .boardId(boardEntity.getBoardId())
+                    .content(boardEntity.getContent())
+                    .file(boardEntity.getFile())
+                    .registeredTime(boardEntity.getRegisteredTime())
+                    .modifiedTime(boardEntity.getModifiedTime())
+                    .member(MemberResponseDto.Community.fromEntity(boardEntity.getMember()))
                     .build();
         }
     }

@@ -101,7 +101,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void writeBoard(BoardRequestDto.Write board) throws RollbackException {
-        BoardResponseDto.Info.fromEntity(boardRepository.save(Board.builder()
+        BoardRequestDto.Info.fromEntity(boardRepository.save(Board.builder()
                 .content(board.getContent())
                 .file(board.getFile())
                 .member(memberRepository.findByMemberId(board.getMemberId()))
@@ -111,7 +111,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void updateBoard(Long boardId, BoardRequestDto.Write board) throws RollbackException {
-        BoardResponseDto.Info.fromEntity(boardRepository.save(
+        BoardRequestDto.Info.fromEntity(boardRepository.save(
                 boardRepository.findById(boardId).get()
                         .updateContentAndFile(board.getContent(), board.getFile())));
     }
@@ -119,7 +119,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void deleteBoard(Long boardId) throws RollbackException {
-        BoardResponseDto.Info.fromEntity(boardRepository.save(
+        BoardRequestDto.Info.fromEntity(boardRepository.save(
                 boardRepository.findById(boardId).get().updateIsDeleted()));
     }
 
