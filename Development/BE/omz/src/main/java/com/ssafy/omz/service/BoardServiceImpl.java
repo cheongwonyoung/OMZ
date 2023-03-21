@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.RollbackException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -36,23 +38,26 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardResponseDto.Info> searchBoardByContent(Long memberId, String word, Pageable pageable) {
-        return boardRepository.findAllByIsDeletedIsFalseAndContentContaining(word, pageable)
+    public List<BoardResponseDto.Info> searchBoardByContent(Long memberId, String word) {
+        return boardRepository.findAllByIsDeletedIsFalseAndContentContaining(word)
                 .map(board -> {
                     BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
                     res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
                     return res;
-                });
+                }).stream().collect(Collectors.toList());
     }
 
     @Override
-    public Page<BoardResponseDto.Info> searchBoardByNickname(Long memberId, String word, Pageable pageable) {
-        return boardRepository.findAllByIsDeletedIsFalseAndMember_NicknameContaining(word, pageable)
-                .map(board -> {
-                    BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
-                    res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
-                    return res;
-                });
+    public List<BoardResponseDto.Info> searchBoardByNickname(Long memberId, String word) {
+        List<Board> boards = boardRepository.findAllByIsDeletedIsFalseAndMember_NicknameContaining(word);
+        List<BoardResponseDto.Info> res = new ArrayList<>();
+        for(Board board : boards){
+            BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(board);
+            respDto.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+
+            res.add(respDto);
+        }
+        return res;
     }
 
     @Override
@@ -82,13 +87,18 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardResponseDto.Info> getLikeList(Long memberId, Pageable pageable) {
-        return boardLikesRepository.findAllByMember_MemberId(memberId, pageable)
-                .map(likeInfo -> {
-                    BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(boardRepository.findByBoardId(likeInfo.getBoard().getBoardId()));
-                    res.setILikeBoard(true);
-                    return res;
-                });
+    public List<BoardResponseDto.Info> getLikeList(Long memberId) {
+        List<BoardLikes> likeInfo = boardLikesRepository.findAllByMember_MemberId(memberId);
+        List<BoardResponseDto.Info> res = new ArrayList<>();
+        for(BoardLikes info : likeInfo){
+            Board board = boardRepository.findByIsDeletedIsFalseAndBoardId(info.getBoard().getBoardId());
+            if(board != null){
+                BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(board);
+                respDto.setILikeBoard(true);
+                res.add(respDto);
+            }
+        }
+        return res;
     }
     @Override
     @Transactional
@@ -113,6 +123,16 @@ public class BoardServiceImpl implements BoardService {
     public void deleteBoard(Long boardId) throws RollbackException {
         BoardResponseDto.Info.fromEntity(boardRepository.save(
                 boardRepository.findById(boardId).get().updateIsDeleted()));
+    }
+
+    @Override
+    public Page<BoardResponseDto.Info> getMemberBoardList(Long memberId, Pageable pageable) {
+        return boardRepository.findAllByIsDeletedIsFalseAndMember_MemberId(memberId, pageable)
+                .map(board -> {
+                    BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
+                    res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+                    return res;
+                });
     }
 
 }
