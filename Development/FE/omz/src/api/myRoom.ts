@@ -2,7 +2,7 @@ import axios from "axios";
 
 // 음악추천 api Django Url
 const djInstance = axios.create({
-  // baseURL: "http://localhosst:8000",
+  // baseURL: "http://localhost:8000",
   baseURL: "http://127.0.0.1:8000",
   headers: { "Content-Type": "application/json" },
 });
