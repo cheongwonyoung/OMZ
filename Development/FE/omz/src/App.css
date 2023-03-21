@@ -1,0 +1,22 @@
+.App {
+  background: conic-gradient(
+      #e2edff,
+      rgba(255, 214, 233, 0.81),
+      #fdffae94,
+      rgba(229, 255, 240, 0.88)
+    )
+    #ffffff;
+  height: auto;
+  min-height: 100vh;
+  padding-bottom: 2rem;
+}
+
+#btn {
+  background: conic-gradient(
+      #e2edff,
+      rgba(255, 214, 233, 0.81),
+      #fdffae94,
+      rgba(229, 255, 240, 0.88)
+    )
+    #ffffff;
+}
