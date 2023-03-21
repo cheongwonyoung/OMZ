@@ -1,6 +1,7 @@
 package com.ssafy.omz.api;
 
 import com.ssafy.omz.dto.resp.ChatRoomDto;
+import com.ssafy.omz.service.ChatRedisCacheService;
 import com.ssafy.omz.service.ChatRoomService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +23,15 @@ public class ChatController {
 
     private final ChatRoomService chatRoomService;
 
+//    private final ChatRedisCacheService chatRedisCacheService;
+
+
     @Autowired
-    public ChatController(ChatRoomService chatRoomService){
+    public ChatController(ChatRoomService chatRoomService
+//            , ChatRedisCacheService chatRedisCacheService
+    ){
         this.chatRoomService = chatRoomService;
+//        this.chatRedisCacheService = chatRedisCacheService;
     }
 
     @ApiOperation(value = "채팅방 목록 조회", notes = "사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
@@ -75,4 +84,27 @@ public class ChatController {
 //        //  이제까지의 채팅 데이터 넘겨주면 됨 ...
 //        return new ResponseEntity<>();
 //    }
+
+//        @ApiOperation(value = "채팅방 대화 내역 불러오기", notes = "채팅방 번호(roomId)에 해당하는 채팅방의 대화 내역을 불러온다.")
+//        @ApiResponses({
+//            @ApiResponse(code = 200, message = "OK"),
+//            @ApiResponse(code = 404, message = "Not Found")
+//            //Other Http Status code..
+//        })
+//        @ApiImplicitParam(
+//                name = "roomId"
+//                , value = "채팅방 번호"
+//        )
+//        @PostMapping("/{roomId}")
+//        public ResponseDto<List<ChatPagingResponseDto>> getChatting(@PathVariable Long roomId, @RequestBody(required = false) ChatPagingDto chatPagingDto){
+//
+//            //Cursor 존재하지 않을 경우,현재시간을 기준으로 paging
+//            if(chatPagingDto == null || chatPagingDto.getCursor() == null || chatPagingDto.getCursor().equals("")){
+//                chatPagingDto= ChatPagingDto.builder()
+//                        .cursor( LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+//                        .build();
+//            }
+//            //  getChatsFromRedis는 프론트에서 커서 값 가져오는 부분이라 아직 코드 작성 안 함 (0321_16:04)
+//            return chatRedisCacheService.getChatsFromRedis(roomId,chatPagingDto);
+//        }
 }

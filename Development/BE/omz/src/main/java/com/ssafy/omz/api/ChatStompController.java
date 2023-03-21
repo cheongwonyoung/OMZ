@@ -24,6 +24,9 @@ public class ChatStompController { // stomp chat controller
 
     private final ChatRedisCacheService chatRedisCacheService;
 
+
+
+
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
      */
@@ -62,8 +65,6 @@ public class ChatStompController { // stomp chat controller
 
         // Topic에 pub 보내주기
         // 해당 채팅방에 메세지 보내주기
-
-        System.out.println("[ChatController message] Topic : " + topic.getTopic()); // chatroom
 
         redisPublisher.publish(topic, message);
 

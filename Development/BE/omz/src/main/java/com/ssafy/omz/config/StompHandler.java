@@ -5,6 +5,7 @@ import com.ssafy.omz.service.ChatRoomService;
 import com.ssafy.omz.service.RedisPublisher;
 import com.ssafy.omz.util.ChatUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class StompHandler implements ChannelInterceptor {
@@ -35,16 +37,14 @@ public class StompHandler implements ChannelInterceptor {
 
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
-        System.out.println("[StompHandler preSend]");
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 //        String sessionId = (String) message.getHeaders().get("simpSessionId");
 
         // 최초 소켓 연결
         if (StompCommand.CONNECT == accessor.getCommand()) {
-            System.out.println("[StompHandler preSend] : CONNECT");
             // 토큰 추출 -> 사용자 정보 확인
             String token = accessor.getFirstNativeHeader(TOKEN);
-            System.out.println("[StompHandler preSend] : CONNECT Token : "+token);
+            log.info("[StompHandler preSend] : CONNECT Token : "+token);
 
 //            String token = accessor.getFirstNativeHeader("Authorization").substring(7); // 7?
 //            if(jwtDecoder.decodeUserId(token) == null) {
@@ -53,8 +53,8 @@ public class StompHandler implements ChannelInterceptor {
         }
         // 소켓 연결 후, SUBSCRIBE 등록 ( 구독 요청 )
         else if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
-            // 메세지 보내지 아
-            System.out.println("[StompHandler preSend] : SUBSCRIBE");
+
+            log.info("[StompHandler preSend] : SUBSCRIBE");
 
             // 토큰 추출 -> 사용자 정보 확인
             String token = accessor.getFirstNativeHeader(TOKEN);
@@ -103,6 +103,7 @@ public class StompHandler implements ChannelInterceptor {
 
             // ***********TEST*****************
             String username = "sunheeTestStompHandler";
+
             //redis에  key(roomId) :  Value( sessionId , nickname ) 저장
             chatRoomService.enterChatRoom(roomId, sessionId, username); // 닉네임으로? 아니면 memberId로?
             //  SESSION_ID - sessionId - roomId
@@ -122,14 +123,14 @@ public class StompHandler implements ChannelInterceptor {
             // publish ENTER 보내서 RedisSubscriber 호출됨
 
 
-            System.out.println("[StompHandler preSend] : SUBSCRIBE After publish sessionId : " + sessionId + ", roomId : " + roomId);
+            log.info("[StompHandler preSend] : SUBSCRIBE After publish sessionId : " + sessionId + ", roomId : " + roomId);
 
 
         }
         //  user 확인 후 채팅방에서 제외
         //  소켓 연결 후, 소켓 연결 해제 시 ( 근본 GitHub )
         else if (StompCommand.DISCONNECT == accessor.getCommand()) {
-            System.out.println("[StompHandler preSend] : DISCONNECT");
+            log.info("[StompHandler preSend] : DISCONNECT");
 
 //            String rawToken = Optional.ofNullable(accessor.getFirstNativeHeader("Authorization"))
 //                    .orElse("unknownUser");
@@ -163,9 +164,6 @@ public class StompHandler implements ChannelInterceptor {
             // sessionId null이면 (위에서 null) Failed to send message to ExecutorSubscribableChannel 발생
 
             String roomId = chatRoomService.disconnectWebsocket(sessionId);
-//            long roomIdLong = 0;
-//            if(roomId != null)
-//                roomIdLong = Long.parseLong(roomId);
 
             redisPublisher.publish(topic,
                     ChatMessage.builder()
@@ -174,29 +172,27 @@ public class StompHandler implements ChannelInterceptor {
 //                            .userList(chatRoomService.findUser(roomId, sessionId))
                             .build()
             );
-            System.out.println("[StompHandler preSend] : DISCONNECT After publish QUIT sessionId : " + sessionId +", roomId : "+roomId);
+            log.info("[StompHandler preSend] : DISCONNECT After publish QUIT sessionId : " + sessionId +", roomId : "+roomId);
 
         }
         //reids SubScribe 해제
-        else if (StompCommand.UNSUBSCRIBE == accessor.getCommand()) {
-            System.out.println("[StompHandler preSend] : UNSUBSCRIBE");
-
-            String sessionId = Optional.ofNullable(
-                    (String) message.getHeaders().get(SIMP_SESSION_ID)
-            ).orElse(null);
-
-            long roomId = Long.parseLong(chatRoomService.leaveChatRoom(sessionId));
-
-            redisPublisher.publish(topic,
-                    ChatMessage.builder()
-                            .type(ChatMessage.MessageType.QUIT)
-                            .roomId(roomId)
-//                            .userList(chatRoomService.findUser(roomId, sessionId))
-                            .build()
-            );
-            System.out.println("[StompHandler preSend] : UNSUBSCRIBE sessionId : " + sessionId +", roomId : "+roomId);
-
-        }
+//        else if (StompCommand.UNSUBSCRIBE == accessor.getCommand()) {
+//
+//            String sessionId = Optional.ofNullable(
+//                    (String) message.getHeaders().get(SIMP_SESSION_ID)
+//            ).orElse(null);
+//
+//            long roomId = Long.parseLong(chatRoomService.leaveChatRoom(sessionId));
+//
+//            redisPublisher.publish(topic,
+//                    ChatMessage.builder()
+//                            .type(ChatMessage.MessageType.QUIT)
+//                            .roomId(roomId)
+////                            .userList(chatRoomService.findUser(roomId, sessionId))
+//                            .build()
+//            );
+//
+//        }
         return message;
     }
 }

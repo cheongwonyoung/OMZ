@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 
 @RequiredArgsConstructor
 @Repository
-@Getter
+//@Getter
 public class ChatRoomRedisRepository { // ChatRoomRedisRepository
 
     // Redis Cache Key ?
