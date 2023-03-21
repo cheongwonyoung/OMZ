@@ -30,6 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ROOT_PATH = 'django/'
 
 # Application definition
 
