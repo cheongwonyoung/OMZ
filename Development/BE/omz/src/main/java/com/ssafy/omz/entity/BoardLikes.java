@@ -1,10 +1,7 @@
 package com.ssafy.omz.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,11 +10,11 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Likes {
+public class BoardLikes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long likesId;
+    private long boardLikesId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
@@ -28,4 +25,10 @@ public class Likes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Builder
+    private BoardLikes(Board board, Member member){
+        this.board = board;
+        this.member = member;
+    }
 }
