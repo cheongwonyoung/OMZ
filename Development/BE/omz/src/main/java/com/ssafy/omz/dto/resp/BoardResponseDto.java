@@ -38,7 +38,6 @@ public class BoardResponseDto {
 
     @Data
     @Builder
-//    @Schema
     public static class Detail {
         private Long boardId;
         private String content;
