@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BoardResponseDto {
     @Data
@@ -48,7 +49,7 @@ public class BoardResponseDto {
         private int replyCnt;
         private MemberResponseDto.Community member;
         private boolean iLikeBoard;
-        private List<Reply> replyList;
+        private List<ReplyResponseDto.Info> replyList;
         public static Detail fromEntity(com.ssafy.omz.entity.Board boardEntity) {
             return Detail.builder()
                     .boardId(boardEntity.getBoardId())
@@ -59,6 +60,9 @@ public class BoardResponseDto {
                     .likeCnt(boardEntity.getLikes().size())
                     .replyCnt(boardEntity.getReplies().size())
                     .member(MemberResponseDto.Community.fromEntity(boardEntity.getMember()))
+                    .replyList(boardEntity.getReplies().stream()
+                            .map(ReplyResponseDto.Info::fromEntity)
+                            .collect(Collectors.toList()))
                     .build();
         }
     }

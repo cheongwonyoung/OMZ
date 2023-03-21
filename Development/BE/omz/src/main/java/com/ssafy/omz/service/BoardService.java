@@ -7,14 +7,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.RollbackException;
+import java.util.List;
 
 @Service
 public interface BoardService {
     Page<BoardResponseDto.Info> getBoardList(Long memberId, Pageable pageable);
 
-    Page<BoardResponseDto.Info> searchBoardByContent(Long memberId, String word, Pageable pageable);
+    List<BoardResponseDto.Info> searchBoardByContent(Long memberId, String word);
 
-    Page<BoardResponseDto.Info> searchBoardByNickname(Long memberId, String word, Pageable pageable);
+    List<BoardResponseDto.Info> searchBoardByNickname(Long memberId, String word);
 
     BoardResponseDto.Detail getBoardDetail(Long memberId, Long boardId);
 
@@ -22,11 +23,13 @@ public interface BoardService {
 
     void memberCancleLikeBoard(Long memberId, Long boardId);
 
-    Page<BoardResponseDto.Info> getLikeList(Long memberId, Pageable pageable);
+    List<BoardResponseDto.Info> getLikeList(Long memberId);
 
     void writeBoard(BoardRequestDto.Write board) throws RollbackException;
 
     void updateBoard(Long boardId, BoardRequestDto.Write board) throws RollbackException;
 
     void deleteBoard(Long boardId) throws RollbackException;
+
+    Page<BoardResponseDto.Info> getMemberBoardList(Long memberId, Pageable pageable);
 }
