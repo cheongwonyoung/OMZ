@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BoardResponseDto {
     @Data
@@ -29,7 +30,7 @@ public class BoardResponseDto {
                     .registeredTime(boardEntity.getRegisteredTime())
                     .modifiedTime(boardEntity.getModifiedTime())
                     .likeCnt(boardEntity.getLikes().size())
-                    .replyCnt(boardEntity.getReplies().size())
+                    .replyCnt(boardEntity.getReplies().stream().filter(reply -> !reply.isDeleted()).collect(Collectors.toList()).size())
                     .member(MemberResponseDto.Community.fromEntity(boardEntity.getMember()))
                     .build();
         }
@@ -37,7 +38,6 @@ public class BoardResponseDto {
 
     @Data
     @Builder
-//    @Schema
     public static class Detail {
         private Long boardId;
         private String content;
@@ -48,7 +48,7 @@ public class BoardResponseDto {
         private int replyCnt;
         private MemberResponseDto.Community member;
         private boolean iLikeBoard;
-        private List<Reply> replyList;
+        private List<ReplyResponseDto.Info> replies;
         public static Detail fromEntity(com.ssafy.omz.entity.Board boardEntity) {
             return Detail.builder()
                     .boardId(boardEntity.getBoardId())
@@ -57,8 +57,11 @@ public class BoardResponseDto {
                     .registeredTime(boardEntity.getRegisteredTime())
                     .modifiedTime(boardEntity.getModifiedTime())
                     .likeCnt(boardEntity.getLikes().size())
-                    .replyCnt(boardEntity.getReplies().size())
                     .member(MemberResponseDto.Community.fromEntity(boardEntity.getMember()))
+                    .replies(boardEntity.getReplies().stream()
+                            .map(ReplyResponseDto.Info::fromEntity)
+                            .filter(reply -> !reply.isDeleted())
+                            .collect(Collectors.toList()))
                     .build();
         }
     }
