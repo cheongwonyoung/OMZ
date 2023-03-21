@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 public class ReplyResponseDto {
     @Data
     @Builder
-//    @Schema(name="FreeBoardCommentDto.Info")
     public static class Info {
         private Long replyId;
         private String content;

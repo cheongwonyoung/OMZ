@@ -9,7 +9,6 @@ public class BoardLikesResponseDto {
 
     @Data
     @Builder
-//    @Schema
     public static class Info {
         private Long boardLikesId;
         private Board board;

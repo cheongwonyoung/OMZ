@@ -6,7 +6,6 @@ import lombok.Data;
 public class MemberResponseDto {
     @Data
     @Builder
-//    @Schema
     public static class Community {
         private Long memberId;
         private String nickname;

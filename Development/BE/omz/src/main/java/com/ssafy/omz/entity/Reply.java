@@ -45,4 +45,14 @@ public class Reply {
         this.content = content;
         this.isDeleted = isDeleted;
     }
+
+    public Reply updateContent(String content){
+        this.content = content;
+        return this;
+    }
+
+    public Reply updateIsDeleted(){
+        this.isDeleted = true;
+        return this;
+    }
 }
