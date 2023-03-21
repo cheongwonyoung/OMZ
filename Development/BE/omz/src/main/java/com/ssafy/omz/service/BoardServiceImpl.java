@@ -33,6 +33,7 @@ public class BoardServiceImpl implements BoardService {
                 .map(board -> {
                     BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
                     res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+                    log.info("" + res.getReplyCnt());
                     return res;
                 });
     }
@@ -65,10 +66,7 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findByBoardId(boardId);
         BoardResponseDto.Detail res = BoardResponseDto.Detail.fromEntity(board);
         res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId));
-        res.setReplyList(
-                BoardResponseDto.Detail.fromEntity(board).getReplyList().stream()
-                        .filter(reply -> !reply.isDeleted())
-                        .collect(Collectors.toList()));
+        res.setReplyCnt(res.getReplies().size());
         return  res;
     }
 
