@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 type Props = {
-  goBack(): void;
+  goBack?(): void;
 };
 
 export default function BackBtn({ goBack }: Props) {

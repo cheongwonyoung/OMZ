@@ -1,7 +1,7 @@
 type Props = {
   item: string | undefined;
 };
-
+// TODO: prop은 이거보고 하기
 export default function MyChatting({ item }: Props) {
   return (
     <div className="flex justify-end items-end relative gap-[5px] mr-4">

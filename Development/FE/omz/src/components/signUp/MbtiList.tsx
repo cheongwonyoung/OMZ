@@ -1,4 +1,4 @@
-import MbtiItems from "./MbtiItem";
+import MbtiItem from "./MbtiItem";
 
 type Props = {
   handlePickedMbti(i: any): void;
@@ -28,7 +28,7 @@ export default function MbtiList({ handlePickedMbti, pickedMbti }: Props) {
   return (
     <div className="w-full grid grid-cols-4 gap-2">
       {mbtiList.map((item) => (
-        <MbtiItems
+        <MbtiItem
           mbti={item}
           key={item}
           handlePickedMbti={handlePickedMbti}

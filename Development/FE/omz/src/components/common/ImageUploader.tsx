@@ -36,12 +36,12 @@ export default function ImageUploader({ file, onFile, shape }: Props) {
 
   const circle_img = "object-cover w-full h-full rounded-full";
 
-  const square =
-    "dropzone w-60 h-60 border border-red-200 border-4 border-dashed";
+  const square = "dropzone w-[80%] h-[20px] border-4";
 
+  // "dropzone w-60 h-60 border border-red-200 border-4 border-dashed";
   const square_img = "object-cover w-full h-full";
   return (
-    <section className="container w-full flex justify-center">
+    <section className="container w-[80%] flex justify-center">
       <div
         {...getRootProps({
           className: `${shape ? circle : square}`,

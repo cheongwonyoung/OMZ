@@ -1,7 +1,7 @@
 package com.ssafy.omz.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ssafy.omz.dto.res.TokenDto;
+import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.service.JwtService;
 import com.ssafy.omz.service.MemberService;
 import io.swagger.annotations.Api;

@@ -38,7 +38,7 @@ public class Member {
     private String mbti;
 
     @Column(length = 10)
-    private String nickName;
+    private String nickname;
 
     private String file;
 
@@ -49,6 +49,12 @@ public class Member {
 
     @OneToOne(mappedBy = "member")
     private MiniRoom miniRoom;
+
+    @Builder
+    private Member(String email, String nickname){
+        this.email = email;
+        this.nickname = nickname;
+    }
 
 //    @OneToMany(mappedBy = "memberId")
 //    private List<ChattingRoom> chattingRooms = new ArrayList<>();
