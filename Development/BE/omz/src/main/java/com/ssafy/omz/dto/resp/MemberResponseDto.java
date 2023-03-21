@@ -3,9 +3,7 @@ package com.ssafy.omz.dto.resp;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
-public class MemberDto {
+public class MemberResponseDto {
     @Data
     @Builder
 //    @Schema
@@ -13,7 +11,7 @@ public class MemberDto {
         private Long memberId;
         private String nickname;
         private String file;
-        public static MemberDto.Community fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+        public static MemberResponseDto.Community fromEntity(com.ssafy.omz.entity.Member memberEntity) {
             return Community.builder()
                     .memberId(memberEntity.getMemberId())
                     .nickname(memberEntity.getNickname())

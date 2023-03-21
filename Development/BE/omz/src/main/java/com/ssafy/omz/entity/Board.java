@@ -48,10 +48,21 @@ public class Board {
     private List<Reply> replies = new ArrayList<>();
 
     @Builder
-    private Board(Member member, String content){
+    private Board(Member member, String content, String file){
         this.member = member;
         this.content = content;
+        this.file = file;
     }
 
+    public Board updateContentAndFile(String content, String file){
+        this.file = file;
+        this.content = content;
+        return this;
+    }
+
+    public Board updateIsDeleted(){
+        this.isDeleted = true;
+        return this;
+    }
 
  }

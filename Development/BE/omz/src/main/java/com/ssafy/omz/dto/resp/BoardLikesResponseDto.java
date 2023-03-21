@@ -5,7 +5,7 @@ import com.ssafy.omz.entity.Member;
 import lombok.Builder;
 import lombok.Data;
 
-public class BoardLikesDto {
+public class BoardLikesResponseDto {
 
     @Data
     @Builder
@@ -14,7 +14,7 @@ public class BoardLikesDto {
         private Long boardLikesId;
         private Board board;
         private Member member;
-        public static BoardLikesDto.Info fromEntity(com.ssafy.omz.entity.BoardLikes boardLikesEntity) {
+        public static BoardLikesResponseDto.Info fromEntity(com.ssafy.omz.entity.BoardLikes boardLikesEntity) {
             return Info.builder()
                     .board(boardLikesEntity.getBoard())
                     .member(boardLikesEntity.getMember())
