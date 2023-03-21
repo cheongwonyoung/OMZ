@@ -5,6 +5,11 @@ export const getArticles = () => {
   return instance.get('/api/board');
 }; 
 
+// 게시글 상세 GET
+export const getArticle = (boardid: number, memberId: number) => {
+  return instance.get(`/api/board/${boardid}/${memberId}`)  
+}; 
+
 // 게시글 POST 
 export const createArticle = (formData: FormData) => {
   const response = {
