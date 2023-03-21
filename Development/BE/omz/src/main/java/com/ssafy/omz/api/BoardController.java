@@ -1,10 +1,10 @@
 package com.ssafy.omz.api;
 
+import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.service.BoardService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Parameter;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,10 +38,19 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @ApiOperation(value = "글 상세 보기", notes = "클릭한 글에 대한 상세 정보")
+    @GetMapping("/{memberId}/{boardId}")
+    public ResponseEntity<?> boardDetail(@PathVariable Long memberId, @PathVariable Long boardId) {
+        try {
+            return new ResponseEntity<>(boardService.getBoardDetail(memberId, boardId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     @ApiOperation(value = "글 좋아요", notes = "글에 좋아요 누르기")
     @PostMapping("/{memberId}/{boardId}")
-    public ResponseEntity<?> postUserLikeCourse(@PathVariable Long memberId,
+    public ResponseEntity<?> postMemberLikeBoard(@PathVariable Long memberId,
                                                 @PathVariable Long boardId) {
         try{
             boardService.memberLikeBoard(memberId, boardId);
@@ -51,7 +60,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "글 좋아요 취소", notes = "글에 좋아요 누른 거 취소")
     @PutMapping("/{memberId}/{boardId}")
     public ResponseEntity<?> cancleMemberLikeBoard(@PathVariable Long memberId,
@@ -64,11 +72,9 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "좋아요한 글 목록", notes = "memberId가 좋아요한 글 목록 불러오기")
-    @GetMapping("/likes")
-    public ResponseEntity<?> boardList(@RequestParam(required = false, value = "memberId") Long memberId,
-                                       Pageable pageable) {
+    @GetMapping("/likes/{memberId}")
+    public ResponseEntity<?> getBoardLikeList(@PathVariable Long memberId, Pageable pageable) {
         try {
             return new ResponseEntity<>(boardService.getLikeList(memberId, pageable), HttpStatus.OK);
         } catch (Exception e) {
@@ -76,5 +82,39 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @ApiOperation(value = "커뮤니티 글 작성", notes = "커뮤니티 글 작성하기")
+    @PostMapping("")
+    public ResponseEntity<?> boardWrite(@RequestBody BoardRequestDto.Write board) {
+        try {
+            boardService.writeBoard(board);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기")
+    @PutMapping("/{boardId}")
+    public ResponseEntity<?> boardUpdate(@PathVariable Long boardId,
+                                         @RequestBody BoardRequestDto.Write board) {
+        try {
+            boardService.updateBoard(boardId, board);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기")
+    @PutMapping("/delete/{boardId}")
+    public ResponseEntity<?> boardDelete(@PathVariable Long boardId) {
+        try {
+            boardService.deleteBoard(boardId);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
