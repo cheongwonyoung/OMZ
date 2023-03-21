@@ -1,10 +1,7 @@
 package com.ssafy.omz.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -40,7 +38,7 @@ public class Member {
     private String mbti;
 
     @Column(length = 10)
-    private String nickName;
+    private String nickname;
 
     private String file;
 
@@ -51,6 +49,12 @@ public class Member {
 
     @OneToOne(mappedBy = "member")
     private MiniRoom miniRoom;
+
+    @Builder
+    private Member(String email, String nickname){
+        this.email = email;
+        this.nickname = nickname;
+    }
 
 //    @OneToMany(mappedBy = "memberId")
 //    private List<ChattingRoom> chattingRooms = new ArrayList<>();
