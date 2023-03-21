@@ -21,7 +21,7 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.ssafy.omz"))
 //                .paths(PathSelectors.any())
-                .paths(PathSelectors.ant("/api/**"))
+                .paths(PathSelectors.ant("/**"))
                 .build();
     }
 
