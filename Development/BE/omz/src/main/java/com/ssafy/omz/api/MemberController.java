@@ -31,7 +31,7 @@ public class MemberController {
             , value = "카카오 토큰"
             , defaultValue = "None")
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> kakaoLogin(@RequestHeader(value = "access_token") String token) throws JsonProcessingException {
+    public ResponseEntity<?> kakaoLogin(@RequestHeader(value = "access_token") String token) throws JsonProcessingException {
 
         // access, refresh token을 담을 response dto
         TokenDto tokenDto = null;
@@ -40,8 +40,9 @@ public class MemberController {
             tokenDto = memberService.kakaoLogin(token);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.OK);
 
     }
 
@@ -52,7 +53,7 @@ public class MemberController {
             , value = "access token 재발급 용도"
             , defaultValue = "None")
     @PostMapping("/refresh")
-    public ResponseEntity<TokenDto> refreshToken(@RequestHeader(value = "refresh_token") String token) throws Exception {
+    public ResponseEntity<?> refreshToken(@RequestHeader(value = "refresh_token") String token) throws Exception {
         TokenDto tokenDto = null;
         logger.info("refresh_token : {}", token);
         try {
@@ -68,16 +69,10 @@ public class MemberController {
         } catch (Exception e) {
             logger.debug("여긴 ??????????");
             e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
-
-    }
-
-    @PostMapping("/{aa}")
-    public String test(@PathVariable("aa") String aa) throws JsonProcessingException {
-
-        return aa;
+        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.OK);
 
     }
 
