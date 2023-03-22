@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,7 +16,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Builder
-public class Chat {
+public class Chat implements Serializable {
+
+    private static final long serialVersionUID = 5090380600159441769L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

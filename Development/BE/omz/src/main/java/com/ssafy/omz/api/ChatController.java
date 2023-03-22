@@ -17,7 +17,8 @@ import java.util.List;
 
 @Api("ChatController API v1")
 //@RequiredArgsConstructor
-@RequestMapping("/api/chatting")
+//@RequestMapping("/api/chatting")
+@RequestMapping("/chatting")
 @RestController
 public class ChatController {
 
@@ -34,7 +35,7 @@ public class ChatController {
 //        this.chatRedisCacheService = chatRedisCacheService;
     }
 
-    @ApiOperation(value = "채팅방 목록 조회", notes = "사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
+    @ApiOperation(value = "채팅방 목록 조회", notes = "토큰 사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 204, message = "No Content"),
@@ -49,7 +50,7 @@ public class ChatController {
         try {
         //  Token 기반 사용자 정보 추출
             // Member member = ?
-          long memberId = 1;
+          long memberId = 4; // sara
             //  service
             chatRoomList = chatRoomService.getChatRoomList(memberId);
             if (chatRoomList.isEmpty()) // || chatRoomList == null

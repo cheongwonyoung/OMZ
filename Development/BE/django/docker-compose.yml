@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/code
       - ./nginx/nginx:/etc/nginx.conf.d
+    # 시작순서제어 - nginx 컨테이너 시작 전 web 컨테이너 시작 
     depends_on:
       - web
   web:
@@ -18,6 +19,6 @@ services:
     command: gunicorn backend.wsqi.application --bind 0.0.0.0:8000
 
     volumes:
-      - .:/Development/BE/django/
+      - .:/code
     ports:
       - "8000:8000"

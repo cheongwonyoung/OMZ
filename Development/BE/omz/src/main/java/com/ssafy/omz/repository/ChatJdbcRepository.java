@@ -19,7 +19,7 @@ public class ChatJdbcRepository {
     public void batchInsertChats(List<Chat> chatList){
 
 
-        String sql = "INSERT INTO chats"
+        String sql = "INSERT INTO chat"
                 +  "(chat_room_id, message, from_member_id, created_time) VALUE(?,?,?,?)";
 //        +  "(chat_room_id, message, from_member_id, created_time, is_checked) VALUE(?,?,?,?)";
 
