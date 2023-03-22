@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { images } from "../../assets/images";
-
-export default function BottomBar() {
+type Props = {
+  openGuestBook(): void;
+};
+export default function BottomBar({ openGuestBook }: Props) {
   const navigate = useNavigate();
   return (
     <div>
-      <div className="flex items-center">
+      <div className="flex items-center" onClick={openGuestBook}>
         <img src={images.foot_print_img} alt="" className="w-10 h-10 mr-2" />
         <p>방명록</p>
       </div>
