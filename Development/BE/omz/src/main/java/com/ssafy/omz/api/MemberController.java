@@ -1,6 +1,8 @@
 package com.ssafy.omz.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ssafy.omz.dto.req.BoardRequestDto;
+import com.ssafy.omz.dto.req.MemberRequestDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.service.JwtService;
 import com.ssafy.omz.service.MemberService;
@@ -21,7 +23,6 @@ import org.slf4j.LoggerFactory;
 public class MemberController {
     private final MemberService memberService;
     private final JwtService jwtService;
-
     public static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @ApiOperation(value = "카카오 로그인", notes = "kakao token을 받아 유효성 검사 후 access, refresh token 발급")
@@ -31,7 +32,7 @@ public class MemberController {
             , value = "카카오 토큰"
             , defaultValue = "None")
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> kakaoLogin(@RequestHeader(value = "access_token") String token) throws JsonProcessingException {
+    public ResponseEntity<?> kakaoLogin(@RequestHeader(value = "access_token") String token) throws JsonProcessingException {
 
         // access, refresh token을 담을 response dto
         TokenDto tokenDto = null;
@@ -40,8 +41,9 @@ public class MemberController {
             tokenDto = memberService.kakaoLogin(token);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.OK);
 
     }
 
@@ -52,7 +54,7 @@ public class MemberController {
             , value = "access token 재발급 용도"
             , defaultValue = "None")
     @PostMapping("/refresh")
-    public ResponseEntity<TokenDto> refreshToken(@RequestHeader(value = "refresh_token") String token) throws Exception {
+    public ResponseEntity<?> refreshToken(@RequestHeader(value = "refresh_token") String token) throws Exception {
         TokenDto tokenDto = null;
         logger.info("refresh_token : {}", token);
         try {
@@ -68,28 +70,22 @@ public class MemberController {
         } catch (Exception e) {
             logger.debug("여긴 ??????????");
             e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
+        return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.OK);
 
     }
 
-    @PostMapping("/{aa}")
-    public String test(@PathVariable("aa") String aa) throws JsonProcessingException {
-
-        return aa;
-
-    }
-
-    @ApiOperation(value = "친구 찾기 페이지 멤버 검색", notes = "닉네임으로 멤버 검색하기")
-    @GetMapping("/search/{word}")
-    public ResponseEntity<?> getMemberList(@PathVariable String word) {
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateMemberInfo(@RequestParam(required = false, value = "memberId") Long memberId, @RequestBody MemberRequestDto.Write member) throws Exception {
         try {
-            return new ResponseEntity<>(memberService.getMemberList(word), HttpStatus.OK);
+            memberService.updateMemberInfo(memberId, member);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

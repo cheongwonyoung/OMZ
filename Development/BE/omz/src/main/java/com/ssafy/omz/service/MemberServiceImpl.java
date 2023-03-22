@@ -3,20 +3,40 @@ package com.ssafy.omz.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.omz.dto.resp.BoardResponseDto;
+import com.ssafy.omz.dto.req.FaceRequestDto;
+import com.ssafy.omz.dto.req.MemberRequestDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
+import com.ssafy.omz.entity.Face;
 import com.ssafy.omz.entity.Member;
+import com.ssafy.omz.repository.FaceRepository;
 import com.ssafy.omz.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import com.google.cloud.storage.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.imageio.ImageIO;
+import javax.persistence.RollbackException;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.UUID;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,6 +48,13 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
 
     private final JwtService jwtService;
+
+    private final Storage storage;
+    private final FaceRepository faceRepository;
+
+//    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
+//    private String bucketName;
+
     @Override
     public TokenDto kakaoLogin(String token) throws JsonProcessingException{
         // 토큰으로 카카오 api 호출
@@ -56,6 +83,49 @@ public class MemberServiceImpl implements MemberService{
     public String memberEmail(String token) {
         Member member = memberRepository.findByToken(token).orElse(null);
         return member.getEmail();
+    }
+
+
+    // 회원 정보 수정
+    @Override
+    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto){
+        String bucketName = "omz-bucket";
+        MultipartFile file = memberDto.getProfile();
+        String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
+        try(InputStream inputStream = file.getInputStream()) {
+            Image processedImage = ImageIO.read(inputStream);
+
+            BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = scaledBI.createGraphics();
+            g.drawImage(processedImage, 0, 0, 200, 200, null);
+            g.dispose();
+
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(scaledBI, "jpg", os);
+
+            InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
+
+            storage.create(BlobInfo.newBuilder(bucketName, saveFileName).build(), processedInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        memberRepository.save(
+                memberRepository.findByMemberId(memberId).updateMemberInfo(
+                        memberDto.getMbti(),
+                        memberDto.getNickname(),
+                        saveFileName,
+                        faceRepository.save(faceRepository.findByFaceId(memberDto.getMyFace()).updateFace()),
+                        faceRepository.findByFaceId(memberDto.getPreferFace()),
+                        "asdf"
+                )
+
+        );
+
+        user.updateSaveName(saveFileName);
+//        String result = "/" + saveFileName;
+//        return result;
+
     }
 
     // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
@@ -120,11 +190,5 @@ public class MemberServiceImpl implements MemberService{
 //        String nickname = "test1";
         return new KakaoUserInfoDto(id, nickname, email);
 
-    }
-    @Override
-    public List<MemberResponseDto.LittleInfo> getMemberList(String word) {
-        return memberRepository.findByNicknameContaining(word).stream()
-                .map(MemberResponseDto.LittleInfo::fromEntity)
-                .collect(Collectors.toList());
     }
 }

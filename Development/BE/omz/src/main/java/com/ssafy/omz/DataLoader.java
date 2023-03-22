@@ -1,13 +1,7 @@
 package com.ssafy.omz;
 
-import com.ssafy.omz.entity.Board;
-import com.ssafy.omz.entity.BoardLikes;
-import com.ssafy.omz.entity.Member;
-import com.ssafy.omz.entity.Reply;
-import com.ssafy.omz.repository.BoardRepository;
-import com.ssafy.omz.repository.BoardLikesRepository;
-import com.ssafy.omz.repository.MemberRepository;
-import com.ssafy.omz.repository.ReplyRepository;
+import com.ssafy.omz.entity.*;
+import com.ssafy.omz.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -28,7 +22,8 @@ public class DataLoader implements CommandLineRunner {
     private ReplyRepository replyRepository;
     @Autowired
     private BoardLikesRepository boardLikesRepository;
-
+    @Autowired
+    private FriendRepository friendRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -39,14 +34,42 @@ public class DataLoader implements CommandLineRunner {
         addBoard();
         addReply();
         addBoardLikes();
+        addFriend();
+    }
+
+    private void addFriend() {
+        List<Member> memberList = memberRepository.findAll();
+        List<Friend> friendList = new ArrayList<>();
+        friendList.add(Friend.builder()
+                .message("렉쮸꽁")
+                .toMember(memberList.get(1))
+                .fromMember(memberList.get(0))
+                .state(1)
+                .build());
+        for (int i = 2; i < 4; i++) {
+            friendList.add(Friend.builder()
+                    .message("친구 대기즁 나랑 친구 안 하면 앙마")
+                    .toMember(memberList.get(i))
+                    .fromMember(memberList.get(0))
+                    .state(0)
+                    .build());
+        }
+        friendList.add(Friend.builder()
+                .message("친구 거절 부탁 나랑 친구 하면 앙마")
+                .toMember(memberList.get(4))
+                .fromMember(memberList.get(0))
+                .state(-1)
+                .build());
+        friendRepository.saveAllAndFlush(friendList);
+
     }
 
     private void addBoardLikes() {
         List<Member> memberList = memberRepository.findAll();
         List<Board> boardList = boardRepository.findAll();
         List<BoardLikes> boardLikesList = new ArrayList<>();
-        for (int i = 0; i < memberList.size(); i++){
-            for (int j = 0; j < 5; j++){
+        for (int i = 0; i < memberList.size(); i++) {
+            for (int j = 0; j < 5; j++) {
                 boardLikesList.add(BoardLikes.builder()
                         .board(boardList.get(j))
                         .member(memberList.get(i))

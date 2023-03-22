@@ -56,6 +56,16 @@ public class Member {
         this.nickname = nickname;
     }
 
+    public Member updateMemberInfo(String mbti, String nickname, String file, Face myface, Face preferFace, String faceName){
+        this.mbti = mbti;
+        this.nickname = nickname;
+        this.file = file;
+        this.face = myface;
+        this.preferFace = preferFace;
+        this.faceName = faceName;
+        return this;
+    }
+
 //    @OneToMany(mappedBy = "memberId")
 //    private List<ChattingRoom> chattingRooms = new ArrayList<>();
 //
