@@ -10,3 +10,11 @@ services:
       - "mode=standalone"
     ports:
       - 6379:6379
+
+  api-swagger:
+    image: swaggerapi/swagger-ui
+    container_name: api-swagger
+    ports:
+      - 8080:8080
+
+
