@@ -2,7 +2,6 @@ package com.ssafy.omz.dto.req;
 
 import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
-import com.ssafy.omz.dto.resp.ReplyResponseDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +9,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.stream.Collectors;
 
 public class BoardRequestDto {
     @Data
@@ -35,15 +33,15 @@ public class BoardRequestDto {
         private String file;
         private LocalDateTime registeredTime;
         private LocalDateTime modifiedTime;
-        private MemberResponseDto.Community member;
-        public static BoardResponseDto.Info fromEntity(com.ssafy.omz.entity.Board boardEntity) {
-            return BoardResponseDto.Info.builder()
+        private MemberResponseDto.LittleInfo member;
+        public static BoardRequestDto.Info fromEntity(com.ssafy.omz.entity.Board boardEntity) {
+            return BoardRequestDto.Info.builder()
                     .boardId(boardEntity.getBoardId())
                     .content(boardEntity.getContent())
                     .file(boardEntity.getFile())
                     .registeredTime(boardEntity.getRegisteredTime())
                     .modifiedTime(boardEntity.getModifiedTime())
-                    .member(MemberResponseDto.Community.fromEntity(boardEntity.getMember()))
+                    .member(MemberResponseDto.LittleInfo.fromEntity(boardEntity.getMember()))
                     .build();
         }
     }

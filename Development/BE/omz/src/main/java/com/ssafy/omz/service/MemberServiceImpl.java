@@ -3,7 +3,9 @@ package com.ssafy.omz.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.repository.MemberRepository;
@@ -15,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -54,6 +59,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
+
     private TokenDto registerKakaoUserIfNeed(KakaoUserInfoDto kakaoUserInfo) {
         // 이미 회원인지 확인
         String email = kakaoUserInfo.getEmail();
@@ -114,5 +120,11 @@ public class MemberServiceImpl implements MemberService{
 //        String nickname = "test1";
         return new KakaoUserInfoDto(id, nickname, email);
 
+    }
+    @Override
+    public List<MemberResponseDto.LittleInfo> getMemberList(String word) {
+        return memberRepository.findByNickname(word).stream()
+                .map(MemberResponseDto.LittleInfo::fromEntity)
+                .collect(Collectors.toList());
     }
 }
