@@ -2,6 +2,7 @@ package com.ssafy.omz.service;
 
 import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.dto.req.FriendRequestDto;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.entity.Board;
 import com.ssafy.omz.entity.Friend;
 import com.ssafy.omz.repository.FriendRepository;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.transaction.RollbackException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service("FriendService")
@@ -27,5 +30,23 @@ public class FriendServiceImpl implements FriendService {
                 .toMember(memberRepository.findByMemberId(friend.getToMemberId()))
                 .fromMember(memberRepository.findByMemberId(friend.getFromMemberId()))
                 .build()));
+    }
+
+//    @Override
+//    public Boolean requestFriendPossibleCheck(Long toMemberId, Long fromMemberId) {
+//        return !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(toMemberId, fromMemberId)
+//                || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(fromMemberId, toMemberId);
+//    }
+
+    @Override
+    public List<MemberResponseDto.FriendSearch> getSearchMemberList(Long memberId, String word) {
+        return memberRepository.findByNicknameContaining(word)
+                .map(member -> {
+                    MemberResponseDto.FriendSearch res = MemberResponseDto.FriendSearch.fromEntity(member);
+                    res.setRequestPossble(!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, res.getMemberId())
+                            || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(res.getMemberId(), memberId));
+
+                    return res;
+                }).stream().collect(Collectors.toList());
     }
 }

@@ -80,16 +80,4 @@ public class MemberController {
         return aa;
 
     }
-
-    @ApiOperation(value = "친구 찾기 페이지 멤버 검색", notes = "닉네임으로 멤버 검색하기")
-    @GetMapping("/search/{word}")
-    public ResponseEntity<?> getMemberList(@PathVariable String word) {
-        try {
-            return new ResponseEntity<>(memberService.getMemberList(word), HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 }
