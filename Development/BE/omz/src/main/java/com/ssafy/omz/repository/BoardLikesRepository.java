@@ -5,11 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface BoardLikesRepository extends JpaRepository<BoardLikes,Long> {
 
     Boolean existsByMember_MemberIdAndBoard_BoardId(Long memberId, Long boardId);
 
-    Page<BoardLikes> findAllByMember_MemberId(Long memberId, Pageable pageable);
+    List<BoardLikes> findAllByMember_MemberId(Long memberId);
 
     BoardLikes findByMember_MemberIdAndBoard_BoardId(Long memberId, Long boardId);
 }

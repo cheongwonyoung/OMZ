@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 @Api("memberController API v1")
 @RestController
-@RequestMapping("/api/member")
+@RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberService memberService;
@@ -72,6 +72,24 @@ public class MemberController {
 
         return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.ACCEPTED);
 
+    }
+
+    @PostMapping("/{aa}")
+    public String test(@PathVariable("aa") String aa) throws JsonProcessingException {
+
+        return aa;
+
+    }
+
+    @ApiOperation(value = "친구 찾기 페이지 멤버 검색", notes = "닉네임으로 멤버 검색하기")
+    @GetMapping("/search/{word}")
+    public ResponseEntity<?> getMemberList(@PathVariable String word) {
+        try {
+            return new ResponseEntity<>(memberService.getMemberList(word), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
