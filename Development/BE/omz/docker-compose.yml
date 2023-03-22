@@ -11,11 +11,10 @@ services:
     ports:
       - 6379:6379
 
-services:
   api-swagger:
     image: swaggerapi/swagger-ui
     container_name: api-swagger
     ports:
       - 8080:8080
-    environment:
-      API_URL: {URL}:8080/api/swagger-ui.html
+
+
