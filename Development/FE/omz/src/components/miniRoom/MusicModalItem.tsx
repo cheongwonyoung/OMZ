@@ -1,12 +1,10 @@
 type Props = {
   music: {
-    Title: string;
-    Genre: string;
-    Artist: string;
+    [key: string]: string;
   };
   selectMusic?(name: string | undefined): void;
   musicSelected?: string[];
-  selectBgm?(item: { Title: string; Artist: string }): void;
+  selectBgm?(item: { [key: string]: any }): void;
   bgm?: { Title: string; Artist: string };
 };
 

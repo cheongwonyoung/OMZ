@@ -2,13 +2,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
+  faHeart,
+  faHeartCrack,
 } from "@fortawesome/free-solid-svg-icons";
 import FriendsCard from "./FriendsCard";
-export default function FriendsRecommend() {
+import FriendBtn from "./FriendBtn";
+
+type Props = {
+  handleRefuseModal(): void;
+  handleProposalModal(): void;
+};
+export default function FriendsRecommend({
+  handleRefuseModal,
+  handleProposalModal,
+}: Props) {
   return (
     <div className="flex flex-col w-11/12 h-full pt-8">
-      <p className=" text-purple-500 font-semibold">추천 친구</p>
-      <div className="w-full flex justify-center h-3/4 mt-8 items-center">
+      <p className=" text-purple-500 font-semibold ml-6">추천 친구</p>
+      <div className="w-full flex justify-center h-3/4 mt-4 px-4 items-center">
         <div className="w-1/12 flex justify-center items-center">
           <FontAwesomeIcon icon={faChevronLeft} className="cursor-pointer" />
         </div>
@@ -18,8 +29,16 @@ export default function FriendsRecommend() {
         </div>
       </div>
       <div className="flex justify-center mt-8 gap-8">
-        <button>친구 신청</button>
-        <button>친구 거절</button>
+        <FriendBtn
+          icon={<FontAwesomeIcon icon={faHeart} />}
+          text={"친구 신청"}
+          logic={handleProposalModal}
+        />
+        <FriendBtn
+          icon={<FontAwesomeIcon icon={faHeartCrack} />}
+          text={"친구 거절"}
+          logic={handleRefuseModal}
+        />
       </div>
     </div>
   );
