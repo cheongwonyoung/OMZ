@@ -2,6 +2,7 @@ package com.ssafy.omz.dto.req;
 
 import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class FriendRequestDto {
 
     @Data
     @Builder
+    @ApiModel(value = "친구 신청 정보", description = "신청 메세지, toMemberId, fromMemberId를 가진 Class")
     public static class Write {
         @Size(min=1, max=20, message = "바르지 않은 message 크기 입니다")
         @NotEmpty(message="message는 빈값 일 수 없습니다")
