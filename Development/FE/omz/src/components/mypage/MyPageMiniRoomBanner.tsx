@@ -9,7 +9,7 @@ export default function MyPageMiniRoomBanner() {
   };
   return (
     <div
-      className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2.5 px-2.5 rounded-[10px] mt-10 cursor-pointer"
+      className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2.5 px-2.5 rounded-[10px] mt-6 cursor-pointer"
       onClick={goMiniRoom}
     >
       <img

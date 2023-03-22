@@ -37,14 +37,14 @@ export default function MyPageBasicInformation() {
   };
 
   return (
-    <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-[27px]">
+    <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-[27px] px-8">
       <div className="flex justify-between items-end self-stretch flex-grow-0 flex-shrink-0">
         <div className="flex justify-start items-end flex-grow-0 flex-shrink-0 relative gap-[15px]">
           <p className="flex-grow-0 flex-shrink-0 text-[32px] font-bold text-left text-black">
             닉네임
           </p>
           <p className="flex-grow-0 flex-shrink-0 text-xl text-center text-black">
-            MBTI
+            ISFP
           </p>
         </div>
         <div
