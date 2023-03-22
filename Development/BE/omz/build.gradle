@@ -53,9 +53,10 @@ tasks.named('test') {
 }
 
 
-//bootJar{
-//	bootJar.enabled=false
-//}
+bootJar{
+	bootJar.enabled=true
+}
+
 jar {
     enabled = false
 }
