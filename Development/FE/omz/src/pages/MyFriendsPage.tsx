@@ -1,5 +1,10 @@
+import { images } from "../assets/images";
+import TitleBar from "../components/common/TitleBar";
+
 export default function MyFriendsPage() {
   return (
-    <div className="rounded-full h-48 w-48 bg-gradient-radial from-purple-500 via-pink-500 to-red-500"></div>
+    <div className="flex flex-col items-center">
+      <TitleBar goto="/" title="My Friends" icon={images.new_friends_img} />
+    </div>
   );
 }

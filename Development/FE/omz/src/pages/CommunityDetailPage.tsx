@@ -1,9 +1,10 @@
 import CommunityArticleItem from "../components/communityPage/CommunityArticleItem";
-import CommunityBanner from "../components/communityPage/CommunityBanner";
 import CommunityCommentInput from "../components/communityPage/CommunityCommentInput";
 import CommunityComment from "../components/communityPage/CommunityComment";
 import { getArticle } from "../api/community";
 import { v4 as uuidv4 } from "uuid";
+import { images } from "../assets/images";
+import TitleBar from "../components/common/TitleBar";
 // import CommunityNavbar from "../components/communityPage/CommunityNavbar";
 import { useLocation } from "react-router-dom";
 import { useQuery, useMutation } from "react-query";
@@ -39,8 +40,8 @@ export default function CommunityDetailPage() {
   if (isError) return <h3>Error...</h3>;
 
   return (
-    <div>
-      <CommunityBanner />
+    <div className="flex flex-col items-center">
+      <TitleBar title="Community" icon={images.community_img} goto="/" />
       <CommunityArticleItem key={uuidv4()} item={data?.data} />
       <CommunityCommentInput onCommentSubmit={handleCommentSubmit} />
 

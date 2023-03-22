@@ -4,11 +4,9 @@ import BottomBar from "../components/miniRoom/BottomBar";
 import Heart from "../components/miniRoom/Heart";
 import MusicModal from "../components/miniRoom/MusicModal";
 import StateMessage from "../components/miniRoom/StateMessage";
-import UpperBar from "../components/miniRoom/UpperBar";
 import { useState } from "react";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
-import { MiniroomBeta } from "../assets/3DMiniRoom/MiniroomBeta";
 import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
 import ModalBlackBg from "../components/common/ModalBlackBg";
 import GuestBookModal from "../components/miniRoom/GuestBookModal";
@@ -50,7 +48,7 @@ export default function MiniRoomPage() {
       <TitleBar
         icon={images.mini_room_img}
         title={"000님의 MiniRoom"}
-        backBtn={true}
+        goto={"/"}
       />
       <div className="w-full flex flex-col items-center px-4">
         <div className="mt-8 w-full">

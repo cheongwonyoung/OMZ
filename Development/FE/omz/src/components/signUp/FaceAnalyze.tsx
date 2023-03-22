@@ -8,7 +8,8 @@ type Props = {
 };
 
 export default function FaceAnalyze({ getFaceResult, plusPage }: Props) {
-  const URL = "https://teachablemachine.withgoogle.com/models/bhQALUaBi/";
+  // const URL = "https://teachablemachine.withgoogle.com/models/bhQALUaBi/";
+  const URL = "https://teachablemachine.withgoogle.com/models/LJMFCgOd1/";
 
   let model: any;
 
@@ -20,6 +21,7 @@ export default function FaceAnalyze({ getFaceResult, plusPage }: Props) {
     model = await tmImage.load(modelURL, metadataURL);
     const image = document.getElementById("face-image");
     const prediction = await model.predict(image, false);
+    console.log(prediction);
     setLoding(false);
     getFaceResult(prediction);
     plusPage();

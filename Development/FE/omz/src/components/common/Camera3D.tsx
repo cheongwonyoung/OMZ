@@ -1,12 +1,13 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Model } from "../../assets/3DAvatar/Rabbit";
 
 type Props = {
   Avatar?: any;
-  MiniRoom?: any;
+  MiniRoom: any;
 };
-export default function Camera3D({ Avatar, MiniRoom }: Props) {
+export default function CameraMiniroom({ Avatar, MiniRoom }: Props) {
+  const pp = { position: [-15, 15, 15], fov: 60 };
+
   return (
     <Canvas
       camera={{ position: [-15, 15, 15], fov: 60 }}

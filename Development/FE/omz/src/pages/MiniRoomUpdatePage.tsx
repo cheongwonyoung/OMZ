@@ -26,7 +26,7 @@ export default function MiniRoomUpdatePage() {
       <TitleBar
         icon={images.mini_room_img}
         title={"000님의 MiniRoom"}
-        backBtn={true}
+        goto={"/miniroom"}
       />
       <div className="w-full aspect-square">
         {/* <Camera3D
