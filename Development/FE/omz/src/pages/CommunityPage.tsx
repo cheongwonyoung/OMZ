@@ -2,10 +2,18 @@ import CommunityBanner from "../components/communityPage/CommunityBanner";
 import CommunityNavbar from "../components/communityPage/CommunityNavbar";
 import CommunityArticles from "../components/communityPage/CommunityArticles";
 import CommunityPopularArticle from "../components/communityPage/CommunityPopularArticle";
-import Article from "../api/types";
+import { getArticles } from "../api/community";
+import { useQuery } from "react-query";
+
+// type Article = {
+//   Content: string;
+//   file: string;
+//   memberId: number;
+// };
 
 export default function CommunityPage() {
-  const articles = [new Article("hihihihi"), new Article("하이룽뤀")];
+  const { data } = useQuery("articles", getArticles);
+  console.log(data);
   return (
     <div>
       <CommunityBanner />
@@ -13,8 +21,13 @@ export default function CommunityPage() {
         <p className="p-2">실시간 인기글</p>
         <CommunityPopularArticle />
         <p className="p-2">최신글</p>
-        {/* TODO: 나중에 api에서 가져온 데이터들 삭 가져오기  */}
-        <CommunityArticles items={articles} />
+        <div>
+          {/* {data?.content.map((article: Article) => (
+            <p>{article.Content}</p>
+          ))} */}
+        </div>
+
+        {/* <CommunityArticles items={articles} /> */}
       </div>
       <CommunityNavbar />
     </div>
