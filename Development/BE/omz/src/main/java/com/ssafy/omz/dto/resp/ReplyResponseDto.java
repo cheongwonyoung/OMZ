@@ -1,7 +1,5 @@
 package com.ssafy.omz.dto.resp;
 
-import com.ssafy.omz.entity.Member;
-import com.ssafy.omz.entity.Reply;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,14 +13,14 @@ public class ReplyResponseDto {
         private String content;
         private boolean isDeleted;
         private LocalDateTime registeredTime;
-        private MemberResponseDto.Community member;
+        private MemberResponseDto.LittleInfo member;
         public static Info fromEntity(com.ssafy.omz.entity.Reply replyEntity) {
             return Info.builder()
                     .replyId(replyEntity.getReplyId())
                     .content(replyEntity.getContent())
                     .isDeleted(replyEntity.isDeleted())
                     .registeredTime(replyEntity.getRegisteredTime())
-                    .member(MemberResponseDto.Community.fromEntity(replyEntity.getMember()))
+                    .member(MemberResponseDto.LittleInfo.fromEntity(replyEntity.getMember()))
                     .build();
         }
     }

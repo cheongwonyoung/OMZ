@@ -32,14 +32,14 @@ public class ReplyRequestDto {
         private String content;
         private boolean isDeleted;
         private LocalDateTime registeredTime;
-        private MemberResponseDto.Community member;
-        public static ReplyResponseDto.Info fromEntity(com.ssafy.omz.entity.Reply replyEntity) {
-            return ReplyResponseDto.Info.builder()
+        private MemberResponseDto.LittleInfo member;
+        public static ReplyRequestDto.Info fromEntity(com.ssafy.omz.entity.Reply replyEntity) {
+            return ReplyRequestDto.Info.builder()
                     .replyId(replyEntity.getReplyId())
                     .content(replyEntity.getContent())
                     .isDeleted(replyEntity.isDeleted())
                     .registeredTime(replyEntity.getRegisteredTime())
-                    .member(MemberResponseDto.Community.fromEntity(replyEntity.getMember()))
+                    .member(MemberResponseDto.LittleInfo.fromEntity(replyEntity.getMember()))
                     .build();
         }
     }
