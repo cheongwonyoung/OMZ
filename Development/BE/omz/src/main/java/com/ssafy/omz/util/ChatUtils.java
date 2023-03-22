@@ -29,7 +29,7 @@ public class ChatUtils {
 
 
     //  Destination으로부터 roomId 값 조회
-    public String getRoodIdFromDestination(String destination){
+    public String getRoomIdFromDestination(String destination){
         int lastIndex = destination.lastIndexOf('/');
         if(lastIndex != -1)
             return destination.substring(lastIndex+1);
@@ -55,11 +55,12 @@ public class ChatUtils {
         LocalDateTime current = LocalDateTime.now();
         LocalDateTime cursorDate = current.minusDays(7);
 
+        //  이건 7일전 뭔지 로그에 찍어보기위해서만,..?
         String cursor = cursorDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"));
         log.info("7일전 날짜 : {}", cursor);
 
         //  7일전 데이터 전부 가져와서, Redis에 적재
-        List<Chat> chatList = chatRepository.findAllByCreatedTimeAfterOrderByCreatedTimeDesc(cursor);
+        List<Chat> chatList = chatRepository.findAllByCreatedTimeAfterOrderByCreatedTimeDesc(cursorDate);
 
         for (Chat chat : chatList) {
             ChatMessage chatMessage = ChatMessage.of(chat);
