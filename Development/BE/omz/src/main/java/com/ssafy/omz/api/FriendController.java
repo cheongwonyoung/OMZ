@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class FriendController {
 
     private final FriendService friendService;
+
     @ApiOperation(value = "친구 찾기 페이지 멤버 검색", notes = "닉네임으로 멤버 검색하기 \n" +
             "친구 신청 버튼을 띄울지 말지 판단할 수 있게 내 memberId도 보내주세요")
     @GetMapping("/{memberId}/{word}")
@@ -54,6 +55,16 @@ public class FriendController {
 //            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 //        }
 
-//    }
+    //    }
+    @ApiOperation(value = "내 친구 목록", notes = "내 친구  목록 불러오기")
+    @GetMapping("")
+    public ResponseEntity<?> getFriendList(@PathVariable Long memberId) {
+        try {
+            return new ResponseEntity<>(friendService.getFriendList(memberId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

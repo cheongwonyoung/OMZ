@@ -12,4 +12,6 @@ public interface FriendService {
     void requestFriend(FriendRequestDto.Write friend) throws RollbackException;
 //    Boolean requestFriendPossibleCheck(Long toMemberId, Long fromMemberId);
     List<MemberResponseDto.FriendSearch> getSearchMemberList(Long memberId, String word);
+
+    List<MemberResponseDto.FriendListInfo> getFriendList(Long memberId);
 }
