@@ -1,11 +1,10 @@
-import CommunityBanner from "../components/communityPage/CommunityBanner";
 import CommunityNavbar from "../components/communityPage/CommunityNavbar";
 import ImageUploader from "../components/common/ImageUploader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import { images } from "../assets/images";
-
+import TitleBar from "../components/common/TitleBar";
 export default function CommunityCreatePage() {
   const [showUploader, setShowUploader] = useState(false);
 
@@ -30,8 +29,9 @@ export default function CommunityCreatePage() {
   };
 
   return (
-    <div>
-      <CommunityBanner />
+    <div className="flex flex-col items-center">
+      <TitleBar title="Community" icon={images.community_img} goto="/" />
+
       <img src={images.main_logo} alt="" className="ml-10 w-10 h-10" />
       <form onSubmit={submitHandler}>
         <div className="w-full flex flex-col justify-center items-center">
