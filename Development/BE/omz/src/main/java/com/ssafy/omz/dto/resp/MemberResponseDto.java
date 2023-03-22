@@ -8,13 +8,12 @@ import java.time.LocalDateTime;
 public class MemberResponseDto {
     @Data
     @Builder
-//    @Schema
-    public static class Community {
+    public static class LittleInfo {
         private Long memberId;
         private String nickname;
         private String file;
-        public static MemberResponseDto.Community fromEntity(com.ssafy.omz.entity.Member memberEntity) {
-            return Community.builder()
+        public static LittleInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+            return LittleInfo.builder()
                     .memberId(memberEntity.getMemberId())
                     .nickname(memberEntity.getNickname())
                     .file(memberEntity.getFile())

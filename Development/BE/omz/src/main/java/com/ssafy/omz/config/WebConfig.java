@@ -3,12 +3,14 @@ package com.ssafy.omz.config;
 import com.ssafy.omz.interceptor.JwtInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
     private final JwtInterceptor jwtInterceptor;
@@ -25,6 +27,12 @@ public class WebConfig implements WebMvcConfigurer {
 //                .excludePathPatterns("/swagger-ui.html") // swagger 관련
 //                .excludePathPatterns("/webjars/**"); // /swagger 관련
 
+    }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5173")
+                .allowedMethods("OPTIONS", "GET", "POST", "PUT", "DELETE");
     }
 
 }

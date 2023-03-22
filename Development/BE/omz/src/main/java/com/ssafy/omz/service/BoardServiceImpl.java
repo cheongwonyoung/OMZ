@@ -33,6 +33,7 @@ public class BoardServiceImpl implements BoardService {
                 .map(board -> {
                     BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
                     res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+                    log.info("" + res.getReplyCnt());
                     return res;
                 });
     }
@@ -65,10 +66,7 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.findByBoardId(boardId);
         BoardResponseDto.Detail res = BoardResponseDto.Detail.fromEntity(board);
         res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId));
-        res.setReplyList(
-                BoardResponseDto.Detail.fromEntity(board).getReplyList().stream()
-                        .filter(reply -> !reply.isDeleted())
-                        .collect(Collectors.toList()));
+        res.setReplyCnt(res.getReplies().size());
         return  res;
     }
 
@@ -103,7 +101,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void writeBoard(BoardRequestDto.Write board) throws RollbackException {
-        BoardResponseDto.Info.fromEntity(boardRepository.save(Board.builder()
+        BoardRequestDto.Info.fromEntity(boardRepository.save(Board.builder()
                 .content(board.getContent())
                 .file(board.getFile())
                 .member(memberRepository.findByMemberId(board.getMemberId()))
@@ -113,7 +111,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void updateBoard(Long boardId, BoardRequestDto.Write board) throws RollbackException {
-        BoardResponseDto.Info.fromEntity(boardRepository.save(
+        BoardRequestDto.Info.fromEntity(boardRepository.save(
                 boardRepository.findById(boardId).get()
                         .updateContentAndFile(board.getContent(), board.getFile())));
     }
@@ -121,7 +119,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void deleteBoard(Long boardId) throws RollbackException {
-        BoardResponseDto.Info.fromEntity(boardRepository.save(
+        BoardRequestDto.Info.fromEntity(boardRepository.save(
                 boardRepository.findById(boardId).get().updateIsDeleted()));
     }
 

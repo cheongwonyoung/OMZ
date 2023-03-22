@@ -19,6 +19,7 @@ from drf_yasg.views import get_schema_view
 from django.conf import settings
 from drf_yasg import openapi
 from rest_framework import permissions
+from .settings import ROOT_PATH
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -31,8 +32,8 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("music_choice/",include('music_choice.urls')),
+    path(ROOT_PATH + 'admin/', admin.site.urls),
+    path(ROOT_PATH + "music_choice/",include('music_choice.urls')),
     
 ]
 

@@ -1,9 +1,11 @@
 package com.ssafy.omz.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ssafy.omz.dto.req.MemberRequestDto;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface MemberService{

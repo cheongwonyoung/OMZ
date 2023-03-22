@@ -7,8 +7,9 @@ import { v4 as uuidv4 } from "uuid";
 import MyChatting from "../components/chatting/MyChatting";
 import YourChatting from "../components/chatting/YourChatting";
 // import { StompConfig } from "@stomp/stompjs";
-
+// TODO: uuid는 이거 보고 하기
 export default function ChattingDetailPage() {
+  const [connected, setConnected] = useState(false);
   type chat = { memberId?: number; message?: string };
   const [chatList, setChatList] = useState<chat[]>([
     {
@@ -35,6 +36,7 @@ export default function ChattingDetailPage() {
       },
       onConnect: () => {
         console.log("성공!");
+        setConnected(true);
         subscribe();
       },
       debug: function (str: any) {
@@ -76,8 +78,11 @@ export default function ChattingDetailPage() {
   };
 
   const disConnect = () => {
-    if (client.current.connected) client.current.deactivate();
-    console.log("안됨");
+    if (connected) {
+      client.current.deactivate();
+      setConnected(false);
+      console.log("deactivate!");
+    }
   };
 
   return (

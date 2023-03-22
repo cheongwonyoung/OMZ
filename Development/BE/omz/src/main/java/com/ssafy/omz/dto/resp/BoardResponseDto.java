@@ -1,6 +1,5 @@
 package com.ssafy.omz.dto.resp;
 
-import com.ssafy.omz.entity.Reply;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,7 +19,7 @@ public class BoardResponseDto {
         private LocalDateTime modifiedTime;
         private int likeCnt;
         private int replyCnt;
-        private MemberResponseDto.Community member;
+        private MemberResponseDto.LittleInfo member;
         private boolean iLikeBoard;
         public static Info fromEntity(com.ssafy.omz.entity.Board boardEntity) {
             return Info.builder()
@@ -30,15 +29,14 @@ public class BoardResponseDto {
                     .registeredTime(boardEntity.getRegisteredTime())
                     .modifiedTime(boardEntity.getModifiedTime())
                     .likeCnt(boardEntity.getLikes().size())
-                    .replyCnt(boardEntity.getReplies().size())
-                    .member(MemberResponseDto.Community.fromEntity(boardEntity.getMember()))
+                    .replyCnt(boardEntity.getReplies().stream().filter(reply -> !reply.isDeleted()).collect(Collectors.toList()).size())
+                    .member(MemberResponseDto.LittleInfo.fromEntity(boardEntity.getMember()))
                     .build();
         }
     }
 
     @Data
     @Builder
-//    @Schema
     public static class Detail {
         private Long boardId;
         private String content;
@@ -47,9 +45,9 @@ public class BoardResponseDto {
         private LocalDateTime modifiedTime;
         private int likeCnt;
         private int replyCnt;
-        private MemberResponseDto.Community member;
+        private MemberResponseDto.LittleInfo member;
         private boolean iLikeBoard;
-        private List<ReplyResponseDto.Info> replyList;
+        private List<ReplyResponseDto.Info> replies;
         public static Detail fromEntity(com.ssafy.omz.entity.Board boardEntity) {
             return Detail.builder()
                     .boardId(boardEntity.getBoardId())
@@ -58,10 +56,10 @@ public class BoardResponseDto {
                     .registeredTime(boardEntity.getRegisteredTime())
                     .modifiedTime(boardEntity.getModifiedTime())
                     .likeCnt(boardEntity.getLikes().size())
-                    .replyCnt(boardEntity.getReplies().size())
-                    .member(MemberResponseDto.Community.fromEntity(boardEntity.getMember()))
-                    .replyList(boardEntity.getReplies().stream()
+                    .member(MemberResponseDto.LittleInfo.fromEntity(boardEntity.getMember()))
+                    .replies(boardEntity.getReplies().stream()
                             .map(ReplyResponseDto.Info::fromEntity)
+                            .filter(reply -> !reply.isDeleted())
                             .collect(Collectors.toList()))
                     .build();
         }
