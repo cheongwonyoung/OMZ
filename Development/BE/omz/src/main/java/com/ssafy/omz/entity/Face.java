@@ -1,5 +1,6 @@
 package com.ssafy.omz.entity;
 
+import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -42,4 +43,11 @@ public class Face {
 
     @OneToOne(mappedBy = "preferFace")
     private Member preferMember;
+
+    public Face updateFace(double dogProbability, String file){
+        this.file = file;
+        this.content = content;
+        return this;
+    }
+
 }
