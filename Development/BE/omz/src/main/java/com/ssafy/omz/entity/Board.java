@@ -1,10 +1,7 @@
 package com.ssafy.omz.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -30,9 +27,6 @@ public class Board {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(length = 45)
-    private String title;
-
     @Column(length = 140)
     private String content;
 
@@ -42,8 +36,8 @@ public class Board {
     @CreationTimestamp
     private LocalDateTime modifiedTime;
 
-    @ColumnDefault("0")
-    private int likes;
+    @OneToMany(mappedBy = "board")
+    private List<BoardLikes> likes = new ArrayList<>();
 
     private String file;
 
@@ -52,4 +46,23 @@ public class Board {
 
     @OneToMany(mappedBy = "board")
     private List<Reply> replies = new ArrayList<>();
+
+    @Builder
+    private Board(Member member, String content, String file){
+        this.member = member;
+        this.content = content;
+        this.file = file;
+    }
+
+    public Board updateContentAndFile(String content, String file){
+        this.file = file;
+        this.content = content;
+        return this;
+    }
+
+    public Board updateIsDeleted(){
+        this.isDeleted = true;
+        return this;
+    }
+
  }

@@ -1,10 +1,7 @@
 package com.ssafy.omz.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -40,4 +37,22 @@ public class Reply {
 
     @ColumnDefault("false")
     private boolean isDeleted;
+
+    @Builder
+    private Reply(Board board, Member member, String content, boolean isDeleted){
+        this.board = board;
+        this.member = member;
+        this.content = content;
+        this.isDeleted = isDeleted;
+    }
+
+    public Reply updateContent(String content){
+        this.content = content;
+        return this;
+    }
+
+    public Reply updateIsDeleted(){
+        this.isDeleted = true;
+        return this;
+    }
 }
