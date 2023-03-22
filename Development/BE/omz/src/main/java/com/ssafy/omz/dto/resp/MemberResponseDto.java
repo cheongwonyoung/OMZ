@@ -3,6 +3,8 @@ package com.ssafy.omz.dto.resp;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 public class MemberResponseDto {
     @Data
     @Builder
@@ -19,4 +21,7 @@ public class MemberResponseDto {
                     .build();
         }
     }
+
+
+
 }

@@ -1,6 +1,8 @@
 package com.ssafy.omz.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ssafy.omz.dto.req.BoardRequestDto;
+import com.ssafy.omz.dto.req.MemberRequestDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.service.JwtService;
 import com.ssafy.omz.service.MemberService;
@@ -21,7 +23,6 @@ import org.slf4j.LoggerFactory;
 public class MemberController {
     private final MemberService memberService;
     private final JwtService jwtService;
-
     public static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @ApiOperation(value = "카카오 로그인", notes = "kakao token을 받아 유효성 검사 후 access, refresh token 발급")
@@ -74,6 +75,18 @@ public class MemberController {
 
         return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.OK);
 
+    }
+
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateMemberInfo(@RequestParam(required = false, value = "memberId") Long memberId, @RequestBody MemberRequestDto.Write member) throws Exception {
+        try {
+            memberService.updateMemberInfo(memberId, member);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }
