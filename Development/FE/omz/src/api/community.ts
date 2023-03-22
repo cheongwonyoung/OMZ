@@ -11,13 +11,8 @@ export const getArticle = (boardId: number, memberId: number) => {
 }; 
 
 // 게시글 POST 
-export const createArticle = (formData: FormData) => {
-  const response = {
-    headers: {
-      'Content-Type': 'multipart/form-data', 
-    }, 
-  }; 
-  return instance.post('/board', formData, response)  
+export const createArticle = (board: { boardId: number; content: string; memberId: number }) => {
+  return instance.post('/board', board)  
 }
 
 // 게시글 UPDATE
