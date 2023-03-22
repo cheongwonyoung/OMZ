@@ -123,7 +123,7 @@ public class MemberServiceImpl implements MemberService{
     }
     @Override
     public List<MemberResponseDto.LittleInfo> getMemberList(String word) {
-        return memberRepository.findByNickname(word).stream()
+        return memberRepository.findByNicknameContaining(word).stream()
                 .map(MemberResponseDto.LittleInfo::fromEntity)
                 .collect(Collectors.toList());
     }

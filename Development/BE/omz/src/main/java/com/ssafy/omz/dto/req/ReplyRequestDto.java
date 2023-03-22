@@ -2,6 +2,7 @@ package com.ssafy.omz.dto.req;
 
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.ReplyResponseDto;
+import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 public class ReplyRequestDto {
     @Data
     @Builder
+    @ApiModel(value = "댓글 작성 정보", description = "작성 내용, 작성자, 댓글을 작성한 게시글 ID를 가진 Class")
     public static class Write {
         @NotEmpty(message="content은 빈값 일 수 없습니다")
         @NotNull(message="content은 null 일 수 없습니다")

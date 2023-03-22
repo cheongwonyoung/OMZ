@@ -5,17 +5,17 @@ FROM python:3.10.9
 RUN pip3 install django
 
 # 컨테이너 내 프로젝트 root directory 설정
-#WORKDIR /usr/src/app
+WORKDIR ./Development/BE/django/
 
 # 프로젝트 코드 복사
-#COPY . .
+COPY . .
 
-#WORKDIR ./django
+WORKDIR ./django
 
 # 프로젝트에 필요한 파이썬 패키지 설치
-#ADD requirements.txt /usr/src/app/
+ADD requirements.txt /Development/BE/django/
 RUN pip3 install -r requirements.txt
-#ADD . /usr/src/app/
+ADD . /Development/BE/django/
 
 
 # 포트 설정
