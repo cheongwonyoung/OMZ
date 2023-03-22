@@ -191,10 +191,4 @@ public class MemberServiceImpl implements MemberService{
         return new KakaoUserInfoDto(id, nickname, email);
 
     }
-    @Override
-    public List<MemberResponseDto.LittleInfo> getMemberList(String word) {
-        return memberRepository.findByNicknameContaining(word).stream()
-                .map(MemberResponseDto.LittleInfo::fromEntity)
-                .collect(Collectors.toList());
-    }
 }
