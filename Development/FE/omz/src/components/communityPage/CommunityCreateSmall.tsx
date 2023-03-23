@@ -3,20 +3,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 type Props = {
-  onArticleSubmit: (article: string) => void;
+  onArticleSubmit: (article: string, image: File) => void;
 };
 export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
   const articleInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredArticle = articleInputRef.current!.value;
+    const enteredImage = imageInputRef.current!.value;
 
     if (enteredArticle.trim().length === 0) {
       return;
     }
-    onArticleSubmit(enteredArticle);
+
+    onArticleSubmit(enteredArticle, enteredImage);
     articleInputRef.current!.value = "";
+    imageInputRef.current!.value = "";
   };
 
   return (
@@ -37,6 +41,7 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
           maxLength={140}
           ref={articleInputRef}
         />
+
         <FontAwesomeIcon icon={faImage} />
         <button>
           <FontAwesomeIcon icon={faCheck} />

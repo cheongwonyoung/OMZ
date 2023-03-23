@@ -16,11 +16,9 @@ export default function CommunityPage() {
     "articles",
     getArticles
   );
-  const boardId = 21;
   const memberId = 1;
-  console.log(data);
   const addArticle = useMutation(
-    (board: { boardId: number; content: string; memberId: number }) =>
+    (board: { content: string; file: File; memberId: number }) =>
       createArticle(board),
     {
       onSuccess: () => {
@@ -33,9 +31,12 @@ export default function CommunityPage() {
   if (isLoading) return <h3>isLoading...</h3>;
   if (isError) return <h3>isError...</h3>;
 
-  // TODO: Article 추가인데 boardId 어케 들어감요?
-  const handleArticleSubmit = (article: string) => {
-    addArticle.mutate({ boardId, content: article, memberId });
+  const handleArticleSubmit = (article: string, image: File) => {
+    addArticle.mutate({
+      content: article,
+      file: image,
+      memberId: memberId,
+    });
   };
 
   return (
