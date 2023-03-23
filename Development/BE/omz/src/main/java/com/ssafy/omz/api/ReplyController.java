@@ -33,8 +33,8 @@ public class ReplyController {
     }
 
     @ApiOperation(value = "커뮤니티 댓글 수정", notes = "커뮤니티 댓글 수정하기")
-    @PutMapping("/")
-    public ResponseEntity<?> replyUpdate(@RequestParam(required = false, value = "replyId") Long replyId,
+    @PutMapping("/{replyId}")
+    public ResponseEntity<?> replyUpdate(@PathVariable Long replyId,
                                          @RequestBody ReplyRequestDto.Write reply) {
         try {
             replyService.updateReply(replyId, reply);
@@ -46,7 +46,7 @@ public class ReplyController {
     }
 
     @ApiOperation(value = "커뮤니티 댓글 삭제", notes = "커뮤니티 댓글 삭제하기")
-    @PutMapping("/delete/{replyId}")
+    @DeleteMapping("/{replyId}")
     public ResponseEntity<?> boardDelete(@PathVariable Long replyId) {
         try {
             replyService.deleteReply(replyId);
