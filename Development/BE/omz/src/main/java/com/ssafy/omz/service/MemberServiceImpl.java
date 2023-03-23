@@ -87,46 +87,46 @@ public class MemberServiceImpl implements MemberService{
 
 
     // 회원 정보 수정
-    @Override
-    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto){
-        String bucketName = "omz-bucket";
-        MultipartFile file = memberDto.getProfile();
-        String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
-        try(InputStream inputStream = file.getInputStream()) {
-            Image processedImage = ImageIO.read(inputStream);
-
-            BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = scaledBI.createGraphics();
-            g.drawImage(processedImage, 0, 0, 200, 200, null);
-            g.dispose();
-
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(scaledBI, "jpg", os);
-
-            InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
-
-            storage.create(BlobInfo.newBuilder(bucketName, saveFileName).build(), processedInputStream);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        memberRepository.save(
-                memberRepository.findByMemberId(memberId).updateMemberInfo(
-                        memberDto.getMbti(),
-                        memberDto.getNickname(),
-                        saveFileName,
-                        faceRepository.save(faceRepository.findByFaceId(memberDto.getMyFace()).updateFace()),
-                        faceRepository.findByFaceId(memberDto.getPreferFace()),
-                        "asdf"
-                )
-
-        );
-
-        user.updateSaveName(saveFileName);
-//        String result = "/" + saveFileName;
-//        return result;
-
-    }
+//    @Override
+//    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto){
+//        String bucketName = "omz-bucket";
+//        MultipartFile file = memberDto.getProfile();
+//        String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
+//        try(InputStream inputStream = file.getInputStream()) {
+//            Image processedImage = ImageIO.read(inputStream);
+//
+//            BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+//            Graphics2D g = scaledBI.createGraphics();
+//            g.drawImage(processedImage, 0, 0, 200, 200, null);
+//            g.dispose();
+//
+//            ByteArrayOutputStream os = new ByteArrayOutputStream();
+//            ImageIO.write(scaledBI, "jpg", os);
+//
+//            InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
+//
+//            storage.create(BlobInfo.newBuilder(bucketName, saveFileName).build(), processedInputStream);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        memberRepository.save(
+//                memberRepository.findByMemberId(memberId).updateMemberInfo(
+//                        memberDto.getMbti(),
+//                        memberDto.getNickname(),
+//                        saveFileName,
+//                        faceRepository.save(faceRepository.findByFaceId(memberDto.getMyFace()).updateFace()),
+//                        faceRepository.findByFaceId(memberDto.getPreferFace()),
+//                        "asdf"
+//                )
+//
+//        );
+//
+//        user.updateSaveName(saveFileName);
+////        String result = "/" + saveFileName;
+////        return result;
+//
+//    }
 
     // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
 

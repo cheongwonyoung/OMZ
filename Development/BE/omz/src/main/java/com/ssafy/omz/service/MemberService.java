@@ -18,5 +18,5 @@ public interface MemberService{
     // refresh code에 해당하는 유저 email 반환
     String memberEmail(String token);
 
-    void updateMemberInfo(Long memberId, MemberRequestDto.Write member);
+//    void updateMemberInfo(Long memberId, MemberRequestDto.Write member);
 }
