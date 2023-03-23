@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { images } from "../../assets/images";
+import { v4 as uuidv4 } from "uuid";
 
 export default function UpdateAnimal() {
   const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
@@ -42,7 +43,7 @@ export default function UpdateAnimal() {
   return (
     <div className="flex flex-col gap-2">
       {animalList.map((item) => (
-        <div className="grid grid-cols-4 gap-4 items-center">
+        <div className="grid grid-cols-4 gap-4 items-center" key={item}>
           <div className="flex flex-col items-center">
             <img
               src={images[imgsrc(item)]}

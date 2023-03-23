@@ -44,10 +44,10 @@ public class Face {
     @OneToOne(mappedBy = "preferFace")
     private Member preferMember;
 
-    public Face updateFace(double dogProbability, String file){
-        this.file = file;
-        this.content = content;
-        return this;
-    }
+//    public Face updateFace(double dogProbability, String file){
+//        this.file = file;
+//        this.content = content;
+//        return this;
+//    }
 
 }

@@ -3,6 +3,8 @@ import NextBtn from "./NextBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
+import { v4 as uuidv4 } from "uuid";
+
 type Props = {
   plusPage(): void;
 };
@@ -52,7 +54,7 @@ export default function StepLikeAnimal({ plusPage }: Props) {
       <p className="text-xl mb-8 font-bold">동물상 좋아하는 정도</p>
       <div className="flex flex-col  w-8/12 gap-2">
         {animalList.map((item) => (
-          <div className="grid grid-cols-4 gap-4 items-center">
+          <div className="grid grid-cols-4 gap-4 items-center" key={item}>
             <div className="flex flex-col items-center">
               <img
                 src={images[imgsrc(item)]}
