@@ -15,6 +15,8 @@ type Props = {
 
 export default function CommunityComment({ item, refetch }: Props) {
   const [showModal, setShowModal] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
+
   const timestamp = new Date(item.registeredTime);
   const date = timestamp.toDateString();
 
@@ -22,7 +24,6 @@ export default function CommunityComment({ item, refetch }: Props) {
     onSuccess: () => {
       setShowModal(false);
       refetch();
-      console.log(refetch);
     },
   });
 
@@ -67,25 +68,48 @@ export default function CommunityComment({ item, refetch }: Props) {
                 {date}
               </p>
             </div>
+            {showUpdate ? (
+              <div>
+                <div>
+                  <input type="text" />
+                </div>
 
-            <div>
-              <p>{item.content}</p>
-            </div>
-
-            {/* <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setShowModal(true)}
-                className="cursor-pointer hover:text-[#FF0076]"
-              >
-                삭제
-              </button>
-              <button
-                onClick={() => updateComment()}
-                className="cursor-pointer hover:text-[#FDFFA7]"
-              >
-                수정
-              </button>
-            </div> */}
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="cursor-pointer hover:text-[#FF0076]"
+                  >
+                    삭제
+                  </button>
+                  <button
+                    onClick={() => setShowUpdate(true)}
+                    className="cursor-pointer hover:text-[#FDFFA7]"
+                  >
+                    수정
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <p>{item.content}</p>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="cursor-pointer hover:text-[#FF0076]"
+                  >
+                    삭제
+                  </button>
+                  <button
+                    onClick={() => setShowUpdate(true)}
+                    className="cursor-pointer hover:text-[#FDFFA7]"
+                  >
+                    수정
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
