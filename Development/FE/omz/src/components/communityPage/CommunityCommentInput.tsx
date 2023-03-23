@@ -30,7 +30,7 @@ export default function CommunityCommentInput({ onCommentSubmit }: Props) {
 
       <form
         onSubmit={submitHandler}
-        className="w-full h-full flex justify-between"
+        className="w-full h-full flex justify-between items-center"
       >
         <input
           type="text"
