@@ -9,14 +9,31 @@ public class FriendResponseDto {
     @Builder
 //    @Schema
     public static class Info {
+        private Long friendId;
         private String message;
         private MemberResponseDto.LittleInfo toMember;
         private MemberResponseDto.LittleInfo fromMember;
-        public static FriendRequestDto.Info fromEntity(com.ssafy.omz.entity.Friend friendEntity) {
-            return FriendRequestDto.Info.builder()
+        public static FriendResponseDto.Info fromEntity(com.ssafy.omz.entity.Friend friendEntity) {
+            return Info.builder()
+                    .friendId(friendEntity.getFriendId())
                     .message(friendEntity.getMessage())
                     .toMember(MemberResponseDto.LittleInfo.fromEntity(friendEntity.getToMember()))
                     .fromMember(MemberResponseDto.LittleInfo.fromEntity(friendEntity.getFromMember()))
+                    .build();
+        }
+    }
+
+    @Data
+    @Builder
+    public static class WaitingListInfo {
+        private Long friendId;
+        private String message;
+        private MemberResponseDto.LittleInfo toMember;
+        public static FriendResponseDto.WaitingListInfo fromEntity(com.ssafy.omz.entity.Friend friendEntity) {
+            return WaitingListInfo.builder()
+                    .friendId(friendEntity.getFriendId())
+                    .message(friendEntity.getMessage())
+                    .toMember(MemberResponseDto.LittleInfo.fromEntity(friendEntity.getToMember()))
                     .build();
         }
     }

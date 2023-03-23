@@ -2,10 +2,11 @@ package com.ssafy.omz.entity;
 
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 

@@ -10,8 +10,10 @@ import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.entity.Face;
 import com.ssafy.omz.entity.Member;
+import com.ssafy.omz.entity.MiniRoom;
 import com.ssafy.omz.repository.FaceRepository;
 import com.ssafy.omz.repository.MemberRepository;
+import com.ssafy.omz.repository.MiniRoomRepository;
 import lombok.RequiredArgsConstructor;
 import com.google.cloud.storage.*;
 
@@ -37,10 +39,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
-
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.util.Map.Entry;
 
 @RequiredArgsConstructor
 @Service("MemberService")
@@ -51,6 +53,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final Storage storage;
     private final FaceRepository faceRepository;
+    private final MiniRoomRepository miniRoomRepository;
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
