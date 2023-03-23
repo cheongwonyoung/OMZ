@@ -24,6 +24,8 @@ public class DataLoader implements CommandLineRunner {
     private BoardLikesRepository boardLikesRepository;
     @Autowired
     private FriendRepository friendRepository;
+    @Autowired
+    private MiniRoomRepository miniRoomRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -35,6 +37,19 @@ public class DataLoader implements CommandLineRunner {
         addReply();
         addBoardLikes();
         addFriend();
+        addMiniRoom();
+    }
+
+    private void addMiniRoom() {
+        List<Member> memberList = memberRepository.findAll();
+        List<MiniRoom> miniRoomList = new ArrayList<>();
+        for (int i = 0; i < memberList.size();  i++){
+            miniRoomList.add(MiniRoom.builder()
+                    .member(memberList.get(i))
+                    .stateMessage("미니룸 상태메세지는 140자까지 쓸 수 있어요 좀 길죠? 저는 40자예용")
+                    .build());
+        }
+        miniRoomRepository.saveAllAndFlush(miniRoomList);
     }
 
     private void addFriend() {
@@ -44,6 +59,12 @@ public class DataLoader implements CommandLineRunner {
                 .message("렉쮸꽁")
                 .toMember(memberList.get(1))
                 .fromMember(memberList.get(0))
+                .state(1)
+                .build());
+        friendList.add(Friend.builder()
+                .message("렉쮸꽁")
+                .toMember(memberList.get(0))
+                .fromMember(memberList.get(1))
                 .state(1)
                 .build());
         for (int i = 2; i < 4; i++) {
