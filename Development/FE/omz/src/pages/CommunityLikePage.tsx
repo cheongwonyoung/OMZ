@@ -24,7 +24,7 @@ export default function CommunityLikePage() {
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
       {data?.data.map((article: Article) => (
-        <CommunityArticleItem key={uuidv4()} item={article} />
+        <CommunityArticleItem key={uuidv4()} item={article} refetch={refetch} />
       ))}
       <CommunityNavbar />
     </div>

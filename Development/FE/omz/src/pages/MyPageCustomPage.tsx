@@ -39,7 +39,6 @@ export default function MyPageCustomPage() {
           저장
         </p>
       </div>
-
       <div className="w-full h-1/4 mt-8">
         <MyPageBox handleItems={handleItems} />
       </div>

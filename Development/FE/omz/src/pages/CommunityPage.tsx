@@ -22,7 +22,6 @@ export default function CommunityPage() {
       createArticle(board),
     {
       onSuccess: () => {
-        console.log("추가완!");
         refetch();
       },
     }
@@ -46,7 +45,11 @@ export default function CommunityPage() {
       <p className="p-2">최신글</p>
       <div>
         {data?.data.content.map((article: Article[]) => (
-          <CommunityArticleItem key={uuidv4()} item={article} />
+          <CommunityArticleItem
+            key={uuidv4()}
+            item={article}
+            refetch={refetch}
+          />
         ))}
       </div>
       <CommunityNavbar />

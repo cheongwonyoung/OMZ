@@ -45,7 +45,7 @@ export const updateArticle = (board: { boardId: number, content: string; file: F
 }
 
 
-// 게시글 DELETE 
+// 게시글 DELETE (O)
 export const deleteArticle = (boardId: number) => {
   return instance.delete(`/board/${boardId}`)
 }
@@ -71,7 +71,7 @@ export const likeArticles = (memberId: number) => {
 }; 
  
  
-// 글 검색
+// 글 검색 (O)
 export const searchArticles = (memberId: number, key: string, word: string) => {
   return instance.get(`/board/search/${memberId}/${key}/${word}`)  
 }; 
@@ -82,7 +82,7 @@ export const createReply = (reply: { boardId: number; content: string; memberId:
   return instance.post('/reply', reply)  
 }
   
-// 댓글 수정
+// 댓글 수정 (O)
 export const updateReply = (replyId: number, reply: { boardId: number; content: string; memberId: number }) => {
   return instance.put(`/reply/${replyId}`, reply)   
 }  
