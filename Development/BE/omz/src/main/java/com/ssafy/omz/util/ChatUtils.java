@@ -55,7 +55,6 @@ public class ChatUtils {
         LocalDateTime current = LocalDateTime.now();
         LocalDateTime cursorDate = current.minusDays(7);
 
-        //  이건 7일전 뭔지 로그에 찍어보기위해서만,..?
         String cursor = cursorDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"));
         log.info("7일전 날짜 : {}", cursor);
 

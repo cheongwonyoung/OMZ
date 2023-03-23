@@ -9,5 +9,7 @@ import java.util.List;
 public interface ChatRedisCacheService {
     void addChatToRedisCache(ChatMessage message);
 
-    List<ChatPagingResponseDto> getChatsFromRedis(Long roomId, ChatPagingRequestDto chatPagingDto);
+    List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, ChatPagingRequestDto chatPagingDto);
+
+    void findOtherChatsFromMysql(List<ChatPagingResponseDto> chatMessageDtoList, Long chatRoomId, String cursor);
 }
