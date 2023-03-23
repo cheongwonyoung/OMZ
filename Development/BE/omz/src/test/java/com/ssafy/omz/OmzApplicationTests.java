@@ -9,5 +9,4 @@ class OmzApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
