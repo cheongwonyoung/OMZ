@@ -46,7 +46,12 @@ export default function CommunityDetailPage() {
       <CommunityCommentInput onCommentSubmit={handleCommentSubmit} />
 
       {data?.data.replies.map((comment: Comment) => (
-        <CommunityComment key={uuidv4()} item={comment} refetch={refetch} />
+        <CommunityComment
+          key={uuidv4()}
+          item={comment}
+          refetch={refetch}
+          boardIdNum={boardId}
+        />
       ))}
       {/* <CommunityNavbar /> */}
     </div>
