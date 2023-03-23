@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
-
     private final BoardService boardService;
 
     @ApiOperation(value = "메인 글 리스트",
@@ -34,7 +33,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "글 검색", notes = "커뮤니티 검색 결과 불러오기")
     @GetMapping("/search")
     public ResponseEntity<?> searchList(@RequestParam(required = false, value = "memberId") Long memberId,
@@ -50,7 +48,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "글 상세 보기", notes = "클릭한 글에 대한 상세 정보")
     @GetMapping("/{memberId}/{boardId}")
     public ResponseEntity<?> boardDetail(@PathVariable Long memberId, @PathVariable Long boardId) {
@@ -61,7 +58,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "글 좋아요", notes = "글에 좋아요 누르기")
     @PostMapping("/{memberId}/{boardId}")
     public ResponseEntity<?> postMemberLikeBoard(@PathVariable Long memberId,
@@ -74,7 +70,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "글 좋아요 취소", notes = "글에 좋아요 누른 거 취소")
     @PutMapping("/{memberId}/{boardId}")
     public ResponseEntity<?> cancleMemberLikeBoard(@PathVariable Long memberId,
@@ -87,7 +82,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "좋아요한 글 목록", notes = "memberId가 좋아요한 글 목록 불러오기")
     @GetMapping("/likes/{memberId}")
     public ResponseEntity<?> getBoardLikeList(@PathVariable Long memberId) {
@@ -98,7 +92,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "사용자가 쓴 글 목록", notes = "memberId가 쓴 글 목록 불러오기")
     @GetMapping("/{memberId}")
     public ResponseEntity<?> getBoardMemberList(@PathVariable Long memberId, Pageable pageable) {
@@ -109,7 +102,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "커뮤니티 글 작성", notes = "커뮤니티 글 작성하기")
     @PostMapping("")
     public ResponseEntity<?> boardWrite(@RequestBody BoardRequestDto.Write board) {
@@ -121,7 +113,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기")
     @PutMapping("/")
     public ResponseEntity<?> boardUpdate(@RequestParam(required = false, value = "boardId") Long boardId, @RequestBody BoardRequestDto.Write board) {
@@ -133,7 +124,6 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @ApiOperation(value = "커뮤니티 글 삭제", notes = "커뮤니티 글 삭제하기")
     @PutMapping("/delete/{boardId}")
     public ResponseEntity<?> boardDelete(@PathVariable Long boardId) {

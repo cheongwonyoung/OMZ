@@ -41,15 +41,15 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
   });
 
   return (
-    <div className="w-10/12 h-3/4 overflow-scroll z-50 border-solid border border-gray-500 rounded-lg absolute bg-white mt-8">
-      <div className="relative w-full h-full flex flex-col items-center pt-8">
-        <FontAwesomeIcon
-          icon={faXmark}
-          className="absolute right-4 top-4"
-          onClick={closeGuestBook}
-        />
-        <p className="text-2xl text-purple-500 font-bo">방명록</p>
-        <div className="flex flex-col w-full p-4 gap-8">{letter}</div>
+    <div className="w-full h-3/4 flex flex-col items-center pt-8">
+      <FontAwesomeIcon
+        icon={faXmark}
+        className="absolute right-4 top-4"
+        onClick={closeGuestBook}
+      />
+      <p className="text-2xl text-purple-500">방명록</p>
+      <div className="flex flex-col p-4 gap-8 max-h-96 sm:max-h-full overflow-scroll">
+        {letter}
       </div>
     </div>
   );
