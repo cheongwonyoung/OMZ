@@ -5,13 +5,32 @@ import { faImage, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import { images } from "../assets/images";
 import TitleBar from "../components/common/TitleBar";
+import { useMutation } from "react-query";
+import { createArticle } from "../api/community";
+import { useNavigate } from "react-router-dom";
+
 export default function CommunityCreatePage() {
   const [showUploader, setShowUploader] = useState(false);
-
   const contentInputRef = useRef<HTMLTextAreaElement>(null);
+  const navigate = useNavigate();
   const [file, setFile] = useState([]);
   const onFile = (f: []): void => {
     setFile(f);
+  };
+  const memberId = 1;
+
+  const addArticle = useMutation(
+    (article: { content: string; file: File; memberId: number }) =>
+      createArticle(article),
+    {
+      onSuccess: () => {
+        navigate("/community");
+      },
+    }
+  );
+
+  const ArticleSubmit = (content: string, file: File) => {
+    addArticle.mutate({ content: content, file: file, memberId });
   };
 
   const submitHandler = (event: React.FormEvent) => {
@@ -21,45 +40,45 @@ export default function CommunityCreatePage() {
     if (enteredContent.trim().length === 0) {
       return;
     }
-    const communityData = {
-      content: enteredContent,
-      image: file[0],
-    };
-    console.log(communityData);
+    ArticleSubmit(enteredContent, file[0]);
+    contentInputRef.current!.value = "";
+    setFile([]);
   };
 
   return (
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
-
-      <img src={images.main_logo} alt="" className="ml-10 w-10 h-10" />
-      <form onSubmit={submitHandler}>
-        <div className="w-full flex flex-col justify-center items-center">
+      <div className="mb-3"></div>
+      <form action="" className="w-11/12 pb-10" onSubmit={submitHandler}>
+        <div className="w-full flex justify-between items-start gap-2">
+          <img src={images.profile_img} alt="" className="w-15 h-15" />
           <textarea
-            className="w-[80%] bg-inherit m-3"
-            maxLength={145}
-            placeholder="나는 지금..."
+            maxLength={140}
+            placeholder="나는 지금.."
             ref={contentInputRef}
+            className="bg-inherit focus:outline-none w-full h-[200px]"
           />
-          {showUploader && (
-            <ImageUploader file={file} onFile={onFile} shape={false} />
-          )}
         </div>
-
-        <div className="flex justify-end items-center gap-3 mr-5">
+        {showUploader && (
+          <ImageUploader file={file} onFile={onFile} shape={false} />
+        )}
+        <div className="flex justify-end items-center gap-3">
           <div
             onClick={() => {
-              setShowUploader(true);
+              if (showUploader) {
+                setShowUploader(false);
+              } else {
+                setShowUploader(true);
+              }
             }}
           >
             <FontAwesomeIcon icon={faImage} />
           </div>
           <button>
-            <FontAwesomeIcon icon={faCheck} />{" "}
+            <FontAwesomeIcon icon={faCheck} />
           </button>
         </div>
       </form>
-
       <CommunityNavbar />
     </div>
   );

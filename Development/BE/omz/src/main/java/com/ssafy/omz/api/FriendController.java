@@ -43,21 +43,9 @@ public class FriendController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-//    @ApiOperation(value = "친구 신청을 할 수 있는 유저인지 판단", notes = "이전에 친구를 끊음 or \n" +
-//            "이미 친구 신청을 받음 or \n 이미 친구 신청 보냄 or \n 이미 친구인 상태면 \n" +
-//            "친구 신청하기 버튼 안 띄워줘도 됨")
-//    @GetMapping("/{toMemberId}/{fromMemberId}")
-//    public ResponseEntity<?> friendRequestPossibleCheck(@PathVariable Long toMemberId, @PathVariable Long fromMemberId) {
-//        try {
-//            return new ResponseEntity<>(friendService.requestFriendPossibleCheck(toMemberId, fromMemberId), HttpStatus.ACCEPTED);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
 
-    //    }
     @ApiOperation(value = "내 친구 목록", notes = "내 친구  목록 불러오기")
-    @GetMapping("")
+    @GetMapping("/{memberId}")
     public ResponseEntity<?> getFriendList(@PathVariable Long memberId) {
         try {
             return new ResponseEntity<>(friendService.getFriendList(memberId), HttpStatus.OK);
@@ -67,4 +55,50 @@ public class FriendController {
         }
     }
 
+    @ApiOperation(value = "내 친구 대기 목록", notes = "나한테 친구 신청 보낸 사람들 목록 불러오기")
+    @GetMapping("waiting/{memberId}")
+    public ResponseEntity<?> getFriendWaitingList(@PathVariable Long memberId) {
+        try {
+            return new ResponseEntity<>(friendService.getFriendWaitingList(memberId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "친구 수락", notes = "친구 요청 수락하기")
+    @PutMapping("accept/{friendId}")
+    public ResponseEntity<?> acceptFriend(@PathVariable Long friendId) {
+        try {
+            friendService.friendAccept(friendId);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "친구 거절", notes = "친구 요청 거절하기")
+    @DeleteMapping("reject/{friendId}")
+    public ResponseEntity<?> rejectFriend(@PathVariable Long friendId) {
+        try {
+            friendService.friendReject(friendId);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "친구 끊기", notes = "이미 친구인 멤버와 친구 끊기 \n 해당 작업 수행 후 다신 친구 신청 불가")
+    @PutMapping("/{toMemberId}/{fromMemberId}")
+    public ResponseEntity<?> cutFriend(@PathVariable Long toMemberId, @PathVariable Long fromMemberId) {
+        try {
+            friendService.friendCut(toMemberId, fromMemberId);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
