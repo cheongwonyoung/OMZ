@@ -1,8 +1,10 @@
 import { images } from "../../assets/images";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import DeleteCommentModal from "./DeleteCommentModal";
 import { deleteReply, updateReply } from "../../api/community";
 import { useMutation } from "react-query";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 type Comment = {
   [key: string]: any;
@@ -11,10 +13,13 @@ type Comment = {
 type Props = {
   item: Comment;
   refetch: () => Promise<any>;
+  boardIdNum: number;
 };
 
-export default function CommunityComment({ item, refetch }: Props) {
+export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   const [showModal, setShowModal] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
+  const commentContent = useRef<HTMLTextAreaElement>(item.content);
   const timestamp = new Date(item.registeredTime);
   const date = timestamp.toDateString();
 
@@ -22,23 +27,40 @@ export default function CommunityComment({ item, refetch }: Props) {
     onSuccess: () => {
       setShowModal(false);
       refetch();
-      console.log(refetch);
     },
   });
 
-  // const updateComment = useMutation(
-  //   (replyId: number, comment: { boardId: number; content: string; memberId: number }) =>
-  //     updateReply(replyId, comment)
-  //   {
-  //     onSuccess: () => {
-  //       refetch();
-  //     },
-  //   }
-  // );
+  const boardId = boardIdNum;
+  const replyId = item.replyId;
+  const memberId = item.memberId;
 
-  // const handleCommentUpdate = (comment: string) => {
-  //   updateComment.mutate(replyId, {boardId, content:comment, memberId})
-  // };
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    const enteredUpdateComment = commentContent.current!.value;
+
+    if (enteredUpdateComment.trim().length) {
+      return;
+    }
+    handleCommentUpdate(enteredUpdateComment);
+  };
+
+  const updateComment = useMutation(
+    (comment: {
+      boardId: number;
+      content: string;
+      memberId: number;
+      replyId: number;
+    }) => updateReply(comment),
+    {
+      onSuccess: () => {
+        refetch();
+      },
+    }
+  );
+
+  const handleCommentUpdate = (comment: string) => {
+    updateComment.mutate({ boardId, content: comment, memberId, replyId });
+  };
 
   function closeModalHandler() {
     setShowModal(false);
@@ -68,24 +90,52 @@ export default function CommunityComment({ item, refetch }: Props) {
               </p>
             </div>
 
-            <div>
-              <p>{item.content}</p>
-            </div>
-
-            {/* <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setShowModal(true)}
-                className="cursor-pointer hover:text-[#FF0076]"
-              >
-                삭제
-              </button>
-              <button
-                onClick={() => updateComment()}
-                className="cursor-pointer hover:text-[#FDFFA7]"
-              >
-                수정
-              </button>
-            </div> */}
+            {showUpdate ? (
+              <div className="w-full">
+                <form action="" onSubmit={submitHandler} className="w-full">
+                  <textarea
+                    defaultValue={item.content}
+                    ref={commentContent}
+                    maxLength={70}
+                    className="w-full focus:outline-none"
+                  />
+                  <div className="flex justify-end gap-2">
+                    {/* 누르면 update 반영되게 !! */}
+                    <button
+                      // onClick={() => setShowModal(true)}
+                      className="cursor-pointer hover:text-[#FF0076]"
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </button>
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      onClick={() => setShowUpdate(false)}
+                      className="cursor-pointer hover:text-[#FDFFA7]"
+                    />
+                  </div>
+                </form>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <p>{item.content}</p>
+                </div>
+                <div className="flex justify-end gap-2">
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="cursor-pointer hover:text-[#FF0076]"
+                  >
+                    삭제
+                  </button>
+                  <button
+                    onClick={() => setShowUpdate(true)}
+                    className="cursor-pointer hover:text-[#FDFFA7]"
+                  >
+                    수정
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

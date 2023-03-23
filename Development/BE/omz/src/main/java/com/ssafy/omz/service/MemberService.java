@@ -21,7 +21,5 @@ public interface MemberService{
     // refresh code에 해당하는 유저 email 반환
     String memberEmail(String token);
 
-    // 회원가입
-    void updateMemberInfo(Long memberId, MemberRequestDto.Write member, FaceRequestDto.Write face, FaceRequestDto.Write preferFace);
-
+//    void updateMemberInfo(Long memberId, MemberRequestDto.Write member);
 }

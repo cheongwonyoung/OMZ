@@ -11,18 +11,13 @@ export const getArticle = (boardId: number, memberId: number) => {
 }; 
 
 // 게시글 POST 
-export const createArticle = (board: { boardId: number; content: string; memberId: number }) => {
+export const createArticle = (board: { content: string; file: File; memberId: number }) => {
   return instance.post('/board', board)  
 }
 
 // 게시글 UPDATE
-export const updateArticle = (formData: FormData) => {
-  const response = {
-    headers: {
-      'Content-Type': 'multipart/form-data', 
-    },
-  };
-  return instance.put(`/board/`, formData, response)
+export const updateArticle = (board: { content: string; file: File; memberId: number }) => {
+  return instance.put(`/board/`, board)
 }
 
 
@@ -64,8 +59,8 @@ export const createReply = (reply: { boardId: number; content: string; memberId:
 }
   
 // 댓글 수정
-export const updateReply = (replyId: number, reply: { boardId: number; content: string; memberId: number }) => {
-  return instance.put(`/reply/${replyId}`, reply)   
+export const updateReply = (reply: { boardId: number; content: string; memberId: number }) => {
+  return instance.put('/reply/', reply)   
 }  
 
 // 댓글 삭제 (O) 
