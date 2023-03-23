@@ -15,6 +15,7 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
     if (enteredArticle.trim().length === 0) {
       return;
     }
+    onArticleSubmit(enteredArticle);
     articleInputRef.current!.value = "";
   };
 

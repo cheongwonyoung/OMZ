@@ -1,8 +1,9 @@
 import { images } from "../../assets/images";
 import { useState } from "react";
 import DeleteCommentModal from "./DeleteCommentModal";
-import { deleteReply } from "../../api/community";
+import { deleteReply, updateReply } from "../../api/community";
 import { useMutation } from "react-query";
+
 type Comment = {
   [key: string]: any;
 };
@@ -24,6 +25,20 @@ export default function CommunityComment({ item, refetch }: Props) {
       console.log(refetch);
     },
   });
+
+  // const updateComment = useMutation(
+  //   (replyId: number, comment: { boardId: number; content: string; memberId: number }) =>
+  //     updateReply(replyId, comment)
+  //   {
+  //     onSuccess: () => {
+  //       refetch();
+  //     },
+  //   }
+  // );
+
+  // const handleCommentUpdate = (comment: string) => {
+  //   updateComment.mutate(replyId, {boardId, content:comment, memberId})
+  // };
 
   function closeModalHandler() {
     setShowModal(false);
@@ -57,17 +72,20 @@ export default function CommunityComment({ item, refetch }: Props) {
               <p>{item.content}</p>
             </div>
 
-            <div className="flex justify-end gap-2">
+            {/* <div className="flex justify-end gap-2">
               <button
                 onClick={() => setShowModal(true)}
                 className="cursor-pointer hover:text-[#FF0076]"
               >
                 삭제
               </button>
-              <button className="cursor-pointer hover:text-[#FDFFA7]">
+              <button
+                onClick={() => updateComment()}
+                className="cursor-pointer hover:text-[#FDFFA7]"
+              >
                 수정
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

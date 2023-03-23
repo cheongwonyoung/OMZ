@@ -1,6 +1,5 @@
 import CommunityNavbar from "../components/communityPage/CommunityNavbar";
 import CommunityArticleItem from "../components/communityPage/CommunityArticleItem";
-// import CommunityPopularArticle from "../components/communityPage/CommunityPopularArticle";
 import { getArticles } from "../api/community";
 import { useMutation, useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
@@ -17,12 +16,15 @@ export default function CommunityPage() {
     "articles",
     getArticles
   );
-
+  const boardId = 21;
+  const memberId = 1;
+  console.log(data);
   const addArticle = useMutation(
-    (comment: { boardId: number; content: string; memberId: number }) =>
-      createArticle(comment),
+    (board: { boardId: number; content: string; memberId: number }) =>
+      createArticle(board),
     {
       onSuccess: () => {
+        console.log("추가완!");
         refetch();
       },
     }
@@ -35,6 +37,7 @@ export default function CommunityPage() {
   const handleArticleSubmit = (article: string) => {
     addArticle.mutate({ boardId, content: article, memberId });
   };
+
   return (
     <div className="flex flex-col items-center">
       <TitleBar goto="/" title="Community" icon={images.community_img} />

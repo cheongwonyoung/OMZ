@@ -1,11 +1,11 @@
 import { instance } from '.'; 
 
-// 게시글 GET 
+// 게시글 GET (O) 
 export const getArticles = () => {
   return instance.get('/board');
 }; 
 
-// 게시글 상세 GET
+// 게시글 상세 GET (O) 
 export const getArticle = (boardId: number, memberId: number) => {
   return instance.get(`/board/${memberId}/${boardId}`)  
 }; 
@@ -31,7 +31,7 @@ export const deleteArticle = (boardId: number) => {
   return instance.put(`/board/delete/${boardId}`)
 }
 
-// 사용자가 쓴 글 목록 GET
+// 사용자가 쓴 글 목록 GET (O) 
 export const getMemberArticle = (memberId: number) => {
   return instance.get(`/board/${memberId}`)  
 }; 
@@ -46,7 +46,7 @@ export const dislikeArticle = (boardId: number, memberId: number) => {
   return instance.put(`/board/${memberId}/${boardId}`,{},{})   
 } 
 
-// 내가 좋아요한 글 목록 불러오기
+// 내가 좋아요한 글 목록 불러오기 (O) 
 export const likeArticles = (memberId: number) => {
   return instance.get(`/board/likes/${memberId}`)  
 }; 
@@ -58,22 +58,17 @@ export const searchArticles = () => {
 }; 
   
 
-// 댓글 작성
+// 댓글 작성 (O) 
 export const createReply = (reply: { boardId: number; content: string; memberId: number }) => {
   return instance.post('/reply', reply)  
 }
   
 // 댓글 수정
-export const updateReply = (formData: FormData) => {
-  const response = {
-    headers: {
-      'Content-Type': 'multipart/form-data', 
-    }, 
-  }; 
-  return instance.put('/reply/', formData, response)  
+export const updateReply = (replyId: number, reply: { boardId: number; content: string; memberId: number }) => {
+  return instance.put(`/reply/${replyId}`, reply)   
 }  
 
-// 댓글 삭제
+// 댓글 삭제 (O) 
 export const deleteReply = (replyId: number) => {
   return instance.put(`/reply/delete/${replyId}`)
 }
