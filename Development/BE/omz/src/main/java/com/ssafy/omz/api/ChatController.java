@@ -102,8 +102,8 @@ public class ChatController {
 //            //Cursor 존재하지 않을 경우,현재시간을 기준으로 paging
 //            if(chatPagingDto == null || chatPagingDto.getCursor() == null || chatPagingDto.getCursor().equals("")){
 //                chatPagingDto= ChatPagingDto.builder()
-//                        .cursor( LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
-//                        .build();
+//                        .cursor( LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"))).build();
+//
 //            }
 //            //  getChatsFromRedis는 프론트에서 커서 값 가져오는 부분이라 아직 코드 작성 안 함 (0321_16:04)
 //            return chatRedisCacheService.getChatsFromRedis(roomId,chatPagingDto);

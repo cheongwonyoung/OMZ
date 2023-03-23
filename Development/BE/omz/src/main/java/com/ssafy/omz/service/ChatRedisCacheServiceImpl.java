@@ -1,6 +1,7 @@
 package com.ssafy.omz.service;
 
 import com.ssafy.omz.dto.req.ChatMessage;
+import com.ssafy.omz.dto.req.ChatPagingRequestDto;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.util.ChatUtils;
@@ -105,5 +106,47 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
     //  Cursor Pagination 사용 부분
 
     //  Redis   getChatsFromRedis
+    //chat_data 조회
+//    public ResponseDto<List<ChatPagingResponseDto>> getChatsFromRedis(Long roomId, ChatPagingRequestDto chatPagingDto) {
+//
+//        //마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
+//        ChatMessage cursorDto = ChatMessage.builder()
+//                .type(ChatMessage.MessageType.TALK)
+//                .roomId(roomId)
+//                .createdTime(chatPagingDto.getCursor()) // ChatMessage에서는 LocalDateTime으로 되어있음
+//                .message(chatPagingDto.getMessage())
+//                .writer(chatPagingDto.getWriter()) // ChatMessage에서는 memberId -> long 으로 되어 있음
+//                .build();
+//
+//
+//        //마지막 chat_data cursor Rank 조회
+//        Long rank = zSetOperations.reverseRank(CHAT_SORTED_SET_ + workSpaceId, cursorDto);
+//
+//        //Cursor 없을 경우 -> 최신채팅 조회
+//        if (rank == null)
+//            rank = 0L;
+//        else rank = rank + 1;
+//
+//        //Redis 로부터 chat_data 조회
+//        Set<ChatMessageSaveDto> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + workSpaceId, rank, rank + 10);
+//
+//        List<ChatPagingResponseDto> chatMessageDtoList =
+//                chatMessageSaveDtoSet
+//                        .stream()
+//                        .map(ChatPagingResponseDto::byChatMessageDto)
+//                        .collect(Collectors.toList());
+//
+//        //Chat_data 부족할경우 MYSQL 추가 조회
+//        if (chatMessageDtoList.size() != 10) {
+//            findOtherChatDataInMysql(chatMessageDtoList, workSpaceId, chatPagingDto.getCursor());
+//        }
+//
+//        //redis caching 닉네임으로 작성자 삽입
+//        for (ChatPagingResponseDto chatPagingResponseDto : chatMessageDtoList) {
+//            chatPagingResponseDto.setNickname(findUserNicknameByUsername(chatPagingResponseDto.getWriter()));
+//        }
+//
+//        return ResponseDto.success(chatMessageDtoList);
+//    }
     //  MySql   findChatFromMysql
 }
