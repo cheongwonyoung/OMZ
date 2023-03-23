@@ -54,9 +54,13 @@ public class Board {
         this.file = file;
     }
 
-    public Board updateContentAndFile(String content, String file){
-        this.file = file;
+    public Board updateContent(String content){
         this.content = content;
+        return this;
+    }
+
+    public Board updateFile(String file){
+        this.file = file;
         return this;
     }
 
