@@ -1,7 +1,10 @@
 package com.ssafy.omz.entity;
 
 import com.sun.istack.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -32,8 +35,10 @@ public class MiniRoom {
 
     @OneToMany(mappedBy = "miniRoom")
     private List<GuestBook> guestBooks = new ArrayList<>();
+
     @Builder
-    private MiniRoom(Member member){
+    private MiniRoom(Member member, String stateMessage){
         this.member = member;
+        this.stateMessage = stateMessage;
     }
 }
