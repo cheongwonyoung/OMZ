@@ -3,6 +3,9 @@ package com.ssafy.omz.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
+import com.ssafy.omz.dto.req.FaceRequestDto;
+import com.ssafy.omz.dto.req.MemberRequestDto;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,5 +21,7 @@ public interface MemberService{
     // refresh code에 해당하는 유저 email 반환
     String memberEmail(String token);
 
-    void updateMemberInfo(Long memberId, MemberRequestDto.Write member);
+    // 회원가입
+    void updateMemberInfo(Long memberId, MemberRequestDto.Write member, FaceRequestDto.Write face, FaceRequestDto.Write preferFace);
+
 }
