@@ -10,8 +10,10 @@ import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.entity.Face;
 import com.ssafy.omz.entity.Member;
+import com.ssafy.omz.entity.MiniRoom;
 import com.ssafy.omz.repository.FaceRepository;
 import com.ssafy.omz.repository.MemberRepository;
+import com.ssafy.omz.repository.MiniRoomRepository;
 import lombok.RequiredArgsConstructor;
 import com.google.cloud.storage.*;
 
@@ -37,10 +39,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
-
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.util.Map.Entry;
 
 @RequiredArgsConstructor
 @Service("MemberService")
@@ -51,6 +53,7 @@ public class MemberServiceImpl implements MemberService{
 
     private final Storage storage;
     private final FaceRepository faceRepository;
+    private final MiniRoomRepository miniRoomRepository;
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
@@ -88,7 +91,7 @@ public class MemberServiceImpl implements MemberService{
 
     // 회원 정보 수정
     @Override
-    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto){
+    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto, FaceRequestDto.Write face, FaceRequestDto.Write preferFace){
         String bucketName = "omz-bucket";
         MultipartFile file = memberDto.getProfile();
         String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
@@ -110,21 +113,63 @@ public class MemberServiceImpl implements MemberService{
             e.printStackTrace();
         }
 
+        Member member = memberRepository.findByMemberId(memberId);
+
+        // 가장 닮은 관상 찾기
+        // HashMap 준비
+        Map<String, Double> map = new HashMap<>();
+        map.put("강아지", face.getDog());
+        map.put("고양이", face.getCat());
+        map.put("곰", face.getBear());
+        map.put("토끼", face.getRabbit());
+        map.put("공룡", face.getDinosaur());
+        map.put("여우", face.getFox());
+
+        // Max
+        Entry<String, Double> maxEntry = null;
+
+        // Iterator
+        Set<Entry<String, Double>> entrySet = map.entrySet();
+        for (Entry<String, Double> entry : entrySet) {
+            if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+                maxEntry = entry;
+            }
+        }
+        String myFace = maxEntry.getKey();
+
+        // 미니룸 저장
+        miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
+
+
         memberRepository.save(
                 memberRepository.findByMemberId(memberId).updateMemberInfo(
                         memberDto.getMbti(),
                         memberDto.getNickname(),
                         saveFileName,
-                        faceRepository.save(faceRepository.findByFaceId(memberDto.getMyFace()).updateFace()),
-                        faceRepository.findByFaceId(memberDto.getPreferFace()),
-                        "asdf"
+                        // 내 관상 저장
+                        faceRepository.save(Face.builder()
+                                .dogProbability(face.getDog())
+                                .catProbability(face.getCat())
+                                .bearProbability(face.getBear())
+                                .rabbitProbability(face.getRabbit())
+                                .dinosaurProbability(face.getDinosaur())
+                                .foxProbability(face.getFox())
+                                .build()),
+                        // 선호하는 관상 저장
+                        faceRepository.save(Face.builder()
+                                .dogProbability(preferFace.getDog())
+                                .catProbability(preferFace.getCat())
+                                .bearProbability(preferFace.getBear())
+                                .rabbitProbability(preferFace.getRabbit())
+                                .dinosaurProbability(preferFace.getDinosaur())
+                                .foxProbability(preferFace.getFox())
+                                .build()),
+                        myFace
+
                 )
 
         );
 
-        user.updateSaveName(saveFileName);
-//        String result = "/" + saveFileName;
-//        return result;
 
     }
 
