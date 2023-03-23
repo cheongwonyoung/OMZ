@@ -10,20 +10,44 @@ export const getArticle = (boardId: number, memberId: number) => {
   return instance.get(`/board/${memberId}/${boardId}`)  
 }; 
 
-// 게시글 POST 
+// 게시글 POST  
 export const createArticle = (board: { content: string; file: File; memberId: number }) => {
-  return instance.post('/board', board)  
+  const formData = new FormData();
+  const boardInfo = {
+    content: board.content,
+    memberId: board.memberId, 
+  }
+  formData.append('dto', JSON.stringify(boardInfo)) 
+  formData.append('file', board.file) 
+ 
+  return instance.post('/board', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data', 
+    }
+  })  
 }
 
 // 게시글 UPDATE
-export const updateArticle = (board: { content: string; file: File; memberId: number }) => {
-  return instance.put(`/board/`, board)
+export const updateArticle = (board: { boardId: number, content: string; file: File; memberId: number }) => {
+  const formData = new FormData();
+  const boardInfo = {
+    content: board.content, 
+    memberId: board.memberId, 
+  }
+  formData.append('dto', JSON.stringify(boardInfo))
+  formData.append('file', board.file)
+
+  return instance.put(`/board/${board.boardId}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data' 
+    }
+  })
 }
 
 
 // 게시글 DELETE 
 export const deleteArticle = (boardId: number) => {
-  return instance.put(`/board/delete/${boardId}`)
+  return instance.delete(`/board/${boardId}`)
 }
 
 // 사용자가 쓴 글 목록 GET (O) 
@@ -48,8 +72,8 @@ export const likeArticles = (memberId: number) => {
  
  
 // 글 검색
-export const searchArticles = () => {
-  return instance.get('/board/search')  
+export const searchArticles = (memberId: number, key: string, word: string) => {
+  return instance.get(`/board/search/${memberId}/${key}/${word}`)  
 }; 
   
 
@@ -59,12 +83,12 @@ export const createReply = (reply: { boardId: number; content: string; memberId:
 }
   
 // 댓글 수정
-export const updateReply = (reply: { boardId: number; content: string; memberId: number }) => {
-  return instance.put('/reply/', reply)   
+export const updateReply = (replyId: number, reply: { boardId: number; content: string; memberId: number }) => {
+  return instance.put(`/reply/${replyId}`, reply)   
 }  
 
 // 댓글 삭제 (O) 
 export const deleteReply = (replyId: number) => {
-  return instance.put(`/reply/delete/${replyId}`)
+  return instance.delete(`/reply/${replyId}`)
 }
  

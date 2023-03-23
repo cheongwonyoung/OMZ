@@ -6,12 +6,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type Article = {
   [key: string]: any;
 };
 
 const CommunityArticleItem: React.FC<{ item: Article }> = (props) => {
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
   const timestamp = new Date(props.item.registeredTime);
   const date = timestamp.toDateString();
@@ -20,6 +23,10 @@ const CommunityArticleItem: React.FC<{ item: Article }> = (props) => {
     navigate(`/community/${boardId}`, {
       state: { boardId: boardId, memberId: 1 },
     });
+  };
+
+  const goToMyPage = (memberId: number) => {
+    navigate(`/community/mypage/${memberId}`);
   };
 
   return (
@@ -41,11 +48,23 @@ const CommunityArticleItem: React.FC<{ item: Article }> = (props) => {
                 src={images.mini_room_img}
               />
             )}
-            <p className="flex-grow-0 flex-shrink-0 text-sm font-medium text-left">
+            <p
+              className="flex-grow-0 flex-shrink-0 text-sm font-medium text-left cursor-pointer hover:text-white"
+              onClick={(e) => {
+                e?.stopPropagation();
+                goToMyPage(props.item.member.memberId);
+              }}
+            >
               {props.item.member.nickname}
             </p>
             {/* TODO: 이거는 내가 썼을 때만 나타나게 하기  */}
-            <FontAwesomeIcon icon={faEllipsis} />
+            <FontAwesomeIcon
+              icon={faEllipsis}
+              className="cursor-pointer hover:text-white"
+              onClick={(e) => {
+                e?.stopPropagation();
+              }}
+            />
           </div>
           <div>
             {props.item.file ? (
