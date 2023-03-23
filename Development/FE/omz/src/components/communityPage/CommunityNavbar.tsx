@@ -34,7 +34,10 @@ export default function CommunityNavbar() {
           </div>
         </div>
         <div className="flex justify-center items-center w-[50px] h-[50px] absolute left-[170px] top-0 gap-[5px] p-[5px] rounded-[10px] bg-white">
-          <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 p-2 rounded-[10px] bg-white border border-black">
+          <div
+            className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 p-2 rounded-[10px] bg-white border border-black"
+            id="btn"
+          >
             <Link to="/community/create">
               <FontAwesomeIcon icon={faPlus} className="text-2xl" />
             </Link>

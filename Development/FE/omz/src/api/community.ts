@@ -11,12 +11,12 @@ export const getArticle = (boardId: number, memberId: number) => {
 }; 
 
 // 게시글 POST 
-export const createArticle = (board: { content: string; file: string; memberId: number }) => {
+export const createArticle = (board: { content: string; file: File; memberId: number }) => {
   return instance.post('/board', board)  
 }
 
 // 게시글 UPDATE
-export const updateArticle = (board: { content: string; file: string; memberId: number }) => {
+export const updateArticle = (board: { content: string; file: File; memberId: number }) => {
   return instance.put(`/board/`, board)
 }
 
