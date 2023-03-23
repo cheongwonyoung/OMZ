@@ -1,5 +1,6 @@
 package com.ssafy.omz.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.service.BoardService;
 import io.swagger.annotations.*;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Api("boardController API v1")
@@ -106,9 +108,12 @@ public class BoardController {
     }
     @ApiOperation(value = "커뮤니티 글 작성", notes = "커뮤니티 글 작성하기")
     @PostMapping("")
-    public ResponseEntity<?> boardWrite(@RequestBody BoardRequestDto.Write board) {
+    public ResponseEntity<?> boardWrite(@RequestParam MultipartFile file,
+                                        @RequestParam String dto) {
         try {
-            boardService.writeBoard(board);
+            ObjectMapper mapper = new ObjectMapper();
+            BoardRequestDto.Write writeInfo = mapper.readValue(dto, BoardRequestDto.Write.class);
+            boardService.writeBoard(file, writeInfo);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -117,9 +122,13 @@ public class BoardController {
     }
     @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기")
     @PutMapping("/{boardId}")
-    public ResponseEntity<?> boardUpdate(@PathVariable Long boardId, @RequestBody BoardRequestDto.Write board) {
+    public ResponseEntity<?> boardUpdate(@PathVariable Long boardId,
+                                         @RequestParam MultipartFile file,
+                                         @RequestParam String dto) {
         try {
-            boardService.updateBoard(boardId, board);
+            ObjectMapper mapper = new ObjectMapper();
+            BoardRequestDto.Write writeInfo = mapper.readValue(dto, BoardRequestDto.Write.class);
+            boardService.updateBoard(boardId, file, writeInfo);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
