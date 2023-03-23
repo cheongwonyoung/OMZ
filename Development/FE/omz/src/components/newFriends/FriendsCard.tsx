@@ -1,13 +1,20 @@
-import Camera3D from "../common/Camera3D";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Model } from "../../assets/3DAvatar/Rabbit";
+import CameraAvatar from "../common/CameraAvatar";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import TagList from "./TagList";
 export default function FriendsCard() {
+  // const tags = ["곰상", "ISFP", "짝꿍", "가능성", "95%"];
+  const tags = ["100%", "가능성", "짝꿍", "곰상", "ISFP"];
   return (
-    <div className="w-5/6 bg-slate-500/75 rounded-2xl h-full flex flex-col items-center">
-      <Camera3D />
-      <div>아바타</div>
-      <div>이름</div>
-      <div>태그</div>
-      <button>놀러가기</button>
+    <div className="w-full bg-slate-500/50 rounded-2xl flex flex-col items-center gap-8 p-8 sm:w-3/12">
+      <CameraAvatar Avatar={<Model />} />
+      <div className="text-white font-semibold">윾태초이</div>
+      <TagList tags={tags} />
+      <button className="text-white wor">
+        <FontAwesomeIcon icon={faHome} className="mr-2" />
+        놀러가기
+      </button>
     </div>
   );
 }

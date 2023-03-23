@@ -106,7 +106,7 @@ const router = createBrowserRouter([
         element: <MiniRoomUpdatePage />,
       },
       {
-        path: "community/1",
+        path: "community/:board_id",
         element: <CommunityDetailPage />,
       },
       {

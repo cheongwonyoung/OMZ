@@ -2,13 +2,10 @@ import { useQuery } from "react-query";
 import { getMusicToPick } from "../../api/myRoom";
 import MusicModalItem from "./MusicModalItem";
 import { v4 as uuidv4 } from "uuid";
-import { useState } from "react";
-type music = {
-  Title: string;
-  Genre: string;
-  Artist: string;
-};
 
+type Music = {
+  [key: string]: string;
+};
 type Props = {
   plusPage(): void;
   musicSelected: string[];
@@ -26,7 +23,8 @@ export default function MusicModalToPick({
       <p>듣고싶은 음악을 선택해주세요</p>
       <p>최대 3개</p>
       <div className="flex flex-col gap-2 w-full mt-4">
-        {data?.data.map((music: music) => (
+        {/* {data?.data.map((music: music) => ( */}
+        {data?.data.map((music: Music) => (
           <MusicModalItem
             music={music}
             key={uuidv4()}
