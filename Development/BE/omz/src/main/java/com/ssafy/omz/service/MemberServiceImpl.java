@@ -138,7 +138,7 @@ public class MemberServiceImpl implements MemberService{
         String myFace = maxEntry.getKey();
 
         // 미니룸 저장
-        miniRoomRepository.save(MiniRoom.builder().member(member).build());
+        miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
 
 
         memberRepository.save(
