@@ -2,6 +2,7 @@ package com.ssafy.omz.service;
 
 import com.ssafy.omz.dto.req.ChatMessage;
 import com.ssafy.omz.dto.req.ChatPagingRequestDto;
+import com.ssafy.omz.dto.resp.ChatPagingResponseDto;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.util.ChatUtils;
@@ -11,7 +12,10 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -107,29 +111,30 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 
     //  Redis   getChatsFromRedis
     //chat_data 조회
-//    public ResponseDto<List<ChatPagingResponseDto>> getChatsFromRedis(Long roomId, ChatPagingRequestDto chatPagingDto) {
-//
-//        //마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
-//        ChatMessage cursorDto = ChatMessage.builder()
-//                .type(ChatMessage.MessageType.TALK)
-//                .roomId(roomId)
-//                .createdTime(chatPagingDto.getCursor()) // ChatMessage에서는 LocalDateTime으로 되어있음
-//                .message(chatPagingDto.getMessage())
-//                .writer(chatPagingDto.getWriter()) // ChatMessage에서는 memberId -> long 으로 되어 있음
-//                .build();
-//
-//
-//        //마지막 chat_data cursor Rank 조회
-//        Long rank = zSetOperations.reverseRank(CHAT_SORTED_SET_ + workSpaceId, cursorDto);
-//
-//        //Cursor 없을 경우 -> 최신채팅 조회
-//        if (rank == null)
-//            rank = 0L;
-//        else rank = rank + 1;
-//
-//        //Redis 로부터 chat_data 조회
-//        Set<ChatMessageSaveDto> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + workSpaceId, rank, rank + 10);
-//
+    public List<ChatPagingResponseDto> getChatsFromRedis(Long roomId, ChatPagingRequestDto chatPagingDto) {
+
+        //마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
+        ChatMessage cursorDto = ChatMessage.builder()
+                .type(ChatMessage.MessageType.TALK)
+                .roomId(roomId.toString())
+                .createdTime(chatPagingDto.getCursor()) // ChatMessage에서는 LocalDateTime으로 되어있음
+                .message(chatPagingDto.getMessage())
+                .memberId(chatPagingDto.getMemberId())
+                .nickName(chatPagingDto.getNickname())
+                .build();
+
+
+        //마지막 chat_data cursor Rank 조회
+        Long rank = zSetOperations.reverseRank(CHAT_SORTED_SET_ + roomId, cursorDto);
+
+        //Cursor 없을 경우 -> 최신채팅 조회
+        if (rank == null)
+            rank = 0L;
+        else rank = rank + 1;
+
+        //Redis 로부터 chat_data 조회
+        Set<ChatMessage> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + roomId, rank, rank + 10);
+
 //        List<ChatPagingResponseDto> chatMessageDtoList =
 //                chatMessageSaveDtoSet
 //                        .stream()
@@ -138,7 +143,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 //
 //        //Chat_data 부족할경우 MYSQL 추가 조회
 //        if (chatMessageDtoList.size() != 10) {
-//            findOtherChatDataInMysql(chatMessageDtoList, workSpaceId, chatPagingDto.getCursor());
+//            findOtherChatDataInMysql(chatMessageDtoList, roomId, chatPagingDto.getCursor());
 //        }
 //
 //        //redis caching 닉네임으로 작성자 삽입
@@ -146,7 +151,9 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 //            chatPagingResponseDto.setNickname(findUserNicknameByUsername(chatPagingResponseDto.getWriter()));
 //        }
 //
-//        return ResponseDto.success(chatMessageDtoList);
-//    }
+//        return chatMessageDtoList;
+        return new ArrayList<>();
+    }
+
     //  MySql   findChatFromMysql
 }

@@ -1,5 +1,7 @@
 package com.ssafy.omz.api;
 
+import com.ssafy.omz.dto.req.ChatPagingRequestDto;
+import com.ssafy.omz.dto.resp.ChatPagingResponseDto;
 import com.ssafy.omz.dto.resp.ChatRoomDto;
 import com.ssafy.omz.service.ChatRedisCacheService;
 import com.ssafy.omz.service.ChatRoomService;
@@ -24,15 +26,13 @@ public class ChatController {
 
     private final ChatRoomService chatRoomService;
 
-//    private final ChatRedisCacheService chatRedisCacheService;
+    private final ChatRedisCacheService chatRedisCacheService;
 
 
     @Autowired
-    public ChatController(ChatRoomService chatRoomService
-//            , ChatRedisCacheService chatRedisCacheService
-    ){
+    public ChatController(ChatRoomService chatRoomService, ChatRedisCacheService chatRedisCacheService){
         this.chatRoomService = chatRoomService;
-//        this.chatRedisCacheService = chatRedisCacheService;
+        this.chatRedisCacheService = chatRedisCacheService;
     }
 
     @ApiOperation(value = "채팅방 목록 조회", notes = "토큰 사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
@@ -46,14 +46,14 @@ public class ChatController {
     public ResponseEntity<List<ChatRoomDto>> getChatRoomList(){
 
         HttpStatus status = HttpStatus.OK;
-        List<ChatRoomDto> chatRoomList = new ArrayList<>();
+        List<ChatRoomDto> chatRoomList = null;
         try {
         //  Token 기반 사용자 정보 추출
             // Member member = ?
           long memberId = 4; // sara
             //  service
             chatRoomList = chatRoomService.getChatRoomList(memberId);
-            if (chatRoomList.isEmpty()) // || chatRoomList == null
+            if (chatRoomList.isEmpty() || chatRoomList == null) // || chatRoomList == null
                 status = HttpStatus.NO_CONTENT;
 
         } catch (Exception e){
@@ -86,26 +86,42 @@ public class ChatController {
 //        return new ResponseEntity<>();
 //    }
 
-//        @ApiOperation(value = "채팅방 대화 내역 불러오기", notes = "채팅방 번호(roomId)에 해당하는 채팅방의 대화 내역을 불러온다.")
-//        @ApiResponses({
-//            @ApiResponse(code = 200, message = "OK"),
-//            @ApiResponse(code = 404, message = "Not Found")
-//            //Other Http Status code..
-//        })
-//        @ApiImplicitParam(
-//                name = "roomId"
-//                , value = "채팅방 번호"
-//        )
-//        @PostMapping("/{roomId}")
-//        public ResponseDto<List<ChatPagingResponseDto>> getChatting(@PathVariable Long roomId, @RequestBody(required = false) ChatPagingDto chatPagingDto){
-//
-//            //Cursor 존재하지 않을 경우,현재시간을 기준으로 paging
-//            if(chatPagingDto == null || chatPagingDto.getCursor() == null || chatPagingDto.getCursor().equals("")){
-//                chatPagingDto= ChatPagingDto.builder()
-//                        .cursor( LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"))).build();
-//
-//            }
-//            //  getChatsFromRedis는 프론트에서 커서 값 가져오는 부분이라 아직 코드 작성 안 함 (0321_16:04)
-//            return chatRedisCacheService.getChatsFromRedis(roomId,chatPagingDto);
-//        }
+        @ApiOperation(value = "채팅방 대화 내역 불러오기", notes = "채팅방 번호(roomId)에 해당하는 채팅방의 대화 내역을 불러온다.")
+        @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Not Found")
+            //Other Http Status code..
+        })
+        @ApiImplicitParam(
+                name = "roomId"
+                , value = "채팅방 번호"
+        )
+        @PostMapping("/{roomId}")
+        public ResponseEntity<List<ChatPagingResponseDto>> getChatting(@PathVariable Long roomId, @RequestBody(required = false) ChatPagingRequestDto chatPagingDto){
+
+            HttpStatus status = HttpStatus.OK;
+            List<ChatPagingResponseDto> chatList = null;
+            //Cursor 존재하지 않을 경우,현재시간을 기준으로 paging
+            try {
+                if(chatPagingDto == null || chatPagingDto.getCursor() == null || chatPagingDto.getCursor().equals("")){
+                    chatPagingDto= ChatPagingRequestDto.builder()
+                            //  cursor type 정하기
+                            .cursor(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"))).build();
+
+                }
+                chatList = chatRedisCacheService.getChatsFromRedis(roomId, chatPagingDto);
+
+                if(chatList.isEmpty() || chatList == null)
+                    status = HttpStatus.NO_CONTENT;
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                status = HttpStatus.BAD_REQUEST;
+            }
+
+            //  getChatsFromRedis는 프론트에서 커서 값 가져오는 부분이라 아직 코드 작성 안 함 (0321_16:04)
+//            return chatRedisCacheService.getChatsFromRedis(roomId, chatPagingDto);
+            return new ResponseEntity<List<ChatPagingResponseDto>>(chatList, status);
+        }
 }

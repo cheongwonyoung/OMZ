@@ -1,4 +1,4 @@
-package com.ssafy.omz.dto.req;
+package com.ssafy.omz.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatPagingRequestDto {
-
+public class ChatPagingResponseDto {
     private String message;
 
     private String memberId;
 
     private String nickname;
-//    private String writer; // nickname or memberId
-    private String cursor; // LocalDateTime ? 
+
+    private String createdTime;
 }

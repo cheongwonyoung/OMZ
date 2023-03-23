@@ -38,13 +38,13 @@ public class ChatUtils {
     }
 
     //  채팅 데이터 생성일자 Double 형으로 형변환
-    public Double changeLocalDateTimeToDouble(LocalDateTime createdAt) {
-//        public Double changeLocalDateTimeToDouble(String createdAt) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
-//        LocalDateTime localDateTime = LocalDateTime.parse(createdAt, formatter);
+//    public Double changeLocalDateTimeToDouble(LocalDateTime createdAt) {
+        public Double changeLocalDateTimeToDouble(String createdAt) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
+        LocalDateTime localDateTime = LocalDateTime.parse(createdAt, formatter);
 
-        createdAt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"));
-        return ((Long) createdAt.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()).doubleValue();
+//        createdAt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"));
+        return ((Long) localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()).doubleValue();
     }
 
     //  7일전까지의 채팅 데이터 MySql에서 Redis로 적재
@@ -60,7 +60,7 @@ public class ChatUtils {
         log.info("7일전 날짜 : {}", cursor);
 
         //  7일전 데이터 전부 가져와서, Redis에 적재
-        List<Chat> chatList = chatRepository.findAllByCreatedTimeAfterOrderByCreatedTimeDesc(cursorDate);
+        List<Chat> chatList = chatRepository.findAllByCreatedTimeAfterOrderByCreatedTimeDesc(cursor);
 
         for (Chat chat : chatList) {
             ChatMessage chatMessage = ChatMessage.of(chat);
