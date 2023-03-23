@@ -7,6 +7,7 @@ import NextBtn from "../components/signUp/NextBtn";
 import { useState } from "react";
 import { MiniroomBeta } from "../assets/3DMiniRoom/MiniroomBeta";
 import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
+import { MiniroomBeta3 } from "../assets/3DMiniRoom/MiniroomBeta3";
 export default function MiniRoomUpdatePage() {
   const [itemStatus, setItemStatus] = useState({
     table: "1",
@@ -17,6 +18,7 @@ export default function MiniRoomUpdatePage() {
   const handleItems = (item: string) => {
     const variety = item.split("_")[0];
     const num = item.split("_")[1];
+    console.log(itemStatus);
     setItemStatus({ ...itemStatus, [variety]: num });
   };
   return (
@@ -32,9 +34,14 @@ export default function MiniRoomUpdatePage() {
             <MiniroomBeta position={[20, -25, -20]} itemStatus={itemStatus} />
           }
         /> */}
-        <Camera3D
+        {/* <Camera3D
           MiniRoom={
             <MiniroomBeta2 position={[20, -25, -20]} itemStatus={itemStatus} />
+          }
+        /> */}
+        <Camera3D
+          MiniRoom={
+            <MiniroomBeta3 position={[20, -25, -20]} itemStatus={itemStatus} />
           }
         />
       </div>

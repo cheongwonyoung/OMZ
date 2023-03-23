@@ -29,7 +29,7 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 // When allowCredentials is true, allowedOrigins cannot contain the special value "*" since that cannot be set on the "Access-Control-Allow-Origin" response header.
                 .setAllowedOriginPatterns("*")
 //                .setAllowedOrigins("http://localhost:8080","http://localhost:3000")
-//                .setAllowedOrigins("http://j8a101.p.ssafy.io")
+//                .setAllowedOrigins("http://j8a705.p.ssafy.io")
                 .withSockJS();
     }
 

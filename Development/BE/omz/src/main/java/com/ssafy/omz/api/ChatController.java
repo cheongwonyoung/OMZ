@@ -17,7 +17,8 @@ import java.util.List;
 
 @Api("ChatController API v1")
 //@RequiredArgsConstructor
-@RequestMapping("/api/chatting")
+//@RequestMapping("/api/chatting")
+@RequestMapping("/chatting")
 @RestController
 public class ChatController {
 
@@ -34,7 +35,7 @@ public class ChatController {
 //        this.chatRedisCacheService = chatRedisCacheService;
     }
 
-    @ApiOperation(value = "채팅방 목록 조회", notes = "사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
+    @ApiOperation(value = "채팅방 목록 조회", notes = "토큰 사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 204, message = "No Content"),
@@ -49,7 +50,7 @@ public class ChatController {
         try {
         //  Token 기반 사용자 정보 추출
             // Member member = ?
-          long memberId = 1;
+          long memberId = 4; // sara
             //  service
             chatRoomList = chatRoomService.getChatRoomList(memberId);
             if (chatRoomList.isEmpty()) // || chatRoomList == null
@@ -101,8 +102,8 @@ public class ChatController {
 //            //Cursor 존재하지 않을 경우,현재시간을 기준으로 paging
 //            if(chatPagingDto == null || chatPagingDto.getCursor() == null || chatPagingDto.getCursor().equals("")){
 //                chatPagingDto= ChatPagingDto.builder()
-//                        .cursor( LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
-//                        .build();
+//                        .cursor( LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"))).build();
+//
 //            }
 //            //  getChatsFromRedis는 프론트에서 커서 값 가져오는 부분이라 아직 코드 작성 안 함 (0321_16:04)
 //            return chatRedisCacheService.getChatsFromRedis(roomId,chatPagingDto);

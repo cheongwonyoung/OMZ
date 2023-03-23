@@ -96,7 +96,7 @@ public class StompHandler implements ChannelInterceptor {
                     (String) message.getHeaders().get(SIMP_SESSION_ID)
             ).orElse(null);
 
-            String roomId = chatUtils.getRoodIdFromDestination(destination);
+            String roomId = chatUtils.getRoomIdFromDestination(destination);
 
             // for Test를 위해 token 값 일단 넣어주기
 //            String username = token; // null값 들어가는게 맞긴 한데 확인을 못해보내 ㅈ금 ...
