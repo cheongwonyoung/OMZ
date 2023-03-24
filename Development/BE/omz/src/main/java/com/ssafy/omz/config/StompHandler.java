@@ -116,7 +116,7 @@ public class StompHandler implements ChannelInterceptor {
                     ChatMessage.builder()
 //                            .memberId()
                             .type(ChatMessage.MessageType.ENTER)
-                            .roomId(Long.valueOf(roomId))
+                            .roomId(roomId)
 //                            .userList(chatRoomService.findUser(roomId, sessionId))
                             .build()
             );
@@ -168,7 +168,7 @@ public class StompHandler implements ChannelInterceptor {
             redisPublisher.publish(topic,
                     ChatMessage.builder()
                             .type(ChatMessage.MessageType.QUIT)
-                            .roomId(roomId != null ? Long.parseLong(roomId) : null)
+                            .roomId(roomId)
 //                            .userList(chatRoomService.findUser(roomId, sessionId))
                             .build()
             );
