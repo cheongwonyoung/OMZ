@@ -38,7 +38,8 @@ public class ChatController {
     @ApiOperation(value = "채팅방 목록 조회", notes = "토큰 사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 204, message = "No Content"),
+            @ApiResponse(code = 204, message = "채팅 목록이 없습니다."),
+            @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Not Found")
             //Other Http Status code..
     })
@@ -89,6 +90,7 @@ public class ChatController {
         @ApiOperation(value = "채팅방 대화 내역 불러오기", notes = "채팅방 번호(roomId)에 해당하는 채팅방의 대화 내역을 불러온다.")
         @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "채팅 대화 내역이 없습니다."),
             @ApiResponse(code = 404, message = "Not Found")
             //Other Http Status code..
         })
@@ -107,7 +109,6 @@ public class ChatController {
                     chatPagingDto= ChatPagingRequestDto.builder()
                             //  cursor type 정하기
                             .cursor(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"))).build();
-
                 }
                 chatList = chatRedisCacheService.getChatsFromRedis(roomId, chatPagingDto);
 
@@ -119,9 +120,6 @@ public class ChatController {
                 e.printStackTrace();
                 status = HttpStatus.BAD_REQUEST;
             }
-
-            //  getChatsFromRedis는 프론트에서 커서 값 가져오는 부분이라 아직 코드 작성 안 함 (0321_16:04)
-//            return chatRedisCacheService.getChatsFromRedis(roomId, chatPagingDto);
             return new ResponseEntity<List<ChatPagingResponseDto>>(chatList, status);
         }
 }
