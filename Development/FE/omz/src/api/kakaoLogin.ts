@@ -14,6 +14,9 @@ export const getKakaoToken = (code: string) => {
   });
 };
 
-// export const getServerToken = (token:string) => {
-//   return instance
-// }
+export const getServerToken = (token: string) => {
+  const config = {
+    headers: { access_token: token },
+  };
+  return instance.post("/member/login", {}, config);
+};

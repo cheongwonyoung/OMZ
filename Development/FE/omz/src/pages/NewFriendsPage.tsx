@@ -9,6 +9,8 @@ import { useEffect, useState } from "react";
 import FriendsProposalModal from "../components/newFriends/FriendsProposalModal";
 import FriendSearchItems from "../components/newFriends/FriendSearchItems";
 import FriendSearchList from "../components/newFriends/FriendSearchList";
+import { useMutation } from "react-query";
+import { searchFriend } from "../api/newFriend";
 export default function NewFriendsPage() {
   const [isRefuse, setIsRefuse] = useState(false);
   const handleRefuseModal = () => {
@@ -20,16 +22,31 @@ export default function NewFriendsPage() {
     setIsProposal((prev) => !prev);
   };
 
-  const [search, setSearch] = useState("");
+  const [word, setWord] = useState("");
   const handleSearch = (e: any) => {
-    setSearch(e.target.value);
+    setWord(e.target.value);
   };
+
+  const goSearchFriends = useMutation(
+    (gogo: { memberId: number; word: string }) =>
+      searchFriend(gogo.memberId, gogo.word),
+    {
+      onSettled(data) {
+        console.log(data);
+      },
+    }
+  );
 
   const [searchActive, setSearchActive] = useState(false);
 
   useEffect(() => {
-    search === "" ? setSearchActive(false) : setSearchActive(true);
-  }, [search]);
+    if (word === "") {
+      setSearchActive(false);
+    } else {
+      setSearchActive(true);
+      goSearchFriends.mutate({ memberId: 1, word });
+    }
+  }, [word]);
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -56,7 +73,7 @@ export default function NewFriendsPage() {
           type="search"
           placeholder="Search"
           onChange={(e) => handleSearch(e)}
-          value={search}
+          value={word}
         />
       </div>
       {searchActive ? (
