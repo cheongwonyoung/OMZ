@@ -14,7 +14,7 @@ public class ChatRoomDto {
     private long roomId;
 
 //    //  채팅 상대 memberId
-//    private long memberId;
+    private long memberId;
 
     //  채팅 상대 닉네임
     private String nickName;
@@ -32,7 +32,7 @@ public class ChatRoomDto {
     private boolean isChecked;
 
     //  채팅 상대와의 친구 여부
-    private boolean isFriend;
+    private int friendState;
 
 
 }

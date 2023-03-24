@@ -1,12 +1,15 @@
 package com.ssafy.omz.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ssafy.omz.dto.req.MemberRequestDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
 
+import com.ssafy.omz.entity.Member;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,6 +25,9 @@ public interface MemberService{
     String memberEmail(String token);
 
     // 회원가입
-    void updateMemberInfo(Long memberId, MemberRequestDto.Write member, FaceRequestDto.Write face, FaceRequestDto.Write preferFace);
+    void updateMemberInfo(Long memberId, MultipartFile profile, MemberRequestDto.Write member);
+
+    // 회원정보 조회
+    MemberResponseDto.MemberInfo getMemberInfo(Long memberId);
 
 }

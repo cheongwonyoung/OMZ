@@ -34,7 +34,7 @@ public class Face {
     private double rabbitProbability;
 
     @NotNull
-    private double dinosaurProbability;
+    private double dinoProbability;
 
     @NotNull
     private double foxProbability;
@@ -46,13 +46,31 @@ public class Face {
     private Member preferMember;
 
     @Builder
-    private Face(double dogProbability, double catProbability, double bearProbability, double rabbitProbability, double dinosaurProbability, double foxProbability){
+    private Face(double dogProbability, double catProbability, double bearProbability, double rabbitProbability, double dinoProbability, double foxProbability, Member member){
         this.dogProbability = dogProbability;
         this.catProbability = catProbability;
         this.bearProbability = bearProbability;
         this.rabbitProbability = rabbitProbability;
-        this.dinosaurProbability = dinosaurProbability;
+        this.dinoProbability = dinoProbability;
         this.foxProbability = foxProbability;
+        this.member = member;
     }
+
+    public Face updateFace(double dogProbability, double catProbability, double bearProbability,
+                      double rabbitProbability, double dinosaurProbability, double foxProbability){
+        this.dogProbability = dogProbability;
+        this.catProbability = catProbability;
+        this.bearProbability = bearProbability;
+        this.rabbitProbability = rabbitProbability;
+        this.dinoProbability = dinosaurProbability;
+        this.foxProbability = foxProbability;
+
+        return this;
+    }
+//    public Face updateFace(double dogProbability, String file){
+//        this.file = file;
+//        this.content = content;
+//        return this;
+//    }
 
 }

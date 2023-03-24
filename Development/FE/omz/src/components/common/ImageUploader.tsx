@@ -38,7 +38,8 @@ export default function ImageUploader({ file, onFile, shape }: Props) {
 
   const circle_img = "object-cover w-full h-full rounded-full";
 
-  const square = "dropzone w-[80%] h-[20px] border-4";
+  const square =
+    "dropzone w-full h-30 border border-black border-2 border-solid";
 
   // "dropzone w-60 h-60 border border-red-200 border-4 border-dashed";
   const square_img = "object-cover w-full h-full";

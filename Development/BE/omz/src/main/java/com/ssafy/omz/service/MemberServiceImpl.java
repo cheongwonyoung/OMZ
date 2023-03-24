@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
+import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
@@ -91,9 +92,8 @@ public class MemberServiceImpl implements MemberService{
 
     // 회원 정보 수정
     @Override
-    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto, FaceRequestDto.Write face, FaceRequestDto.Write preferFace){
+    public void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.Write memberDto){
         String bucketName = "omz-bucket";
-        MultipartFile file = memberDto.getProfile();
         String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
         try(InputStream inputStream = file.getInputStream()) {
             Image processedImage = ImageIO.read(inputStream);
@@ -114,6 +114,8 @@ public class MemberServiceImpl implements MemberService{
         }
 
         Member member = memberRepository.findByMemberId(memberId);
+        FaceRequestDto.Write face = memberDto.getMyFace();
+        FaceRequestDto.Write preferFace = memberDto.getPreferFace();
 
         // 가장 닮은 관상 찾기
         // HashMap 준비
@@ -122,7 +124,7 @@ public class MemberServiceImpl implements MemberService{
         map.put("고양이", face.getCat());
         map.put("곰", face.getBear());
         map.put("토끼", face.getRabbit());
-        map.put("공룡", face.getDinosaur());
+        map.put("공룡", face.getDino());
         map.put("여우", face.getFox());
 
         // Max
@@ -152,7 +154,7 @@ public class MemberServiceImpl implements MemberService{
                                 .catProbability(face.getCat())
                                 .bearProbability(face.getBear())
                                 .rabbitProbability(face.getRabbit())
-                                .dinosaurProbability(face.getDinosaur())
+                                .dinoProbability(face.getDino())
                                 .foxProbability(face.getFox())
                                 .build()),
                         // 선호하는 관상 저장
@@ -161,7 +163,7 @@ public class MemberServiceImpl implements MemberService{
                                 .catProbability(preferFace.getCat())
                                 .bearProbability(preferFace.getBear())
                                 .rabbitProbability(preferFace.getRabbit())
-                                .dinosaurProbability(preferFace.getDinosaur())
+                                .dinoProbability(preferFace.getDino())
                                 .foxProbability(preferFace.getFox())
                                 .build()),
                         myFace
@@ -173,8 +175,15 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
-    // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
+    // 회원정보 조회
+    @Override
+    public MemberResponseDto.MemberInfo getMemberInfo(Long memberId) {
+        Member member = memberRepository.findByMemberId(memberId);
+        return MemberResponseDto.MemberInfo.fromEntity(member);
+    }
 
+
+    // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
     private TokenDto registerKakaoUserIfNeed(KakaoUserInfoDto kakaoUserInfo) {
         // 이미 회원인지 확인
         String email = kakaoUserInfo.getEmail();

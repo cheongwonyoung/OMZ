@@ -32,7 +32,7 @@ public class ChatJdbcRepository {
                 ps.setLong(1, chat.getChatRoom().getChatRoomId());
                 ps.setString(2, chat.getMessage());
                 ps.setLong(3, chat.getFromMember().getMemberId());
-                ps.setObject(4, chat.getCreatedTime());
+                ps.setString(4, chat.getCreatedTime());
             }
 
             @Override
