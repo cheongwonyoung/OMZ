@@ -53,6 +53,12 @@ public class Face {
         this.rabbitProbability = rabbitProbability;
         this.dinoProbability = dinoProbability;
         this.foxProbability = foxProbability;
+        this.member = member;
     }
+//    public Face updateFace(double dogProbability, String file){
+//        this.file = file;
+//        this.content = content;
+//        return this;
+//    }
 
 }

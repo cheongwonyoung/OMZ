@@ -12,6 +12,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 //@Api("ChatStompController API v1")
 @RequiredArgsConstructor
@@ -57,11 +58,12 @@ public class ChatStompController { // stomp chat controller
 //        Header에서 토큰 꺼내서 보낸 사람 누군지 확인 (member_id)
 //        message.setMemberId();
 //        message.setNickName("sunheeTestController");
-        message.setCreatedTime(LocalDateTime.now());
+        message.setCreatedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")));
 //        "createdTime":[2023,3,16,14,41,59,51216100] 이렇게 Message 넘어옴
 
         message.setType(ChatMessage.MessageType.TALK);
 
+        //  만약 맨 처음 보낸 메세지면 ...
 
         // Topic에 pub 보내주기
         // 해당 채팅방에 메세지 보내주기

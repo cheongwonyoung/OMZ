@@ -17,7 +17,7 @@ public class FaceResponseDto {
         private Double dinosaur;
         private Double fox;
 
-        public static Info fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+        public static Info fromEntity(com.ssafy.omz.entity.Face faceEntity) {
             return Info.builder()
                     .dog(memberEntity.getFace().getDogProbability())
                     .cat(memberEntity.getFace().getCatProbability())

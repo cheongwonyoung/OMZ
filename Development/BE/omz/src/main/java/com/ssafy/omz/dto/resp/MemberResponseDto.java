@@ -1,7 +1,6 @@
 package com.ssafy.omz.dto.resp;
 
 import com.ssafy.omz.entity.Face;
-import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Data;
 
@@ -58,26 +57,38 @@ public class MemberResponseDto {
                     .build();
         }
     }
+    @Data
+    @Builder
+    public static class MyPageMainInfo {
+        private Long memberId;
+        private String nickname;
+        private String mbti;
+        private FaceResponseDto.Info face;
+        private String faceName;
+        public static MyPageMainInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+            return MyPageMainInfo.builder()
+                    .memberId(memberEntity.getMemberId())
+                    .nickname(memberEntity.getNickname())
+                    .mbti(memberEntity.getMbti())
+                    .face(FaceResponseDto.Info.fromEntity(memberEntity.getFace()))
+                    .faceName(memberEntity.getFaceName())
+                    .build();
+        }
+    }
 
     @Data
     @Builder
-    public static class MemberInfo {
+    public static class MyPageModifyInfo {
         private Long memberId;
-        private String email;
-        private String mbti;
         private String nickname;
-        private String file;
-        private Face face;
-        private Face preferFace;
-        public static MemberInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
-            return MemberInfo.builder()
+        private String mbti;
+        private FaceResponseDto.Info preferFace;
+        public static MyPageModifyInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+            return MyPageModifyInfo.builder()
                     .memberId(memberEntity.getMemberId())
-                    .email(memberEntity.getEmail())
-                    .mbti(memberEntity.getMbti())
                     .nickname(memberEntity.getNickname())
-                    .file(memberEntity.getFile())
-                    .face(memberEntity.getFace())
-                    .preferFace(memberEntity.getPreferFace())
+                    .mbti(memberEntity.getMbti())
+                    .preferFace(FaceResponseDto.Info.fromEntity(memberEntity.getPreferFace()))
                     .build();
         }
     }
