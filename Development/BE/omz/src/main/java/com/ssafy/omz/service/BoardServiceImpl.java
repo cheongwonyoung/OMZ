@@ -87,16 +87,20 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void memberLikeBoard(Long memberId, Long boardId) {
-        log.info(memberId + " " + boardId);
-        boardLikesRepository.save(BoardLikes.builder()
-                .member(memberRepository.findByMemberId(memberId))
-                .board(boardRepository.findByBoardId(boardId))
-                .build());
+        if(!boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+            boardLikesRepository.save(BoardLikes.builder()
+                    .member(memberRepository.findByMemberId(memberId))
+                    .board(boardRepository.findByBoardId(boardId))
+                    .build());
+        }
     }
 
     @Override
     public void memberCancleLikeBoard(Long memberId, Long boardId) {
-        boardLikesRepository.deleteById(boardLikesRepository.findByMember_MemberIdAndBoard_BoardId(memberId, boardId).getBoardLikesId());
+        if(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+            boardLikesRepository.deleteById(boardLikesRepository
+                    .findByMember_MemberIdAndBoard_BoardId(memberId, boardId).getBoardLikesId());
+        }
     }
 
     @Override

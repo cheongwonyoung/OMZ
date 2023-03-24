@@ -39,6 +39,10 @@ public class Item {
         this.itemType = itemType;
         this.state = state;
         this.name = name;
+    }
 
+    public Item updateItemState(int state){
+        this.state = state;
+        return this;
     }
 }

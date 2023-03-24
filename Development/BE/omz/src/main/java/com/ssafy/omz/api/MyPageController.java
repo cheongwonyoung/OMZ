@@ -1,5 +1,8 @@
 package com.ssafy.omz.api;
 
+import com.ssafy.omz.dto.req.FaceRequestDto;
+import com.ssafy.omz.dto.req.ItemRequestDto;
+import com.ssafy.omz.repository.ItemRepository;
 import com.ssafy.omz.service.MyPageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Api("myPageController API v1")
@@ -44,12 +49,60 @@ public class MyPageController {
         }
     }
 
+    @ApiOperation(value = "닉네임 수정", notes = "닉네임 수정하기")
+    @PutMapping("/modify/nickname/{memberId}/{nickname}")
+    public ResponseEntity<?> nicknameUpdate(@PathVariable Long memberId, @PathVariable String nickname) {
+        try {
+            myPageService.updateNickname(memberId, nickname);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "엠비티아이 수정", notes = "엠비티아이 수정하기")
+    @PutMapping("/modify/mbti/{memberId}/{mbti}")
+    public ResponseEntity<?> mbtiUpdate(@PathVariable Long memberId, @PathVariable String mbti) {
+        try {
+            myPageService.updateMbti(memberId, mbti);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "선호하는 동물상 수정", notes = "선호하는 동물상 수정하기")
+    @PutMapping("/modify/face/{memberId}")
+    public ResponseEntity<?> preferFaceUpdate(@PathVariable Long memberId, @RequestBody FaceRequestDto.Write faceInfo) {
+        try {
+            myPageService.updatePreferFace(memberId, faceInfo);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @ApiOperation(value = "마이페이지 커스텀 메인", notes = "마이페이지 커스텀 페이지 정보 불러오기\n" +
             "memberId, 내 동물이름, 착용한 아이템 반환")
     @GetMapping("/custom/{memberId}")
     public ResponseEntity<?> getMyPageCustom(@PathVariable Long memberId) {
         try {
             return new ResponseEntity<>(myPageService.getMyPageCustom(memberId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "착용 아이템 수정", notes = "착용한 아이템 수정하기")
+    @PutMapping("/custom/{memberId}")
+    public ResponseEntity<?> avatarCustomUpdate(@PathVariable Long memberId, @RequestBody List<ItemRequestDto.Write> itemInfo) {
+        try {
+            myPageService.updateAvatarCustom(memberId, itemInfo);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

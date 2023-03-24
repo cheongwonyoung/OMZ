@@ -67,6 +67,15 @@ public class Member {
         return this;
     }
 
+    public Member updateNickname(String nickname){
+        this.nickname = nickname;
+        return this;
+    }
+    public Member updateMbti(String mbti){
+        this.mbti = mbti;
+        return this;
+    }
+
     public Member updateMemberInfo(String mbti, String nickname, String file, Face myface, Face preferFace, String faceName){
         this.mbti = mbti;
         this.nickname = nickname;
