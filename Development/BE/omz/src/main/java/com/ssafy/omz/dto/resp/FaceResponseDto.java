@@ -23,7 +23,7 @@ public class FaceResponseDto {
                     .cat(faceEntity.getCatProbability())
                     .bear(faceEntity.getBearProbability())
                     .rabbit(faceEntity.getRabbitProbability())
-                    .dinosaur(faceEntity.getDinosaurProbability())
+                    .dinosaur(faceEntity.getDinoProbability())
                     .fox(faceEntity.getFoxProbability())
                     .build();
         }
