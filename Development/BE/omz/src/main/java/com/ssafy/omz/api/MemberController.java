@@ -12,11 +12,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
 @Api("memberController API v1")
 @RestController
 @RequestMapping("/member")
@@ -77,17 +80,34 @@ public class MemberController {
         return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.OK);
 
     }
+//, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}
 
     @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
-    @PatchMapping("/update")
-    public ResponseEntity<?> updateMemberInfo(@RequestParam(required = true, value = "memberId") Long memberId,  MemberRequestDto.Write member, @RequestBody FaceRequestDto.Write face, @RequestBody FaceRequestDto.Write preferFace) throws Exception {
+    //MediaType.APPLICATION_JSON_VALUE
+    @PostMapping(value = "/update",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    @RequestPart( value = "memberId") Long memberId, , @RequestPart(value="member") MemberRequestDto.Write member
+    public ResponseEntity<?> updateMemberInfo(@RequestParam(value="file") MultipartFile file) throws Exception {
         try {
-//            memberService.updateMemberInfo(memberId, member, face, preferFace);
+//            memberService.updateMemberInfo(memberId, profile, member);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
+        try {
+
+            return new ResponseEntity<>(test, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 }
