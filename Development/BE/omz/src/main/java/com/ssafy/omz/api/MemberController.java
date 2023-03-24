@@ -78,15 +78,16 @@ public class MemberController {
 
     }
 
-//    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
-//    @PatchMapping("/update")
-//    public ResponseEntity<?> updateMemberInfo(@RequestParam(required = false, value = "memberId") Long memberId, @RequestBody MemberRequestDto.Write member) throws Exception {
-//        try {
-//            memberService.updateMemberInfo(memberId, member);
-//            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    @PatchMapping("/update")
+    public ResponseEntity<?> updateMemberInfo(@RequestParam(required = true, value = "memberId") Long memberId,  MemberRequestDto.Write member, @RequestBody FaceRequestDto.Write face, @RequestBody FaceRequestDto.Write preferFace) throws Exception {
+        try {
+//            memberService.updateMemberInfo(memberId, member, face, preferFace);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

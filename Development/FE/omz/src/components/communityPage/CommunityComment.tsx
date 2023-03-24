@@ -32,34 +32,32 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
 
   const boardId = boardIdNum;
   const replyId = item.replyId;
-  const memberId = item.memberId;
+  const memberId = 1;
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredUpdateComment = commentContent.current!.value;
 
-    if (enteredUpdateComment.trim().length) {
+    if (enteredUpdateComment.trim().length === 0) {
       return;
     }
+
     handleCommentUpdate(enteredUpdateComment);
   };
 
   const updateComment = useMutation(
-    (comment: {
-      boardId: number;
-      content: string;
-      memberId: number;
-      replyId: number;
-    }) => updateReply(comment),
+    (reply: { boardId: number; content: string; memberId: number }) =>
+      updateReply(replyId, reply),
     {
       onSuccess: () => {
         refetch();
+        console.log("하 이 롱 ");
       },
     }
   );
 
   const handleCommentUpdate = (comment: string) => {
-    updateComment.mutate({ boardId, content: comment, memberId, replyId });
+    updateComment.mutate({ boardId, content: comment, memberId });
   };
 
   function closeModalHandler() {
@@ -97,14 +95,11 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                     defaultValue={item.content}
                     ref={commentContent}
                     maxLength={70}
-                    className="w-full focus:outline-none"
+                    className="w-full focus:outline-none bg-white/50 resize-none"
                   />
                   <div className="flex justify-end gap-2">
                     {/* 누르면 update 반영되게 !! */}
-                    <button
-                      // onClick={() => setShowModal(true)}
-                      className="cursor-pointer hover:text-[#FF0076]"
-                    >
+                    <button className="cursor-pointer hover:text-[#FF0076]">
                       <FontAwesomeIcon icon={faCheck} />
                     </button>
                     <FontAwesomeIcon

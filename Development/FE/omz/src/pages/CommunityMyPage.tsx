@@ -26,7 +26,7 @@ export default function CommunityMyPage() {
       <TitleBar title="Community" icon={images.community_img} goto="/" />
       <CommunityMyPageBanner />
       {data?.data.content.map((article: Article) => (
-        <CommunityArticleItem key={uuidv4()} item={article} />
+        <CommunityArticleItem key={uuidv4()} item={article} refetch={refetch} />
       ))}
       <CommunityNavbar />
     </div>

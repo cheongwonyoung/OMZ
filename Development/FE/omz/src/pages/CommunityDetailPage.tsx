@@ -42,7 +42,7 @@ export default function CommunityDetailPage() {
   return (
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
-      <CommunityArticleItem key={uuidv4()} item={data?.data} />
+      {/* <CommunityArticleItem key={uuidv4()} item={data?.data} /> */}
       <CommunityCommentInput onCommentSubmit={handleCommentSubmit} />
 
       {data?.data.replies.map((comment: Comment) => (

@@ -90,7 +90,7 @@ const router = createBrowserRouter([
         element: <CommunityLikePage />,
       },
       {
-        path: "community/mypage",
+        path: "community/mypage/:memberId",
         element: <CommunityMyPage />,
       },
       {
