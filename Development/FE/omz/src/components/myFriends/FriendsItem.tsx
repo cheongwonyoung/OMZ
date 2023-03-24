@@ -18,7 +18,7 @@ export default function FriendsItem({ name, content, imgsrc, bottom }: Props) {
       </div>
       <div className="w-full">
         <p className="font-semibold mb-2">{name}</p>
-        <div className="border border-solid border-indigo-400 rounded-r-2xl rounded-bl-2xl p-2 text-sm font-semibold w-full">
+        <div className="bg-white border border-solid border-indigo-200 rounded-r-2xl rounded-bl-2xl p-2 text-sm font-semibold w-full">
           {content}
         </div>
         {bottom}

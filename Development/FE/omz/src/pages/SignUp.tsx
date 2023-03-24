@@ -17,7 +17,6 @@ export default function SignUp() {
     setPickedMbti(e.target.id);
   };
   // 관상 결과 정보
-  const [face, setFace] = useState<object[]>([]);
   const [animal, setAnimal] = useState("");
   type Result = {
     className: string;
@@ -30,7 +29,6 @@ export default function SignUp() {
   };
 
   const getFaceResult = (result: Result) => {
-    setFace(result);
     let maxAni = "";
     let maxVal = 0;
     for (const res of result) {
