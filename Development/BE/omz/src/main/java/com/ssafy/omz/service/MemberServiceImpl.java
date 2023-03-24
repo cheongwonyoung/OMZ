@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
+import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
@@ -173,6 +174,14 @@ public class MemberServiceImpl implements MemberService{
 
 
     }
+
+    // 회원정보 조회
+    @Override
+    public MemberResponseDto.MemberInfo getMemberInfo(Long memberId) {
+        Member member = memberRepository.findByMemberId(memberId);
+        return MemberResponseDto.MemberInfo.fromEntity(member);
+    }
+
 
     // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
     private TokenDto registerKakaoUserIfNeed(KakaoUserInfoDto kakaoUserInfo) {

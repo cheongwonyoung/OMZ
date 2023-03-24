@@ -82,6 +82,18 @@ public class MemberController {
     }
 //, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}
 
+    @ApiOperation(value = "유저 정보", notes = "유저 아이디를 받아 유저 정보 반환")
+    //MediaType.APPLICATION_JSON_VALUE
+    @GetMapping(value = "/info/{memberId}")
+    public ResponseEntity<?> memberInfo(@PathVariable Long memberId) throws Exception {
+        try {
+            return new ResponseEntity<>(memberService.getMemberInfo(memberId), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
     //MediaType.APPLICATION_JSON_VALUE
     @PostMapping(value = "/update",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})

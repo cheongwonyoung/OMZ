@@ -6,6 +6,7 @@ import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
 
+import com.ssafy.omz.entity.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,5 +25,8 @@ public interface MemberService{
 
     // 회원가입
     void updateMemberInfo(Long memberId, MultipartFile profile, MemberRequestDto.Write member);
+
+    // 회원정보 조회
+    MemberResponseDto.MemberInfo getMemberInfo(Long memberId);
 
 }
