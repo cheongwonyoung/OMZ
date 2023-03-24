@@ -1,9 +1,6 @@
 package com.ssafy.omz.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,5 +21,10 @@ public class ItemType {
 
     @Column(length = 10)
     private String itemTypeName;
+
+    @Builder
+    private ItemType (String itemTypeName){
+        this.itemTypeName = itemTypeName;
+    }
 
 }
