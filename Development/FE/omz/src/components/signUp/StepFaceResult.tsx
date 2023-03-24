@@ -20,14 +20,14 @@ export default function StepFaceResult({
 }: Props) {
   const showAvatar = () => {
     switch (animal) {
-      case "rabbit":
-        return <CameraAvatar Avatar={<Model position={[0, -2, 0]} />} />;
+      case "토끼":
+        return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
     }
   };
 
   const content = () => {
     switch (animal) {
-      case "rabbit":
+      case "토끼":
         return "상큼발랄한 매력의 토끼상";
     }
   };
