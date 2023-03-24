@@ -1,6 +1,7 @@
 package com.ssafy.omz.dto.req;
 
 import com.ssafy.omz.entity.Face;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ public class MemberRequestDto {
 
     @Data
     @Builder
+    @ApiModel(value = "멤버 회원가입 작성 정보")
     public static class Write {
         @NotEmpty(message="email는 빈값 일 수 없습니다")
         @NotNull(message="email는 null 일 수 없습니다")
@@ -31,11 +33,11 @@ public class MemberRequestDto {
 
         @NotEmpty(message="myFace는 빈값 일 수 없습니다")
         @NotNull(message="myFace는 null 일 수 없습니다")
-        private FaceRequestDto myFace;
+        private FaceRequestDto.Write myFace;
 
         @NotEmpty(message="preferFace는 빈값 일 수 없습니다")
         @NotNull(message="preferFace는 null 일 수 없습니다")
-        private FaceRequestDto preferFace;
+        private FaceRequestDto.Write preferFace;
 
 
     }

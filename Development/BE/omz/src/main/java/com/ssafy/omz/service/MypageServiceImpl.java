@@ -1,16 +1,18 @@
 package com.ssafy.omz.service;
 
+import com.ssafy.omz.dto.req.FaceRequestDto;
+import com.ssafy.omz.dto.req.ItemRequestDto;
 import com.ssafy.omz.dto.resp.ItemResponseDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.entity.Item;
-import com.ssafy.omz.repository.ItemRepository;
-import com.ssafy.omz.repository.ItemTypeRepository;
-import com.ssafy.omz.repository.MemberRepository;
-import com.ssafy.omz.repository.MiniRoomRepository;
+import com.ssafy.omz.entity.Member;
+import com.ssafy.omz.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import javax.transaction.TransactionalException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ public class MypageServiceImpl implements MyPageService {
     final private MiniRoomRepository miniRoomRepository;
     final private ItemRepository itemRepository;
     final private ItemTypeRepository itemTypeRepository;
+    final private FaceRepository faceRepository;
 
     @Override
     public Map<String, Object> getMyPageMain(Long memberId) {
@@ -65,5 +68,35 @@ public class MypageServiceImpl implements MyPageService {
         res.put("faceName", memberRepository.findByMemberId(memberId).getFaceName());
         res.put("items", items);
         return res;
+    }
+
+    @Override
+    @Transactional
+    public void updateNickname(Long memberId, String nickname)  throws TransactionalException{
+        memberRepository.save(memberRepository.findByMemberId(memberId).updateNickname(nickname));
+    }
+
+    @Override
+    @Transactional
+    public void updateMbti(Long memberId, String mbti) throws TransactionalException {
+        memberRepository.save(memberRepository.findByMemberId(memberId).updateMbti(mbti));
+    }
+
+    @Override
+    @Transactional
+    public void updatePreferFace(Long memberId, FaceRequestDto.Write faceInfo) throws TransactionalException {
+        Long faceId = memberRepository.findByMemberId(memberId).getPreferFace().getFaceId();
+        faceRepository.save(faceRepository.findByFaceId(faceId).updateFace(
+                faceInfo.getDog(), faceInfo.getCat(), faceInfo.getBear(),
+                faceInfo.getRabbit(), faceInfo.getDino(), faceInfo.getFox()));
+    }
+
+    @Override
+    @Transactional
+    public void updateAvatarCustom(Long memberId, List<ItemRequestDto.Write> itemInfo) throws TransactionalException {
+        for (int i = 0; i < itemInfo.size(); i++){
+            itemRepository.save(itemRepository.findByMember_MemberIdAndName(memberId,itemInfo.get(i).getName())
+                    .updateItemState(itemInfo.get(i).getState()));
+        }
     }
 }

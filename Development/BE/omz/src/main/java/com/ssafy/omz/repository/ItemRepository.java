@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item,Long> {
     List<Item> findAllByMember_MemberIdAndItemType_ItemTypeId(Long memberId, Long itemTypeId);
+
+    Item findByMember_MemberIdAndName(Long memberId, String name);
 }

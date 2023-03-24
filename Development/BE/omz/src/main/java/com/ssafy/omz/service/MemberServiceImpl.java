@@ -114,8 +114,8 @@ public class MemberServiceImpl implements MemberService{
         }
 
         Member member = memberRepository.findByMemberId(memberId);
-        FaceRequestDto face = memberDto.getMyFace();
-        FaceRequestDto preferFace = memberDto.getPreferFace();
+        FaceRequestDto.Write face = memberDto.getMyFace();
+        FaceRequestDto.Write preferFace = memberDto.getPreferFace();
 
         // 가장 닮은 관상 찾기
         // HashMap 준비

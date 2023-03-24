@@ -100,8 +100,8 @@ public class MemberResponseDto {
         private String mbti;
         private String nickname;
         private String file;
-        private Face face;
-        private Face preferFace;
+        private FaceResponseDto.Info face;
+        private FaceResponseDto.Info preferFace;
 
         public static MemberInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
             return MemberInfo.builder()
@@ -110,8 +110,8 @@ public class MemberResponseDto {
                     .mbti(memberEntity.getMbti())
                     .nickname(memberEntity.getNickname())
                     .file(memberEntity.getFile())
-                    .face(memberEntity.getFace())
-                    .preferFace(memberEntity.getPreferFace())
+                    .face(FaceResponseDto.Info.fromEntity(memberEntity.getFace()))
+                    .preferFace(FaceResponseDto.Info.fromEntity(memberEntity.getPreferFace()))
                     .build();
         }
     }
