@@ -62,7 +62,7 @@ public class Face {
         this.catProbability = catProbability;
         this.bearProbability = bearProbability;
         this.rabbitProbability = rabbitProbability;
-        this.dinosaurProbability = dinosaurProbability;
+        this.dinoProbability = dinosaurProbability;
         this.foxProbability = foxProbability;
 
         return this;

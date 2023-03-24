@@ -88,7 +88,7 @@ public class MypageServiceImpl implements MyPageService {
         Long faceId = memberRepository.findByMemberId(memberId).getPreferFace().getFaceId();
         faceRepository.save(faceRepository.findByFaceId(faceId).updateFace(
                 faceInfo.getDog(), faceInfo.getCat(), faceInfo.getBear(),
-                faceInfo.getRabbit(), faceInfo.getDinosaur(), faceInfo.getFox()));
+                faceInfo.getRabbit(), faceInfo.getDino(), faceInfo.getFox()));
     }
 
     @Override
