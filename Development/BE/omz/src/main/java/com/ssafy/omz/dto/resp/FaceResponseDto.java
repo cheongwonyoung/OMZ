@@ -19,12 +19,12 @@ public class FaceResponseDto {
 
         public static Info fromEntity(com.ssafy.omz.entity.Face faceEntity) {
             return Info.builder()
-                    .dog(faceEntity.getDogProbability())
-                    .cat(faceEntity.getCatProbability())
-                    .bear(faceEntity.getBearProbability())
-                    .rabbit(faceEntity.getRabbitProbability())
-                    .dinosaur(faceEntity.getDinosaurProbability())
-                    .fox(faceEntity.getFoxProbability())
+                    .dog(memberEntity.getFace().getDogProbability())
+                    .cat(memberEntity.getFace().getCatProbability())
+                    .bear(memberEntity.getFace().getBearProbability())
+                    .rabbit(memberEntity.getFace().getRabbitProbability())
+                    .dinosaur(memberEntity.getFace().getDinoProbability())
+                    .fox(memberEntity.getFace().getFoxProbability())
                     .build();
         }
     }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
+import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
@@ -90,49 +91,99 @@ public class MemberServiceImpl implements MemberService{
 
 
     // 회원 정보 수정
-//    @Override
-//    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto){
-//        String bucketName = "omz-bucket";
-//        MultipartFile file = memberDto.getProfile();
-//        String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
-//        try(InputStream inputStream = file.getInputStream()) {
-//            Image processedImage = ImageIO.read(inputStream);
-//
-//            BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-//            Graphics2D g = scaledBI.createGraphics();
-//            g.drawImage(processedImage, 0, 0, 200, 200, null);
-//            g.dispose();
-//
-//            ByteArrayOutputStream os = new ByteArrayOutputStream();
-//            ImageIO.write(scaledBI, "jpg", os);
-//
-//            InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
-//
-//            storage.create(BlobInfo.newBuilder(bucketName, saveFileName).build(), processedInputStream);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        memberRepository.save(
-//                memberRepository.findByMemberId(memberId).updateMemberInfo(
-//                        memberDto.getMbti(),
-//                        memberDto.getNickname(),
-//                        saveFileName,
-//                        faceRepository.save(faceRepository.findByFaceId(memberDto.getMyFace()).updateFace()),
-//                        faceRepository.findByFaceId(memberDto.getPreferFace()),
-//                        "asdf"
-//                )
-//
-//        );
-//
-//        user.updateSaveName(saveFileName);
-////        String result = "/" + saveFileName;
-////        return result;
-//
-//    }
+    @Override
+    public void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.Write memberDto){
+        String bucketName = "omz-bucket";
+        String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
+        try(InputStream inputStream = file.getInputStream()) {
+            Image processedImage = ImageIO.read(inputStream);
+
+            BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = scaledBI.createGraphics();
+            g.drawImage(processedImage, 0, 0, 200, 200, null);
+            g.dispose();
+
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(scaledBI, "jpg", os);
+
+            InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
+
+            storage.create(BlobInfo.newBuilder(bucketName, saveFileName).build(), processedInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Member member = memberRepository.findByMemberId(memberId);
+        FaceRequestDto face = memberDto.getMyFace();
+        FaceRequestDto preferFace = memberDto.getPreferFace();
+
+        // 가장 닮은 관상 찾기
+        // HashMap 준비
+        Map<String, Double> map = new HashMap<>();
+        map.put("강아지", face.getDog());
+        map.put("고양이", face.getCat());
+        map.put("곰", face.getBear());
+        map.put("토끼", face.getRabbit());
+        map.put("공룡", face.getDino());
+        map.put("여우", face.getFox());
+
+        // Max
+        Entry<String, Double> maxEntry = null;
+
+        // Iterator
+        Set<Entry<String, Double>> entrySet = map.entrySet();
+        for (Entry<String, Double> entry : entrySet) {
+            if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+                maxEntry = entry;
+            }
+        }
+        String myFace = maxEntry.getKey();
+
+        // 미니룸 저장
+        miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
+
+
+        memberRepository.save(
+                memberRepository.findByMemberId(memberId).updateMemberInfo(
+                        memberDto.getMbti(),
+                        memberDto.getNickname(),
+                        saveFileName,
+                        // 내 관상 저장
+                        faceRepository.save(Face.builder()
+                                .dogProbability(face.getDog())
+                                .catProbability(face.getCat())
+                                .bearProbability(face.getBear())
+                                .rabbitProbability(face.getRabbit())
+                                .dinoProbability(face.getDino())
+                                .foxProbability(face.getFox())
+                                .build()),
+                        // 선호하는 관상 저장
+                        faceRepository.save(Face.builder()
+                                .dogProbability(preferFace.getDog())
+                                .catProbability(preferFace.getCat())
+                                .bearProbability(preferFace.getBear())
+                                .rabbitProbability(preferFace.getRabbit())
+                                .dinoProbability(preferFace.getDino())
+                                .foxProbability(preferFace.getFox())
+                                .build()),
+                        myFace
+
+                )
+
+        );
+
+
+    }
+
+    // 회원정보 조회
+    @Override
+    public MemberResponseDto.MemberInfo getMemberInfo(Long memberId) {
+        Member member = memberRepository.findByMemberId(memberId);
+        return MemberResponseDto.MemberInfo.fromEntity(member);
+    }
+
 
     // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
-
     private TokenDto registerKakaoUserIfNeed(KakaoUserInfoDto kakaoUserInfo) {
         // 이미 회원인지 확인
         String email = kakaoUserInfo.getEmail();

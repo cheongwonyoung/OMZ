@@ -4,6 +4,9 @@ import com.ssafy.omz.entity.Face;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 public class MemberResponseDto {

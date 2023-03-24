@@ -1,6 +1,5 @@
 package com.ssafy.omz.dto.req;
 
-import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.entity.Face;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,17 +29,14 @@ public class MemberRequestDto {
         @NotNull(message="nickname은 null 일 수 없습니다")
         private String nickname;
 
-        @NotEmpty(message="profile은 빈값 일 수 없습니다")
-        @NotNull(message="profile은 null 일 수 없습니다")
-        private MultipartFile profile;
-
         @NotEmpty(message="myFace는 빈값 일 수 없습니다")
         @NotNull(message="myFace는 null 일 수 없습니다")
-        private Long myFace;
+        private FaceRequestDto myFace;
 
         @NotEmpty(message="preferFace는 빈값 일 수 없습니다")
         @NotNull(message="preferFace는 null 일 수 없습니다")
-        private Long preferFace;
+        private FaceRequestDto preferFace;
+
 
     }
 
