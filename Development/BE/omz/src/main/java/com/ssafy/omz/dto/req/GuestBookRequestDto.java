@@ -1,13 +1,8 @@
 package com.ssafy.omz.dto.req;
 
-import com.ssafy.omz.dto.resp.GuestBookResponseDto;
-import com.ssafy.omz.dto.resp.MemberResponseDto;
-import com.ssafy.omz.entity.GuestBook;
-import com.ssafy.omz.entity.Member;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -16,7 +11,7 @@ import javax.validation.constraints.Size;
 public class GuestBookRequestDto {
 
     @Data
-    @Builder
+    @NoArgsConstructor
     @ApiModel(value="방명록 작성 정보", description = "작성자, 내용을 가진 class")
     public static class Write{
 
