@@ -92,7 +92,7 @@ public class MemberServiceImpl implements MemberService{
 
     // 회원 정보 수정
     @Override
-    public void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.Write memberDto){
+    public void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFaceInfo) {
         String bucketName = "omz-bucket";
         String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
         try(InputStream inputStream = file.getInputStream()) {
@@ -114,8 +114,8 @@ public class MemberServiceImpl implements MemberService{
         }
 
         Member member = memberRepository.findByMemberId(memberId);
-        FaceRequestDto.Write face = memberDto.getMyFace();
-        FaceRequestDto.Write preferFace = memberDto.getPreferFace();
+        FaceRequestDto.Write face = faceInfo;
+        FaceRequestDto.Write preferFace = prefeFaceInfo;
 
         // 가장 닮은 관상 찾기
         // HashMap 준비
@@ -145,8 +145,8 @@ public class MemberServiceImpl implements MemberService{
 
         memberRepository.save(
                 memberRepository.findByMemberId(memberId).updateMemberInfo(
-                        memberDto.getMbti(),
-                        memberDto.getNickname(),
+                        memberInfo.getMbti(),
+                        memberInfo.getNickname(),
                         saveFileName,
                         // 내 관상 저장
                         faceRepository.save(Face.builder()
