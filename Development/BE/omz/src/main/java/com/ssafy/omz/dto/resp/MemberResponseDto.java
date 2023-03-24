@@ -92,4 +92,27 @@ public class MemberResponseDto {
                     .build();
         }
     }
+    @Data
+    @Builder
+    public static class MemberInfo {
+        private Long memberId;
+        private String email;
+        private String mbti;
+        private String nickname;
+        private String file;
+        private Face face;
+        private Face preferFace;
+
+        public static MemberInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+            return MemberInfo.builder()
+                    .memberId(memberEntity.getMemberId())
+                    .email(memberEntity.getEmail())
+                    .mbti(memberEntity.getMbti())
+                    .nickname(memberEntity.getNickname())
+                    .file(memberEntity.getFile())
+                    .face(memberEntity.getFace())
+                    .preferFace(memberEntity.getPreferFace())
+                    .build();
+        }
+    }
 }

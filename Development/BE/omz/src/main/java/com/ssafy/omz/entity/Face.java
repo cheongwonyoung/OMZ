@@ -46,7 +46,7 @@ public class Face {
     private Member preferMember;
 
     @Builder
-    private Face(double dogProbability, double catProbability, double bearProbability, double rabbitProbability, double dinoProbability, double foxProbability){
+    private Face(double dogProbability, double catProbability, double bearProbability, double rabbitProbability, double dinoProbability, double foxProbability, Member member){
         this.dogProbability = dogProbability;
         this.catProbability = catProbability;
         this.bearProbability = bearProbability;
