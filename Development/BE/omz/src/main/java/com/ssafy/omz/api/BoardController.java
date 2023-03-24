@@ -1,5 +1,6 @@
 package com.ssafy.omz.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.service.BoardService;
 import io.swagger.annotations.*;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Api("boardController API v1")
@@ -33,11 +35,13 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @ApiOperation(value = "글 검색", notes = "커뮤니티 검색 결과 불러오기")
-    @GetMapping("/search")
-    public ResponseEntity<?> searchList(@RequestParam(required = false, value = "memberId") Long memberId,
-                                       @RequestParam(required = false, value = "key") String key,
-                                       @RequestParam(required = false, value = "word") String word) {
+    @ApiOperation(value = "글 검색", notes = "커뮤니티 검색 결과 불러오기 \n "
+            + "key:  content 혹은 nickname으로 주세요 \n"
+            + "word: 검색할 단어를 입력해주시면 돼요")
+            @GetMapping("/search/{memberId}/{key}/{word}")
+            public ResponseEntity<?> searchList(@PathVariable Long memberId,
+            @PathVariable String key,
+            @PathVariable String word) {
         try {
             if (key.equals("content"))
                 return new ResponseEntity<>(boardService.searchBoardByContent(memberId, word), HttpStatus.OK);
@@ -104,9 +108,12 @@ public class BoardController {
     }
     @ApiOperation(value = "커뮤니티 글 작성", notes = "커뮤니티 글 작성하기")
     @PostMapping("")
-    public ResponseEntity<?> boardWrite(@RequestBody BoardRequestDto.Write board) {
+    public ResponseEntity<?> boardWrite(@RequestParam(required = false) MultipartFile file,
+                                        @RequestParam String dto) {
         try {
-            boardService.writeBoard(board);
+            ObjectMapper mapper = new ObjectMapper();
+            BoardRequestDto.Write writeInfo = mapper.readValue(dto, BoardRequestDto.Write.class);
+            boardService.writeBoard(file, writeInfo);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,10 +121,14 @@ public class BoardController {
         }
     }
     @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기")
-    @PutMapping("/")
-    public ResponseEntity<?> boardUpdate(@RequestParam(required = false, value = "boardId") Long boardId, @RequestBody BoardRequestDto.Write board) {
+    @PutMapping("/{boardId}")
+    public ResponseEntity<?> boardUpdate(@PathVariable Long boardId,
+                                         @RequestParam(required = false) MultipartFile file,
+                                         @RequestParam String dto) {
         try {
-            boardService.updateBoard(boardId, board);
+            ObjectMapper mapper = new ObjectMapper();
+            BoardRequestDto.Write writeInfo = mapper.readValue(dto, BoardRequestDto.Write.class);
+            boardService.updateBoard(boardId, file, writeInfo);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,7 +136,7 @@ public class BoardController {
         }
     }
     @ApiOperation(value = "커뮤니티 글 삭제", notes = "커뮤니티 글 삭제하기")
-    @PutMapping("/delete/{boardId}")
+    @DeleteMapping("/{boardId}")
     public ResponseEntity<?> boardDelete(@PathVariable Long boardId) {
         try {
             boardService.deleteBoard(boardId);

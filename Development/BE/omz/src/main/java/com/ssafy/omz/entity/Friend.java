@@ -34,10 +34,15 @@ public class Friend {
     private String message;
 
     @Builder
-    private Friend(Member toMember, Member fromMember, String message, int state){
+    private Friend(Member toMember, Member fromMember, String message, int state) {
         this.toMember = toMember;
         this.fromMember = fromMember;
         this.message = message;
         this.state = state;
+    }
+
+    public Friend updateState(int state) {
+        this.state = state;
+        return this;
     }
 }

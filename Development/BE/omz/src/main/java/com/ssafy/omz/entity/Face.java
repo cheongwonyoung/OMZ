@@ -2,10 +2,11 @@ package com.ssafy.omz.entity;
 
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+//import lombok.AllArgsConstructor;
+//import lombok.Getter;
+//import lombok.NoArgsConstructor;
+//import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -44,6 +45,17 @@ public class Face {
     @OneToOne(mappedBy = "preferFace")
     private Member preferMember;
 
+    @Builder
+    private Face(double dogProbability, double catProbability, double bearProbability,
+                 double rabbitProbability, double dinosaurProbability, double foxProbability, Member member){
+        this.dogProbability = dogProbability;
+        this.catProbability = catProbability;
+        this.bearProbability = bearProbability;
+        this.rabbitProbability = rabbitProbability;
+        this.dinosaurProbability = dinosaurProbability;
+        this.foxProbability = foxProbability;
+        this.member = member;
+    }
 //    public Face updateFace(double dogProbability, String file){
 //        this.file = file;
 //        this.content = content;

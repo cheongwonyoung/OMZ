@@ -51,9 +51,20 @@ public class Member {
     private MiniRoom miniRoom;
 
     @Builder
-    private Member(String email, String nickname){
+    private Member(String email, String nickname, String mbti, String faceName){
         this.email = email;
         this.nickname = nickname;
+        this.mbti = mbti;
+        this.faceName = faceName;
+    }
+    public Member updateFace(Face face){
+        this.face = face;
+        return this;
+    }
+
+    public Member updatePreferFace(Face preferFace){
+        this.preferFace = preferFace;
+        return this;
     }
 
     public Member updateMemberInfo(String mbti, String nickname, String file, Face myface, Face preferFace, String faceName){
