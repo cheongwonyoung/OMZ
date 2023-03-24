@@ -45,7 +45,6 @@ public class StompHandler implements ChannelInterceptor {
             // 토큰 추출 -> 사용자 정보 확인
             String token = accessor.getFirstNativeHeader(TOKEN);
             log.info("[StompHandler preSend] : CONNECT Token : "+token);
-
 //            String token = accessor.getFirstNativeHeader("Authorization").substring(7); // 7?
 //            if(jwtDecoder.decodeUserId(token) == null) {
 //                throw new LoginUserNotFoundException("로그인을 해주시기 바랍니다.");

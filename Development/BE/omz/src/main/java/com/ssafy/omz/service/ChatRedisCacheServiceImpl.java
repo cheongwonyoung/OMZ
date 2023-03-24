@@ -76,7 +76,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 
     }
 
-    //  이거 왜 하는? MySql -> Redis
+    //  MySql -> Redis
     public void cachingDBDataToRedis(Chat chat) {
         ChatMessage chatMessage = ChatMessage.of(chat);
         redisTemplate.opsForZSet()
@@ -117,7 +117,17 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         roomRedisTemplate.opsForHash().delete(MEMBER_ID_NICKNAME, memberId);
     }
 
+    @Override
+    public ChatMessage getRecentMessageByChatRoomId(Long chatRoomId){
+        Long size = zSetOperations.size(CHAT_SORTED_SET_ + chatRoomId);
+        if(size == 0)
+            return null;
+        ChatMessage recentChatMessage = zSetOperations.range(CHAT_SORTED_SET_ + chatRoomId, size - 1, size).iterator().next();
+        return recentChatMessage;
+    }
+
     //  해당 채팅방(roomId)
+    @Override
     public List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, ChatPagingRequestDto chatPagingDto) {
 
         //마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
@@ -129,7 +139,6 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
                 .memberId(chatPagingDto.getMemberId())
                 .nickName(chatPagingDto.getNickname())
                 .build();
-
 
         //마지막 chat_data cursor Rank 조회
         Long rank = zSetOperations.reverseRank(CHAT_SORTED_SET_ + chatRoomId, cursorDto);
