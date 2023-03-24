@@ -1,7 +1,7 @@
 package com.ssafy.omz.dto.req;
 
-import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.entity.Face;
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,17 +30,14 @@ public class MemberRequestDto {
         @NotNull(message="nickname은 null 일 수 없습니다")
         private String nickname;
 
-        @NotEmpty(message="profile은 빈값 일 수 없습니다")
-        @NotNull(message="profile은 null 일 수 없습니다")
-        private MultipartFile profile;
-
         @NotEmpty(message="myFace는 빈값 일 수 없습니다")
         @NotNull(message="myFace는 null 일 수 없습니다")
-        private Long myFace;
+        private FaceRequestDto.Write myFace;
 
         @NotEmpty(message="preferFace는 빈값 일 수 없습니다")
         @NotNull(message="preferFace는 null 일 수 없습니다")
-        private Long preferFace;
+        private FaceRequestDto.Write preferFace;
+
 
     }
 
@@ -65,5 +62,22 @@ public class MemberRequestDto {
                     .preferFace(memberEntity.getPreferFace())
                     .build();
         }
+    }
+
+    @Data
+    @NoArgsConstructor
+    @ApiModel(value = "멤버 회원가입 작성 정보")
+    public static class MemberInfo {
+        @NotEmpty(message="email는 빈값 일 수 없습니다")
+        @NotNull(message="email는 null 일 수 없습니다")
+        private String email;
+
+        @NotEmpty(message="mbti는 빈값 일 수 없습니다")
+        @NotNull(message="mbti는 null 일 수 없습니다")
+        private String mbti;
+
+        @NotEmpty(message="nickname은 빈값 일 수 없습니다")
+        @NotNull(message="nickname은 null 일 수 없습니다")
+        private String nickname;
     }
 }

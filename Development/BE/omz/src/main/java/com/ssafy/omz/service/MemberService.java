@@ -7,7 +7,9 @@ import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
 
+import com.ssafy.omz.entity.Member;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,5 +24,11 @@ public interface MemberService{
     // refresh code에 해당하는 유저 email 반환
     String memberEmail(String token);
 
-//    void updateMemberInfo(Long memberId, MemberRequestDto.Write member);
+    // 회원가입
+    void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo);
+
+    // 회원정보 조회
+    MemberResponseDto.MemberInfo getMemberInfo(Long memberId);
+
+
 }
