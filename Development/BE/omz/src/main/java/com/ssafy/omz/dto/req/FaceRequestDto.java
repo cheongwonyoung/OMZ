@@ -4,6 +4,7 @@ import com.ssafy.omz.dto.resp.FaceResponseDto;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -12,7 +13,8 @@ import javax.validation.constraints.NotEmpty;
 public class FaceRequestDto {
 
     @Data
-    @Builder
+    @NoArgsConstructor
+    @ApiModel(value = "동물상 정보")
     public static class Write {
 
         @NotEmpty(message = "dog는 빈값 일 수 없습니다")

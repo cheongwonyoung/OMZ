@@ -17,7 +17,6 @@ public class MemberRequestDto {
 
     @Data
     @Builder
-    @ApiModel(value = "멤버 회원가입 작성 정보")
     public static class Write {
         @NotEmpty(message="email는 빈값 일 수 없습니다")
         @NotNull(message="email는 null 일 수 없습니다")
@@ -63,5 +62,22 @@ public class MemberRequestDto {
                     .preferFace(memberEntity.getPreferFace())
                     .build();
         }
+    }
+
+    @Data
+    @NoArgsConstructor
+    @ApiModel(value = "멤버 회원가입 작성 정보")
+    public static class MemberInfo {
+        @NotEmpty(message="email는 빈값 일 수 없습니다")
+        @NotNull(message="email는 null 일 수 없습니다")
+        private String email;
+
+        @NotEmpty(message="mbti는 빈값 일 수 없습니다")
+        @NotNull(message="mbti는 null 일 수 없습니다")
+        private String mbti;
+
+        @NotEmpty(message="nickname은 빈값 일 수 없습니다")
+        @NotNull(message="nickname은 null 일 수 없습니다")
+        private String nickname;
     }
 }

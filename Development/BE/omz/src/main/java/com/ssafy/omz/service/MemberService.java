@@ -25,9 +25,10 @@ public interface MemberService{
     String memberEmail(String token);
 
     // 회원가입
-    void updateMemberInfo(Long memberId, MultipartFile profile, MemberRequestDto.Write member);
+    void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo);
 
     // 회원정보 조회
     MemberResponseDto.MemberInfo getMemberInfo(Long memberId);
+
 
 }
