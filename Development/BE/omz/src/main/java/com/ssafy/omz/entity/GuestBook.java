@@ -1,10 +1,7 @@
 package com.ssafy.omz.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -36,4 +33,12 @@ public class GuestBook {
 
     @CreationTimestamp
     private LocalDateTime registeredTime;
+
+    @Builder
+    private GuestBook(MiniRoom miniRoom, Member member, String content){
+        this.miniRoom = miniRoom;
+        this.member = member;
+        this.content = content;
+    }
+
 }
