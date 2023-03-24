@@ -42,7 +42,7 @@ public class ChatController {
             @ApiResponse(code = 404, message = "Not Found")
             //Other Http Status code..
     })
-    @GetMapping()
+    @GetMapping("")
     public ResponseEntity<List<ChatRoomDto>> getChatRoomList(){
 
         HttpStatus status = HttpStatus.OK;

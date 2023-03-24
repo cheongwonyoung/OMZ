@@ -25,7 +25,7 @@ public class ChatCachingInRedisScheduling {
 
     //  매일 새벽 2시 현재로부터 일주일 전 채팅 데이터를 MySql에서 가져와 Redis Cache에 적재
 //    @Scheduled(cron = "0 0 2 * * *")
-    @Scheduled(cron = "0 3/2 16 * * *")
+    @Scheduled(cron = "0 3/2 9 * * *")
     @Transactional
     public void chatCaching() {
         log.info("[ChatCachingInRedisScheduling chatCaching] redis chat caching start");

@@ -63,6 +63,7 @@ public class ChatStompController { // stomp chat controller
 
         message.setType(ChatMessage.MessageType.TALK);
 
+        //  만약 맨 처음 보낸 메세지면 ...
 
         // Topic에 pub 보내주기
         // 해당 채팅방에 메세지 보내주기
