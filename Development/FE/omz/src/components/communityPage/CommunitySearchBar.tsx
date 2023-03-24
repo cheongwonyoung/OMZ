@@ -15,12 +15,16 @@ type Article = {
   [key: string]: any;
 };
 export default function CommunitySearchBar() {
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState("content");
   const [word, setWord] = useState("");
   const memberId = 1;
 
-  const { data, isLoading, isError, error, refetch } = useQuery("search", () =>
-    searchArticles(memberId, key, word)
+  const { data, isLoading, isError, error, refetch } = useQuery(
+    "search",
+    () => searchArticles(memberId, key, word),
+    {
+      enabled: false,
+    }
   );
 
   const handleClick = () => {

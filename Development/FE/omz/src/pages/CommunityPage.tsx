@@ -8,15 +8,21 @@ import { images } from "../assets/images";
 import CommunityCreateSmall from "../components/communityPage/CommunityCreateSmall";
 import { createArticle } from "../api/community";
 type Article = {
+  boardId: number;
   [key: string]: any;
 };
 
 export default function CommunityPage() {
+  // 모든 게시글 리스트 불러오기(GET)
   const { data, isLoading, isError, error, refetch } = useQuery(
     "articles",
     getArticles
   );
+  // TODO: 나중에 고치기
   const memberId = 1;
+
+  console.log(data);
+  // 게시글 만들기 (Create)
   const addArticle = useMutation(
     (board: { content: string; file: File; memberId: number }) =>
       createArticle(board),
@@ -26,10 +32,6 @@ export default function CommunityPage() {
       },
     }
   );
-
-  if (isLoading) return <h3>isLoading...</h3>;
-  if (isError) return <h3>isError...</h3>;
-
   const handleArticleSubmit = (article: string, image: File) => {
     addArticle.mutate({
       content: article,
@@ -37,16 +39,21 @@ export default function CommunityPage() {
       memberId: memberId,
     });
   };
+  console.log(data?.data.content);
+  // TODO: 나중에 에러 페이지 로딩 페이지 만들기
+  if (isLoading) return <h3>isLoading...</h3>;
+  if (isError) return <h3>isError...</h3>;
 
   return (
     <div className="flex flex-col items-center">
       <TitleBar goto="/" title="Community" icon={images.community_img} />
+      <div className="m-3"></div>
       <CommunityCreateSmall onArticleSubmit={handleArticleSubmit} />
-      <p className="p-2">최신글</p>
-      <div>
-        {data?.data.content.map((article: Article[]) => (
+      <div className="m-3"></div>
+      <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {data?.data.content.map((article: Article) => (
           <CommunityArticleItem
-            key={uuidv4()}
+            key={article.boardId}
             item={article}
             refetch={refetch}
           />

@@ -57,12 +57,12 @@ export const getMemberArticle = (memberId: number) => {
 
 // 글 좋아요
 export const likeArticle = (boardId: number, memberId: number) => {
-  return instance.post(`/board/${memberId}/${boardId}`,{},{})   
+  return instance.post(`/board/${memberId}/${boardId}`)   
 } 
 
 // 글 좋아요 취소
 export const dislikeArticle = (boardId: number, memberId: number) => {
-  return instance.put(`/board/${memberId}/${boardId}`,{},{})   
+  return instance.put(`/board/${memberId}/${boardId}`)   
 } 
 
 // 내가 좋아요한 글 목록 불러오기 (O) 

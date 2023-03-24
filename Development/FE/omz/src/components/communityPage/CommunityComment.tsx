@@ -51,7 +51,6 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
     {
       onSuccess: () => {
         refetch();
-        console.log("하 이 롱 ");
       },
     }
   );
