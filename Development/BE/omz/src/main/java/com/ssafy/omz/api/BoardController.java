@@ -108,7 +108,7 @@ public class BoardController {
     }
     @ApiOperation(value = "커뮤니티 글 작성", notes = "커뮤니티 글 작성하기")
     @PostMapping("")
-    public ResponseEntity<?> boardWrite(@RequestParam MultipartFile file,
+    public ResponseEntity<?> boardWrite(@RequestParam(required = false) MultipartFile file,
                                         @RequestParam String dto) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -123,7 +123,7 @@ public class BoardController {
     @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기")
     @PutMapping("/{boardId}")
     public ResponseEntity<?> boardUpdate(@PathVariable Long boardId,
-                                         @RequestParam MultipartFile file,
+                                         @RequestParam(required = false) MultipartFile file,
                                          @RequestParam String dto) {
         try {
             ObjectMapper mapper = new ObjectMapper();
