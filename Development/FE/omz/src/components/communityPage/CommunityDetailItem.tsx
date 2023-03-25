@@ -29,7 +29,7 @@ type Props = {
   refetch: () => Promise<any>;
 };
 
-export default function CommunityArticleItem({ item, refetch }: Props) {
+export default function CommunityDetailItem({ item, refetch }: Props) {
   const navigate = useNavigate();
 
   // 삭제 눌렀을 때 띄울 모달 state
@@ -53,13 +53,6 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
 
   // TODO: 나중에 바꿔주기
   const memberId = 1;
-
-  // 클릭하면 Detail 페이지로 이동시킴
-  const handleClick = (boardId: number) => {
-    navigate(`/community/${boardId}`, {
-      state: { boardId: boardId, memberId: 1 },
-    });
-  };
 
   // Community 내의 마이 페이지로 이동시킴
   const goToMyPage = (memberId: number) => {
@@ -86,6 +79,7 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
     }) => updateArticle(board),
     {
       onSuccess: () => {
+        console.log("board");
         refetch();
       },
     }
@@ -147,12 +141,9 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
 
   return (
     <>
-      <div className="w-full flex justify-center">
-        <div className="flex flex-col pb-5 px-2 items-center">
-          <div
-            className="bg-white/70 flex justify-center rounded-xl cursor-pointer hover:scale-105 hover:bg-black/20 p-2"
-            onClick={() => handleClick(item.boardId)}
-          >
+      <div className="w-full flex justify-center mt-5">
+        <div className="w-11/12 flex flex-col pb-5 px-2 items-center">
+          <div className="bg-white/70 flex justify-center rounded-xl p-2">
             <div className="w-[90%] h-[90%]">
               <div className="flex justify-between">
                 <div className="flex justify-start gap-5 items-center">
@@ -214,25 +205,21 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                     src={images.main_logo}
                   />
                 )}
-                {/* 수정할 때 나오는 창  */}
+
                 {showUpdate ? (
-                  <form
-                    onSubmit={submitHandler}
-                    className="w-full flex flex-col justify-center items-end"
-                  >
+                  <form onSubmit={submitHandler} className="w-full">
                     <textarea
                       onClick={(e) => e.stopPropagation()}
                       defaultValue={item.content}
                       ref={articleContent}
                       maxLength={140}
-                      rows={6}
                       className="w-full focus:outline-none bg-white/50 resize-none"
                     ></textarea>
                     <button
-                      className="cursor-pointer hover:text-white p-3 border-black border-2 rounded-xl mb-3"
+                      className="cursor-pointer hover:text-white"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      수정하기
+                      <FontAwesomeIcon icon={faCheck} />
                     </button>
                   </form>
                 ) : (

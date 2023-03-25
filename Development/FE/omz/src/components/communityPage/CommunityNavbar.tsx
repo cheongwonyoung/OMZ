@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -11,37 +11,69 @@ import {
 export default function CommunityNavbar() {
   return (
     <>
-      <div className="w-full sm:hidden fixed left-0 bottom-0">
-        <div className="w-full h-[55px] flex justify-around items-center bg-black">
-          <div className="flex justify-evenly items-center flex-grow-0 flex-shrink-0 gap-8">
-            <Link to="/community">
-              <FontAwesomeIcon icon={faHouse} className="text-white text-2xl" />
-            </Link>
-            <Link to="/community/search">
-              <FontAwesomeIcon
-                icon={faSearch}
-                className="text-white text-2xl"
-              />
-            </Link>
-          </div>
-          <div className="flex justify-evenly items-center flex-grow-0 flex-shrink-0 gap-8">
-            <Link to="/community/like">
-              <FontAwesomeIcon icon={faHeart} className="text-white text-2xl" />
-            </Link>
-            <Link to="/community/mypage">
-              <FontAwesomeIcon icon={faUser} className="text-white text-2xl" />
-            </Link>
+      <div className="bg-black fixed bottom-0 overflow-visible w-full shadow-inner p-4 flex flex-row rounded-tl-[10px] rounded-tr-[10px]">
+        <div className="flex flex-1 justify-center text-xs font-bold text-center">
+          <NavLink
+            to="/community/"
+            className={({ isActive }) =>
+              isActive ? "text-[#5B5685]" : "text-white"
+            }
+          >
+            <FontAwesomeIcon icon={faHouse} className="text-2xl" />
+            <span className="block text-xs pt-1">Home</span>
+          </NavLink>
+        </div>
+        <div className="flex flex-1 justify-center text-xs font-bold text-center">
+          <NavLink
+            to="/community/search"
+            className={({ isActive }) =>
+              isActive ? "text-[#5B5685]" : "text-white"
+            }
+          >
+            <FontAwesomeIcon icon={faSearch} className="text-2xl" />
+            <span className="block text-xs pt-1">Explore</span>
+          </NavLink>
+        </div>
+        <div className="flex flex-1 justify-center items-center font-bold text-center">
+          <div className="flex justify-center items-center w-[50px] h-[50px]  p-[5px] rounded-[10px] bg-white">
+            <div
+              className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2 p-2 rounded-[10px] bg-white border border-black"
+              id="btn"
+            >
+              <NavLink
+                to="/community/create"
+                className={({ isActive }) =>
+                  isActive ? "text-[#5B5685]" : "text-black"
+                }
+              >
+                <FontAwesomeIcon icon={faPlus} className="text-2xl" />
+              </NavLink>
+            </div>
           </div>
         </div>
-        <div className="flex justify-center items-center w-[50px] h-[50px] absolute left-[170px] top-0 gap-[5px] p-[5px] rounded-[10px] bg-white">
-          <div
-            className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 p-2 rounded-[10px] bg-white border border-black"
-            id="btn"
+
+        <div className="flex flex-1 justify-center text-xs font-bold text-center">
+          <NavLink
+            to="/community/like"
+            className={({ isActive }) =>
+              isActive ? "text-[#5B5685]" : "text-white"
+            }
           >
-            <Link to="/community/create">
-              <FontAwesomeIcon icon={faPlus} className="text-2xl" />
-            </Link>
-          </div>
+            <FontAwesomeIcon icon={faHeart} className="text-2xl" />
+            <span className="block text-xs pt-1">Like</span>
+          </NavLink>
+        </div>
+        <div className="flex flex-1 justify-center text-xs font-bold text-center">
+          {/* TODO: 나중에 고쳐야함  */}
+          <NavLink
+            to="/community/mypage/1"
+            className={({ isActive }) =>
+              isActive ? "text-[#5B5685]" : "text-white"
+            }
+          >
+            <FontAwesomeIcon icon={faUser} className="text-2xl" />
+            <span className="block text-xs pt-1">MyPage</span>
+          </NavLink>
         </div>
       </div>
     </>

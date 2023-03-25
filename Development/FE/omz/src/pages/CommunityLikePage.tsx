@@ -5,27 +5,48 @@ import { likeArticles } from "../api/community";
 import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 import CommunityArticleItem from "../components/communityPage/CommunityArticleItem";
+import Loading from "../components/common/Loading";
+
 type Article = {
   [key: string]: any;
 };
 
 export default function CommunityLikePage() {
+  // TODO: 나중에 바꾸기
   const memberId = 1;
-
+  const membernickname = "채채";
+  // 좋아요한 게시물 가져오기
   const { data, isLoading, isError, error, refetch } = useQuery(
     "articlelike",
     () => likeArticles(memberId)
   );
-  console.log(data);
-  if (isLoading) return <h3>Loading..</h3>;
+
+  if (isLoading) return <Loading />;
   if (isError) return <h3>Error...</h3>;
 
   return (
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
-      {data?.data.map((article: Article) => (
-        <CommunityArticleItem key={uuidv4()} item={article} refetch={refetch} />
-      ))}
+      <div className="mb-5"></div>
+      <div className="w-11/12 mb-5">
+        <div className="flex justify-start items-center">
+          <p className="font-bold text-2xl">
+            {membernickname}님이 좋아하는 게시물
+          </p>
+
+          <img src={images.heart_img} alt="" className="" />
+        </div>
+      </div>
+      <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {data?.data.map((article: Article) => (
+          <CommunityArticleItem
+            key={uuidv4()}
+            item={article}
+            refetch={refetch}
+          />
+        ))}
+      </div>
+      <div className="pb-20"></div>
       <CommunityNavbar />
     </div>
   );

@@ -7,14 +7,14 @@ import { v4 as uuidv4 } from "uuid";
 import MyChatting from "../components/chatting/MyChatting";
 import YourChatting from "../components/chatting/YourChatting";
 // import { StompConfig } from "@stomp/stompjs";
-// TODO: uuid는 이거 보고 하기
+
 export default function ChattingDetailPage() {
   const [connected, setConnected] = useState(false);
-  type chat = { memberId?: number; message?: string };
+  type chat = { memberId?: number; message: string };
   const [chatList, setChatList] = useState<chat[]>([
     {
-      memberId: 3,
       message: "안녕하세요",
+      memberId: 3,
     },
   ]);
   const client: any = useRef({});
@@ -28,14 +28,13 @@ export default function ChattingDetailPage() {
 
   const connect = () => {
     client.current = new StompJS.Client({
-      // "ws://70.12.246.116:8080/stomp-chat/websocket"
-      brokerURL: "ws://70.12.246.116:8080/stomp-chat/websocket",
+      // brokerURL: "ws://70.12.246.116:8080/stomp-chat/websocket",
+      brokerURL: "ws://localhost:8080/api/stomp-chat/websocket",
       connectHeaders: {
         login: "user",
         password: "password",
       },
       onConnect: () => {
-        console.log("성공!");
         setConnected(true);
         subscribe();
       },
@@ -62,6 +61,7 @@ export default function ChattingDetailPage() {
         memberId: newMemberID,
       },
     ]);
+    console.log(chatList);
   };
 
   const handler = (message: string) => {

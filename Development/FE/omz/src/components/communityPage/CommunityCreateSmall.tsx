@@ -10,7 +10,9 @@ type Props = {
 };
 
 export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
+  // 이미지 버튼 클릭하면 이미지 업로더 띄울 수 있게 함
   const [showUploader, setShowUploader] = useState(false);
+  // 내용 업로드
   const articleInputRef = useRef<HTMLInputElement>(null);
   // 이미지 업로드
   const [file, setFile] = useState([]);
@@ -18,8 +20,7 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
     setFile(f);
   };
 
-  // const imageInputRef = useRef<HTMLInputElement>(null);
-
+  // Post 하고 값들 다 없는 걸로 바꿔주기
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredArticle = articleInputRef.current!.value;
@@ -27,52 +28,51 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
     if (enteredArticle.trim().length === 0) {
       return;
     }
-
     onArticleSubmit(enteredArticle, file[0]);
     articleInputRef.current!.value = "";
     setFile([]);
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center w-11/12 relative gap-[15px] p-3 mt-3 border-black border-2">
-        <img
-          className="flex-grow-0 flex-shrink-0 w-10 h-10"
-          src={images.mini_room_img}
-        />
-
-        <form
-          onSubmit={submitHandler}
-          className="w-full h-full flex justify-between items-center"
-        >
-          <input
-            type="text"
-            className="w-10/12 h-full focus:outline-none bg-transparent"
-            placeholder="나는 지금..."
-            maxLength={140}
-            ref={articleInputRef}
-          />
-
-          <FontAwesomeIcon
-            icon={faImage}
-            onClick={() => {
-              if (showUploader) {
-                setShowUploader(false);
-              } else {
-                setShowUploader(true);
-              }
-            }}
-          />
-          <button>
-            <FontAwesomeIcon icon={faCheck} />
-          </button>
-          {showUploader && (
-            <div className="flex flex-col">
-              <ImageUploader file={file} onFile={onFile} shape={false} />
+    <>
+      {/* TODO: img 방식 나중에 바꾸기  */}
+      <form onSubmit={submitHandler} className="w-full">
+        <div className="w-full flex flex-col items-center">
+          <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2">
+            <img
+              src={images.profile_img}
+              alt=""
+              className="w-[3rem] h-[3rem] object-cover rounded-full"
+            />
+            <div className="w-full flex justify-between items-center">
+              <input
+                type="text"
+                className="w-10/12 h-full focus:outline-none bg-transparent"
+                placeholder="아무말이나 일단 써"
+                maxLength={140}
+                ref={articleInputRef}
+              />
+              <FontAwesomeIcon
+                icon={faImage}
+                className="text-xl"
+                onClick={() => {
+                  if (showUploader) {
+                    setShowUploader(false);
+                  } else {
+                    setShowUploader(true);
+                  }
+                }}
+              />
+              <button>
+                <FontAwesomeIcon icon={faCheck} className="text-xl" />
+              </button>
             </div>
+          </div>
+          {showUploader && (
+            <ImageUploader file={file} onFile={onFile} shape={false} />
           )}
-        </form>
-      </div>
-    </div>
+        </div>
+      </form>
+    </>
   );
 }
