@@ -1,12 +1,14 @@
 import CommunityNavbar from "../components/communityPage/CommunityNavbar";
 import CommunityArticleItem from "../components/communityPage/CommunityArticleItem";
 import { getArticles } from "../api/community";
-import { useMutation, useQuery } from "react-query";
-import { v4 as uuidv4 } from "uuid";
+import { useMutation, useQuery, useInfiniteQuery } from "react-query";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
 import CommunityCreateSmall from "../components/communityPage/CommunityCreateSmall";
 import { createArticle } from "../api/community";
+import Loading from "../components/common/Loading";
+import InfiniteScroll from "react-infinite-scroller";
+
 type Article = {
   boardId: number;
   [key: string]: any;
@@ -14,14 +16,14 @@ type Article = {
 
 export default function CommunityPage() {
   // 모든 게시글 리스트 불러오기(GET)
-  const { data, isLoading, isError, error, refetch } = useQuery(
-    "articles",
-    getArticles
-  );
-  // TODO: 나중에 고치기
   const memberId = 1;
-
+  const { data, isLoading, isError, error, refetch } = useQuery(
+    ["articles", memberId],
+    () => getArticles(memberId)
+  );
   console.log(data);
+  // TODO: 나중에 고치기
+
   // 게시글 만들기 (Create)
   const addArticle = useMutation(
     (board: { content: string; file: File; memberId: number }) =>
@@ -39,9 +41,9 @@ export default function CommunityPage() {
       memberId: memberId,
     });
   };
-  console.log(data?.data.content);
+
   // TODO: 나중에 에러 페이지 로딩 페이지 만들기
-  if (isLoading) return <h3>isLoading...</h3>;
+  if (isLoading) return <Loading />;
   if (isError) return <h3>isError...</h3>;
 
   return (
@@ -59,6 +61,7 @@ export default function CommunityPage() {
           />
         ))}
       </div>
+      <div className="pb-20"></div>
       <CommunityNavbar />
     </div>
   );

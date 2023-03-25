@@ -5,6 +5,7 @@ import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
 import { useQuery } from "react-query";
 import { getChatting } from "../api/chatting";
+import Loading from "../components/common/Loading";
 
 const ChattingPage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const ChattingPage = () => {
   //   () => getChatting()
   // );
 
-  // if (isLoading) return <h3>Loading..</h3>;
+  // if (isLoading) return <Loading />;
   // if (isError) return <h3>Error...</h3>;
   // console.log(data);
   return (

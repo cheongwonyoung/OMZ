@@ -1,11 +1,11 @@
 import { images } from "../../assets/images";
 import { useState, useRef } from "react";
-import DeleteCommentModal from "./DeleteCommentModal";
+import DeleteCommentModal from "../common/DeletetModal";
 import { deleteReply, updateReply } from "../../api/community";
 import { useMutation } from "react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
-
+import { useNavigate } from "react-router-dom";
 type Comment = {
   [key: string]: any;
 };
@@ -17,12 +17,18 @@ type Props = {
 };
 
 export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
+  const navigate = useNavigate();
+  // 삭제 모달 띄울 state
   const [showModal, setShowModal] = useState(false);
+  // update 로 바꿔줄 state
   const [showUpdate, setShowUpdate] = useState(false);
+  // update할 내용 담기
   const commentContent = useRef<HTMLTextAreaElement>(item.content);
+  // 시간 원하는 형식으로 바꿔주기
   const timestamp = new Date(item.registeredTime);
   const date = timestamp.toDateString();
 
+  // 댓글 삭제하기
   const deleteComment = useMutation((replyId: number) => deleteReply(replyId), {
     onSuccess: () => {
       setShowModal(false);
@@ -34,6 +40,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   const replyId = item.replyId;
   const memberId = 1;
 
+  // 댓글 수정하기
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredUpdateComment = commentContent.current!.value;
@@ -59,6 +66,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
     updateComment.mutate({ boardId, content: comment, memberId });
   };
 
+  // 삭제 관련
   function closeModalHandler() {
     setShowModal(false);
   }
@@ -67,19 +75,30 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
     deleteComment.mutate(replyId);
   }
 
+  // Community 내의 마이 페이지로 이동시킴
+  const goToMyPage = (memberId: number) => {
+    navigate(`/community/mypage/${memberId}`);
+  };
+
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-10/12 m-3">
+    <div className="w-full flex justify-center border-b-2 border-white">
+      <div className="w-11/12 m-3">
         <div className="flex w-full justify-between items-start gap-3">
-          {item.member.file ? (
-            <img src={item.member.file} alt="" className="w-10 h-10" />
-          ) : (
-            <img src={images.main_logo} alt="" className="w-10 h-10" />
-          )}
+          {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
+          <img
+            className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem] cursor-pointer hover:scale-110"
+            src={images.profile_img}
+            onClick={() => {
+              goToMyPage(item.member.memberId);
+            }}
+          />
 
           <div className="flex w-full flex-col justify-center items-end">
             <div className="flex w-full justify-between items-center">
-              <p className="flex-grow-0 flex-shrink-0 text-sm font-bold text-left text-[#555a64]">
+              <p
+                className="flex-grow-0 flex-shrink-0 text-sm font-bold text-left text-[#555a64] cursor-pointer hover:text-white"
+                onClick={() => goToMyPage(item.member.memberId)}
+              >
                 {item.member.nickname}
               </p>
               <p className="flex-grow-0 flex-shrink-0 text-xs text-right text-[#555a64]">
@@ -96,23 +115,25 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                     maxLength={70}
                     className="w-full focus:outline-none bg-white/50 resize-none"
                   />
-                  <div className="flex justify-end gap-2">
+                  <div className="flex justify-end gap-5">
                     {/* 누르면 update 반영되게 !! */}
                     <button className="cursor-pointer hover:text-[#FF0076]">
-                      <FontAwesomeIcon icon={faCheck} />
+                      <FontAwesomeIcon icon={faCheck} className="text-2xl" />
                     </button>
-                    <FontAwesomeIcon
-                      icon={faXmark}
-                      onClick={() => setShowUpdate(false)}
-                      className="cursor-pointer hover:text-[#FDFFA7]"
-                    />
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        onClick={() => setShowUpdate(false)}
+                        className="cursor-pointer hover:text-[#FDFFA7] text-2xl"
+                      />
+                    </div>
                   </div>
                 </form>
               </div>
             ) : (
               <div>
                 <div>
-                  <p>{item.content}</p>
+                  <p className="text-left">{item.content}</p>
                 </div>
                 <div className="flex justify-end gap-2">
                   <button

@@ -1,8 +1,12 @@
 import { instance } from '.'; 
 
 // 게시글 GET (O) 
-export const getArticles = () => {
-  return instance.get('/board');
+export const getArticles = (memberId: number) => {
+  return instance.get('/board', {
+    params: {
+      memberId: memberId
+    }
+  });
 }; 
 
 // 게시글 상세 GET (O) 
@@ -56,12 +60,12 @@ export const getMemberArticle = (memberId: number) => {
 }; 
 
 // 글 좋아요
-export const likeArticle = (boardId: number, memberId: number) => {
+export const likeArticle = (memberId: number, boardId: number,) => {
   return instance.post(`/board/${memberId}/${boardId}`)   
 } 
 
 // 글 좋아요 취소
-export const dislikeArticle = (boardId: number, memberId: number) => {
+export const dislikeArticle = (memberId: number, boardId: number,) => {
   return instance.put(`/board/${memberId}/${boardId}`)   
 } 
 

@@ -46,23 +46,26 @@ export default function CommunityCreatePage() {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center justify-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
-      <div className="mb-3"></div>
+      <div className="mb-5"></div>
       <form action="" className="w-11/12 pb-10" onSubmit={submitHandler}>
         <div className="w-full flex justify-between items-start gap-2">
           <img src={images.profile_img} alt="" className="w-15 h-15" />
           <textarea
             maxLength={140}
-            placeholder="나는 지금.."
+            placeholder="아무말이나 일단 써"
             ref={contentInputRef}
-            className="bg-inherit focus:outline-none w-full h-[200px]"
+            className="bg-inherit focus:outline-none w-full h-[200px] resize-none"
           />
         </div>
-        {showUploader && (
-          <ImageUploader file={file} onFile={onFile} shape={false} />
-        )}
-        <div className="flex justify-end items-center gap-3">
+        <div className="flex justify-center mb-2">
+          {showUploader && (
+            <ImageUploader file={file} onFile={onFile} shape={false} />
+          )}
+        </div>
+
+        <div className="flex justify-end items-center gap-5">
           <div
             onClick={() => {
               if (showUploader) {
@@ -72,13 +75,20 @@ export default function CommunityCreatePage() {
               }
             }}
           >
-            <FontAwesomeIcon icon={faImage} />
+            <FontAwesomeIcon
+              icon={faImage}
+              className="text-2xl cursor-pointer hover:text-white"
+            />
           </div>
           <button>
-            <FontAwesomeIcon icon={faCheck} />
+            <FontAwesomeIcon
+              icon={faCheck}
+              className="text-2xl cursor-pointer hover:text-white"
+            />
           </button>
         </div>
       </form>
+      <div className="pb-20"></div>
       <CommunityNavbar />
     </div>
   );

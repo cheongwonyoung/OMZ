@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export default function DeleteCommentModal(props: any) {
+export default function DeleteModal(props: any) {
   // esc 누르면 모달 사라지게 하기
   window.onkeydown = function (event) {
     if (event.keyCode == 27) {
@@ -24,7 +24,7 @@ export default function DeleteCommentModal(props: any) {
                 icon={faTrash}
                 className="text-[#FABBCA] text-[40px]"
               />
-              <p className="font-bold">댓글을 정말 삭제하시겠습니까?</p>
+              <p className="font-bold">정말 삭제하시겠습니까?</p>
 
               <button onClick={() => props.onCancel()}>
                 <FontAwesomeIcon
