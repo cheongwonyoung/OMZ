@@ -20,6 +20,7 @@ export default function KakaoRedirectPage() {
     }
   );
 
+  //TODO UseQuery 바로 사용
   useQuery("kakao_token", () => getKakaoToken(AUTH_CODE), {
     retry: false,
     onSuccess(data) {

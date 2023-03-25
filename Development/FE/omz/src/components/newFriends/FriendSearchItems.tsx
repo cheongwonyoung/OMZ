@@ -14,7 +14,7 @@ export default function FriendSearchItems() {
           {goBtn("마이페이지")}
         </div>
       </div>
-      <div className="w-full h-0.5 bg-black"></div>
+      <div className="w-full h-[1px] bg-black"></div>
     </div>
   );
 }

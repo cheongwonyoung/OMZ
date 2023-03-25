@@ -43,6 +43,7 @@ export default function MyPageUpdateForm() {
       name="name"
       value={myInfos.name}
       onChange={(e) => handleMyInfos(e)}
+      maxLength={10}
     />
   );
 
@@ -58,7 +59,7 @@ export default function MyPageUpdateForm() {
         />
       </div>
       {isDrop && (
-        <div className="w-full top-9 px-4 py-2 gap-1 flex flex-col absolute border border-solid border-purple-200 bg-white rounded-xl h-96 overflow-scroll">
+        <div className="w-full top-9 px-4 py-2 gap-1 flex flex-col absolute border border-solid border-purple-200 bg-white rounded-xl h-96 overflow-y-scroll">
           {mbtiList.map((item) => (
             <button
               key={uuidv4()}
