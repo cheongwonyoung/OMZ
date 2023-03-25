@@ -1,6 +1,7 @@
 package com.ssafy.omz.service;
 
-import com.ssafy.omz.dto.resp.ChatRoomDto;
+import com.ssafy.omz.dto.resp.ChatRoomInfoResponseDto;
+import com.ssafy.omz.dto.resp.ChatRoomResponseDto;
 
 import java.util.List;
 
@@ -11,5 +12,7 @@ public interface ChatRoomService {
     String disconnectWebsocket(String sessionId);
     String leaveChatRoom(String sessionId); // unsubscribe
 
-    List<ChatRoomDto> getChatRoomList(long memberId);
+    List<ChatRoomInfoResponseDto> getChatRoomList(long memberId);
+
+    ChatRoomResponseDto getChatRoomInfo(long chatRoomId, long memberId);
 }

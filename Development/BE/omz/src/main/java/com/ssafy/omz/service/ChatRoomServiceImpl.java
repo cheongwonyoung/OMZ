@@ -1,7 +1,8 @@
 package com.ssafy.omz.service;
 
 import com.ssafy.omz.dto.req.ChatMessage;
-import com.ssafy.omz.dto.resp.ChatRoomDto;
+import com.ssafy.omz.dto.resp.ChatRoomInfoResponseDto;
+import com.ssafy.omz.dto.resp.ChatRoomResponseDto;
 import com.ssafy.omz.entity.ChatRoom;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.repository.ChatRoomRedisRepository;
@@ -54,16 +55,18 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
-    public List<ChatRoomDto> getChatRoomList(long memberId) {
+    public List<ChatRoomInfoResponseDto> getChatRoomList(long memberId) {
+
         Member member = memberRepository.findByMemberId(memberId);
         List<ChatRoom> chatRooms = chatRoomRepository.findAllByToMemberIdOrFromMemberId(member, member);
 
-        List<ChatRoomDto> chatRoomList = new ArrayList<>();
+        List<ChatRoomInfoResponseDto> chatRoomList = new ArrayList<>();
         for (ChatRoom chatRoom:
              chatRooms) {
 
-            //  chatRepository 제일 최근 메세지 하나 redis에서 조회
+            //  chatRepository 최근 메세지 Redis에서 조회
             ChatMessage recentChatMessage = chatRedisCacheService.getRecentMessageByChatRoomId(chatRoom.getChatRoomId());
+
             if(recentChatMessage == null)
                 continue;
 
@@ -77,7 +80,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                 state = friendRepository.findByToMember_MemberIdAndFromMember_MemberId(memberId, other.getMemberId()).getState();
 
             chatRoomList.add(
-                    ChatRoomDto.builder()
+                    ChatRoomInfoResponseDto.builder()
                             .roomId(chatRoom.getChatRoomId())
                             .nickName(other.getNickname())
                             .memberId(other.getMemberId())
@@ -90,5 +93,23 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             );
         }
         return chatRoomList;
+    }
+
+    @Override
+    public ChatRoomResponseDto getChatRoomInfo(long chatRoomId, long memberId) {
+        Member member = memberRepository.findByMemberId(memberId);
+        ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(chatRoomId);
+        Member other = (chatRoom.getToMemberId().getMemberId() != memberId) ? chatRoom.getToMemberId() : chatRoom.getFromMemberId();
+
+        int state = 2;
+        if(friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, other.getMemberId()))
+            state = friendRepository.findByToMember_MemberIdAndFromMember_MemberId(memberId, other.getMemberId()).getState();
+
+        return ChatRoomResponseDto.builder()
+                .nickName(other.getNickname())
+                .otherMemberId(other.getMemberId())
+                .file(other.getFile())
+                .friendState(state)
+                .build();
     }
 }
