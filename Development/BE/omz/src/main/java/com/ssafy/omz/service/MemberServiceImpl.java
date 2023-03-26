@@ -10,11 +10,14 @@ import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.entity.Face;
+import com.ssafy.omz.entity.Item;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.entity.MiniRoom;
 import com.ssafy.omz.repository.FaceRepository;
+import com.ssafy.omz.repository.ItemRepository;
 import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.repository.MiniRoomRepository;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import com.google.cloud.storage.*;
 
@@ -35,10 +38,7 @@ import javax.imageio.ImageIO;
 import javax.persistence.RollbackException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.UUID;
 import java.util.*;
 import java.util.List;
@@ -55,6 +55,8 @@ public class MemberServiceImpl implements MemberService{
     private final Storage storage;
     private final FaceRepository faceRepository;
     private final MiniRoomRepository miniRoomRepository;
+    private final ItemRepository itemRepository;
+    private static final String SECRET_KEY  = "CREATEDBYWY";
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
@@ -142,6 +144,12 @@ public class MemberServiceImpl implements MemberService{
         // 미니룸 저장
         miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
 
+//        this.member = member;
+//        this.itemType = itemType;
+//        this.state = state;
+//        this.name = name;
+        // 아이템 정보 저장
+//        itemRepository.save(Item.builder().member(member).itemType())
 
         memberRepository.save(
                 memberRepository.findByMemberId(memberId).updateMemberInfo(
@@ -177,8 +185,14 @@ public class MemberServiceImpl implements MemberService{
 
     // 회원정보 조회
     @Override
-    public MemberResponseDto.MemberInfo getMemberInfo(Long memberId) {
-        Member member = memberRepository.findByMemberId(memberId);
+    public MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException {
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
         return MemberResponseDto.MemberInfo.fromEntity(member);
     }
 
