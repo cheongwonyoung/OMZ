@@ -1,6 +1,7 @@
 package com.ssafy.omz.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
@@ -12,11 +13,14 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
 @Api("memberController API v1")
 @RestController
 @RequestMapping("/member")
@@ -77,17 +81,50 @@ public class MemberController {
         return new ResponseEntity<TokenDto>(tokenDto, HttpStatus.OK);
 
     }
+//, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE}
 
-    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
-    @PatchMapping("/update")
-    public ResponseEntity<?> updateMemberInfo(@RequestParam(required = true, value = "memberId") Long memberId,  MemberRequestDto.Write member, @RequestBody FaceRequestDto.Write face, @RequestBody FaceRequestDto.Write preferFace) throws Exception {
+    @ApiOperation(value = "유저 정보", notes = "유저 아이디를 받아 유저 정보 반환")
+    //MediaType.APPLICATION_JSON_VALUE
+    @GetMapping(value = "/info/{memberId}")
+    public ResponseEntity<?> memberInfo(@PathVariable Long memberId) throws Exception {
         try {
-//            memberService.updateMemberInfo(memberId, member, face, preferFace);
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(memberService.getMemberInfo(memberId), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    //MediaType.APPLICATION_JSON_VALUE
+    @PostMapping(value = "/update/{memberId}",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> updateMemberInfo(@PathVariable Long memberId, @RequestParam(value="file") MultipartFile file, @RequestParam String member, @RequestParam String face, @RequestParam String preferFace) throws Exception {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            MemberRequestDto.MemberInfo memberInfo = mapper.readValue(member, MemberRequestDto.MemberInfo.class);
+            FaceRequestDto.Write faceInfo = mapper.readValue(face, FaceRequestDto.Write.class);
+            FaceRequestDto.Write prefeFacerInfo = mapper.readValue(preferFace, FaceRequestDto.Write.class);
+
+            memberService.updateMemberInfo(memberId, file, memberInfo,faceInfo,prefeFacerInfo);
+            return new ResponseEntity<>(file.getOriginalFilename(),HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
+        try {
+
+            return new ResponseEntity<>(test, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 }

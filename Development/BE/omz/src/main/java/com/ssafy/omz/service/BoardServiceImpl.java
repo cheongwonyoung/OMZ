@@ -52,12 +52,15 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<BoardResponseDto.Info> searchBoardByContent(Long memberId, String word) {
-        return boardRepository.findAllByIsDeletedIsFalseAndContentContaining(word)
-                .map(board -> {
-                    BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
-                    res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
-                    return res;
-                }).stream().collect(Collectors.toList());
+        List<Board> boards = boardRepository.findAllByIsDeletedIsFalseAndContentContaining(word);
+        List<BoardResponseDto.Info> res = new ArrayList<>();
+        for (Board board : boards) {
+            BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(board);
+            respDto.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+
+            res.add(respDto);
+        }
+        return res;
     }
 
     @Override
@@ -84,16 +87,20 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void memberLikeBoard(Long memberId, Long boardId) {
-        log.info(memberId + " " + boardId);
-        boardLikesRepository.save(BoardLikes.builder()
-                .member(memberRepository.findByMemberId(memberId))
-                .board(boardRepository.findByBoardId(boardId))
-                .build());
+        if(!boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+            boardLikesRepository.save(BoardLikes.builder()
+                    .member(memberRepository.findByMemberId(memberId))
+                    .board(boardRepository.findByBoardId(boardId))
+                    .build());
+        }
     }
 
     @Override
     public void memberCancleLikeBoard(Long memberId, Long boardId) {
-        boardLikesRepository.deleteById(boardLikesRepository.findByMember_MemberIdAndBoard_BoardId(memberId, boardId).getBoardLikesId());
+        if(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+            boardLikesRepository.deleteById(boardLikesRepository
+                    .findByMember_MemberIdAndBoard_BoardId(memberId, boardId).getBoardLikesId());
+        }
     }
 
     @Override

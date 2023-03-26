@@ -36,8 +36,7 @@ public class Chat implements Serializable {
 
     private String message;
 
-    @CreationTimestamp
-    private LocalDateTime createdTime;
+    private String createdTime;
 
     @ColumnDefault("false")
     private boolean isChecked;

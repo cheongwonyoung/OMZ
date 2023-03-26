@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 public class ChatPagingRequestDto {
 
     private String message;
-    private String writer; // nickname or memberId
+
+    private String memberId;
+
+    private String nickname;
+//    private String writer; // nickname or memberId
     private String cursor; // LocalDateTime ? 
 }
