@@ -8,7 +8,7 @@ export default function BackBtn({ goBack }: Props) {
   return (
     <div
       onClick={goBack}
-      className="text-purple-700 w-full h-full flex justify-center items-center text-xl"
+      className="text-black w-full h-full flex justify-center items-center text-xl hover:text-purple-600 cursor-pointer"
       // className="bg-black text-white w-full h-full flex justify-center items-center rounded-xl"
     >
       <FontAwesomeIcon icon={faArrowLeft} />

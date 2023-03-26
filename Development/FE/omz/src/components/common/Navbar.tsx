@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
 
 export default function NavBar() {
   const [navbar, setNavbar] = useState(false);
+  const memberId = useRecoilValue(userStatus).id;
 
   return (
     <nav className="w-full bg-white shadow hidden sm:block">
@@ -47,7 +50,7 @@ export default function NavBar() {
                 <Link to="/miniroom">Mini Room</Link>
               </li>
               <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/mypage">My Page</Link>
+                <Link to={`/mypage/${memberId}`}>My Page</Link>
               </li>
               <li className="text-gray-600 hover:text-blue-600">
                 <Link to="/myfriends">My Friends</Link>

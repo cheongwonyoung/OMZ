@@ -1,19 +1,21 @@
 import MbtiUpdateModal from "../components/mypage/MbtiUpdateModal";
 import { useState } from "react";
 import { Model } from "../assets/3DAvatar/Rabbit";
-import Camera3D from "../components/common/Camera3D";
 import MyPageMiniRoomBanner from "../components/mypage/MyPageMiniRoomBanner";
 import MyPageBasicInformation from "../components/mypage/MyPageBasicInformation";
 import { useNavigate } from "react-router-dom";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
 import CameraAvatar from "../components/common/CameraAvatar";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
+import { useQuery } from "react-query";
 export default function MyPage() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const goToCustom = () => {
-    navigate("/mypage/custom/1");
+    navigate("/mypage/custom");
   };
   function closeModalHandler() {
     setShowModal(false);
@@ -24,6 +26,9 @@ export default function MyPage() {
     return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
     // }
   };
+
+  // TODO 멤버 아이디 사용
+  const memberId = useRecoilValue(userStatus).id;
 
   return (
     <div className="flex flex-col justify-center items-center w-full">

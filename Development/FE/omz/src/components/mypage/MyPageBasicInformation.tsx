@@ -7,7 +7,7 @@ export default function MyPageBasicInformation() {
   const navigate = useNavigate();
 
   const goToUpdate = () => {
-    navigate("/mypage/1");
+    navigate("/mypage/update");
   };
   const animalPrefer: { [key: string]: number } = {
     강아지: 20,

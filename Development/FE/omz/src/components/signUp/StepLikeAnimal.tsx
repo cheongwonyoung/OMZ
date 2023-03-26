@@ -5,31 +5,23 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { v4 as uuidv4 } from "uuid";
 
+interface AnimalPrefer {
+  [key: string]: number;
+}
+
 type Props = {
   plusPage(): void;
+  changePrefer(e: any): void;
+  animalPrefer: AnimalPrefer;
 };
 
-export default function StepLikeAnimal({ plusPage }: Props) {
+export default function StepLikeAnimal({
+  plusPage,
+  changePrefer,
+  animalPrefer,
+}: Props) {
   const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
-  interface AnimalPrefer {
-    [key: string]: number;
-  }
 
-  const [animalPrefer, setAnimalPrefer] = useState<AnimalPrefer>({
-    강아지: 0,
-    고양이: 0,
-    곰: 0,
-    여우: 0,
-    토끼: 0,
-    공룡: 0,
-  });
-
-  const changePrefer = (e: any) => {
-    const name = e.target.id;
-    const value = e.target.value;
-    setAnimalPrefer({ ...animalPrefer, [name]: value });
-    console.log(animalPrefer);
-  };
   const imgsrc = (i: string): string => {
     switch (i) {
       case "강아지":

@@ -18,6 +18,7 @@ export default function ImageUploader({ file, onFile, shape }: Props) {
       "image/*": [],
     },
     onDrop: (acceptedFiles: any) => {
+      console.log(acceptedFiles);
       onFile(
         acceptedFiles.map((file: MediaSource) =>
           Object.assign(file, {
