@@ -101,7 +101,7 @@ public class StompHandler implements ChannelInterceptor {
 //            String username = token; // null값 들어가는게 맞긴 한데 확인을 못해보내 ㅈ금 ...
 
             // ***********TEST*****************
-            String username = "sunheeTestStompHandler";
+            String username = "sunheeTestStompHandler"; // token 기반 nickname 추출해야 함
 
             //redis에  key(roomId) :  Value( sessionId , nickname ) 저장
             chatRoomService.enterChatRoom(roomId, sessionId, username); // 닉네임으로? 아니면 memberId로?

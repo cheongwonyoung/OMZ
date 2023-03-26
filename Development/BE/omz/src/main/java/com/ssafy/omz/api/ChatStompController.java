@@ -1,12 +1,15 @@
 package com.ssafy.omz.api;
 
 import com.ssafy.omz.dto.req.ChatMessage;
+import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.service.ChatRedisCacheService;
+import com.ssafy.omz.service.MemberService;
 import com.ssafy.omz.service.RedisPublisher;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 //@Api("ChatStompController API v1")
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class ChatStompController { // stomp chat controller
@@ -25,8 +29,7 @@ public class ChatStompController { // stomp chat controller
 
     private final ChatRedisCacheService chatRedisCacheService;
 
-
-
+    private final MemberService memberService;  // LittleInfo return하는 메소드 추가해야 함
 
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
@@ -51,23 +54,18 @@ public class ChatStompController { // stomp chat controller
             , defaultValue = "None")
     @MessageMapping("/chat/message")
     public void sendMessage(ChatMessage message){  // @Header("token") String token @Header("Authorization") String token
-
+log.info("[ChatStompController sendMessage] ChatMessage : {}",message.toString());
 //        GitHub 예시
 //        UserInfo userInfo = jwtDecoder.decodeUsername(headerTokenExtractor.extract(token));
 
-//        Header에서 토큰 꺼내서 보낸 사람 누군지 확인 (member_id)
-//        message.setMemberId();
-//        message.setNickName("sunheeTestController");
+//        message.setNickName(memberService.getLittleInfo(Long.valueOf(message.getMemberId())).getNickname());
         message.setCreatedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")));
-//        "createdTime":[2023,3,16,14,41,59,51216100] 이렇게 Message 넘어옴
-
         message.setType(ChatMessage.MessageType.TALK);
 
         //  만약 맨 처음 보낸 메세지면 ...
 
         // Topic에 pub 보내주기
         // 해당 채팅방에 메세지 보내주기
-
         redisPublisher.publish(topic, message);
 
         //  Redis Cache에 채팅 메세지 저장

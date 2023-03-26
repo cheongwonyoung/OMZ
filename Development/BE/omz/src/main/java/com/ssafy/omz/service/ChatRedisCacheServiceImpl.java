@@ -9,6 +9,7 @@ import com.ssafy.omz.repository.ChatRepository;
 import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.util.ChatUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
@@ -126,11 +128,10 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         return recentChatMessage;
     }
 
-    //  해당 채팅방(roomId)
     @Override
     public List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, ChatPagingRequestDto chatPagingDto) {
 
-        //마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
+        //  마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
         ChatMessage cursorDto = ChatMessage.builder()
                 .type(ChatMessage.MessageType.TALK)
                 .roomId(chatRoomId.toString())
@@ -140,17 +141,17 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
                 .nickName(chatPagingDto.getNickname())
                 .build();
 
-        //마지막 chat_data cursor Rank 조회
+        //  마지막 chat_data cursor Rank 조회
         Long rank = zSetOperations.reverseRank(CHAT_SORTED_SET_ + chatRoomId, cursorDto);
-
-        //Cursor 없을 경우 -> 최신채팅 조회
+log.info("[Cursor Pagination] rank : {}", rank);
+        //  Cursor 없을 경우 -> 최신채팅 조회
         if (rank == null)
             rank = 0L;
         else rank = rank + 1;
 
         //  Redis로부터 chat_data 조회
         Set<ChatMessage> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + chatRoomId, rank, rank + 10);
-
+log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size());
         List<ChatPagingResponseDto> chatMessageDtoList =
                 chatMessageSaveDtoSet
                         .stream()
@@ -168,7 +169,6 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         }
 
         return chatMessageDtoList;
-//        return new ArrayList<>();
     }
 
     @Override
