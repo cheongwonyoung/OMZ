@@ -8,17 +8,23 @@ import TitleBar from "../components/common/TitleBar";
 import { useMutation } from "react-query";
 import { createArticle } from "../api/community";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 
 export default function CommunityCreatePage() {
-  const [showUploader, setShowUploader] = useState(false);
-  const contentInputRef = useRef<HTMLTextAreaElement>(null);
   const navigate = useNavigate();
+  // 게시글 내용
+  const contentInputRef = useRef<HTMLTextAreaElement>(null);
+  // 이미지 파일
+  // image업로더 보여지는 유무
+  const [showUploader, setShowUploader] = useState(false);
   const [file, setFile] = useState([]);
   const onFile = (f: []): void => {
     setFile(f);
   };
-  const memberId = 1;
 
+  const memberId = useRecoilValue(userStatus).id;
+  // 게시글 POST, 생성이 되었으면 메인 커뮤니티로 보내줌
   const addArticle = useMutation(
     (article: { content: string; file: File; memberId: number }) =>
       createArticle(article),

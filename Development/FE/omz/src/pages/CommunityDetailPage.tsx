@@ -11,6 +11,8 @@ import { useQuery, useMutation } from "react-query";
 import { createReply } from "../api/community";
 import Loading from "../components/common/Loading";
 import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 
 type Comment = {
   [key: string]: any;
@@ -20,7 +22,7 @@ export default function CommunityDetailPage() {
   // CommunityPage 에서 boardId, memberId state로 넘겨줌 그거 useLocation으로 받아오기
   const location = useLocation();
   const boardId = location.state.boardId;
-  const memberId = location.state.memberId;
+  const memberId = useRecoilValue(userStatus).id;
 
   // article 상세 정보 받아오기
   const { data, isLoading, isError, refetch } = useQuery("article", () =>
@@ -41,16 +43,22 @@ export default function CommunityDetailPage() {
   const handleCommentSubmit = (comment: string) => {
     addComment.mutate({ boardId, content: comment, memberId });
   };
+  // 처음에 들어올 때 refetch 해줌
   useEffect(() => {
     refetch();
   }, []);
+
   if (isLoading) return <Loading />;
   if (isError) return <h3>Error...</h3>;
 
   return (
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
-      <CommunityDetailItem key={uuidv4()} item={data?.data} refetch={refetch} />
+      <CommunityDetailItem
+        key={data?.data.boardId}
+        item={data?.data}
+        refetch={refetch}
+      />
       <CommunityCommentInput onCommentSubmit={handleCommentSubmit} />
       {data?.data.replies.map((comment: Comment) => (
         <CommunityComment

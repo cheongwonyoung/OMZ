@@ -4,7 +4,7 @@ import { instance } from '.';
 export const getArticles = (memberId: number) => {
   return instance.get('/board', {
     params: {
-      memberId: memberId
+      memberId: memberId,
     }
   });
 }; 

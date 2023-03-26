@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from "uuid";
 import CommunityArticleItem from "./CommunityArticleItem";
 import { KeyboardEvent } from "react";
 import Loading from "../common/Loading";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
 type Search = {
   memberId: number;
   key: string;
@@ -21,9 +23,8 @@ export default function CommunitySearchBar() {
   const [key, setKey] = useState("content");
   // word 는 사용자가 검색하는 단어
   const [word, setWord] = useState("");
-  // TODO: 나중에 바꾸기
-  const memberId = 1;
 
+  const memberId = useRecoilValue(userStatus).id;
   // 검색된 데이터 불러오기, 단 검색을 안했을 때 불러오는 걸 막기 위해 enabled: false 설정을 해줌
   const { data, isLoading, isError, refetch } = useQuery(
     "search",

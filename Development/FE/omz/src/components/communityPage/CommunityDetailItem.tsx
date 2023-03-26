@@ -18,6 +18,8 @@ import {
   dislikeArticle,
 } from "../../api/community";
 import { imageUrl } from "../../api";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
 // import CommunityCommentModal from "./CommunityCommentModal";
 
 type Article = {
@@ -35,7 +37,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
   // 삭제 눌렀을 때 띄울 모달 state
   const [showModal, setShowModal] = useState(false);
   // 댓글창 눌렀을 때 띄울 모달
-  const [commentModal, setCommentModal] = useState(false);
+  // const [commentModal, setCommentModal] = useState(false);
 
   // 수정 눌렀을 때 form 으로 바뀌는 state
   const [showUpdate, setShowUpdate] = useState(false);
@@ -51,8 +53,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
   const boardId = item.boardId;
   const file = item.file;
 
-  // TODO: 나중에 바꿔주기
-  const memberId = 1;
+  const memberId = useRecoilValue(userStatus).id;
 
   // Community 내의 마이 페이지로 이동시킴
   const goToMyPage = (memberId: number) => {
@@ -167,30 +168,31 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
                     {item.member.nickname}
                   </p>
                 </div>
+                {memberId === item?.member.memberId && (
+                  <div className="flex justify-start gap-5 items-center">
+                    <FontAwesomeIcon
+                      icon={faPencil}
+                      className="p-1 cursor-pointer hover:text-white text-lg"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (showUpdate) {
+                          setShowUpdate(false);
+                        } else {
+                          setShowUpdate(true);
+                        }
+                      }}
+                    />
 
-                <div className="flex justify-start gap-5 items-center">
-                  <FontAwesomeIcon
-                    icon={faPencil}
-                    className="p-1 cursor-pointer hover:text-white text-lg"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (showUpdate) {
-                        setShowUpdate(false);
-                      } else {
-                        setShowUpdate(true);
-                      }
-                    }}
-                  />
-
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    className="p-1 cursor-pointer hover:text-white text-lg"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setShowModal(true);
-                    }}
-                  />
-                </div>
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      className="p-1 cursor-pointer hover:text-white text-lg"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowModal(true);
+                      }}
+                    />
+                  </div>
+                )}
               </div>
 
               <div>
