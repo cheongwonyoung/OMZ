@@ -2,20 +2,20 @@ import { useMutation, useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import { getKakaoToken, getServerToken } from "../api/kakaoLogin";
 import { useRecoilState } from "recoil";
-import { userState } from "../recoil/userAtom";
+import { userToken } from "../recoil/userAtom";
 export default function KakaoRedirectPage() {
-  const [user, setUser] = useRecoilState(userState);
+  const [token, setToken] = useRecoilState(userToken);
   const AUTH_CODE = useLocation().search.split("code=")[1];
   const getTokken = useMutation(
     (access_token: string) => getServerToken(access_token),
     {
       onSuccess(data) {
-        setUser({
-          ...user,
+        setToken({
+          ...token,
           access_token: data.data.accessToken,
           refresh_token: data.data.refreshToken,
         });
-        console.log(user);
+        console.log(token);
       },
     }
   );
@@ -35,7 +35,7 @@ export default function KakaoRedirectPage() {
   return (
     <div>
       리다이렉트 여기서 로직
-      <button onClick={() => console.log(user)}>sdfa</button>
+      <button onClick={() => console.log(token)}>sdfa</button>
     </div>
   );
 }

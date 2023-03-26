@@ -1,7 +1,10 @@
 import { images } from "../assets/images";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 
 export default function MainPage() {
+  const memberId = useRecoilValue(userStatus).id;
   return (
     <div className="flex flex-col justify-center items-center gap-[60px]">
       <div className="flex flex-col justify-center items-center flex-grow-0 flex-shrink-0 relative">
@@ -30,7 +33,7 @@ export default function MainPage() {
             </Link>
           </div>
           <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 relative gap-[5px]">
-            <Link to="/miniroom">
+            <Link to={`miniroom/${memberId}`}>
               <img
                 src={images.mini_room_img}
                 className="flex-grow-0 flex-shrink-0 w-20 h-20 object-cover hover:scale-110"
@@ -43,7 +46,7 @@ export default function MainPage() {
             </Link>
           </div>
           <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 relative gap-[5px]">
-            <Link to="/mypage">
+            <Link to={`/mypage/${memberId}`}>
               <img
                 src={images.my_page_img}
                 className="flex-grow-0 flex-shrink-0 w-[75.08px] h-20 object-cover hover:scale-110"
