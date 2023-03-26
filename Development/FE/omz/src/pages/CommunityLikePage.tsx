@@ -6,19 +6,19 @@ import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 import CommunityArticleItem from "../components/communityPage/CommunityArticleItem";
 import Loading from "../components/common/Loading";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 
 type Article = {
   [key: string]: any;
 };
 
 export default function CommunityLikePage() {
-  // TODO: 나중에 바꾸기
-  const memberId = 1;
-  const membernickname = "채채";
+  const memberId = useRecoilValue(userStatus).id;
+  const membernickname = useRecoilValue(userStatus).nickName;
   // 좋아요한 게시물 가져오기
-  const { data, isLoading, isError, error, refetch } = useQuery(
-    "articlelike",
-    () => likeArticles(memberId)
+  const { data, isLoading, isError, refetch } = useQuery("articlelike", () =>
+    likeArticles(memberId)
   );
 
   if (isLoading) return <Loading />;
@@ -30,9 +30,10 @@ export default function CommunityLikePage() {
       <div className="mb-5"></div>
       <div className="w-11/12 mb-5">
         <div className="flex justify-start items-center">
-          <p className="font-bold text-2xl">
-            {membernickname}님이 좋아하는 게시물
-          </p>
+          <div>
+            <p className="font-bold text-2xl text-">{membernickname}</p>
+            <p className="font-bold text-2xl">님이 좋아하는 게시물</p>
+          </div>
 
           <img src={images.heart_img} alt="" className="" />
         </div>

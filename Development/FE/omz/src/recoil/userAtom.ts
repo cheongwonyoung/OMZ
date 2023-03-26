@@ -18,7 +18,7 @@ export const userStatus = atom({
   key: "userStatus",
   default: {
     id: 1,
-    nickName: "최윾태",
+    nickName: "비동기신10yutae",
   },
   effects_UNSTABLE: [persistAtom],
 });

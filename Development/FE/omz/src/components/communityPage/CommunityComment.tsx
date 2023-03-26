@@ -6,6 +6,9 @@ import { useMutation } from "react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
+
 type Comment = {
   [key: string]: any;
 };
@@ -38,7 +41,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
 
   const boardId = boardIdNum;
   const replyId = item.replyId;
-  const memberId = 1;
+  const memberId = useRecoilValue(userStatus).id;
 
   // 댓글 수정하기
   const submitHandler = (event: React.FormEvent) => {
@@ -135,20 +138,22 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                 <div>
                   <p className="text-left">{item.content}</p>
                 </div>
-                <div className="flex justify-end gap-2">
-                  <button
-                    onClick={() => setShowModal(true)}
-                    className="cursor-pointer hover:text-[#FF0076]"
-                  >
-                    삭제
-                  </button>
-                  <button
-                    onClick={() => setShowUpdate(true)}
-                    className="cursor-pointer hover:text-[#FDFFA7]"
-                  >
-                    수정
-                  </button>
-                </div>
+                {memberId === item.member.memberId && (
+                  <div className="flex justify-end gap-2">
+                    <button
+                      onClick={() => setShowModal(true)}
+                      className="cursor-pointer hover:text-[#FF0076]"
+                    >
+                      삭제
+                    </button>
+                    <button
+                      onClick={() => setShowUpdate(true)}
+                      className="cursor-pointer hover:text-[#FDFFA7]"
+                    >
+                      수정
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

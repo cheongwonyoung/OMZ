@@ -7,7 +7,10 @@ import { images } from "../assets/images";
 import CommunityCreateSmall from "../components/communityPage/CommunityCreateSmall";
 import { createArticle } from "../api/community";
 import Loading from "../components/common/Loading";
-import InfiniteScroll from "react-infinite-scroller";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
+
+// import InfiniteScroll from "react-infinite-scroller";
 
 type Article = {
   boardId: number;
@@ -15,22 +18,21 @@ type Article = {
 };
 
 export default function CommunityPage() {
+  const memberId = useRecoilValue(userStatus).id;
   // 모든 게시글 리스트 불러오기(GET)
-  const memberId = 1;
-  const { data, isLoading, isError, error, refetch } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     ["articles", memberId],
     () => getArticles(memberId)
   );
   console.log(data);
-  // TODO: 나중에 고치기
-
-  // 게시글 만들기 (Create)
+  // 게시글 만들기(POST)
   const addArticle = useMutation(
     (board: { content: string; file: File; memberId: number }) =>
       createArticle(board),
     {
       onSuccess: () => {
         refetch();
+        alert("게시글 생성 완료");
       },
     }
   );
@@ -42,7 +44,6 @@ export default function CommunityPage() {
     });
   };
 
-  // TODO: 나중에 에러 페이지 로딩 페이지 만들기
   if (isLoading) return <Loading />;
   if (isError) return <h3>isError...</h3>;
 

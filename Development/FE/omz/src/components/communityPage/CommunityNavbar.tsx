@@ -7,8 +7,11 @@ import {
   faPlus,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
 
 export default function CommunityNavbar() {
+  const memberId: number = useRecoilValue(userStatus).id;
   return (
     <>
       <div className="bg-black fixed bottom-0 overflow-visible w-full shadow-inner p-4 flex flex-row rounded-tl-[10px] rounded-tr-[10px]">
@@ -64,9 +67,8 @@ export default function CommunityNavbar() {
           </NavLink>
         </div>
         <div className="flex flex-1 justify-center text-xs font-bold text-center">
-          {/* TODO: 나중에 고쳐야함  */}
           <NavLink
-            to="/community/mypage/1"
+            to={`/community/mypage/${memberId}`}
             className={({ isActive }) =>
               isActive ? "text-[#5B5685]" : "text-white"
             }
