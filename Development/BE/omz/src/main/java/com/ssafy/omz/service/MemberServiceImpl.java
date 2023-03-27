@@ -13,10 +13,7 @@ import com.ssafy.omz.entity.Face;
 import com.ssafy.omz.entity.Item;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.entity.MiniRoom;
-import com.ssafy.omz.repository.FaceRepository;
-import com.ssafy.omz.repository.ItemRepository;
-import com.ssafy.omz.repository.MemberRepository;
-import com.ssafy.omz.repository.MiniRoomRepository;
+import com.ssafy.omz.repository.*;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import com.google.cloud.storage.*;
@@ -57,6 +54,7 @@ public class MemberServiceImpl implements MemberService{
     private final MiniRoomRepository miniRoomRepository;
     private final ItemRepository itemRepository;
     private static final String SECRET_KEY  = "CREATEDBYWY";
+    private final ItemTypeRepository itemTypeRepository;
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
@@ -144,12 +142,10 @@ public class MemberServiceImpl implements MemberService{
         // 미니룸 저장
         miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
 
-//        this.member = member;
-//        this.itemType = itemType;
-//        this.state = state;
-//        this.name = name;
         // 아이템 정보 저장
-//        itemRepository.save(Item.builder().member(member).itemType())
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("hat").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("glasses").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("wing").build());
 
         memberRepository.save(
                 memberRepository.findByMemberId(memberId).updateMemberInfo(
