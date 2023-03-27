@@ -5,18 +5,20 @@ FROM python:3.10.9
 RUN pip3 install django
 
 # 컨테이너 내 프로젝트 root directory 설정
-WORKDIR /project
-
-# 프로젝트 코드 복사
-ADD . /project
-
-WORKDIR /project
-
-# 프로젝트에 필요한 파이썬 패키지 설치
-RUN pip3 install -r requirements.txt
+# /usr/src/app 디렉토리 생성
+WORKDIR /usr/src/app
 
 
-# 포트 설정
-EXPOSE 8000
+# 현재 폴더 내용을 복사
+COPY . .
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
+#manage.py를 실행할 수 있는 디렉토리로 이동
+WORKDIR ./django
+
+RUN  pip install -r requirements.txt
+
+# django를 가동시켜주는 코드
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8080"]
+
+EXPOSE 8080
