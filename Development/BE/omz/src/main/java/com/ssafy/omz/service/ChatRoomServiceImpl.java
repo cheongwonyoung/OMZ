@@ -40,8 +40,8 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
-    public void enterChatRoom(String roomId, String sessionId, String username) {
-        chatRoomRedisRepository.enterChatRoom(roomId,sessionId,username);
+    public void enterChatRoom(String roomId, String sessionId, String nickname) {
+        chatRoomRedisRepository.enterChatRoom(roomId, sessionId, nickname);
     }
 
     @Override
