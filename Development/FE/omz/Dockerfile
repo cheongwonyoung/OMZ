@@ -1,5 +1,5 @@
 # node.js로 빌드 ( base로 사용할 Image name )
-FROM node:18.15.0 as build-stage
+FROM node:18.15.0 as builder
 
 # 작업 폴더를 만들고 npm 설치
 RUN mkdir /usr/src/app
