@@ -174,36 +174,7 @@ public class DataLoader implements CommandLineRunner {
                 .name("wing")
                 .state(3)
                 .build()));
-        itemList.add(itemRepository.save(Item.builder()
-                .itemType(itemTypeList.get(1))
-                .member(memberList.get(5))
-                .name("bed")
-                .state(3)
-                .build()));
-        itemList.add(itemRepository.save(Item.builder()
-                .itemType(itemTypeList.get(1))
-                .member(memberList.get(5))
-                .name("table")
-                .state(3)
-                .build()));
-        itemList.add(itemRepository.save(Item.builder()
-                .itemType(itemTypeList.get(1))
-                .member(memberList.get(5))
-                .name("lamp")
-                .state(3)
-                .build()));
-        itemList.add(itemRepository.save(Item.builder()
-                .itemType(itemTypeList.get(1))
-                .member(memberList.get(5))
-                .name("drawer")
-                .state(3)
-                .build()));
-        itemList.add(itemRepository.save(Item.builder()
-                .itemType(itemTypeList.get(1))
-                .member(memberList.get(5))
-                .name("clock")
-                .state(3)
-                .build()));
+
         itemRepository.saveAllAndFlush(itemList);
     }
 
