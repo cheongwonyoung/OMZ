@@ -14,7 +14,7 @@ public class FaceResponseDto {
         private Double cat;
         private Double bear;
         private Double rabbit;
-        private Double dinosaur;
+        private Double dino;
         private Double fox;
 
         public static Info fromEntity(com.ssafy.omz.entity.Face faceEntity) {
@@ -23,7 +23,7 @@ public class FaceResponseDto {
                     .cat(faceEntity.getCatProbability())
                     .bear(faceEntity.getBearProbability())
                     .rabbit(faceEntity.getRabbitProbability())
-                    .dinosaur(faceEntity.getDinoProbability())
+                    .dino(faceEntity.getDinoProbability())
                     .fox(faceEntity.getFoxProbability())
                     .build();
         }

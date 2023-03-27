@@ -8,6 +8,8 @@ import com.ssafy.omz.dto.req.MemberRequestDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.service.JwtService;
 import com.ssafy.omz.service.MemberService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -29,7 +31,7 @@ public class MemberController {
     private final MemberService memberService;
     private final JwtService jwtService;
     public static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-
+    private static final String SECRET_KEY  = "CREATEDBYWY";
     @ApiOperation(value = "카카오 로그인", notes = "kakao token을 받아 유효성 검사 후 access, refresh token 발급")
     @ApiImplicitParam(
             name = "access_token"
@@ -85,10 +87,11 @@ public class MemberController {
 
     @ApiOperation(value = "유저 정보", notes = "유저 아이디를 받아 유저 정보 반환")
     //MediaType.APPLICATION_JSON_VALUE
-    @GetMapping(value = "/info/{memberId}")
-    public ResponseEntity<?> memberInfo(@PathVariable Long memberId) throws Exception {
+    @GetMapping(value = "/info")
+    public ResponseEntity<?> memberInfo(@RequestHeader(value = "access_token") String token) throws Exception {
         try {
-            return new ResponseEntity<>(memberService.getMemberInfo(memberId), HttpStatus.OK);
+
+            return new ResponseEntity<>(memberService.getMemberInfo(token), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -113,17 +116,18 @@ public class MemberController {
         }
     }
 
-    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
-    @GetMapping(value = "/test")
-    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
-        try {
-
-            return new ResponseEntity<>(test, HttpStatus.ACCEPTED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+//    @GetMapping(value = "/test")
+//    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
+//        String token = jwtService.createAccessToken("userEmail", test);
+//        try {
+//
+//            return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
 
 

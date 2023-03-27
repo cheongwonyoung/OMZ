@@ -11,6 +11,7 @@ import com.ssafy.omz.entity.Member;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -28,7 +29,9 @@ public interface MemberService{
     void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo);
 
     // 회원정보 조회
-    MemberResponseDto.MemberInfo getMemberInfo(Long memberId);
+    MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException;
 
+    // 회원정보 조회(채팅)
+    MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException;
 
 }
