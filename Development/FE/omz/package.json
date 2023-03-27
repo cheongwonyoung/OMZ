@@ -30,6 +30,7 @@
     "react-query": "^3.39.3",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.9.0",
+    "react-youtube": "^10.1.0",
     "recoil": "^0.7.7",
     "recoil-persist": "^4.2.0",
     "three": "^0.150.1",
