@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.service.JwtService;
 import com.ssafy.omz.service.MemberService;
@@ -90,8 +91,11 @@ public class MemberController {
     @GetMapping(value = "/info")
     public ResponseEntity<?> memberInfo(@RequestHeader(value = "access_token") String token) throws Exception {
         try {
-
-            return new ResponseEntity<>(memberService.getMemberInfo(token), HttpStatus.OK);
+            MemberResponseDto.MemberInfo result = memberService.getMemberInfo(token);
+            if(result==null){
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,15 +104,16 @@ public class MemberController {
 
     @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
     //MediaType.APPLICATION_JSON_VALUE
-    @PostMapping(value = "/update/{memberId}",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> updateMemberInfo(@PathVariable Long memberId, @RequestParam(value="file") MultipartFile file, @RequestParam String member, @RequestParam String face, @RequestParam String preferFace) throws Exception {
+    @PostMapping(value = "/update",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> updateMemberInfo(@RequestHeader(value = "access_token") String token, @RequestParam(value="file") MultipartFile file, @RequestParam String member, @RequestParam String face, @RequestParam String preferFace) throws Exception {
         try {
             ObjectMapper mapper = new ObjectMapper();
             MemberRequestDto.MemberInfo memberInfo = mapper.readValue(member, MemberRequestDto.MemberInfo.class);
             FaceRequestDto.Write faceInfo = mapper.readValue(face, FaceRequestDto.Write.class);
             FaceRequestDto.Write prefeFacerInfo = mapper.readValue(preferFace, FaceRequestDto.Write.class);
+            Long id = memberService.getMemberInfo(token).getMemberId();
 
-            memberService.updateMemberInfo(memberId, file, memberInfo,faceInfo,prefeFacerInfo);
+            memberService.updateMemberInfo(id, file, memberInfo,faceInfo,prefeFacerInfo);
             return new ResponseEntity<>(file.getOriginalFilename(),HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,18 +121,18 @@ public class MemberController {
         }
     }
 
-//    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
-//    @GetMapping(value = "/test")
-//    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
-//        String token = jwtService.createAccessToken("userEmail", test);
-//        try {
-//
-//            return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
+        String token = jwtService.createAccessToken("userEmail", test);
+        try {
+
+            return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

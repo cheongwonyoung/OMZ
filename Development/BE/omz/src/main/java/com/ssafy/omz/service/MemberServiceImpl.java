@@ -189,6 +189,10 @@ public class MemberServiceImpl implements MemberService{
                 .getBody()
                 .get("userEmail");
         Member member = memberRepository.findByEmail(email).orElse(null);
+        if(member.getFaceName()==null){
+            return null;
+        }
+
         return MemberResponseDto.MemberInfo.fromEntity(member);
     }
 
