@@ -4,11 +4,17 @@ import { images } from "../../assets/images";
 import { useMutation } from "react-query";
 import { friendProposal } from "../../api/newFriend";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
 type Props = {
   handleProposalModal(): void;
+  modalFor: { memberId: number; nickname: string };
 };
 
-export default function FriendsProposalModal({ handleProposalModal }: Props) {
+export default function FriendsProposalModal({
+  handleProposalModal,
+  modalFor,
+}: Props) {
   const apply = useMutation(
     (friend: { fromMemberId: number; message: string; toMemberId: number }) =>
       friendProposal(friend),
@@ -20,8 +26,14 @@ export default function FriendsProposalModal({ handleProposalModal }: Props) {
     }
   );
 
+  const memberId = useRecoilValue(userStatus).id;
+
   const goApply = async () => {
-    apply.mutate({ fromMemberId: 1, message, toMemberId: 2 });
+    apply.mutate({
+      fromMemberId: memberId,
+      message,
+      toMemberId: modalFor.memberId,
+    });
   };
 
   const [message, setMessage] = useState("");
@@ -38,7 +50,7 @@ export default function FriendsProposalModal({ handleProposalModal }: Props) {
         />
       </div>
       <div className="w-full">
-        <p className="font-bold mb-2 ml-4">To. 최윾태</p>
+        <p className="font-bold mb-2 ml-4">To. {modalFor.nickname}</p>
         <textarea
           className="border-4 border-solid rounded-xl w-full focus:outline-none resize-none h-32 p-2"
           maxLength={30}

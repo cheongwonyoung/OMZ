@@ -11,7 +11,18 @@ import FriendSearchItems from "../components/newFriends/FriendSearchItems";
 import FriendSearchList from "../components/newFriends/FriendSearchList";
 import { useMutation } from "react-query";
 import { searchFriend } from "../api/newFriend";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 export default function NewFriendsPage() {
+  const [modalFor, setModalFor] = useState<{
+    memberId: number;
+    nickname: string;
+  }>({ memberId: 0, nickname: "" });
+
+  const handleModalFor = (memberId: number, nickname: string) => {
+    setModalFor({ memberId, nickname });
+  };
+
   const [isRefuse, setIsRefuse] = useState(false);
   const handleRefuseModal = () => {
     setIsRefuse((prev) => !prev);
@@ -27,15 +38,27 @@ export default function NewFriendsPage() {
     setWord(e.target.value);
   };
 
+  const [searchList, setSearchList] = useState<
+    {
+      memberId?: number;
+      nickname?: string;
+      requestPossible?: boolean;
+      file?: null;
+    }[]
+  >([]);
+
   const goSearchFriends = useMutation(
     (gogo: { memberId: number; word: string }) =>
       searchFriend(gogo.memberId, gogo.word),
     {
-      onSettled(data) {
+      onSuccess(data) {
+        setSearchList(data.data);
         console.log(data);
       },
     }
   );
+
+  const memberId = useRecoilValue(userStatus).id;
 
   const [searchActive, setSearchActive] = useState(false);
 
@@ -44,7 +67,7 @@ export default function NewFriendsPage() {
       setSearchActive(false);
     } else {
       setSearchActive(true);
-      goSearchFriends.mutate({ memberId: 1, word });
+      goSearchFriends.mutate({ memberId, word });
     }
   }, [word]);
 
@@ -58,7 +81,10 @@ export default function NewFriendsPage() {
       {isProposal && (
         <ModalBlackBg
           modal={
-            <FriendsProposalModal handleProposalModal={handleProposalModal} />
+            <FriendsProposalModal
+              handleProposalModal={handleProposalModal}
+              modalFor={modalFor}
+            />
           }
         />
       )}
@@ -77,10 +103,15 @@ export default function NewFriendsPage() {
         />
       </div>
       {searchActive ? (
-        <FriendSearchList />
+        <FriendSearchList
+          searchList={searchList}
+          handleModalFor={handleModalFor}
+          handleProposalModal={handleProposalModal}
+        />
       ) : (
         <FriendsRecommend
           handleRefuseModal={handleRefuseModal}
+          handleModalFor={handleModalFor}
           handleProposalModal={handleProposalModal}
         />
       )}

@@ -1,6 +1,8 @@
 import { images } from "../../assets/images";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { useQuery } from "react-query";
+import { getMyPageInfos } from "../../api/myPage";
 
 export default function MyPageBasicInformation() {
   const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
@@ -36,6 +38,18 @@ export default function MyPageBasicInformation() {
         return "";
     }
   };
+
+  const myPageId = useParams().id;
+  console.log(myPageId);
+  const { data } = useQuery(
+    "mypageInfo",
+    () => getMyPageInfos(Number(myPageId)),
+    {
+      onSuccess(data) {
+        console.log(data);
+      },
+    }
+  );
 
   return (
     <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-[27px] px-8">
