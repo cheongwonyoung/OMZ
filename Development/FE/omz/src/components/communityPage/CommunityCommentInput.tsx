@@ -22,8 +22,8 @@ export default function CommunityCommentInput({ onCommentSubmit }: Props) {
   };
 
   return (
-    <div className="w-full flex justify-center  bg-white border-r-0 border-b border-t border-l-0 border-black">
-      <div className="flex justify-between items-center w-11/12 relative gap-[15px] p-[15px]">
+    <div className="w-full flex justify-center  bg-white border-r-0 border-b border-t border-l-0 border-black ">
+      <div className="flex justify-between items-center w-11/12 relative gap-[15px] p-[15px] max-w-4xl">
         <img
           className="flex-grow-0 flex-shrink-0 w-10 h-10"
           src={images.mini_room_img}

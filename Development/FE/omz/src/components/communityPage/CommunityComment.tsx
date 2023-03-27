@@ -8,6 +8,7 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
+import moment from "moment";
 
 type Comment = {
   [key: string]: any;
@@ -28,8 +29,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   // update할 내용 담기
   const commentContent = useRef<HTMLTextAreaElement>(item.content);
   // 시간 원하는 형식으로 바꿔주기
-  const timestamp = new Date(item.registeredTime);
-  const date = timestamp.toDateString();
+  const date = new Date(item.registeredTime);
 
   // 댓글 삭제하기
   const deleteComment = useMutation((replyId: number) => deleteReply(replyId), {
@@ -84,8 +84,8 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   };
 
   return (
-    <div className="w-full flex justify-center border-b-2 border-white">
-      <div className="w-11/12 m-3">
+    <div className="w-full flex justify-center border-b border-black mt-3">
+      <div className="w-11/12 m-3 max-w-4xl">
         <div className="flex w-full justify-between items-start gap-3">
           {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
           <img
@@ -105,7 +105,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                 {item.member.nickname}
               </p>
               <p className="flex-grow-0 flex-shrink-0 text-xs text-right text-[#555a64]">
-                {date}
+                {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
               </p>
             </div>
 
@@ -134,7 +134,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                 </form>
               </div>
             ) : (
-              <div>
+              <div className="w-full">
                 <div>
                   <p className="text-left">{item.content}</p>
                 </div>
