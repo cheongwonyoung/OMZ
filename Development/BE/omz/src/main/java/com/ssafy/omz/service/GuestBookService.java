@@ -17,11 +17,12 @@ import java.util.List;
 public interface GuestBookService {
 
     // 방명록 전체 리스트
-//    List<GuestBookResponseDto.Info> getGuestBookList(Long miniRoomId);
+    List<GuestBookResponseDto> getGuestBookList(long miniRoomId);
 
     // 방명록 작성
     void writeGuestBook(GuestBookRequestDto.Write guestBook) throws RollbackException;
 
     // 방명록 삭제
-    void deleteGuestBook(Long guestBookId) throws RollbackException;
+    void deleteGuestBook(long guestBookId) throws RollbackException;
+
 }

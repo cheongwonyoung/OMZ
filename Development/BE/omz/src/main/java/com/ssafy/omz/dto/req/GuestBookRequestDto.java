@@ -1,5 +1,6 @@
 package com.ssafy.omz.dto.req;
 
+import com.ssafy.omz.entity.GuestBook;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 public class GuestBookRequestDto {
 
@@ -17,11 +19,11 @@ public class GuestBookRequestDto {
 
         @NotEmpty(message="miniRoomId는 빈값 일 수 없습니다")
         @NotNull(message="miniRoomId는 null 일 수 없습니다")
-        private Long miniRoomId;
+        private long miniRoomId;
 
         @NotEmpty(message="memberId는 빈값 일 수 없습니다")
         @NotNull(message="memberId는 null 일 수 없습니다")
-        private Long memberId;
+        private long memberId;
         @Size(min=1, max=140, message = "바르지않은 content 크기")
         @NotEmpty(message="content은 빈값 일 수 없습니다")
         @NotNull(message="content은 null 일 수 없습니다")

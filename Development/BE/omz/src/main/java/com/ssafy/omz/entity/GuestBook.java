@@ -35,10 +35,11 @@ public class GuestBook {
     private LocalDateTime registeredTime;
 
     @Builder
-    private GuestBook(MiniRoom miniRoom, Member member, String content){
+    private GuestBook(MiniRoom miniRoom, Member member, String content, LocalDateTime registeredTime){
         this.miniRoom = miniRoom;
         this.member = member;
         this.content = content;
+        this.registeredTime = registeredTime;
     }
 
 }

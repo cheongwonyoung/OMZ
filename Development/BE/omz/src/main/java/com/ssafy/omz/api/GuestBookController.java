@@ -21,11 +21,11 @@ public class GuestBookController {
 
     private final GuestBookService guestBookService;
 
-    // 방명록 전체 조회
+    @ApiOperation(value = "방명록 조회")
     @GetMapping("")
     public ResponseEntity<?> guestBookList(@RequestParam(required = true, value = "miniRoomId") Long miniRoomId){
         try{
-            return null;
+            return new ResponseEntity<>(guestBookService.getGuestBookList(miniRoomId), HttpStatus.OK);
         } catch ( Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -33,11 +33,11 @@ public class GuestBookController {
     }
 
 
-    // 방명록 등록
     @ApiOperation(value = "방명록 등록")
     @PostMapping("")
     public ResponseEntity<?> guestBookWrite(@RequestBody GuestBookRequestDto.Write guestBook) {
         try {
+            log.info(guestBook.getContent());
             guestBookService.writeGuestBook(guestBook);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e) {
@@ -46,10 +46,10 @@ public class GuestBookController {
         }
     }
 
-    // 방명록 삭제
+
     @ApiOperation(value = "방명록 삭제")
-    @PutMapping("/delete/{guestBookId}")
-    public ResponseEntity<?> guestBookDelete(@PathVariable Long guestBookId) {
+    @PutMapping("")
+    public ResponseEntity<?> guestBookDelete(@RequestParam(required = true, value = "guestBookId") long guestBookId) {
         try {
             guestBookService.deleteGuestBook(guestBookId);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
