@@ -31,5 +31,7 @@ public interface MemberService{
     // 회원정보 조회
     MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException;
 
+    // 회원정보 조회(채팅)
+    MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException;
 
 }

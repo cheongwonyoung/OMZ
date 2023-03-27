@@ -192,6 +192,19 @@ public class MemberServiceImpl implements MemberService{
         return MemberResponseDto.MemberInfo.fromEntity(member);
     }
 
+    // 회원정보 조회 (채팅)
+    @Override
+    public MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException {
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
+        return MemberResponseDto.LittleInfo.fromEntity(member);
+    }
+
 
     // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
     private TokenDto registerKakaoUserIfNeed(KakaoUserInfoDto kakaoUserInfo) {
