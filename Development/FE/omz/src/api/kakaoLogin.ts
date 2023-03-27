@@ -30,3 +30,10 @@ export const getUserInfo = (token: string) => {
   };
   return instance.get("/member/info", config);
 };
+
+export const signUp = (formData: any, token: string) => {
+  const config = {
+    headers: { access_token: token, "Content-Type": "multipart/form-data" },
+  };
+  return instance.post("/member/update", formData, config);
+};

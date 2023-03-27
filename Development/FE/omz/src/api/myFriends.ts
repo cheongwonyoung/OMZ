@@ -5,11 +5,11 @@ export const getMyFriendsList = (memberId: number) => {
   return instance.get(`/friend/${memberId}`);
 };
 
-// TODO 여기 아래로 아직 적용 안함 컹스
 // 친구 삭제
 export const removeFriend = (toMemberId: number, fromMemberId: number) => {
-  return instance.post(`/friend/${toMemberId}/${fromMemberId}`);
+  return instance.put(`/friend/${toMemberId}/${fromMemberId}`);
 };
+// TODO 여기 아래로 아직 적용 안함 컹스
 
 // 친구 신청에 대한 수락
 export const acceptProposal = (friendId: number) => {

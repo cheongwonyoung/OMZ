@@ -8,9 +8,11 @@ import { useNavigate } from "react-router";
 
 type Props = {
   id: number;
+  name: string;
+  handleDeleteMember(name: string, id: number): void;
 };
 
-export default function ListBottomBar({ id }: Props) {
+export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
   const navigate = useNavigate();
   return (
     <div className="flex w-full justify-around mt-2 text-xs">
@@ -28,7 +30,10 @@ export default function ListBottomBar({ id }: Props) {
         <FontAwesomeIcon icon={faMessage} className="text-pink-400" />
         <p>말 걸기</p>
       </div>
-      <div className="flex items-center gap-1">
+      <div
+        className="flex items-center gap-1"
+        onClick={() => handleDeleteMember(name, id)}
+      >
         <FontAwesomeIcon icon={faHeartCrack} className="text-blue-400" />
         <p>친구 끊기</p>
       </div>

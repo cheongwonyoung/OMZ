@@ -13,14 +13,25 @@ type Props = {
   plusPage(): void;
   changePrefer(e: any): void;
   animalPrefer: AnimalPrefer;
+  signUpSubmit(): void;
 };
 
 export default function StepLikeAnimal({
   plusPage,
   changePrefer,
   animalPrefer,
+  signUpSubmit,
 }: Props) {
   const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
+
+  const animalEng: { [key: string]: string } = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    여우: "fox",
+    토끼: "rabbit",
+    공룡: "dino",
+  };
 
   const imgsrc = (i: string): string => {
     switch (i) {
@@ -58,17 +69,19 @@ export default function StepLikeAnimal({
             <div className="col-span-2 h-1/2">
               <input
                 className="w-full appearance-none h-1 shadow-md bg-purple-300"
-                id={item}
-                value={animalPrefer[item]}
+                id={animalEng[item]}
+                value={animalPrefer[animalEng[item]]}
                 type="range"
                 min={0}
-                max={100}
-                step={5}
+                max={1}
+                step={0.1}
                 onChange={(e) => changePrefer(e)}
               />
             </div>
             <div className="h-1/2">
-              <p className="text-end ">{animalPrefer[item]}%</p>
+              <p className="text-end ">
+                {animalPrefer[animalEng[item]] * 100}%
+              </p>
             </div>
           </div>
         ))}
@@ -77,7 +90,10 @@ export default function StepLikeAnimal({
         <NextBtn
           comment="다음 스텝으로"
           icon={<FontAwesomeIcon icon={faArrowRight} />}
-          logic={plusPage}
+          logic={() => {
+            plusPage();
+            signUpSubmit();
+          }}
         />
       </div>
     </div>

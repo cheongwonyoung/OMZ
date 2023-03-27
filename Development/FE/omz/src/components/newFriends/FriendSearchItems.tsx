@@ -25,19 +25,17 @@ export default function FriendSearchItems({
         </p>
         <div className="flex gap-2">
           {requestPossible && (
-            <button className="p-2 border border-black border-solid bg-slate-200 rounded-lg text-xs">
+            <button
+              className="p-2 border border-black border-solid bg-slate-200 rounded-lg text-xs"
+              onClick={() => {
+                memberId && nickname && handleModalFor(memberId, nickname);
+                handleProposalModal();
+              }}
+            >
               친구신청
             </button>
           )}
-          <button
-            className="p-2 border border-black border-solid bg-slate-200 rounded-lg text-xs"
-            onClick={() => {
-              memberId && nickname && handleModalFor(memberId, nickname);
-              handleProposalModal();
-            }}
-          >
-            친구신청
-          </button>
+
           {/* {goBtn("마이페이지", () => navigate(`/mypage/${memberId}`))} */}
           <button
             className="p-2 border border-black border-solid bg-slate-200 rounded-lg text-xs"

@@ -11,7 +11,7 @@ type Props = {
   getNickname(e: any): void;
   nickname: string;
   plusPage(): void;
-  screenShot?(): void;
+  screenShot(): void;
 };
 
 export default function StepFaceResult({
@@ -21,10 +21,6 @@ export default function StepFaceResult({
   plusPage,
   screenShot,
 }: Props) {
-  useEffect(() => {
-    // screenShot();
-  }, []);
-
   const showAvatar = () => {
     switch (animal) {
       case "토끼":
@@ -39,15 +35,18 @@ export default function StepFaceResult({
     }
   };
 
+  setTimeout(() => screenShot(), 100);
+
   return (
     <div className="w-full h-screen flex flex-col items-center">
       <div>
         <p className="text-lg font-bold">나는....</p>
         <p className="text-lg text-violet-500 font-bold">{content()}</p>
       </div>
-      <div id="capture" className="h-2/4 aspect-square ">
+      <div id="capture" className="h-2/4 aspect-square">
         {showAvatar()}
       </div>
+
       <p className="font-bold mb-8">나만의 닉네임을 입력하세요(최대10자)</p>
       <input
         type="text"
