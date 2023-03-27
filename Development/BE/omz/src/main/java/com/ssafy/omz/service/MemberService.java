@@ -26,10 +26,13 @@ public interface MemberService{
     String memberEmail(String token);
 
     // 회원가입
-    void updateMemberInfo(Long id, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo);
+    void updateMemberInfo(String token, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo) throws UnsupportedEncodingException;
 
     // 회원정보 조회
     MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException;
+
+    // 회원정보 조회 (회원가입용)
+    MemberResponseDto.MemberInfo getJoinMemberInfo(String token) throws UnsupportedEncodingException;
 
     // 회원정보 조회(채팅)
     MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException;

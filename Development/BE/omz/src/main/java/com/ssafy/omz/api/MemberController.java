@@ -91,7 +91,7 @@ public class MemberController {
     @GetMapping(value = "/info")
     public ResponseEntity<?> memberInfo(@RequestHeader(value = "access_token") String token) throws Exception {
         try {
-            MemberResponseDto.MemberInfo result = memberService.getMemberInfo(token);
+            MemberResponseDto.MemberInfo result = memberService.getJoinMemberInfo(token);
             if(result==null){
                 return new ResponseEntity<>(false, HttpStatus.OK);
             }
@@ -111,9 +111,9 @@ public class MemberController {
             MemberRequestDto.MemberInfo memberInfo = mapper.readValue(member, MemberRequestDto.MemberInfo.class);
             FaceRequestDto.Write faceInfo = mapper.readValue(face, FaceRequestDto.Write.class);
             FaceRequestDto.Write prefeFacerInfo = mapper.readValue(preferFace, FaceRequestDto.Write.class);
-            Long id = memberService.getMemberInfo(token).getMemberId();
-
-            memberService.updateMemberInfo(id, file, memberInfo,faceInfo,prefeFacerInfo);
+//            Long id = memberService.getMemberInfo(token).getMemberId();
+//            memberService.updateMemberInfo(id, file, memberInfo,faceInfo,prefeFacerInfo);
+            memberService.updateMemberInfo(token, file, memberInfo,faceInfo,prefeFacerInfo);
             return new ResponseEntity<>(file.getOriginalFilename(),HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
