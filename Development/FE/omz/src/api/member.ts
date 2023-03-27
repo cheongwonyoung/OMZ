@@ -1,6 +1,10 @@
 import { instance } from ".";
 
-// 게시글 상세 GET (O) 
-export const getMemberInfo = (memberId: number) => {
-  return instance.get(`/member/info/${memberId}`)  
-}; 
+// 유저 정보 GET
+export const getMemberInfo = (access_token: string) => {
+  return instance.get(`/member/info`, {
+    params: {
+      access_token: access_token, 
+    }
+  });
+};  

@@ -4,11 +4,20 @@ import {
   faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router";
 
-export default function ListBottomBar() {
+type Props = {
+  id: number;
+};
+
+export default function ListBottomBar({ id }: Props) {
+  const navigate = useNavigate();
   return (
     <div className="flex w-full justify-around mt-2 text-xs">
-      <div className="flex items-center gap-1">
+      <div
+        className="flex items-center gap-1"
+        onClick={() => navigate(`/miniroom/${id}`)}
+      >
         <FontAwesomeIcon
           icon={faHome}
           className="text-brown-400 text-teal-400"

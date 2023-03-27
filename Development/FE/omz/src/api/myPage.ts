@@ -14,3 +14,21 @@ export const getMyCustomInfo = (memberId: number) => {
 export const getMyUserInfo = (memberId: number) => {
   return instance.get(`/mypage/modify/${memberId}`);
 };
+
+// 마이페이지 닉네임 변경
+export const updateMyName = (memberId: number, nickname: string) => {
+  return instance.put(`/mypage/modify/nickname/${memberId}/${nickname}`);
+};
+
+// 마이페이지 MBTI 변경
+export const updateMyMbti = (memberId: number, mbti: string) => {
+  return instance.put(`/mypage/modify/mbti/${memberId}/${mbti}`);
+};
+
+// 마이페이지 선호 동물상 변경
+export const updateMyPreference = (
+  memberId: number,
+  faceInfo: { [key: string]: number }
+) => {
+  return instance.put(`/mypage/modify/face/${memberId}`, faceInfo);
+};

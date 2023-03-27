@@ -19,12 +19,14 @@ type Article = {
 
 export default function CommunityPage() {
   const memberId = useRecoilValue(userStatus).id;
+  let page = 0;
+  const sort = "registeredTime,DESC";
   // 모든 게시글 리스트 불러오기(GET)
   const { data, isLoading, isError, refetch } = useQuery(
-    ["articles", memberId],
-    () => getArticles(memberId)
+    ["articles", memberId, page, sort],
+    () => getArticles(memberId, page, 100, sort)
   );
-  console.log(data);
+
   // 게시글 만들기(POST)
   const addArticle = useMutation(
     (board: { content: string; file: File; memberId: number }) =>
