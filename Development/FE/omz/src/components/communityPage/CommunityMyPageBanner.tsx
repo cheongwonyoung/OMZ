@@ -1,28 +1,16 @@
 import { images } from "../../assets/images";
 import { useNavigate } from "react-router-dom";
-import { getMemberInfo } from "../../api/member";
-import { useQuery } from "react-query";
-import Loading from "../common/Loading";
-import { useEffect } from "react";
 
 type Props = {
   memberId: number;
+  item: string;
 };
 
-export default function CommunityMyPageBanner({ memberId }: Props) {
+export default function CommunityMyPageBanner({ memberId, item }: Props) {
   const navigate = useNavigate();
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     navigate(`/miniroom/${memberId}`);
   };
-  const { data, isLoading, isError, refetch } = useQuery("memberInfo", () =>
-    getMemberInfo(memberId)
-  );
-
-  useEffect(() => {
-    refetch();
-  }, []);
-  if (isLoading) return <Loading />;
-  if (isError) return <h3>Error</h3>;
 
   return (
     <div className="w-full flex justify-center">
@@ -33,7 +21,7 @@ export default function CommunityMyPageBanner({ memberId }: Props) {
         />
         <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 relative gap-[5px] px-[5px]">
           <p className="flex-grow-0 flex-shrink-0 w-[350px] text-sm font-bold text-left text-black">
-            {data?.data.nickname}
+            {item}
           </p>
           <div className="flex justify-start items-center flex-grow-0 flex-shrink-0 relative gap-[5px]">
             <button
