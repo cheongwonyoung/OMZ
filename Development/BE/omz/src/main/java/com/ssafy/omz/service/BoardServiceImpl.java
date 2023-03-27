@@ -133,13 +133,13 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void updateBoard(Long boardId, MultipartFile file, BoardRequestDto.Write writeInfo) throws RollbackException, IOException {
-        Board board = boardRepository.findByBoardId(boardId);
-
         BoardRequestDto.Info.fromEntity(boardRepository.save(
                 boardRepository.findById(boardId).get()
-                        .updateContent(board.getContent())));
+                        .updateContent(writeInfo.getContent())));
 
-        if (file != null || !file.isEmpty())
+        Board board = boardRepository.findByBoardId(boardId);
+
+        if (file != null)
             gcsService.uploadBoardImage(file, board);
     }
 
