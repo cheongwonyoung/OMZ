@@ -10,7 +10,7 @@ RUN npm install  --force
 
 # 소스를 작업폴더로 복사하고 빌드
 COPY . /usr/src/app
-RUN npm run dev
+RUN npm run build
 FROM nginx:latest
 # nginx의 기본 설정을 삭제하고 앱에서 설정한 파일을 복사
 RUN rm -rf /etc/nginx/conf.d 
