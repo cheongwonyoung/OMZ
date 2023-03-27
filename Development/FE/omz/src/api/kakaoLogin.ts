@@ -1,5 +1,8 @@
+import { config } from "@fortawesome/fontawesome-svg-core";
 import axios from "axios";
+import { useRecoilValue } from "recoil";
 import { instance } from ".";
+import { userToken } from "../recoil/userAtom";
 
 export const getKakaoToken = (code: string) => {
   const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
@@ -19,4 +22,11 @@ export const getServerToken = (token: string) => {
     headers: { access_token: token },
   };
   return instance.post("/member/login", {}, config);
+};
+
+export const getUserInfo = (token: string) => {
+  const config = {
+    headers: { access_token: token },
+  };
+  return instance.get("/member/info", config);
 };

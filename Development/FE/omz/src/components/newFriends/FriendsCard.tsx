@@ -1,11 +1,23 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Model } from "../../assets/3DAvatar/Rabbit";
 import CameraAvatar from "../common/CameraAvatar";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faHeart,
+  faHeartCrack,
+} from "@fortawesome/free-solid-svg-icons";
 import TagList from "./TagList";
-import { Bear } from "../../assets/3DAvatar/Bear";
-// import { Fox } from "../../assets/3DAvatar/Fox";
-export default function FriendsCard() {
+import FriendBtn from "./FriendBtn";
+type Props = {
+  handleRefuseModal(): void;
+  handleProposalModal(): void;
+  handleModalFor(memberId: number, nickname: string): void;
+};
+export default function FriendsCard({
+  handleRefuseModal,
+  handleProposalModal,
+  handleModalFor,
+}: Props) {
   // const tags = ["곰상", "ISFP", "짝꿍", "가능성", "95%"];
   const tags = ["100%", "가능성", "짝꿍", "곰상", "ISFP"];
   return (
@@ -19,6 +31,18 @@ export default function FriendsCard() {
         <FontAwesomeIcon icon={faHome} className="mr-2" />
         놀러가기
       </button>
+      <div className="flex justify-center my-8 gap-8">
+        <FriendBtn
+          icon={<FontAwesomeIcon icon={faHeart} />}
+          text={"친구 신청"}
+          logic={handleProposalModal}
+        />
+        <FriendBtn
+          icon={<FontAwesomeIcon icon={faHeartCrack} />}
+          text={"친구 거절"}
+          logic={handleRefuseModal}
+        />
+      </div>
     </div>
   );
 }
