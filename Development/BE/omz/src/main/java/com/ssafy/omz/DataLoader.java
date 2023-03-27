@@ -75,6 +75,36 @@ public class DataLoader implements CommandLineRunner {
                     .name("wing")
                     .state(1)
                     .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("bed")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("table")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("lamp")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("drawer")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("clock")
+                    .state(1)
+                    .build()));
         }
         for (int i = 2; i < 4; i++) {
             itemList.add(itemRepository.save(Item.builder()
@@ -93,6 +123,36 @@ public class DataLoader implements CommandLineRunner {
                     .itemType(itemTypeList.get(0))
                     .member(memberList.get(i))
                     .name("wing")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("bed")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("table")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("lamp")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("drawer")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("clock")
                     .state(2)
                     .build()));
         }
@@ -114,7 +174,36 @@ public class DataLoader implements CommandLineRunner {
                 .name("wing")
                 .state(3)
                 .build()));
-
+        itemList.add(itemRepository.save(Item.builder()
+                .itemType(itemTypeList.get(1))
+                .member(memberList.get(5))
+                .name("bed")
+                .state(3)
+                .build()));
+        itemList.add(itemRepository.save(Item.builder()
+                .itemType(itemTypeList.get(1))
+                .member(memberList.get(5))
+                .name("table")
+                .state(3)
+                .build()));
+        itemList.add(itemRepository.save(Item.builder()
+                .itemType(itemTypeList.get(1))
+                .member(memberList.get(5))
+                .name("lamp")
+                .state(3)
+                .build()));
+        itemList.add(itemRepository.save(Item.builder()
+                .itemType(itemTypeList.get(1))
+                .member(memberList.get(5))
+                .name("drawer")
+                .state(3)
+                .build()));
+        itemList.add(itemRepository.save(Item.builder()
+                .itemType(itemTypeList.get(1))
+                .member(memberList.get(5))
+                .name("clock")
+                .state(3)
+                .build()));
         itemRepository.saveAllAndFlush(itemList);
     }
 

@@ -9,10 +9,7 @@ import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
-import com.ssafy.omz.entity.Face;
-import com.ssafy.omz.entity.Item;
-import com.ssafy.omz.entity.Member;
-import com.ssafy.omz.entity.MiniRoom;
+import com.ssafy.omz.entity.*;
 import com.ssafy.omz.repository.*;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +52,7 @@ public class MemberServiceImpl implements MemberService{
     private final ItemRepository itemRepository;
     private static final String SECRET_KEY  = "CREATEDBYWY";
     private final ItemTypeRepository itemTypeRepository;
+    private final GuestBookRepository guestBookRepository;
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
@@ -153,6 +151,13 @@ public class MemberServiceImpl implements MemberService{
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("hat").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("glasses").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("wing").build());
+
+        // 아이템 정보 저장
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("bed").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("table").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("lamp").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("drawer").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("clock").build());
 
         memberRepository.save(
                 memberRepository.findByEmail(email).get().updateMemberInfo(
