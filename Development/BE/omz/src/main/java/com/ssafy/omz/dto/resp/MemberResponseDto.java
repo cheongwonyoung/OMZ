@@ -31,7 +31,7 @@ public class MemberResponseDto {
         private Long memberId;
         private String nickname;
         private String file;
-        private boolean isRequestPossble;
+        private boolean isRequestPossible;
         public static FriendSearch fromEntity(com.ssafy.omz.entity.Member memberEntity) {
             return FriendSearch.builder()
                     .memberId(memberEntity.getMemberId())

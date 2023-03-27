@@ -40,18 +40,12 @@ public class FriendServiceImpl implements FriendService {
                 .build()));
     }
 
-//    @Override
-//    public Boolean requestFriendPossibleCheck(Long toMemberId, Long fromMemberId) {
-//        return !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(toMemberId, fromMemberId)
-//                || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(fromMemberId, toMemberId);
-//    }
-
     @Override
     public List<MemberResponseDto.FriendSearch> getSearchMemberList(Long memberId, String word) {
         return memberRepository.findByNicknameContaining(word)
                 .map(member -> {
                     MemberResponseDto.FriendSearch res = MemberResponseDto.FriendSearch.fromEntity(member);
-                    res.setRequestPossble(!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, res.getMemberId())
+                    res.setRequestPossible(!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, res.getMemberId())
                             || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(res.getMemberId(), memberId));
                     return res;
                 }).stream().collect(Collectors.toList());
