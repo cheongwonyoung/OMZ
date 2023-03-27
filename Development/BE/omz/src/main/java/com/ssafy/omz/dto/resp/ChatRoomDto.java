@@ -26,12 +26,14 @@ public class ChatRoomDto {
     private String recentMessage;
 
     //  가장 최근 채팅 메세지 생성 일자
-    private LocalDateTime recentMessageCreatedTime;
+    private String recentMessageCreatedTime;
 
     //  채팅 메세지 읽음 여부
     private boolean isChecked;
 
     //  채팅 상대와의 친구 여부
+    //  0 : 친구 대기 중, 1 : 친구 상태, -1 : 친구 거절
+    //  2 : 친구 신청한 적 없음, (친구 추가 버튼)
     private int friendState;
 
 
