@@ -1,10 +1,13 @@
 import { instance } from '.'; 
 
 // 게시글 GET (O) 
-export const getArticles = (memberId: number) => {
+export const getArticles = (memberId: number, page: number, size: number, sort: string) => {
   return instance.get('/board', {
     params: {
       memberId: memberId,
+      page: page, 
+      size: size, 
+      sort: sort 
     }
   });
 }; 
