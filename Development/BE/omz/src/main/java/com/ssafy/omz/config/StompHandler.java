@@ -160,7 +160,7 @@ public class StompHandler implements ChannelInterceptor {
 //                            .memberId(memberId)
 //                            .nickName(nickname)
                             .type(ChatMessage.MessageType.ENTER)
-                            .roomId(roomId)
+                            .roomId(Long.valueOf(roomId))
                             .build()
             );
             // publish ENTER 보내서 RedisSubscriber 호출됨
@@ -206,7 +206,7 @@ public class StompHandler implements ChannelInterceptor {
             redisPublisher.publish(topic,
                     ChatMessage.builder()
                             .type(ChatMessage.MessageType.QUIT)
-                            .roomId(roomId)
+                            .roomId(Long.valueOf(roomId))
 //                            .userList(chatRoomService.findUser(roomId, sessionId))
                             .build()
             );

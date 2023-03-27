@@ -134,7 +134,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         //  마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
         ChatMessage cursorDto = ChatMessage.builder()
                 .type(ChatMessage.MessageType.TALK)
-                .roomId(chatRoomId.toString())
+                .roomId(chatRoomId)
                 .createdTime(chatPagingDto.getCursor()) // ChatMessage에서는 LocalDateTime으로 되어있음
                 .message(chatPagingDto.getMessage())
                 .memberId(chatPagingDto.getMemberId())
@@ -165,7 +165,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 
         //  Redis caching 닉네임으로 작성자 삽입
         for (ChatPagingResponseDto chatPagingResponseDto : chatMessageDtoList) {
-            chatPagingResponseDto.setNickname(findNicknameByMemberId(Long.parseLong(chatPagingResponseDto.getMemberId())));
+            chatPagingResponseDto.setNickname(findNicknameByMemberId(chatPagingResponseDto.getMemberId()));
         }
 
         return chatMessageDtoList;
