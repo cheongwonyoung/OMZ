@@ -19,10 +19,10 @@ export default function DeleteModal(props: any) {
         ></div>
         <div className="relative w-auto mx-auto max-w-3xl">
           <div className="p-4 rounded-lg shadow-lg relative flex flex-col w-full bg-white">
-            <div className="flex justify-between gap-5  items-center">
+            <div className="flex justify-between gap-5 p-5 items-center">
               <FontAwesomeIcon
                 icon={faTrash}
-                className="text-[#FABBCA] text-[40px]"
+                className="text-[30px]"
               />
               <p className="font-bold">정말 삭제하시겠습니까?</p>
 
@@ -39,12 +39,12 @@ export default function DeleteModal(props: any) {
             <div className="flex items-center justify-around p-5 gap-5">
               <button
                 onClick={props.onConfirm}
-                className="relative gap-2.5 px-[15px] py-2.5 rounded-[10px] bg-transparent border border-[#555a64]"
+                className="relative gap-2.5 min-w-[40%] py-2.5 rounded-[10px] bg-transparent border border-[#555a64]"
               >
                 예
               </button>
               <button
-                className="relative gap-2.5 px-[15px] py-2.5 rounded-[10px] bg-[#fabbca] text-white"
+                className="relative gap-2.5 min-w-[40%] py-2.5 rounded-[10px] bg-black text-white"
                 onClick={props.onCancel}
               >
                 아니오

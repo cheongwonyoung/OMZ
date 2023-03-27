@@ -36,9 +36,9 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
   return (
     <>
       {/* TODO: img 방식 나중에 바꾸기  */}
-      <form onSubmit={submitHandler} className="w-full">
+      <form onSubmit={submitHandler} className="w-[90%]">
         <div className="w-full flex flex-col items-center">
-          <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2">
+          <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2 mb-5">
             <img
               src={images.profile_img}
               alt=""
@@ -47,14 +47,14 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
             <div className="w-full flex justify-between items-center">
               <input
                 type="text"
-                className="w-10/12 h-full focus:outline-none bg-transparent"
-                placeholder="아무말이나 일단 써"
+                className="w-10/12 focus:outline-none bg-transparent ml-5"
+                placeholder="무슨 일이 일어나고 있나요?"
                 maxLength={140}
                 ref={articleInputRef}
               />
               <FontAwesomeIcon
                 icon={faImage}
-                className="text-xl"
+                className="text-xl mx-5"
                 onClick={() => {
                   if (showUploader) {
                     setShowUploader(false);

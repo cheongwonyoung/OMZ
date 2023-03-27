@@ -20,7 +20,7 @@ import {
 import { imageUrl } from "../../api";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
-
+import moment from "moment";
 // import CommunityCommentModal from "./CommunityCommentModal";
 
 type Article = {
@@ -46,8 +46,7 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
   const articleContent = useRef<HTMLTextAreaElement>(item.content);
 
   // 시간 원하는 걸로 바꾸기
-  const timestamp = new Date(item.registeredTime);
-  const date = timestamp.toDateString();
+  const date = new Date(item.registeredTime);
 
   // TODO: imageUrl은 이렇게 하기 (이건 커뮤니티 내 사진)
   const imageUrlRoot = imageUrl + item.file;
@@ -76,6 +75,7 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
       return;
     }
     handleArticleUpdate(enteredArticleContent);
+    setShowUpdate(false);
   };
 
   const upDateArticle = useMutation(
@@ -148,27 +148,26 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
 
   return (
     <>
-      <div className="w-full flex justify-center">
-        <div className="flex flex-col pb-5 px-2 items-center">
-          <div
-            className="bg-white/70 flex justify-center rounded-xl cursor-pointer hover:scale-105 hover:bg-black/20 p-2"
-            onClick={() => handleClick(item.boardId)}
-          >
-            <div className="w-[90%] h-[90%]">
-              <div className="flex justify-between">
-                <div className="flex justify-start gap-5 items-center">
-                  {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
-                  <img
-                    className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem] hover:scale-105"
-                    src={images.profile_img}
-                    onClick={(e) => {
-                      e?.stopPropagation();
-                      goToMyPage(item.member.memberId);
-                    }}
-                  />
-
+      <div className="min-w-full max-w-full">
+        <div
+          className="bg-white w-full justify-start rounded-xl cursor-pointer p-2"
+          onClick={() => handleClick(item.boardId)}
+        >
+          <div className="px-5 py-2">
+            <div className="justify-start mt-3">
+              <div className="flex justify-start gap-4 items-center">
+                {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
+                <img
+                  className="w-[3rem] h-[3rem] hover:scale-105"
+                  src={images.profile_img}
+                  onClick={(e) => {
+                    e?.stopPropagation();
+                    goToMyPage(item.member.memberId);
+                  }}
+                />
+                <div className="flex flex-col">
                   <p
-                    className="flex-grow-0 flex-shrink-0 text-ml cursor-pointer hover:text-white font-bold"
+                    className="text-ml cursor-pointer hover:text-white font-bold"
                     onClick={(e) => {
                       e?.stopPropagation();
                       goToMyPage(item.member.memberId);
@@ -176,74 +175,59 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                   >
                     {item.member.nickname}
                   </p>
+                  {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
                 </div>
-                {memberId === item?.member.memberId && (
-                  <div className="flex justify-start gap-5 items-center">
-                    <FontAwesomeIcon
-                      icon={faPencil}
-                      className="p-1 cursor-pointer hover:text-white text-lg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (showUpdate) {
-                          setShowUpdate(false);
-                        } else {
-                          setShowUpdate(true);
-                        }
-                      }}
-                    />
-
-                    <FontAwesomeIcon
-                      icon={faXmark}
-                      className="p-1 cursor-pointer hover:text-white text-lg"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setShowModal(true);
-                      }}
-                    />
-                  </div>
-                )}
               </div>
+            </div>
 
-              <div>
-                {item.file ? (
-                  <img
-                    className="flex-grow-0 flex-shrink-0 w-full rounded-[10px]"
-                    src={imageUrlRoot}
-                  />
-                ) : (
-                  <img
-                    className="flex-grow-0 flex-shrink-0 w-full rounded-[10px]"
-                    src={images.main_logo}
-                  />
-                )}
-                {/* 수정할 때 나오는 창  */}
-                {showUpdate ? (
-                  <form
-                    onSubmit={submitHandler}
-                    className="w-full flex flex-col justify-center items-end"
-                  >
-                    <textarea
-                      onClick={(e) => e.stopPropagation()}
-                      defaultValue={item.content}
-                      ref={articleContent}
-                      maxLength={140}
-                      rows={6}
-                      className="w-full focus:outline-none bg-white/50 resize-none"
-                    ></textarea>
+            <div>
+              {item.file ? (
+                <div className="flex justify-center">
+                  <img className="rounded-[10px] mt-5" src={imageUrlRoot} />
+                </div>
+              ) : (
+                <></>
+              )}
+              {/* 수정할 때 나오는 창  */}
+              {/* {showUpdate ? (
+                <form
+                  onSubmit={submitHandler}
+                  className="flex flex-col justify-center items-end"
+                >
+                  <textarea
+                    onClick={(e) => e.stopPropagation()}
+                    defaultValue={item.content}
+                    ref={articleContent}
+                    maxLength={140}
+                    rows={5}
+                    className="w-full focus:outline-none target my-5 px-5 py-3 bg-black/10 rounded-lg"
+                  ></textarea>
+                  <div className="flex justify-end">
                     <button
-                      className="cursor-pointer hover:text-white p-3 border-black border-2 rounded-xl mb-3"
+                      className="cursor-pointer hover:text-white"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      수정하기
+                      수정
                     </button>
-                  </form>
-                ) : (
-                  <p className="w-full flex-grow-0 flex-shrink-0 text-ml text-left break-normal pb-2">
-                    {item.content}
-                  </p>
-                )}
-              </div>
-              <div className="flex justify-between">
+                    <button
+                      className="cursor-pointer hover:text-white ml-5"
+                      onClick={() => setShowUpdate(false)}
+                    >
+                      취소
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <p className="w-full text-ml text-left break-all my-5">
+                  {item.content}
+                </p>
+              )} */}
+              <p className="w-full text-ml text-left break-all my-5">
+                {item.content}
+              </p>
+            </div>
+            <div className="flex justify-between items-center my-5">
+              {!showUpdate && (
                 <div className="flex w-3/12 justify-start gap-3">
                   <FontAwesomeIcon
                     icon={faComment}
@@ -255,7 +239,7 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                   {!item.ilikeBoard ? (
                     <FontAwesomeIcon
                       icon={faHeart}
-                      className="hover:text-white text-lg"
+                      className="hover:text-white text-lg ml-5"
                       onClick={(e) => {
                         e.stopPropagation();
                         goLoveArticle();
@@ -272,25 +256,46 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                     />
                   )}
 
-                  <p className="flex-grow-0 flex-shrink-0 text-sm font-bold">
-                    {item.likeCnt}
-                  </p>
+                  <p className="text-sm font-bold">{item.likeCnt}</p>
                 </div>
-                <div>
-                  <p className="flex-grow-0 flex-shrink-0 text-sm font-bold">
-                    {date}
-                  </p>
-                </div>
-              </div>
+              )}
+              {/* <div>
+                {memberId === item?.member.memberId && !showUpdate && (
+                  <div className="flex justify-start gap-5 items-center">
+                    <p
+                      className="cursor-pointer hover:text-white text-lg"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (showUpdate) {
+                          setShowUpdate(false);
+                        } else {
+                          setShowUpdate(true);
+                        }
+                      }}
+                    >
+                      수정
+                    </p>
+                    <p
+                      className="cursor-pointer hover:text-white text-lg"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowModal(true);
+                      }}
+                    >
+                      삭제
+                    </p>
+                  </div>
+                )}
+              </div> */}
             </div>
           </div>
-          {showModal && (
-            <DeleteCommentModal
-              onCancel={closeModalHandler}
-              onConfirm={() => confirmModalHandler(item.boardId)}
-            />
-          )}
         </div>
+        {showModal && (
+          <DeleteCommentModal
+            onCancel={closeModalHandler}
+            onConfirm={() => confirmModalHandler(item.boardId)}
+          />
+        )}
       </div>
     </>
   );
