@@ -10,7 +10,7 @@ COPY package.json /usr/src/app/package.json
 RUN npm install  --force
 
 COPY . /usr/src/app
-RUN npm run dev
+RUN npm run build
 FROM nginx:latest
 
 RUN rm -rf /etc/nginx/conf.d
