@@ -73,7 +73,7 @@ public class ChatController {
                         .cursor(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"))).build();
             }
             ChatRoomResponseDto chatRoomResponseDto = chatRoomService.getChatRoomInfo(roomId, memberId);
-            List<ChatPagingResponseDto> chatList = chatRedisCacheService.getChatsFromRedis(roomId, chatPagingDto);
+            List<ChatPagingResponseDto> chatList = chatRedisCacheService.getChatsFromRedis(roomId, memberId, chatPagingDto);
             chatRoomResponseDto.setChatList(chatList);
 
             return new ResponseEntity<ChatRoomResponseDto>(chatRoomResponseDto, HttpStatus.OK);

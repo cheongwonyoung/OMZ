@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.ssafy.omz.dto.resp.ChatPagingResponseDto.byChatMessageDto;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -129,7 +131,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
     }
 
     @Override
-    public List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, ChatPagingRequestDto chatPagingDto) {
+    public List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, Long memberId, ChatPagingRequestDto chatPagingDto) {
 
         //  마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
         ChatMessage cursorDto = ChatMessage.builder()
@@ -152,11 +154,41 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         //  Redis로부터 chat_data 조회
         Set<ChatMessage> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + chatRoomId, rank, rank + 10);
         log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size());
-        List<ChatPagingResponseDto> chatMessageDtoList =
-                chatMessageSaveDtoSet
-                        .stream()
-                        .map(ChatPagingResponseDto::byChatMessageDto)
-                        .collect(Collectors.toList());
+//        List<ChatPagingResponseDto> chatMessageDtoList =
+//                chatMessageSaveDtoSet
+//                        .stream()
+//                        .map(ChatPagingResponseDto::byChatMessageDto)
+//                        .collect(Collectors.toList());
+
+        //  isChecked를 위해 for문 세분화
+        List<ChatPagingResponseDto> chatMessageDtoList = chatMessageSaveDtoSet.stream().map(
+                chatMessage -> {
+                    ChatPagingResponseDto chatPagingResponseDto = byChatMessageDto(chatMessage);
+
+                    //  상대방이 보낸 채팅 메세지
+                    if(chatMessage.getMemberId() != memberId && !chatMessage.isChecked()){
+                        //  isChecked 값 변환 후 NEW_CHAT, CHAT_SORTED_SET_?에 다시 삽입
+                        log.info("[ChatRedisCacheService isChecked] ChatMessage : {}", chatMessage.toString());
+                        chatPagingResponseDto.setChecked(true);
+                        
+                        if(zSetOperations.reverseRank(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage) != null) {
+                            chatMessage.setChecked(true);
+                            redisTemplate.opsForZSet().add(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage, chatUtils.changeLocalDateTimeToDouble(chatMessage.getCreatedTime()));
+                        }
+
+                        chatMessage.setChecked(true);
+
+                        //  zrange NEW_CHAT 0 -1
+                        redisTemplate.opsForZSet().add(NEW_CHAT, chatMessage, chatUtils.changeLocalDateTimeToDouble(chatMessage.getCreatedTime()));
+
+                        // 만약 NEW_CHAT에 있으면
+                        //  zrange CHAT_SORTED_SET_? 0 -1
+                        //  isChecked가 false에서 true로 바뀌어서 다른거 다 같아도 없다고 뜰 수도 있음... 순서를 일단 제일 먼저로 바꿔야하나?
+
+                    }
+                    return chatPagingResponseDto;
+                }
+        ).collect(Collectors.toList());
 
         //  Chat_data 부족할경우 MYSQL 추가 조회
         if (chatMessageDtoList.size() != 10) {
