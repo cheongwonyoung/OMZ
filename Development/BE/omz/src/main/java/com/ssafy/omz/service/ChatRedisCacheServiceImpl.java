@@ -143,7 +143,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 
         //  마지막 chat_data cursor Rank 조회
         Long rank = zSetOperations.reverseRank(CHAT_SORTED_SET_ + chatRoomId, cursorDto);
-log.info("[Cursor Pagination] rank : {}", rank);
+        log.info("[Cursor Pagination] rank : {}", rank);
         //  Cursor 없을 경우 -> 최신채팅 조회
         if (rank == null)
             rank = 0L;
@@ -151,7 +151,7 @@ log.info("[Cursor Pagination] rank : {}", rank);
 
         //  Redis로부터 chat_data 조회
         Set<ChatMessage> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + chatRoomId, rank, rank + 10);
-log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size());
+        log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size());
         List<ChatPagingResponseDto> chatMessageDtoList =
                 chatMessageSaveDtoSet
                         .stream()

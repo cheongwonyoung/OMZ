@@ -116,18 +116,18 @@ public class MemberController {
         }
     }
 
-//    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
-//    @GetMapping(value = "/test")
-//    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
-//        String token = jwtService.createAccessToken("userEmail", test);
-//        try {
-//
-//            return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @ApiOperation(value = "유저 회원가입", notes = "유저 정보를 받아 유저 정보 저장")
+    @GetMapping(value = "/test")
+    public ResponseEntity<?> test(@RequestParam String test) throws Exception {
+        String token = jwtService.createAccessToken("userEmail", test);
+        try {
+
+            return new ResponseEntity<>(token, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

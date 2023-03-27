@@ -29,7 +29,9 @@ public class ChatStompController { // stomp chat controller
 
     private final ChatRedisCacheService chatRedisCacheService;
 
-    private final MemberService memberService;  // LittleInfo return하는 메소드 추가해야 함
+    private final MemberService memberService;
+
+    private final MemberRepository memberRepository;
 
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
@@ -58,7 +60,8 @@ log.info("[ChatStompController sendMessage] ChatMessage : {}",message.toString()
 //        GitHub 예시
 //        UserInfo userInfo = jwtDecoder.decodeUsername(headerTokenExtractor.extract(token));
 
-//        message.setNickName(memberService.getLittleInfo(Long.valueOf(message.getMemberId())).getNickname());
+//        message.setNickName(memberService.getLittleInfo(message.getMemberId()).getNickname());
+        message.setNickName(memberRepository.findByMemberId(Long.valueOf(message.getMemberId())).getNickname());
         message.setCreatedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")));
         message.setType(ChatMessage.MessageType.TALK);
 

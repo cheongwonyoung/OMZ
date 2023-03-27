@@ -12,12 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @Slf4j
@@ -45,13 +47,33 @@ public class StompHandler implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 //        String sessionId = (String) message.getHeaders().get("simpSessionId");
+//        String token = accessor.getFirstNativeHeader("Authorization").substring(7);
+//        String token = accessor.getFirstNativeHeader("Authorization").substring(7);
+
+//        MemberResponseDto.LittleInfo memberInfo = null;
+
 
         // 최초 소켓 연결
         if (StompCommand.CONNECT == accessor.getCommand()) {
 
             // 토큰 추출 -> FE에서 connectHeaders : {token : "토큰값"}
-            String token = accessor.getFirstNativeHeader(TOKEN);
-            log.info("[StompHandler preSend] : CONNECT Token : " + token);
+
+//            log.info("[StompHandler preSend] : CONNECT Authorization : " + accessor.getFirstNativeHeader("Authorization"));
+
+
+//            String token = accessor.getFirstNativeHeader("Authorization").substring(7);
+//            String token = accessor.getFirstNativeHeader(TOKEN);
+
+            log.info("[StompHandler preSend] : CONNECT Authorization : ");
+//            try {
+//                memberInfo = memberService.getLittleInfo(token);
+//                log.info("[CONNECT] memberInfo : {}", memberInfo.toString());
+//            } catch (UnsupportedEncodingException e) {
+//                throw new RuntimeException(e);
+//            }
+
+//            log.info("[StompHandler preSend] : CONNECT token : " + accessor.getFirstNativeHeader(TOKEN));
+
 //            if(jwtDecoder.decodeUserId(token) == null) {
 //                throw new LoginUserNotFoundException("로그인을 해주시기 바랍니다.");
 //            }
@@ -59,13 +81,26 @@ public class StompHandler implements ChannelInterceptor {
         // 소켓 연결 후, SUBSCRIBE 등록 ( 구독 요청 )
         else if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
 
-            log.info("[StompHandler preSend] : SUBSCRIBE");
+            log.info("[SubScribe destination] : " + message.getHeaders().get(SIMP_DESTINATION));
+            log.info("[SubScribe sessionId] : " + message.getHeaders().get(SIMP_SESSION_ID));
+
+            log.info("[StompHandler preSend] : SUBSCRIBE ");
+
+
+//            log.info("[StompHandler preSend] : SUBSCRIBE {}", token);
 
             // 토큰 추출 -> FE에서 connectHeaders : {token : "토큰값"}
-            String token = accessor.getFirstNativeHeader(TOKEN);
+//            token = accessor.getFirstNativeHeader(TOKEN);
+//            String token1 = accessor.getFirstNativeHeader("Authorization");
 
-//            MemberResponseDto.LittleInfo memberInfo = memberService.getLittleInfo(token);
-
+//            String token2 = accessor.getFirstNativeHeader(TOKEN);
+//
+//
+//            try {
+//                memberInfo = memberService.getLittleInfo(token2);
+//            } catch (UnsupportedEncodingException e) {
+//                throw new RuntimeException(e);
+//            }
 
             // ---  blog start ----
 
@@ -104,9 +139,13 @@ public class StompHandler implements ChannelInterceptor {
             ).orElse(null);
 
             String roomId = chatUtils.getRoomIdFromDestination(destination);
-String nickname = null;
+
 //            String nickname = memberInfo.getNickname();
-//            String memberId = memberInfo.getMemberId();
+//            String memberId = String.valueOf(memberInfo.getMemberId());
+
+//            log.info("[Subscribe] memberInfo nickname : {}, memberId : {}", nickname, memberId);
+
+            String nickname = "StompHandler";
 
             //redis에  key(roomId) :  Value( sessionId , nickname ) 저장
             chatRoomService.enterChatRoom(roomId, sessionId, nickname); // 닉네임으로? 아니면 memberId로?
@@ -137,7 +176,7 @@ String nickname = null;
             log.info("[StompHandler preSend] : DISCONNECT");
 
             // 토큰 추출 -> FE에서 connectHeaders : {token : "토큰값"}
-            String token = accessor.getFirstNativeHeader(TOKEN);
+//            String token = accessor.getFirstNativeHeader(TOKEN);
 
 //            String rawToken = Optional.ofNullable(accessor.getFirstNativeHeader("Authorization"))
 //                    .orElse("unknownUser");
