@@ -58,13 +58,13 @@ export default function UpdateAnimal({ animalPrefer, changePrefer }: Props) {
               value={animalPrefer[animalEng[item]]}
               type="range"
               min={0}
-              max={100}
-              step={5}
+              max={1}
+              step={0.1}
               onChange={(e) => changePrefer(e)}
             />
           </div>
           <div className="h-1/2">
-            <p className="text-end ">{animalPrefer[animalEng[item]]}%</p>
+            <p className="text-end ">{animalPrefer[animalEng[item]] * 100}%</p>
           </div>
         </div>
       ))}

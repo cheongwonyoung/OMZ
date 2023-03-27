@@ -1,5 +1,5 @@
 import UpdateItem from "./UpdateItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UpdateAnimal from "./UpdateAnimal";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -62,13 +62,18 @@ export default function MyPageUpdateForm() {
 
   const memberId = useRecoilValue(userStatus).id;
 
-  useQuery("mypageUpdate", () => getMyUserInfo(memberId), {
+  const { refetch } = useQuery("mypageUpdate", () => getMyUserInfo(memberId), {
     onSuccess(data) {
+      console.log(data);
       setName(data.data.nickname);
       setMbti(data.data.mbti);
       setAnimalPrefer(data.data.preferFace);
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const nameInp = (
     <input

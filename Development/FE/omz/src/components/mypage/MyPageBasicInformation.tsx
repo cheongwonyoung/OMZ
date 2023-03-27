@@ -4,20 +4,28 @@ import { v4 as uuidv4 } from "uuid";
 import { useQuery } from "react-query";
 import { getMyPageInfos } from "../../api/myPage";
 
-export default function MyPageBasicInformation() {
+type Props = {
+  member: {
+    [key: string]: any;
+  };
+  isOwner: boolean;
+};
+
+export default function MyPageBasicInformation({ member, isOwner }: Props) {
   const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
   const navigate = useNavigate();
 
   const goToUpdate = () => {
     navigate("/mypage/update");
   };
-  const animalPrefer: { [key: string]: number } = {
-    강아지: 20,
-    고양이: 30,
-    곰: 0,
-    여우: 50,
-    토끼: 30,
-    공룡: 20,
+
+  const animalEng: { [key: string]: string } = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    여우: "fox",
+    토끼: "rabbit",
+    공룡: "dino",
   };
 
   const imgsrc = (i: string): string => {
@@ -39,30 +47,26 @@ export default function MyPageBasicInformation() {
     }
   };
 
-  const myPageId = useParams().id;
-  console.log(myPageId);
-  const { data } = useQuery(
-    "mypageInfo",
-    () => getMyPageInfos(Number(myPageId)),
-    {
-      onSuccess(data) {
-        console.log(data);
-      },
-    }
-  );
-
   return (
-    <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 gap-[27px] px-8">
-      <div className="flex justify-between items-end self-stretch flex-grow-0 flex-shrink-0">
-        <div className="flex justify-start items-end flex-grow-0 flex-shrink-0 relative gap-[15px]">
-          <p className="flex-grow-0 flex-shrink-0 text-[32px] font-bold text-left text-black">
-            닉네임
+    <div className="flex flex-col  gap-[27px] px-8 w-full">
+      <div className="flex w-full">
+        <div className="flex flex-col justify-center items-center  relative gap-[15px] w-full">
+          <p className="text-[32px] font-bold text-left text-black align-middle">
+            {member?.nickname}
           </p>
-          <p className="flex-grow-0 flex-shrink-0 text-xl text-center text-black">
-            ISFP
-          </p>
+          <div className="flex w-full justify-between gap-4">
+            <p className="text-2xl text-center text-black">{member?.mbti}</p>
+            {isOwner && (
+              <button
+                onClick={goToUpdate}
+                className="text-sm font-medium text-center text-black rounded-[10px] bg-white/50 border border-black hover:bg-black/20 px-5 py-2.5"
+              >
+                기본 정보 수정
+              </button>
+            )}
+          </div>
         </div>
-        <div
+        {/* <div
           className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-5 py-2.5 rounded-[10px] bg-white/50 border border-black hover:bg-black/20"
           onClick={goToUpdate}
         >
@@ -72,7 +76,7 @@ export default function MyPageBasicInformation() {
           >
             기본 정보 수정
           </button>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col">
         {animalList.map((item) => (
@@ -88,17 +92,19 @@ export default function MyPageBasicInformation() {
             <div className="col-span-2 h-1/2">
               <input
                 className="w-full appearance-none h-1 shadow-md bg-purple-300"
-                id={item}
-                value={animalPrefer[item]}
+                id={animalEng[item]}
+                value={member?.face[animalEng[item]]}
                 type="range"
                 min={0}
-                max={100}
-                step={5}
+                max={1}
+                step={0.1}
                 readOnly
               />
             </div>
             <div className="h-1/2">
-              <p className="text-end ">{animalPrefer[item]}%</p>
+              <p className="text-end ">
+                {Math.floor(member?.face[animalEng[item]] * 100)}%
+              </p>
             </div>
           </div>
         ))}
