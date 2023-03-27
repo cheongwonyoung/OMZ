@@ -26,7 +26,7 @@ public interface MemberService{
     String memberEmail(String token);
 
     // 회원가입
-    void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo);
+    void updateMemberInfo(Long id, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo);
 
     // 회원정보 조회
     MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException;
