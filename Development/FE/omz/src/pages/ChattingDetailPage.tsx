@@ -9,7 +9,7 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getChattingList } from "../api/chatting";
+import { getChattingList, nextChattingList } from "../api/chatting";
 // import { StompConfig } from "@stomp/stompjs";
 
 export default function ChattingDetailPage() {
@@ -32,9 +32,26 @@ export default function ChattingDetailPage() {
   const { data, isLoading, isError, refetch } = useQuery("chatList", () =>
     getChattingList(roomId, memberId)
   );
+  // 무한 스크롤 {cursor: string, memberId: number, message: string, nickname: string}
+  // const onFetchMessage = () => {
+  //   const last = chatList[chatList.length - 1]
+  //   const chatPagingDto = {
+  //     cursor: last?.createdTime,
+  //     memberId: last?.memberId,
+  //     message: last?.message,
+  //     nickname: last?.nickName
+  //   };
+  //   if (prevHeight !== messageBoxRef.current.scrollHeight) {
+
+  //   }
+  // }
 
   console.log("data", data);
+  // const [prevHeight, setPrevHeight] = useState(0);
+  // const messageBoxRef = useRef(null);
+  // console.log("BOX", messageBoxRef.current.scrollHeight);
 
+  // 무한 스크롤
   useEffect(() => {
     connect();
     return () => disConnect();
@@ -93,13 +110,15 @@ export default function ChattingDetailPage() {
   return (
     <div>
       <ChattingInfoBar />
-      {chatList.map((chat) =>
-        chat.memberId === memberId ? (
-          <MyChatting item={chat.message} key={uuidv4()} />
-        ) : (
-          <YourChatting item={chat.message} key={uuidv4()} />
-        )
-      )}
+      <div>
+        {chatList.map((chat) =>
+          chat.memberId === memberId ? (
+            <MyChatting item={chat.message} key={uuidv4()} />
+          ) : (
+            <YourChatting item={chat.message} key={uuidv4()} />
+          )
+        )}
+      </div>
       <SubmitForm sendMessage={handler} />
     </div>
   );

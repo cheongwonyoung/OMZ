@@ -14,7 +14,6 @@ export const getChattingList = (roomId: number, memberId: number) => {
   return instance.post(`/chatting/${roomId}?memberId=${memberId}`) 
 }  
 
-
 export const nextChattingList = (roomId: number, memberId: number, chatPagingDto : {cursor: string, memberId: number, message: string, nickname: string}) => {
-  return instance.post(`/chatting/${roomId}?memberId=${memberId}`, chatPagingDto) 
+  return instance.post(`/chatting/${roomId}?memberId=${memberId}`,chatPagingDto) 
 }  
