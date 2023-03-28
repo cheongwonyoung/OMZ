@@ -1,11 +1,13 @@
 package com.ssafy.omz.api;
 
 import com.ssafy.omz.dto.req.ChatPagingRequestDto;
-import com.ssafy.omz.dto.resp.ChatPagingResponseDto;
-import com.ssafy.omz.dto.resp.ChatRoomInfoResponseDto;
-import com.ssafy.omz.dto.resp.ChatRoomResponseDto;
+import com.ssafy.omz.dto.resp.*;
+import com.ssafy.omz.entity.ChatRoom;
+import com.ssafy.omz.entity.Friend;
+import com.ssafy.omz.repository.FriendRepository;
 import com.ssafy.omz.service.ChatRedisCacheService;
 import com.ssafy.omz.service.ChatRoomService;
+import com.ssafy.omz.service.FriendService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +28,13 @@ public class ChatController {
 
     private final ChatRedisCacheService chatRedisCacheService;
 
+    private final FriendService friendService;
 
     @Autowired
-    public ChatController(ChatRoomService chatRoomService, ChatRedisCacheService chatRedisCacheService){
+    public ChatController(ChatRoomService chatRoomService, ChatRedisCacheService chatRedisCacheService, FriendService friendService){
         this.chatRoomService = chatRoomService;
         this.chatRedisCacheService = chatRedisCacheService;
+        this.friendService = friendService;
     }
 
     @ApiOperation(value = "채팅방 목록 조회", notes = "토큰 사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
@@ -77,6 +81,32 @@ public class ChatController {
             chatRoomResponseDto.setChatList(chatList);
 
             return new ResponseEntity<ChatRoomResponseDto>(chatRoomResponseDto, HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "채팅 상대방 친구 추가", notes = "")
+    @ApiImplicitParam(
+            name = "roomId"
+            , value = "채팅방 번호"
+    )
+    @PostMapping("/{roomId}/addFriend")
+    public ResponseEntity<?> getChatRoom(@PathVariable Long roomId, @RequestBody(required = false) ChatOtherInfoResponseDto chatOtherInfo){
+
+        //  상대방 memberId
+        try {
+
+            int friendState = chatOtherInfo.getFriendState();
+
+            //  FriendRepository에 나랑 chatOtherInfo.getMemberId() 있는지
+            //  있으면 바로 state 1로 바꿔주고
+            //  없으면 state 0으로 넣어주기
+
+            //  친구 상태 반환
+            return new ResponseEntity<>(friendState, HttpStatus.OK);
         }
         catch (Exception e){
             e.printStackTrace();
