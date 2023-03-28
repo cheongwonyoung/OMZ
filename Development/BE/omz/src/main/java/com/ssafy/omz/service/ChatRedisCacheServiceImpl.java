@@ -162,20 +162,25 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 
         //  isChecked를 위해 for문 세분화
         List<ChatPagingResponseDto> chatMessageDtoList = chatMessageSaveDtoSet.stream().map(
-                chatMessage -> {
+                chatMessage -> { // chatMessage : Redis에 저장되어 있는 채팅 메세지
                     ChatPagingResponseDto chatPagingResponseDto = byChatMessageDto(chatMessage);
-
+                    
                     //  상대방이 보낸 채팅 메세지
                     if(chatMessage.getMemberId() != memberId && !chatMessage.isChecked()){
                         //  isChecked 값 변환 후 NEW_CHAT, CHAT_SORTED_SET_?에 다시 삽입
-                        log.info("[ChatRedisCacheService isChecked] ChatMessage : {}", chatMessage.toString());
+//                        log.info("[ChatRedisCacheService isChecked] isChecked : {}", chatMessage.isChecked());
                         chatPagingResponseDto.setChecked(true);
                         
+                        //  현재 Redis 의 CHAT_SORTED_SET_?에 해당 메세지가 존재한다면 Redis, MySQL에 있는 값 변경 .. ? n
+                        //  아냐 근데 애초에 NEW_CHAT에서 잡아주면 됨
+
                         if(zSetOperations.reverseRank(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage) != null) {
+                            zSetOperations.remove(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage);
                             chatMessage.setChecked(true);
                             redisTemplate.opsForZSet().add(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage, chatUtils.changeLocalDateTimeToDouble(chatMessage.getCreatedTime()));
                         }
-
+                        chatMessage.setChecked(false);
+                        zSetOperations.remove(NEW_CHAT, chatMessage);
                         chatMessage.setChecked(true);
 
                         //  zrange NEW_CHAT 0 -1

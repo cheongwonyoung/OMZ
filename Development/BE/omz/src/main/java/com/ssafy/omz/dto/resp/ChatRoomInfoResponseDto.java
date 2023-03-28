@@ -25,7 +25,7 @@ public class ChatRoomInfoResponseDto {
     //  가장 최근 채팅 메세지 생성 일자
     private String recentMessageCreatedTime;
 
-    //  채팅 메세지 읽음 여부
+    //  채팅 메세지 읽음 여부 (최근 채팅 메세지가 상대방이 보낸 메세지일 때 아직 읽지 않았으면 false)
     private boolean isChecked;
 
     //  채팅 상대와의 친구 여부

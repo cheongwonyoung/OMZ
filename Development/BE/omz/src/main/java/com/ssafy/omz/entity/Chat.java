@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -54,6 +55,7 @@ public class Chat implements Serializable {
                 .createdTime(chatMessage.getCreatedTime())
                 .chatRoom(chatRoom)
                 .fromMember(member)
+                .isChecked(chatMessage.isChecked())
                 .build();
     }
 }

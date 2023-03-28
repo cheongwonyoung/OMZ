@@ -79,6 +79,9 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             if(friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, other.getMemberId()))
                 state = friendRepository.findByToMember_MemberIdAndFromMember_MemberId(memberId, other.getMemberId()).getState();
 
+            //  최근 보낸 메세지가 상대방이 보낸 메세지이며 아직 확인을 안 한 상태라면 false
+            boolean isChecked = recentChatMessage.getMemberId() != memberId ? recentChatMessage.isChecked() : true;
+
             chatRoomList.add(
                     ChatRoomInfoResponseDto.builder()
                             .roomId(chatRoom.getChatRoomId())
@@ -87,7 +90,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                             .file(other.getFile())
                             .recentMessage(recentChatMessage.getMessage())
                             .recentMessageCreatedTime(recentChatMessage.getCreatedTime())
-//                            .isChecked()
+                            .isChecked(isChecked)
                             .friendState(state)
                             .build()
             );
