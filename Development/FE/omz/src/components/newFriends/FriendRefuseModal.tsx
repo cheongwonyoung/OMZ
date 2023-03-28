@@ -1,12 +1,13 @@
 import { faHeartCrack, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMutation } from "react-query";
+import { rejectProposal } from "../../api/myFriends";
 
 type Props = {
   handleRefuseModal(): void;
 };
 export default function FriendRefuseModal({ handleRefuseModal }: Props) {
-  const refuseFriend = useMutation((id) => rejectProposal);
+  const refuseFriend = useMutation((id: number) => rejectProposal(id));
 
   return (
     <div className="flex flex-col items-center">

@@ -55,24 +55,6 @@ export default function StepLikeAnimal({
     }
   };
 
-  const navigate = useNavigate();
-  const [userState, setUserState] = useRecoilState(userStatus);
-  const access_token = useRecoilValue(userToken).access_token;
-  const retryGetUserInfo = useMutation((token: string) => getUserInfo(token), {
-    onSuccess(data) {
-      setUserState({
-        ...userState,
-        id: data.data.memberId,
-        nickname: data.data.nickname,
-        profile_img: data.data.file,
-      });
-      navigate("end");
-    },
-  });
-  const getUserInfoRetry = () => {
-    retryGetUserInfo.mutate(access_token);
-  };
-
   return (
     <div className="flex flex-col justify-center items-center w-11/12 gap-10">
       <p className="text-2xl font-bold">좋아하는 동물 퍼센트 입력</p>
@@ -103,12 +85,12 @@ export default function StepLikeAnimal({
           </div>
         ))}
       </div>
+
       <NextBtn
         comment="다음 스텝으로"
         icon={<FontAwesomeIcon icon={faArrowRight} />}
         logic={() => {
           signUpSubmit();
-          getUserInfoRetry();
         }}
       />
     </div>
