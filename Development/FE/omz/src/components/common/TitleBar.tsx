@@ -21,7 +21,7 @@ export default function TitleBar({ icon, title, goto }: Props) {
       {/*<div className="flex w-11/12 justify-between items-center p-2.5 border-t-0 border-r-0 border-b border-l-0 border-black"> */}
       <div className="flex items-center">
         <img src={icon} alt="" className="h-12 aspect-square mr-4" />
-        <p className="font-bold text-xl">{title}</p>
+        <p className="title font-bold text-xl">{title}</p>
       </div>
       <div className="w-10 h-10 flex content-center">
         <BackBtn goBack={goBack} />

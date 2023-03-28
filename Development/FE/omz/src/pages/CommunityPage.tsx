@@ -47,7 +47,7 @@ export default function CommunityPage() {
   };
 
   if (isLoading) return <Loading />;
-  if (isError) return <h3>isError...</h3>;
+  if (isError) return <p className="title">isError...</p>;
 
   return (
     <div className="flex flex-col items-center">

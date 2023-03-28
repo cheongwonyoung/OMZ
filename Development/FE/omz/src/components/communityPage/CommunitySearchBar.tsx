@@ -73,7 +73,7 @@ export default function CommunitySearchBar() {
       </div>
       <div className="flex flex-col items-center mt-4">
         {isLoading && <Loading />}
-        {isError && <div>isError...</div>}
+        {isError && <div className="title">isError...</div>}
         <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.data.map((article: Article) => (
             <CommunityArticleItem
