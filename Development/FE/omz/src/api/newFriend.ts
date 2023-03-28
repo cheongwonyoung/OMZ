@@ -1,5 +1,6 @@
 import { instance } from ".";
 
+// 친구 신청
 interface Friend {
   [key: string]: string | number;
 }

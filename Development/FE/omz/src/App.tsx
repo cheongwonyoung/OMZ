@@ -23,6 +23,8 @@ import MiniRoomUpdatePage from "./pages/MiniRoomUpdatePage";
 import CommunityDetailPage from "./pages/CommunityDetailPage";
 import MyPageUpdatePage from "./pages/MyPageUpdatePage";
 import MyPageCustomPage from "./pages/MyPageCustomPage";
+import SignUpEnd from "./pages/SignUpEndPage";
+import SignUpEndPage from "./pages/SignUpEndPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -118,6 +120,10 @@ const router = createBrowserRouter([
       {
         path: "mypage/custom",
         element: <MyPageCustomPage />,
+      },
+      {
+        path: "signup/end",
+        element: <SignUpEndPage />,
       },
     ],
   },

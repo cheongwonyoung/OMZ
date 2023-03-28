@@ -4,6 +4,7 @@ import ModalBlackBg from "../components/common/ModalBlackBg";
 import TitleBar from "../components/common/TitleBar";
 import FriendsList from "../components/myFriends/FriendsList";
 import ModalDeleteFriend from "../components/myFriends/ModalDeleteFriend";
+import ModalRefuseProposal from "../components/myFriends/ModalRefuseProposal";
 import ProposalList from "../components/myFriends/ProposalList";
 
 export default function MyFriendsPage() {
@@ -28,6 +29,18 @@ export default function MyFriendsPage() {
 
   const [isDeleteModal, setIsDeleteModal] = useState(false);
 
+  const [refuseMember, setRefuseMember] = useState<{
+    id: number;
+    name: string;
+  }>({ id: 0, name: "" });
+  const [isRefuseModal, setIsRefusModal] = useState(false);
+  const handleRefuseModal = (id: number, name: string) => {
+    setRefuseMember({ id, name });
+    setIsRefusModal((prev) => !prev);
+  };
+  const closeRefuseModal = () => {
+    setIsRefusModal(false);
+  };
   return (
     <div className="flex flex-col items-center">
       <TitleBar goto="/" title="My Friends" icon={images.new_friends_img} />
@@ -42,6 +55,16 @@ export default function MyFriendsPage() {
         />
       )}
       {/* <ModalBlackBg modal={<ModalDeleteFriend />} /> */}
+      {isRefuseModal && (
+        <ModalBlackBg
+          modal={
+            <ModalRefuseProposal
+              closeRefuseModal={closeRefuseModal}
+              refuseMember={refuseMember}
+            />
+          }
+        />
+      )}
       <div className="w-11/12 mt-4">
         <label className="relative inline-flex items-center cursor-pointer">
           <input
@@ -54,7 +77,7 @@ export default function MyFriendsPage() {
           <p className="ml-4 font-bold">{subTitle()}</p>
         </label>
         {isToggle ? (
-          <ProposalList />
+          <ProposalList handleRefuseModal={handleRefuseModal} />
         ) : (
           <FriendsList handleDeleteMember={handleDeleteMember} />
         )}

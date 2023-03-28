@@ -4,20 +4,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
+import { getUserInfo } from "../../api/kakaoLogin";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userStatus, userToken } from "../../recoil/userAtom";
 
 interface AnimalPrefer {
   [key: string]: number;
 }
 
 type Props = {
-  plusPage(): void;
   changePrefer(e: any): void;
   animalPrefer: AnimalPrefer;
   signUpSubmit(): void;
 };
 
 export default function StepLikeAnimal({
-  plusPage,
   changePrefer,
   animalPrefer,
   signUpSubmit,
@@ -50,6 +53,24 @@ export default function StepLikeAnimal({
       default:
         return "";
     }
+  };
+
+  const navigate = useNavigate();
+  const [userState, setUserState] = useRecoilState(userStatus);
+  const access_token = useRecoilValue(userToken).access_token;
+  const retryGetUserInfo = useMutation((token: string) => getUserInfo(token), {
+    onSuccess(data) {
+      setUserState({
+        ...userState,
+        id: data.data.memberId,
+        nickname: data.data.nickname,
+        profile_img: data.data.file,
+      });
+      navigate("end");
+    },
+  });
+  const getUserInfoRetry = () => {
+    retryGetUserInfo.mutate(access_token);
   };
 
   return (
@@ -91,8 +112,8 @@ export default function StepLikeAnimal({
           comment="다음 스텝으로"
           icon={<FontAwesomeIcon icon={faArrowRight} />}
           logic={() => {
-            plusPage();
             signUpSubmit();
+            getUserInfoRetry();
           }}
         />
       </div>

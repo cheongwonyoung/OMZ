@@ -116,14 +116,11 @@ export default function SignUpPage() {
       case 3:
         return (
           <StepLikeAnimal
-            plusPage={plusPage}
             changePrefer={changePrefer}
             animalPrefer={animalPrefer}
             signUpSubmit={signUpSubmit}
           />
         );
-      case 4:
-        return <StepEnd />;
     }
   };
   const token: string = useRecoilValue(userToken).access_token;
