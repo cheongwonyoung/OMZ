@@ -15,30 +15,26 @@ type Article = {
 
 export default function CommunityLikePage() {
   const memberId = useRecoilValue(userStatus).id;
-  const membernickname = useRecoilValue(userStatus).nickName;
   // 좋아요한 게시물 가져오기
   const { data, isLoading, isError, refetch } = useQuery("articlelike", () =>
-    likeArticles(memberId)
+  likeArticles(memberId)
   );
-
+  console.log(data)
+  const membernickname = data?.data[0].member.nickname;
   if (isLoading) return <Loading />;
   if (isError) return <h3>Error...</h3>;
 
   return (
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
-      <div className="mb-5"></div>
-      <div className="w-11/12 mb-5">
-        <div className="flex justify-start items-center">
-          <div>
-            <p className="font-bold text-2xl text-">{membernickname}</p>
-            <p className="font-bold text-2xl">님이 좋아하는 게시물</p>
-          </div>
-
+      <div className="w-11/12 flex flex-col justify-start p-5">
+        <p className="font-bold text-2xl text-">{membernickname} 님이 </p>
+        <div className="flex gap-3">
+          <p className="font-bold text-2xl">좋아하는 게시물</p>
           <img src={images.heart_img} alt="" className="" />
         </div>
       </div>
-      <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.data.map((article: Article) => (
           <CommunityArticleItem
             key={uuidv4()}
