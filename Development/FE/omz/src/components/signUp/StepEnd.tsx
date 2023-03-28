@@ -2,16 +2,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import NextBtn from "./NextBtn";
 import { faPen, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
 export default function StepEnd() {
+  const memberId = useRecoilValue(userStatus).id;
   const navigate = useNavigate();
   const goMiniRoom = () => {
-    navigate("/miniroom");
+    navigate(`/miniroom/${memberId}`);
   };
+
   const goHome = () => {
     navigate("/");
   };
   return (
-    <div className="flex flex-col items-center mt-32">
+    <div className="flex flex-col items-center pt-32">
       <p className="text-3xl font-bold mb-8 text-purple-500">회원가입 완료!</p>
       <div className="flex flex-col items-center mb-12 text-lg font-semibold">
         <p>상태 메시지를 설정하면</p>

@@ -1,4 +1,4 @@
-import { images } from "../../assets/images";
+import { imageUrl } from "../../api";
 
 type Props = {
   name: string;
@@ -11,7 +11,7 @@ export default function FriendsItem({ name, content, imgsrc, bottom }: Props) {
     <div className="flex w-full border-b-2 border-white py-4">
       <div className="pt-2 mr-4">
         <img
-          src={images[imgsrc]}
+          src={imageUrl + imgsrc}
           alt=""
           className="w-[3rem] h-[3rem] object-cover rounded-full"
         />
