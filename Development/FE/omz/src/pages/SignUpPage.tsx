@@ -6,8 +6,8 @@ import StepLikeAnimal from "../components/signUp/StepLikeAnimal";
 import StepMbti from "../components/signUp/StepMbti";
 import html2canvas from "html2canvas";
 import { v4 as uuidv4 } from "uuid";
-import { useRecoilValue } from "recoil";
-import { userToken } from "../recoil/userAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userStatus, userToken } from "../recoil/userAtom";
 import { useMutation, useQuery } from "react-query";
 import { getUserInfo, signUp } from "../api/kakaoLogin";
 import { useNavigate } from "react-router-dom";
@@ -159,10 +159,18 @@ export default function SignUpPage() {
     goSignUp.mutate({ formData, tok: token });
   };
 
+  const [userState, setUserState] = useRecoilState(userStatus);
   const getInfo = useMutation((token: string) => getUserInfo(token), {
     onSuccess(data) {
       console.log(data);
-      data.data === false ? navigate("/signup") : navigate("/");
+      setUserState({
+        ...userState,
+        id: data.data.memberId,
+        nickname: data.data.nickname,
+        profile_img: data.data.file,
+      });
+      navigate("end");
+      // data.data === false ? navigate("/signup") : navigate("/");
     },
   });
 
