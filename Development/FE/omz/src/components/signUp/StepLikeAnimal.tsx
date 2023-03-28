@@ -74,49 +74,43 @@ export default function StepLikeAnimal({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <p className="text-xl mb-8 font-bold">동물상 좋아하는 정도</p>
-      <div className="flex flex-col  w-8/12 gap-2">
+    <div className="flex flex-col justify-center items-center w-11/12 gap-10">
+      <p className="text-2xl font-bold">좋아하는 동물 퍼센트 입력</p>
+      <div className="flex flex-col w-11/12 gap-2">
         {animalList.map((item) => (
-          <div className="grid grid-cols-4 gap-4 items-center" key={item}>
-            <div className="flex flex-col items-center">
+          <div className="flex gap-4 items-center" key={item}>
+            <div className="w-[25%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""
                 className="w-full rounded-full object-cover aspect-square"
               />
-              <p>{item}</p>
+              <p className="text-lg">{item}</p>
             </div>
-            <div className="col-span-2 h-1/2">
-              <input
-                className="w-full appearance-none h-1 shadow-md bg-purple-300"
-                id={animalEng[item]}
-                value={animalPrefer[animalEng[item]]}
-                type="range"
-                min={0}
-                max={1}
-                step={0.1}
-                onChange={(e) => changePrefer(e)}
-              />
-            </div>
-            <div className="h-1/2">
-              <p className="text-end ">
-                {animalPrefer[animalEng[item]] * 100}%
-              </p>
-            </div>
+            <input
+              className="w-full bg-white accent-black"
+              id={animalEng[item]}
+              value={animalPrefer[animalEng[item]]}
+              type="range"
+              min={0}
+              max={1}
+              step={0.1}
+              onChange={(e) => changePrefer(e)}
+            />
+            <p className="min-w-[30px] text-xl font-bold text-center">
+              {animalPrefer[animalEng[item]] * 100}
+            </p>
           </div>
         ))}
       </div>
-      <div className="mt-8">
-        <NextBtn
-          comment="다음 스텝으로"
-          icon={<FontAwesomeIcon icon={faArrowRight} />}
-          logic={() => {
-            signUpSubmit();
-            getUserInfoRetry();
-          }}
-        />
-      </div>
+      <NextBtn
+        comment="다음 스텝으로"
+        icon={<FontAwesomeIcon icon={faArrowRight} />}
+        logic={() => {
+          signUpSubmit();
+          getUserInfoRetry();
+        }}
+      />
     </div>
   );
 }

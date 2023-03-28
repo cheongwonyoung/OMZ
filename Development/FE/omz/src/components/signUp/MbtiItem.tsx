@@ -12,8 +12,8 @@ export default function MbtiItem({
 }: Props) {
   const cn = () => {
     if (mbti === pickedMbti)
-      return "flex justify-center items-center border-solid border-2 rounded-lg h-12 cursor-pointer bg-slate-400";
-    return "flex justify-center items-center border-solid border-2 rounded-lg h-12 cursor-pointer hover:bg-slate-400";
+      return "flex justify-center items-center border-solid border-2 border-black rounded-lg h-12 cursor-pointer bg-black text-white font-bold";
+    return "flex justify-center items-center border-solid border-2 border-black bg-white rounded-lg h-12 cursor-pointer hover:bg-slate-400 font-bold";
   };
 
   return (
