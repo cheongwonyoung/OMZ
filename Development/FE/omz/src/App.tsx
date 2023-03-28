@@ -66,13 +66,11 @@ const router = createBrowserRouter([
         element: <CommunityPage />,
       },
       {
-        // 아마 useId
-        path: "chatting/1",
+        path: "chatting/:id",
         element: <ChattingPage />,
       },
       {
-        // 나중에 룸 넘버로?
-        path: "chatting/1/1",
+        path: "chatting/:id/:roomId",
         element: <ChattingDetailPage />,
       },
       {

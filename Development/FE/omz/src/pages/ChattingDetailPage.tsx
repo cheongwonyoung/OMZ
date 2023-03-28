@@ -7,21 +7,33 @@ import MyChatting from "../components/chatting/MyChatting";
 import YourChatting from "../components/chatting/YourChatting";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
-
+import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
+import { getChattingList } from "../api/chatting";
 // import { StompConfig } from "@stomp/stompjs";
 
 export default function ChattingDetailPage() {
+  const location = useLocation();
+  const roomId = location.state.roomid;
   const [connected, setConnected] = useState(false);
-  type chat = { memberId: number; message: string };
-  const [chatList, setChatList] = useState<chat[]>([
-    {
-      message: "안녕하세요",
-      memberId: 3,
-    },
-  ]);
+  type chat = {
+    createdTime: Date;
+    memberId: number;
+    message: string;
+    nickName: string;
+    roomId: number;
+    type: string;
+  };
+
+  const [chatList, setChatList] = useState<chat[]>([]);
   const client: any = useRef({});
-  const roomId: number = 18;
   const memberId = useRecoilValue(userStatus).id;
+  // 예전 데이터 긁어오기
+  const { data, isLoading, isError, refetch } = useQuery("chatList", () =>
+    getChattingList(roomId, memberId)
+  );
+
+  console.log("data", data);
 
   useEffect(() => {
     connect();
@@ -49,25 +61,14 @@ export default function ChattingDetailPage() {
 
   const subscribe = () => {
     client.current.subscribe("/sub/chat/room/" + roomId, (data: any) => {
-      console.log(data);
-      const newMessage: string = JSON.parse(data.body).message as string;
-      const newMemberID: number = JSON.parse(data.body).memberId as number;
-      console.log(newMemberID);
-      addContent(newMessage, newMemberID);
+      console.log(data.body);
+      const newMessage: chat = JSON.parse(data.body);
+      if (newMessage.type === "TALK") {
+        setChatList((prevMessage) => [...prevMessage, newMessage]);
+      }
     });
   };
-
-  const addContent = (message: string, newMemberID: number) => {
-    setChatList((prevList) => [
-      ...prevList,
-      {
-        message: message,
-        memberId: newMemberID,
-      },
-    ]);
-    console.log(chatList);
-  };
-
+  console.log(chatList);
   const handler = (message: string) => {
     if (!client.current.connected) return;
 

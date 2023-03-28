@@ -74,7 +74,7 @@ export default function MainPage() {
             </Link>
           </div>
           <div className="flex flex-col justify-start items-center flex-grow-0 flex-shrink-0 relative gap-2.5">
-            <Link to="/chatting/1">
+            <Link to={`chatting/${memberId}`}>
               <img
                 src={images.chatting_img}
                 className="flex-grow-0 flex-shrink-0 w-[75.41px] h-20 object-cover hover:scale-110"

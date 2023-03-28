@@ -7,11 +7,11 @@ const SubmitForm = (props: any) => {
   // const {sendMessage, ms, setMs} = props;
   const { sendMessage } = props;
 
-  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key == "Enter") {
-      onClick();
-    }
-  };
+  // const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key == "Enter") {
+  //     onClick();
+  //   }
+  // };
 
   const onClick = () => {
     if (ms.trim().length < 1) {
@@ -42,7 +42,7 @@ const SubmitForm = (props: any) => {
             <input
               value={ms}
               onChange={onChange}
-              onKeyDown={onKeyDown}
+              // onKeyDown={onKeyDown}
               name={"ms"}
               placeholder="메세지를 입력해주세요"
               className="w-full h-[40px] border text-sm text-left text-[#3d3d3d] border-slate-500 rounded-xl pl-4 focus:outline-none focus:ring focus:ring-E2EDFF"
