@@ -95,7 +95,7 @@ export default function NewFriendsPage() {
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </div>
         <input
-          className="h-full w-full outline-none"
+          className="title h-full w-full outline-none"
           type="search"
           placeholder="Search"
           onChange={(e) => handleSearch(e)}

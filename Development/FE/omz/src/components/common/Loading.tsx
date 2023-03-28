@@ -6,7 +6,7 @@ export default function Loading() {
         <img src={images.animate_star} alt="" className="" />
       </div>
       <div>
-        <p className="text-lg font-bold">Loading...</p>
+        <p className="title text-lg font-bold">Loading...</p>
       </div>
     </div>
   );

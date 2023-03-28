@@ -57,7 +57,10 @@ export default function StepLikeAnimal({
 
   return (
     <div className="flex flex-col justify-center items-center w-11/12 gap-10">
-      <p className="text-2xl font-bold">좋아하는 동물 퍼센트 입력</p>
+      <div className="flex flex-col items-center gap-2">
+        <p className="text-2xl font-bold">좋아하는 동물상</p>
+        <p className="text-base">내가 좋아하는 동물상을 퍼센트로 표현해주세요</p>
+      </div>
       <div className="flex flex-col w-11/12 gap-2">
         {animalList.map((item) => (
           <div className="flex gap-4 items-center" key={item}>
@@ -80,7 +83,7 @@ export default function StepLikeAnimal({
               onChange={(e) => changePrefer(e)}
             />
             <p className="min-w-[30px] text-xl font-bold text-center">
-              {animalPrefer[animalEng[item]] * 100}
+              {animalPrefer[animalEng[item]] * 100}%
             </p>
           </div>
         ))}

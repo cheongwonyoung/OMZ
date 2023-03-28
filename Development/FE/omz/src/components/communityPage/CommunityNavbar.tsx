@@ -23,7 +23,7 @@ export default function CommunityNavbar() {
             }
           >
             <FontAwesomeIcon icon={faHouse} className="text-2xl" />
-            <span className="block text-xs pt-1">Home</span>
+            <span className="title block text-xs pt-1">Home</span>
           </NavLink>
         </div>
         <div className="flex flex-1 justify-center text-xs font-bold text-center">
@@ -34,7 +34,7 @@ export default function CommunityNavbar() {
             }
           >
             <FontAwesomeIcon icon={faSearch} className="text-2xl" />
-            <span className="block text-xs pt-1">Explore</span>
+            <span className="title block text-xs pt-1">Explore</span>
           </NavLink>
         </div>
         <div className="flex flex-1 justify-center items-center font-bold text-center">
@@ -63,7 +63,7 @@ export default function CommunityNavbar() {
             }
           >
             <FontAwesomeIcon icon={faHeart} className="text-2xl" />
-            <span className="block text-xs pt-1">Like</span>
+            <span className="title block text-xs pt-1">Like</span>
           </NavLink>
         </div>
         <div className="flex flex-1 justify-center text-xs font-bold text-center">
@@ -74,7 +74,7 @@ export default function CommunityNavbar() {
             }
           >
             <FontAwesomeIcon icon={faUser} className="text-2xl" />
-            <span className="block text-xs pt-1">MyPage</span>
+            <span className="title block text-xs pt-1">MyPage</span>
           </NavLink>
         </div>
       </div>

@@ -29,7 +29,7 @@ export default function CommunityMyPage() {
   }, []);
 
   if (isLoading) return <Loading />;
-  if (isError) return <h3>Error...</h3>;
+  if (isError) return <p className="title">Error...</p>;
   const memberNickname = data?.data.content[0].member.nickname;
   return (
     <div className="flex flex-col items-center">

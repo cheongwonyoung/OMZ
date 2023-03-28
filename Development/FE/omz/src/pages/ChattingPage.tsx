@@ -22,7 +22,7 @@ const ChattingPage = () => {
   );
 
   if (isLoading) return <Loading />;
-  if (isError) return <h3>Error...</h3>;
+  if (isError) return <h3 className="title">Error...</h3>;
 
   return (
     <div className="flex flex-col items-center">
