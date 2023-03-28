@@ -1,5 +1,6 @@
 package com.ssafy.omz.api;
 
+import com.ssafy.omz.dto.req.ItemRequestDto;
 import com.ssafy.omz.dto.req.MiniRoomRequestDto;
 import com.ssafy.omz.entity.MiniRoomLikes;
 import com.ssafy.omz.service.MiniRoomLikesService;
@@ -11,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Api("miniRoomController API v1")
@@ -24,16 +27,28 @@ public class MiniRoomController {
 
 
 
-//    @ApiOperation(value = "미니룸 3D 불러오기")
-//    @GetMapping("/3d")
-//    public ResponseEntity<?> getMiniRoom(@RequestParam(required = true, value = "memberId") long memberId){
-//        try{
-//            return new ResponseEntity<>(miniRoomService.getMiniRoom(memberId), HttpStatus.ACCEPTED);
-//        } catch (Exception e){
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @ApiOperation(value = "미니룸 3D 불러오기")
+    @GetMapping("/3d")
+    public ResponseEntity<?> getMiniRoom(@RequestParam(required = true, value = "memberId") long memberId){
+        try{
+            return new ResponseEntity<>(miniRoomService.getMiniRoom(memberId), HttpStatus.ACCEPTED);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "미니룸 커스텀하기")
+    @PutMapping("/3d/{memberId}")
+    public ResponseEntity<?> getMiniRoom(@PathVariable long memberId, @RequestBody List<ItemRequestDto.Write> customInfo){
+        try{
+            miniRoomService.updateMiniRoomCustom(memberId, customInfo);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     @ApiOperation(value = "상태 메세지 조회")
