@@ -15,20 +15,20 @@ export default function StepEnd() {
     navigate("/");
   };
   return (
-    <div className="flex flex-col items-center pt-32">
-      <p className="text-3xl font-bold mb-8 text-purple-500">회원가입 완료!</p>
-      <div className="flex flex-col items-center mb-12 text-lg font-semibold">
+    <div className="flex flex-col items-center pt-52 gap-16">
+      <p className="text-3xl font-bold">회원가입 완료!</p>
+      <div className="flex flex-col items-center text-lg font-semibold">
         <p>상태 메시지를 설정하면</p>
-        <p>프로필 뮤직을 추천 받을 수 있어요</p>
+        <p>프로필 뮤직을 추천 받을 수 있어요!</p>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full items-center">
         <NextBtn
-          comment="상태 메시지 쓰러가기"
+          comment="상태 메시지 쓰기"
           logic={goMiniRoom}
           icon={<FontAwesomeIcon icon={faPen} />}
         />
         <NextBtn
-          comment="홈으로 이동"
+          comment="홈으로"
           logic={goHome}
           icon={<FontAwesomeIcon icon={faHouse} />}
         />

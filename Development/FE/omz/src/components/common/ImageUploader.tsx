@@ -60,8 +60,8 @@ export default function ImageUploader({ file, onFile, shape }: Props) {
           />
         ) : (
           <div className="flex h-full justify-center items-center">
-              <div className=" flex flex-col items-center p-5">
-                <p>여기를 클릭하거나 파일을 드래그하세요.</p>
+              <div className=" flex flex-col items-center text-center p-5">
+                <p>여기를 클릭하거나 <br/>파일을 드래그하세요.</p>
               </div>
             <input {...getInputProps()} />
           </div>

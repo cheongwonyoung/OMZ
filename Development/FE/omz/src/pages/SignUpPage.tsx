@@ -183,5 +183,5 @@ export default function SignUpPage() {
     }
   );
 
-  return <div className="pt-32 flex justify-center w-full">{stepPage()}</div>;
+  return <div className="pt-24 flex justify-center w-full">{stepPage()}</div>;
 }
