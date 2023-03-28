@@ -37,7 +37,7 @@ public class ChatWriteBackScheduling {
 
     //  매일 1?시부터 1시간마다 Redis Cache에 있는 채팅 데이터를 MySql에 저장
 //    @Scheduled(cron = "0 0 0/1 * * *")
-    @Scheduled(cron = "0 1/3 11 * * *") // 오전 9시 50분부터 3분 간격으로 MySql에 저장
+    @Scheduled(cron = "0 7/30 13 * * *") // 오전 9시 50분부터 3분 간격으로 MySql에 저장
     @Transactional
     public void writeBack(){
         log.info("[ChatWriteBackScheduling writeBack] Scheduling start");

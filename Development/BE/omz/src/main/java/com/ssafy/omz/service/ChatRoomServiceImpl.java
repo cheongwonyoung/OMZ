@@ -1,6 +1,7 @@
 package com.ssafy.omz.service;
 
 import com.ssafy.omz.dto.req.ChatMessage;
+import com.ssafy.omz.dto.resp.ChatOtherInfoResponseDto;
 import com.ssafy.omz.dto.resp.ChatRoomInfoResponseDto;
 import com.ssafy.omz.dto.resp.ChatRoomResponseDto;
 import com.ssafy.omz.entity.ChatRoom;
@@ -85,13 +86,16 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             chatRoomList.add(
                     ChatRoomInfoResponseDto.builder()
                             .roomId(chatRoom.getChatRoomId())
-                            .nickName(other.getNickname())
-                            .memberId(other.getMemberId())
-                            .file(other.getFile())
+                            .chatOtherInfo(
+                                    ChatOtherInfoResponseDto.builder()
+                                            .memberId(other.getMemberId())
+                                            .nickName(other.getNickname())
+                                            .file(other.getFile())
+                                            .friendState(state)
+                                            .build())
                             .recentMessage(recentChatMessage.getMessage())
                             .recentMessageCreatedTime(recentChatMessage.getCreatedTime())
                             .isChecked(isChecked)
-                            .friendState(state)
                             .build()
             );
         }
@@ -109,10 +113,13 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             state = friendRepository.findByToMember_MemberIdAndFromMember_MemberId(memberId, other.getMemberId()).getState();
 
         return ChatRoomResponseDto.builder()
-                .nickName(other.getNickname())
-                .otherMemberId(other.getMemberId())
-                .file(other.getFile())
-                .friendState(state)
+                .chatOtherInfo(
+                        ChatOtherInfoResponseDto.builder()
+                                .memberId(other.getMemberId())
+                                .nickName(other.getNickname())
+                                .file(other.getFile())
+                                .friendState(state)
+                                .build())
                 .build();
     }
 }

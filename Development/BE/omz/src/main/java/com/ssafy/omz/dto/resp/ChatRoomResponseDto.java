@@ -10,13 +10,7 @@ import java.util.List;
 public class ChatRoomResponseDto {
 
     //  채팅 상대방 정보
-    private long otherMemberId;
-
-    private String nickName;
-
-    private String file;
-
-    private int friendState;
+    private ChatOtherInfoResponseDto chatOtherInfo;
 
     //  채팅 메세지 내역
     private List<ChatPagingResponseDto> chatList;
