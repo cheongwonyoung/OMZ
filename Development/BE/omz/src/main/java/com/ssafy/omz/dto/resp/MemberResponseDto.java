@@ -115,4 +115,5 @@ public class MemberResponseDto {
                     .build();
         }
     }
+
 }

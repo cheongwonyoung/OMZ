@@ -1,30 +1,25 @@
 # node.js로 빌드 ( base로 사용할 Image name )
-FROM node:18.15.0 as build-stage
+FROM node:18.15.0 as builder
 
-# 작업 위치 지정
-WORKDIR /app
+# 작업 폴더를 만들고 npm 설치
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
 
-# ADD <복사할 파일 경로> <이미지에서 파일이 위치할 경로>
-ADD . .
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+COPY package.json /usr/src/app/package.json
+RUN npm install  --force
 
-# 의존성 설치
-RUN npm install
-
-# 빌드 시작 (-> dist 폴더 생성됨??)
+COPY . /usr/src/app
 RUN npm run build
+FROM nginx:latest
 
-# nginx로 실행
-FROM nginx:stable-alpine as production-stage
+RUN rm -rf /etc/nginx/conf.d
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
-# 컨테이너가 리스닝할 포트
-EXPOSE 5173
+COPY --from=builder /usr/src/app/dist /usr/share/nginx/html
 
-# nginx.conf를 default.conf로 복사
-COPY  ./nginx/nginx.conf /etc/nginx/conf.d/default.conf 
-
-# 빌더로부터 '/app/dist'를 /usr/share/nginx/html로 복사해온다
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-
-# 컨테이너를 실행할 때 실행할 커맨드
-# CMD : 해당 이미지로 컨테이너 실행 시, 실행 명령어를 설정하지 않았을 때만 이 명령어 실행
+# 80포트 오픈하고 nginx 실행
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
+

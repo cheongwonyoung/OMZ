@@ -9,10 +9,7 @@ import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
-import com.ssafy.omz.entity.Face;
-import com.ssafy.omz.entity.Item;
-import com.ssafy.omz.entity.Member;
-import com.ssafy.omz.entity.MiniRoom;
+import com.ssafy.omz.entity.*;
 import com.ssafy.omz.repository.*;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +52,7 @@ public class MemberServiceImpl implements MemberService{
     private final ItemRepository itemRepository;
     private static final String SECRET_KEY  = "CREATEDBYWY";
     private final ItemTypeRepository itemTypeRepository;
+    private final GuestBookRepository guestBookRepository;
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
@@ -92,7 +90,7 @@ public class MemberServiceImpl implements MemberService{
 
     // 회원 정보 수정
     @Override
-    public void updateMemberInfo(Long memberId, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFaceInfo) {
+    public void updateMemberInfo(String token, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFaceInfo) throws UnsupportedEncodingException {
         String bucketName = "omz-bucket";
         String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
         try(InputStream inputStream = file.getInputStream()) {
@@ -113,7 +111,14 @@ public class MemberServiceImpl implements MemberService{
             e.printStackTrace();
         }
 
-        Member member = memberRepository.findByMemberId(memberId);
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
+
         FaceRequestDto.Write face = faceInfo;
         FaceRequestDto.Write preferFace = prefeFaceInfo;
 
@@ -147,8 +152,15 @@ public class MemberServiceImpl implements MemberService{
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("glasses").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("wing").build());
 
+        // 아이템 정보 저장
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("bed").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("table").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("lamp").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("drawer").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("clock").build());
+
         memberRepository.save(
-                memberRepository.findByMemberId(memberId).updateMemberInfo(
+                memberRepository.findByEmail(email).get().updateMemberInfo(
                         memberInfo.getMbti(),
                         memberInfo.getNickname(),
                         saveFileName,
@@ -179,6 +191,23 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
+    // 회원정보 조회 (회원가입용)
+    @Override
+    public MemberResponseDto.MemberInfo getJoinMemberInfo(String token) throws UnsupportedEncodingException {
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
+        if(member.getFaceName()==null){
+            return null;
+        }
+
+        return MemberResponseDto.MemberInfo.fromEntity(member);
+    }
+
     // 회원정보 조회
     @Override
     public MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException {
@@ -189,6 +218,7 @@ public class MemberServiceImpl implements MemberService{
                 .getBody()
                 .get("userEmail");
         Member member = memberRepository.findByEmail(email).orElse(null);
+
         return MemberResponseDto.MemberInfo.fromEntity(member);
     }
 
@@ -269,3 +299,4 @@ public class MemberServiceImpl implements MemberService{
 
     }
 }
+
