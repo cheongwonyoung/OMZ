@@ -71,9 +71,9 @@ export default function MyPageUpdateForm() {
     },
   });
 
-  useEffect(() => {
-    refetch();
-  }, []);
+  // useEffect(() => {
+  //   refetch();
+  // }, []);
 
   const nameInp = (
     <input
