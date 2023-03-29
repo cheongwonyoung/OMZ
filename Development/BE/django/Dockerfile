@@ -4,6 +4,10 @@ RUN python -V
 
 FROM continuumio/miniconda3
 RUN conda install tensorflow
+RUN conda install tensorflow-estimator
+RUN conda install tensorflow-intel
+RUN conda install tensorflow-io-gcs-filesystem
+
 
 RUN pip install --upgrade pip
 # 필요한 모듈 설치
@@ -22,6 +26,7 @@ COPY . .
 WORKDIR .
 
 RUN pip install -r requirements.txt
+RUN conda list
 
 # django를 가동시켜주는 코드
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8080"]
