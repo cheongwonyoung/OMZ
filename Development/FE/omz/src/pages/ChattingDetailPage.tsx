@@ -9,57 +9,113 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getChattingList, nextChattingList } from "../api/chatting";
+import { getChattingList } from "../api/chatting";
+import Loading from "../components/common/Loading";
+
 // import { StompConfig } from "@stomp/stompjs";
 
 export default function ChattingDetailPage() {
-  const location = useLocation();
-  const roomId = location.state.roomid;
-  const [connected, setConnected] = useState(false);
   type chat = {
-    createdTime: Date;
-    memberId: number;
+    chatRoomId: number;
     message: string;
-    nickName: string;
-    roomId: number;
-    type: string;
+    memberId: number;
+    nickname: string;
+    createdTime: string;
+    checked: boolean;
   };
 
-  const [chatList, setChatList] = useState<chat[]>([]);
+  type chatPagingDTO = {
+    cursor: string;
+    memberId: number;
+    message: string;
+    nickname: string;
+  } | null;
+
+  // prop 받아온 roomId
+  const location = useLocation();
+  const roomId = location.state.roomid;
+  // const roomId = 2;
+
   const client: any = useRef({});
   const memberId = useRecoilValue(userStatus).id;
-  // 예전 데이터 긁어오기
-  const { data, isLoading, isError, refetch } = useQuery("chatList", () =>
-    getChattingList(roomId, memberId)
+  const [connected, setConnected] = useState(false);
+  // const [chatMessages, setChatMessages] = useState<chat[]>([]);
+  const [chatPaging, setChatPaging] = useState<chatPagingDTO>(null);
+  const setTarget = useRef<HTMLDivElement>();
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const { data, isLoading, isError, refetch } = useQuery(
+    ["chatList", chatPaging],
+    () => getChattingList(roomId, memberId, chatPaging)
+    // {
+    // onSuccess(data) {
+    //   if (data?.data?.chatList[0] === chatMessages[0]) {
+    //     return;
+    //   }
+    //   setChatMessages((chatMessages) => [
+    //     chatMessages,
+    //     ...data?.data.chatList,
+    //   ]);
+    // },
+    // }
   );
-  // 무한 스크롤 {cursor: string, memberId: number, message: string, nickname: string}
-  // const onFetchMessage = () => {
-  //   const last = chatList[chatList.length - 1]
-  //   const chatPagingDto = {
-  //     cursor: last?.createdTime,
-  //     memberId: last?.memberId,
-  //     message: last?.message,
-  //     nickname: last?.nickName
-  //   };
-  //   if (prevHeight !== messageBoxRef.current.scrollHeight) {
 
-  //   }
-  // }
+  const [chatMessages, setChatMessages] = useState(data?.data?.chatList);
 
-  console.log("data", data);
-  // const [prevHeight, setPrevHeight] = useState(0);
-  // const messageBoxRef = useRef(null);
-  // console.log("BOX", messageBoxRef.current.scrollHeight);
+  useEffect(() => {
+    // if (data?.data?.chatList[0] === chatMessages[0]) {
+    //   return;
+    // }
+    setChatMessages(data?.data?.chatList);
+  }, [data]);
 
-  // 무한 스크롤
+  useEffect(() => {
+    refetch();
+  }, [connected]);
+
+  const observer = useRef(
+    new IntersectionObserver(
+      (entries) => {
+        const isIntersecting = entries[0].isIntersecting;
+        if (isIntersecting && chatMessages) {
+          const last = chatMessages[chatMessages.length - 1];
+          console.log(chatMessages);
+          console.log("라스트다 이놈아", last);
+          setChatPaging({
+            cursor: last.createdTime,
+            memberId: last.memberId,
+            message: last.message,
+            nickname: last.nickname,
+          });
+          refetch();
+        }
+      },
+      { threshold: 1 }
+    )
+  );
+
+  useEffect(() => {
+    setTimeout(function () {
+      observer.current.observe(setTarget.current);
+      return () => {
+        observer.current.unobserve(setTarget.current);
+      };
+    }, 2000);
+  }, []);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatMessages]);
+
   useEffect(() => {
     connect();
-    return () => disConnect();
+    return () => {
+      disConnect();
+    };
   }, []);
 
   const connect = () => {
     client.current = new StompJS.Client({
-      // brokerURL: "ws://70.12.246.116:8080/stomp-chat/websocket",
       brokerURL: "ws://localhost:8080/api/stomp-chat/websocket",
       connectHeaders: {
         login: "user",
@@ -78,17 +134,28 @@ export default function ChattingDetailPage() {
 
   const subscribe = () => {
     client.current.subscribe("/sub/chat/room/" + roomId, (data: any) => {
-      console.log(data.body);
-      const newMessage: chat = JSON.parse(data.body);
-      if (newMessage.type === "TALK") {
-        setChatList((prevMessage) => [...prevMessage, newMessage]);
+      const newMessages = JSON.parse(data.body);
+
+      const newMessage = {
+        chatRoomId: newMessages.roomId,
+        message: newMessages.message,
+        memberId: newMessages.memberId,
+        nickname: newMessages.nickName,
+        createdTime: newMessages.createdTime,
+        checked: newMessages.checked,
+      };
+
+      if (newMessage.message !== null) {
+        setChatMessages((chatMessages: chat[]) => [
+          newMessage,
+          ...chatMessages,
+        ]);
       }
     });
   };
-  console.log(chatList);
+
   const handler = (message: string) => {
     if (!client.current.connected) return;
-
     client.current.publish({
       destination: "/pub/chat/message",
       body: JSON.stringify({
@@ -99,6 +166,7 @@ export default function ChattingDetailPage() {
     });
   };
 
+  // 연결 끊어졌을 때
   const disConnect = () => {
     if (connected) {
       client.current.deactivate();
@@ -107,11 +175,17 @@ export default function ChattingDetailPage() {
     }
   };
 
+  // 로딩중이거나 에러 있을 때 나오게
+  if (isLoading) return <Loading />;
+  if (isError) return <h3>isError</h3>;
+
+  const chatData = chatMessages?.slice(0).reverse();
   return (
     <div>
       <ChattingInfoBar />
+      <div ref={setTarget}></div>
       <div>
-        {chatList.map((chat) =>
+        {chatData?.map((chat) =>
           chat.memberId === memberId ? (
             <MyChatting item={chat.message} key={uuidv4()} />
           ) : (
@@ -119,6 +193,7 @@ export default function ChattingDetailPage() {
           )
         )}
       </div>
+      <div ref={bottomRef}></div>
       <SubmitForm sendMessage={handler} />
     </div>
   );

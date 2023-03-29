@@ -6,9 +6,11 @@ import moment from "moment";
 type Chat = {
   [key: string]: any;
 };
+
 type Props = {
   item: Chat;
 };
+
 export default function ChatListItem({ item }: Props) {
   const navigate = useNavigate();
 
@@ -17,6 +19,7 @@ export default function ChatListItem({ item }: Props) {
       state: { roomid },
     });
   };
+
   // 지금 시각과 제일 최근에 보낸 채팅의 시각의 차이 를 구함
   const createdTime = item?.recentMessageCreatedTime;
   const now = new Date();
@@ -31,7 +34,7 @@ export default function ChatListItem({ item }: Props) {
     moment.duration(nowTime.diff(chatTime)).asHours()
   );
 
-  // console.log("item은", item);
+  //
   return (
     <>
       <div
@@ -47,7 +50,7 @@ export default function ChatListItem({ item }: Props) {
             <div className="flex justify-start items-start flex-grow-0 flex-shrink-0">
               <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-2.5">
                 <p className="flex-grow-0 flex-shrink-0 text-base font-semibold text-center text-[#3d3d3d]">
-                  {item?.nickName}
+                  {item?.chatOtherInfo.nickName}
                 </p>
               </div>
               {/* <div className="flex justify-center items-center relative rounded-[10px] bg-black">
@@ -78,5 +81,3 @@ export default function ChatListItem({ item }: Props) {
     </>
   );
 }
-
-// friendState 2 ? 1 ?

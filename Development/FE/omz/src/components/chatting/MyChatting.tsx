@@ -4,7 +4,7 @@ type Props = {
 
 export default function MyChatting({ item }: Props) {
   return (
-    <div className="flex justify-end items-end relative gap-[5px] mr-4">
+    <div className="flex justify-end items-end relative gap-[5px] mr-4 m-20">
       <p className="flex-grow-0 flex-shrink-0 text-[10px] text-left capitalize text-[#6d6d6d]">
         timeStamp
       </p>
