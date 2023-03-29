@@ -6,9 +6,6 @@ FROM continuumio/miniconda3
 RUN conda install tensorflow
 RUN conda install tensorflow-estimator
 
-RUN conda list
-
-RUN conda install tensorflow-io-gcs-filesystem
 
 RUN conda list
 
