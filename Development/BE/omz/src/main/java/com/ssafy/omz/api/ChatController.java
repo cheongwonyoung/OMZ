@@ -1,5 +1,6 @@
 package com.ssafy.omz.api;
 
+import com.ssafy.omz.dto.req.ChatMembersInfoRequestDto;
 import com.ssafy.omz.dto.req.ChatPagingRequestDto;
 import com.ssafy.omz.dto.resp.*;
 import com.ssafy.omz.entity.ChatRoom;
@@ -37,7 +38,7 @@ public class ChatController {
         this.friendService = friendService;
     }
 
-    @ApiOperation(value = "채팅방 목록 조회", notes = "토큰 사용자와 채팅했던 채팅방 목록을 불러온다.", response = List.class)
+    @ApiOperation(value = "채팅방 목록 조회", notes = "토큰 사용자와 채팅했던 채팅방 목록을 불러온다. \n chatOtherInfo.friendState 값이 0일 경우 친구 추가 버튼 존재", response = List.class)
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 204, message = "채팅 목록이 없습니다."),
@@ -88,25 +89,21 @@ public class ChatController {
         }
     }
 
-    @ApiOperation(value = "채팅 상대방 친구 추가", notes = "")
-    @ApiImplicitParam(
-            name = "roomId"
-            , value = "채팅방 번호"
-    )
-    @PostMapping("/{roomId}/addFriend")
-    public ResponseEntity<?> getChatRoom(@PathVariable Long roomId, @RequestBody(required = false) ChatOtherInfoResponseDto chatOtherInfo){
+    @ApiOperation(value = "채팅 상대방 친구 추가", notes = "채팅 상대방을 친구 추가한다.")
+//    @ApiImplicitParam(
+//            name = "chatMembersInfo"
+//            , value = "memberId와 chatOtherInfo의 memberId값은 필수로 들어가야 한다."
+//    )
+//    @PostMapping("/{roomId}/addFriend")
+//    public ResponseEntity<?> addFriendInRoom(@PathVariable Long roomId, @RequestBody(required = false) ChatMembersInfoRequestDto chatMembersInfo){
+    @PostMapping("/addFriend")
+    public ResponseEntity<?> addFriendInChat(@RequestBody ChatMembersInfoRequestDto chatMembersInfo){
 
-        //  상대방 memberId
         try {
+            ChatOtherInfoResponseDto chatOtherInfo = chatRoomService.addChatMemeberToFriend(chatMembersInfo);
 
-            int friendState = chatOtherInfo.getFriendState();
-
-            //  FriendRepository에 나랑 chatOtherInfo.getMemberId() 있는지
-            //  있으면 바로 state 1로 바꿔주고
-            //  없으면 state 0으로 넣어주기
-
-            //  친구 상태 반환
-            return new ResponseEntity<>(friendState, HttpStatus.OK);
+            //  친구 추가 버튼 여부 반환
+            return new ResponseEntity<>(chatOtherInfo, HttpStatus.OK);
         }
         catch (Exception e){
             e.printStackTrace();

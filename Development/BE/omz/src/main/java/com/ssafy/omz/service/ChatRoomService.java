@@ -1,8 +1,11 @@
 package com.ssafy.omz.service;
 
+import com.ssafy.omz.dto.req.ChatMembersInfoRequestDto;
+import com.ssafy.omz.dto.resp.ChatOtherInfoResponseDto;
 import com.ssafy.omz.dto.resp.ChatRoomInfoResponseDto;
 import com.ssafy.omz.dto.resp.ChatRoomResponseDto;
 
+import javax.transaction.RollbackException;
 import java.util.List;
 
 public interface ChatRoomService {
@@ -16,4 +19,6 @@ public interface ChatRoomService {
     List<ChatRoomInfoResponseDto> getChatRoomList(long memberId);
 
     ChatRoomResponseDto getChatRoomInfo(long chatRoomId, long memberId);
+
+    ChatOtherInfoResponseDto addChatMemeberToFriend(ChatMembersInfoRequestDto chatMembersInfo) throws RollbackException;
 }
