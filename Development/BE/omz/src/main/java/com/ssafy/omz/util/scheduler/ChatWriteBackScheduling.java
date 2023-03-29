@@ -63,10 +63,7 @@ public class ChatWriteBackScheduling {
                 if(chatroom == null || member == null) {
                     continue;
                 }
-                log.info("[Redis -> MySQL] message : {}, isChecked : {}",chatMessage.getValue().getMessage(), chatMessage.getValue().isChecked());
                 chatList.add(Chat.of(chatMessage.getValue(), chatroom, member));
-                log.info("[Redis -> MySQL] AFTER ADD TO LIST message : {}, isChecked : {}",chatList.get(chatList.size() - 1).getMessage(), chatList.get(chatList.size() - 1).isChecked());
-
             }
             chatJdbcRepository.batchInsertChats(chatList);
 

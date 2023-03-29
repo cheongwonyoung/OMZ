@@ -32,11 +32,7 @@ public class ChatMessage {
 
     private String message;
 
-//    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-//    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private String createdTime;
-
-    private boolean isChecked;
 
     public static ChatMessage of (Chat chat){
         return ChatMessage.builder()
@@ -46,7 +42,6 @@ public class ChatMessage {
                 .nickName(chat.getFromMember().getNickname())
                 .message(chat.getMessage())
                 .createdTime(chat.getCreatedTime())
-                .isChecked(chat.isChecked())
                 .build();
     }
 
