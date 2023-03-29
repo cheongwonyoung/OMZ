@@ -14,7 +14,7 @@ import java.util.Map;
 
 @Service
 public interface BoardService {
-    Page<BoardResponseDto.Info> getBoardList(Long memberId, Pageable pageable);
+    List<BoardResponseDto.Info> getBoardList(Long memberId, Pageable pageable);
 
     List<BoardResponseDto.Info> searchBoardByContent(Long memberId, String word);
 
