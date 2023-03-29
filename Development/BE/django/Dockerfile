@@ -1,5 +1,5 @@
 # 도커에 설치될 python 버전
-FROM python:3.10.9
+FROM python:3.9
 
 RUN pip install --upgrade pip
 # 필요한 모듈 설치
