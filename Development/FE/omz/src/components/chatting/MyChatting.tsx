@@ -8,7 +8,7 @@ type Props = {
 export default function MyChatting({ item, time }: Props) {
   const chatTime = moment(time).format("HH:mm");
   return (
-    <div className="flex justify-end items-end relative gap-[5px] mr-4 m-20">
+    <div className="flex justify-end items-end relative gap-[5px] mr-4 m-5">
       <p className="flex-grow-0 flex-shrink-0 text-[10px] text-left capitalize text-[#6d6d6d]">
         {chatTime}
       </p>

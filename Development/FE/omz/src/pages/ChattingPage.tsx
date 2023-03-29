@@ -18,6 +18,7 @@ const ChattingPage = () => {
     ["chatting", memberId],
     () => getChatting(memberId)
   );
+
   useEffect(() => {
     refetch();
   }, []);

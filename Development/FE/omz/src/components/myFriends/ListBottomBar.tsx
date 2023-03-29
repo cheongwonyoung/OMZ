@@ -45,7 +45,10 @@ export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
         />
         <p>놀러가기</p>
       </div>
-      <div onClick={onClick} className="flex items-center gap-1">
+      <div
+        onClick={onClick}
+        className="flex items-center gap-2 cursor-pointer hover:scale-105 hover:font-bold"
+      >
         <FontAwesomeIcon icon={faMessage} className="text-pink-400" />
         <p>말 걸기</p>
       </div>
