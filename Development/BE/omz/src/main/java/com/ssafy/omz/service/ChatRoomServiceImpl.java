@@ -115,9 +115,6 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                     state = 0;
             }
 
-            //  최근 보낸 메세지가 상대방이 보낸 메세지이며 아직 확인을 안 한 상태라면 false
-            boolean isChecked = recentChatMessage.getMemberId() != memberId ? recentChatMessage.isChecked() : true;
-
             chatRoomList.add(
                     ChatRoomInfoResponseDto.builder()
                             .roomId(chatRoom.getChatRoomId())
@@ -130,7 +127,6 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                                             .build())
                             .recentMessage(recentChatMessage.getMessage())
                             .recentMessageCreatedTime(recentChatMessage.getCreatedTime())
-                            .isChecked(isChecked)
                             .build()
             );
         }
