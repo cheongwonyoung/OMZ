@@ -19,19 +19,25 @@ export default function FriendsCard({
   handleModalFor,
 }: Props) {
   // const tags = ["곰상", "ISFP", "짝꿍", "가능성", "95%"];
-  const tags = ["100%", "가능성", "짝꿍", "곰상", "ISFP"];
+  const info_tags = ["곰상", "ISFP"];
+  const possibility_tags = ["100%", "가능성", "짝꿍"];
   return (
-    <div className="w-full bg-slate-500/50 rounded-2xl flex flex-col items-center gap-8 p-8">
+    <div className="w-full bg-slate-500/50 rounded-2xl flex flex-col items-center gap-5 pt-10 pb-20">
       {/* <CameraAvatar Avatar={<Bear />} /> */}
       {/* <CameraAvatar Avatar={<Fox />} /> */}
-      <CameraAvatar Avatar={<Model />} />
-      <div className="font-semibold text-white">윾태초이</div>
-      <TagList tags={tags} />
-      <button className="text-white wor">
+      <div className="h-60">
+        <CameraAvatar Avatar={<Model />} />
+      </div>
+      <div className="text-2xl text-white">윾태초이</div>
+      <div className="flex flex-col gap-2">
+        <TagList tags={info_tags} />
+        <TagList tags={possibility_tags} />
+      </div>
+      <button className="text-white text-base opacity-95 hover:text-black">
         <FontAwesomeIcon icon={faHome} className="mr-2" />
         놀러가기
       </button>
-      <div className="flex justify-center my-8 gap-8">
+      <div className="flex justify-center gap-3">
         <FriendBtn
           icon={<FontAwesomeIcon icon={faHeart} />}
           text={"친구 신청"}

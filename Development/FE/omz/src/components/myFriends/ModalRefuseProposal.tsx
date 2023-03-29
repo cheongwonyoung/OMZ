@@ -25,14 +25,14 @@ export default function ModalRefuseProposal({
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="w-full px-5 pt-3 flex flex-col items-center">
       <div className="flex text-xl justify-between w-11/12 my-4 items-center">
-        <FontAwesomeIcon icon={faHeartCrack} className="text-rose-500 w-10" />
+        <FontAwesomeIcon icon={faHeartCrack} className="text-rose-500" />
 
         <p className="font-bold">친구 신청 거절</p>
         <FontAwesomeIcon
           icon={faXmark}
-          className="w-10"
+          className="cursor-pointer hover:text-red-600"
           onClick={closeRefuseModal}
         />
       </div>
@@ -40,14 +40,14 @@ export default function ModalRefuseProposal({
         <p>
           <span className="text-purple-500">{refuseMember.name}</span>님의
         </p>
-        <p>친구신청을 거절하겠습니까?</p>
+        <p>친구 신청을 거절하겠습니까?</p>
       </div>
       <div className="flex flex-col items-center text-gray-500 text-xs mb-4">
-        <p>⁙ 친구 신청 거절을 하면</p>
-        <p>다시 친구 신청이 불가능해집니다.</p>
+        <p>⁙ 친구 신청을 거절해도 닉네임 검색을 통해</p>
+        <p>친구 신청을 보낼 수 있습니다.</p>
       </div>
       <button
-        className="font-bold"
+        className="font-bold w-20 hover:text-blue-400"
         onClick={() => {
           refuse();
           closeRefuseModal();
