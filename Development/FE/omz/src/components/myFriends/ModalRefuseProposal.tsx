@@ -6,17 +6,17 @@ import { rejectProposal } from "../../api/myFriends";
 type Props = {
   closeRefuseModal(): void;
   refuseMember: { id: number; name: string };
+  refetch(): void;
 };
 
 export default function ModalRefuseProposal({
   closeRefuseModal,
   refuseMember,
+  refetch,
 }: Props) {
-  console.log(refuseMember);
-
   const refuseFriend = useMutation((id: number) => rejectProposal(id), {
     onSuccess() {
-      console.log("리패치해야함");
+      refetch();
     },
   });
 

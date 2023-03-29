@@ -11,9 +11,11 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useQuery } from "react-query";
 import { getMyPageInfos } from "../api/myPage";
+
 export default function MyPage() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const [animal, setAnimal] = useState("");
 
   const goToCustom = () => {
     navigate("/mypage/custom");
@@ -22,23 +24,38 @@ export default function MyPage() {
     setShowModal(false);
   }
   const showAvatar = () => {
-    // switch (animal) {
-    //   case "rabbit":
-    return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
-    // }
+    switch (animal) {
+      case "토끼":
+        return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
+    }
   };
 
   const memberId = useRecoilValue(userStatus).id;
   const myPageId = useParams().id;
   const isOwner = memberId == myPageId;
-  console.log(myPageId);
+
+  // TODO 아래 itemStatus 이거 아바타에 props로 내려줘서 로직 짜야함
+
+  const [itemStatus, setItemStatus] = useState<{ [key: string]: number }>({
+    hat: 0,
+    glasses: 0,
+    wing: 0,
+  });
+
   const { data } = useQuery(
     "mypageInfo",
     () => getMyPageInfos(Number(myPageId)),
     {
       onSuccess(data) {
-        console.log(data);
+        console.log(data.data);
+        setAnimal(data.data.member.faceName);
+        const existingCustom: { [key: string]: number } = {};
+        for (const custom of data.data.items) {
+          existingCustom[custom.name] = custom.state;
+        }
+        setItemStatus(existingCustom);
       },
+      staleTime: 0,
     }
   );
   const member = data?.data.member;
