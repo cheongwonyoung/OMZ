@@ -13,10 +13,10 @@ export default function FriendsItem({ name, content, imgsrc, bottom }: Props) {
         <img
           src={imageUrl + imgsrc}
           alt=""
-          className="w-[3rem] h-[3rem] object-cover rounded-full"
+          className="w-12 h-12 object-cover rounded-full"
         />
       </div>
-      <div className="w-full">
+      <div className="w-10/12">
         <p className="font-semibold mb-2">{name}</p>
         <div className="bg-white border border-solid border-indigo-200 rounded-r-2xl rounded-bl-2xl p-2 text-sm font-semibold w-full">
           {content}

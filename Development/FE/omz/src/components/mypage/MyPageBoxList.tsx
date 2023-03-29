@@ -4,9 +4,9 @@ type Props = {
 };
 
 export default function MyPageBoxList({ showedItem, handleItems }: Props) {
-  const capList = ["cap_1", "cap_2", "cap_3"];
-  const glassesList = ["glasses_1", "glasses_2", "galsses_3"];
-  const wingList = ["wing_1", "wing_2", "wing_3"];
+  const hatList = ["hat_0", "hat_1", "hat_2", "hat_3"];
+  const glassesList = ["glasses_0", "glasses_1", "glasses_2", "glasses_3"];
+  const wingList = ["wing_0", "wing_1", "wing_2", "wing_3"];
 
   const itemList = () => {
     const structrue = () => {
@@ -16,11 +16,16 @@ export default function MyPageBoxList({ showedItem, handleItems }: Props) {
         case "날개":
           return wingList;
         default:
-          return capList;
+          return hatList;
       }
     };
     return structrue().map((item) => (
-      <div key={item} id={item} onClick={() => handleItems(item)}>
+      <div
+        key={item}
+        id={item}
+        onClick={() => handleItems(item)}
+        className="cursor-pointer"
+      >
         <p>item</p>
       </div>
     ));
