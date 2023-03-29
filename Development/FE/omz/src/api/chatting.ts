@@ -13,3 +13,18 @@ export const getChatting = (memberId: number) => {
 export const getChattingList = (roomId: number, memberId: number, chatPagingDto : {cursor: string, memberId: number, message: string, nickname: string} | null) => {
   return instance.post(`/chatting/${roomId}?memberId=${memberId}`, chatPagingDto) 
 }  
+
+
+//채팅 상대방 친구 추가
+export const addFriends = (chatMembersInfo: {
+  chatOtherInfo: {
+    file: string, 
+    friendState: number, 
+    memberId: number, 
+    nickname: string
+  }, 
+  memberId: number
+}) => {
+  return instance.post(`/chatting/addFriend`, chatMembersInfo) 
+}
+

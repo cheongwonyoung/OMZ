@@ -8,11 +8,8 @@ import YourChatting from "../components/chatting/YourChatting";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useLocation } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { getChattingList } from "../api/chatting";
-import Loading from "../components/common/Loading";
-
-// import { StompConfig } from "@stomp/stompjs";
 
 export default function ChattingDetailPage() {
   type chat = {
@@ -39,68 +36,75 @@ export default function ChattingDetailPage() {
   const client: any = useRef({});
   const memberId = useRecoilValue(userStatus).id;
   const [connected, setConnected] = useState(false);
-  // const [chatMessages, setChatMessages] = useState<chat[]>([]);
   const [chatPaging, setChatPaging] = useState<chatPagingDTO>(null);
-  const setTarget = useRef<HTMLDivElement>();
+  const setTarget = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
-
-  const { data, isLoading, isError, refetch } = useQuery(
-    ["chatList", chatPaging],
-    () => getChattingList(roomId, memberId, chatPaging)
-    // {
-    // onSuccess(data) {
-    //   if (data?.data?.chatList[0] === chatMessages[0]) {
-    //     return;
-    //   }
-    //   setChatMessages((chatMessages) => [
-    //     chatMessages,
-    //     ...data?.data.chatList,
-    //   ]);
-    // },
-    // }
+  const [chatMessages, setChatMessages] = useState<{ [key: string]: any }[]>(
+    []
   );
 
-  const [chatMessages, setChatMessages] = useState(data?.data?.chatList);
+  const [chatOtherInfo, setChatOtherInfo] = useState<any>({});
+
+  type Dto = {
+    cursor: string;
+    memberId: number;
+    message: string;
+    nickname: string;
+  } | null;
+  const {
+    mutate: getChatLog,
+    isLoading,
+    isError,
+  } = useMutation((dto: Dto) => getChattingList(roomId, memberId, dto), {
+    onSuccess(data) {
+      setChatOtherInfo(data.data.chatOtherInfo);
+      const chatBefore = data.data.chatList;
+      if (chatBefore.length !== 0) {
+        setChatMessages((prev: { [key: string]: any }[]) => [
+          ...prev,
+          ...chatBefore,
+        ]);
+        const last = chatBefore[chatBefore.length - 1];
+        setChatPaging({
+          cursor: last.createdTime,
+          memberId: last.memberId,
+          message: last.message,
+          nickname: last.nickname,
+        });
+      }
+    },
+  });
+
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    // if (data?.data?.chatList[0] === chatMessages[0]) {
-    //   return;
-    // }
-    setChatMessages(data?.data?.chatList);
-  }, [data]);
+    getChatLog(chatPaging);
+  }, [page]);
 
-  useEffect(() => {
-    refetch();
-  }, [connected]);
+  const goRefetch = () => {
+    getChatLog(chatPaging);
+  };
 
   const observer = useRef(
     new IntersectionObserver(
       (entries) => {
         const isIntersecting = entries[0].isIntersecting;
-        if (isIntersecting && chatMessages) {
-          const last = chatMessages[chatMessages.length - 1];
-          console.log(chatMessages);
-          console.log("라스트다 이놈아", last);
-          setChatPaging({
-            cursor: last.createdTime,
-            memberId: last.memberId,
-            message: last.message,
-            nickname: last.nickname,
-          });
-          refetch();
+        if (isIntersecting) {
+          setPage((prev) => prev + 1);
         }
       },
-      { threshold: 1 }
+      { threshold: 0.5 }
     )
   );
 
   useEffect(() => {
     setTimeout(function () {
-      observer.current.observe(setTarget.current);
+      const topRef = setTarget.current;
+      observer.current.observe(topRef);
       return () => {
-        observer.current.unobserve(setTarget.current);
+        observer.current.unobserve(topRef);
       };
-    }, 2000);
+    }, 500);
   }, []);
 
   useEffect(() => {
@@ -126,7 +130,7 @@ export default function ChattingDetailPage() {
         subscribe();
       },
       debug: function (str: any) {
-        console.log("debug", str);
+        // console.log("debug", str);
       },
     });
     client.current.activate();
@@ -176,20 +180,28 @@ export default function ChattingDetailPage() {
   };
 
   // 로딩중이거나 에러 있을 때 나오게
-  if (isLoading) return <Loading />;
+  // if (isLoading) return <Loading />;
   if (isError) return <h3>isError</h3>;
 
   const chatData = chatMessages?.slice(0).reverse();
   return (
     <div>
-      <ChattingInfoBar />
+      <ChattingInfoBar item={chatOtherInfo} refetch={goRefetch} />
       <div ref={setTarget}></div>
       <div>
         {chatData?.map((chat) =>
           chat.memberId === memberId ? (
-            <MyChatting item={chat.message} key={uuidv4()} />
+            <MyChatting
+              item={chat.message}
+              time={chat.createdTime}
+              key={uuidv4()}
+            />
           ) : (
-            <YourChatting item={chat.message} key={uuidv4()} />
+            <YourChatting
+              item={chat.message}
+              time={chat.createdTime}
+              key={uuidv4()}
+            />
           )
         )}
       </div>

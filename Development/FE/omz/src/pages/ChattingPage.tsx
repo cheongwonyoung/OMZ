@@ -30,7 +30,11 @@ const ChattingPage = () => {
       <div className="w-full">
         {data?.data !== "" &&
           data?.data.map((chat: Chat) => (
-            <ChatListItem item={chat} key={chat.recentMessageCreatedTime} />
+            <ChatListItem
+              item={chat}
+              key={chat.recentMessageCreatedTime}
+              refetch={refetch}
+            />
           ))}
       </div>
     </div>
