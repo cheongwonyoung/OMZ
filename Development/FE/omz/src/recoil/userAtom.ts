@@ -17,8 +17,8 @@ export const userToken = atom({
 export const userStatus = atom({
   key: "userStatus",
   default: {
-    id: 7,
-    nickname: "",
+    id: 3,
+    nickname: "킹갓제너럴체리",
     profile_img: "",
   },
   effects_UNSTABLE: [persistAtom],

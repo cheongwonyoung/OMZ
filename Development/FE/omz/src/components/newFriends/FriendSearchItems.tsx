@@ -1,4 +1,6 @@
 import { NavigateFunction, useNavigate } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faHome } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   nickname?: string;
@@ -26,22 +28,24 @@ export default function FriendSearchItems({
         <div className="flex gap-2">
           {requestPossible && (
             <button
-              className="p-2 border border-black border-solid bg-slate-200 rounded-lg text-xs"
+              className="text-base hover:font-bold hover:scale-105 mr-5"
               onClick={() => {
                 memberId && nickname && handleModalFor(memberId, nickname);
                 handleProposalModal();
               }}
             >
+              <FontAwesomeIcon icon={faHeart} className="text-pink-400" /> &nbsp;
               친구신청
             </button>
           )}
 
           {/* {goBtn("마이페이지", () => navigate(`/mypage/${memberId}`))} */}
           <button
-            className="p-2 border border-black border-solid bg-slate-200 rounded-lg text-xs"
+            className="text-base hover:font-bold hover:scale-105"
             onClick={() => navigate(`/mypage/${memberId}`)}
           >
-            마이페이지
+            <FontAwesomeIcon icon={faHome} className="text-teal-400" /> &nbsp;
+            놀러가기
           </button>
         </div>
       </div>
