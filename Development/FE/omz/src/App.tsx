@@ -11,7 +11,7 @@ import MiniRoomPage from "./pages/MiniRoomPage";
 import CommunityPage from "./pages/CommunityPage";
 import ChattingPage from "./pages/ChattingPage";
 import ErrorPage from "./pages/ErrorPage";
-import SignUp from "./pages/SignUp";
+import SignUpPage from "./pages/SignUpPage";
 import CommunityLikePage from "./pages/CommunityLikePage";
 import CommunityMyPage from "./pages/CommunityMyPage";
 import MainPage from "./pages/MainPage";
@@ -23,6 +23,8 @@ import MiniRoomUpdatePage from "./pages/MiniRoomUpdatePage";
 import CommunityDetailPage from "./pages/CommunityDetailPage";
 import MyPageUpdatePage from "./pages/MyPageUpdatePage";
 import MyPageCustomPage from "./pages/MyPageCustomPage";
+import SignUpEnd from "./pages/SignUpEndPage";
+import SignUpEndPage from "./pages/SignUpEndPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,16 +49,18 @@ const router = createBrowserRouter([
         path: "/newfriends",
         element: <NewFriendsPage />,
       },
+      // TODO 나중에 path 뒤에 /:id 추가
       {
-        path: "mypage",
+        path: "mypage/:id",
         element: <MyPage />,
       },
       {
         path: "myfriends",
         element: <MyFriendsPage />,
       },
+      // TODO 나중에 path 뒤에 /:id 추가
       {
-        path: "miniroom",
+        path: "miniroom/:id",
         element: <MiniRoomPage />,
       },
       {
@@ -83,14 +87,14 @@ const router = createBrowserRouter([
       },
       {
         path: "signup",
-        element: <SignUp />,
+        element: <SignUpPage />,
       },
       {
         path: "community/like",
         element: <CommunityLikePage />,
       },
       {
-        path: "community/mypage",
+        path: "community/mypage/:memberId",
         element: <CommunityMyPage />,
       },
       {
@@ -110,12 +114,16 @@ const router = createBrowserRouter([
         element: <CommunityDetailPage />,
       },
       {
-        path: "mypage/1",
+        path: "mypage/update",
         element: <MyPageUpdatePage />,
       },
       {
-        path: "mypage/custom/1",
+        path: "mypage/custom",
         element: <MyPageCustomPage />,
+      },
+      {
+        path: "signup/end",
+        element: <SignUpEndPage />,
       },
     ],
   },

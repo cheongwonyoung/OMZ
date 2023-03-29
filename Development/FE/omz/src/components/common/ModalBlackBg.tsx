@@ -1,5 +1,5 @@
 type Props = {
-  modal: any;
+  modal?: any;
 };
 export default function ModalBlackBg({ modal }: Props) {
   return (

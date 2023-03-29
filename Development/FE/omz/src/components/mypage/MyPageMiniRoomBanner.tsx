@@ -1,11 +1,12 @@
 import { images } from "../../assets/images";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 export default function MyPageMiniRoomBanner() {
   const navigate = useNavigate();
+  const memberId = useParams().id;
   const goMiniRoom = () => {
-    navigate("/miniroom");
+    navigate(`/miniroom/${memberId}`);
   };
   return (
     <div

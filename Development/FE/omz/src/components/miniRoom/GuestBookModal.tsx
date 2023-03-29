@@ -1,6 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 type Props = {
   closeGuestBook(): void;
 };
@@ -25,14 +27,14 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
     switch (index % 2) {
       case 1:
         return (
-          <div className="flex w-full justify-end">
+          <div className="flex w-full justify-end" key={uuidv4()}>
             <button className="bg-purple-500 mr-8">삭제</button>
             <span>{talk}</span>
           </div>
         );
       default:
         return (
-          <div className="flex w-full">
+          <div className="flex w-full" key={uuidv4()}>
             <p>{talk}</p>
             <button className="bg-purple-500 ml-8">삭제</button>
           </div>

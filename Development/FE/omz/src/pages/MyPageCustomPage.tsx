@@ -5,7 +5,11 @@ import { Model } from "../assets/3DAvatar/Rabbit";
 import CameraAvatar from "../components/common/CameraAvatar";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 export default function MyPageCustomPage() {
+  const memberId = useRecoilValue(userStatus).id;
+
   // 처음 값은 다 1로 설정 (모자, 안경, 날개)
   const [itemStatus, setItemStatus] = useState({
     cap: "1",
@@ -29,7 +33,11 @@ export default function MyPageCustomPage() {
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <TitleBar goto="/mypage" title="My Page" icon={images.my_page_img} />
+      <TitleBar
+        goto={`/mypage/${memberId}`}
+        title="My Page"
+        icon={images.my_page_img}
+      />
       <div className="w-full px-8">
         <p className="text-2xl mt-4 font-bold">꾸미기</p>
       </div>
@@ -39,7 +47,6 @@ export default function MyPageCustomPage() {
           저장
         </p>
       </div>
-
       <div className="w-full h-1/4 mt-8">
         <MyPageBox handleItems={handleItems} />
       </div>

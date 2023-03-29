@@ -1,26 +1,25 @@
 import { useState } from "react";
 import { images } from "../../assets/images";
 
-export default function UpdateAnimal() {
-  const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
-  interface AnimalPrefer {
+type Props = {
+  animalPrefer: {
     [key: string]: number;
-  }
-  const [animalPrefer, setAnimalPrefer] = useState<AnimalPrefer>({
-    강아지: 0,
-    고양이: 0,
-    곰: 0,
-    여우: 0,
-    토끼: 0,
-    공룡: 0,
-  });
-
-  const changePrefer = (e: any) => {
-    const name = e.target.id;
-    const value = e.target.value;
-    setAnimalPrefer({ ...animalPrefer, [name]: value });
-    console.log(animalPrefer);
   };
+  changePrefer(e: any): void;
+};
+
+export default function UpdateAnimal({ animalPrefer, changePrefer }: Props) {
+  const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
+
+  const animalEng: { [key: string]: string } = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    여우: "fox",
+    토끼: "rabbit",
+    공룡: "dino",
+  };
+
   const imgsrc = (i: string): string => {
     switch (i) {
       case "강아지":
@@ -39,10 +38,11 @@ export default function UpdateAnimal() {
         return "";
     }
   };
+
   return (
     <div className="flex flex-col gap-2">
       {animalList.map((item) => (
-        <div className="grid grid-cols-4 gap-4 items-center">
+        <div className="grid grid-cols-4 gap-4 items-center" key={item}>
           <div className="flex flex-col items-center">
             <img
               src={images[imgsrc(item)]}
@@ -54,17 +54,17 @@ export default function UpdateAnimal() {
           <div className="col-span-2 h-1/2">
             <input
               className="w-full appearance-none h-1 shadow-md bg-purple-300"
-              id={item}
-              value={animalPrefer[item]}
+              id={animalEng[item]}
+              value={animalPrefer[animalEng[item]]}
               type="range"
               min={0}
-              max={100}
-              step={5}
+              max={1}
+              step={0.1}
               onChange={(e) => changePrefer(e)}
             />
           </div>
           <div className="h-1/2">
-            <p className="text-end ">{animalPrefer[item]}%</p>
+            <p className="text-end ">{animalPrefer[animalEng[item]] * 100}%</p>
           </div>
         </div>
       ))}

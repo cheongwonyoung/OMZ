@@ -1,10 +1,14 @@
 import { images } from "../../assets/images";
 import { useState, useRef } from "react";
-import DeleteCommentModal from "./DeleteCommentModal";
+import DeleteCommentModal from "../common/DeletetModal";
 import { deleteReply, updateReply } from "../../api/community";
 import { useMutation } from "react-query";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
+import moment from "moment";
 
 type Comment = {
   [key: string]: any;
@@ -17,12 +21,17 @@ type Props = {
 };
 
 export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
+  const navigate = useNavigate();
+  // 삭제 모달 띄울 state
   const [showModal, setShowModal] = useState(false);
+  // update 로 바꿔줄 state
   const [showUpdate, setShowUpdate] = useState(false);
+  // update할 내용 담기
   const commentContent = useRef<HTMLTextAreaElement>(item.content);
-  const timestamp = new Date(item.registeredTime);
-  const date = timestamp.toDateString();
+  // 시간 원하는 형식으로 바꿔주기
+  const date = new Date(item.registeredTime);
 
+  // 댓글 삭제하기
   const deleteComment = useMutation((replyId: number) => deleteReply(replyId), {
     onSuccess: () => {
       setShowModal(false);
@@ -32,25 +41,23 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
 
   const boardId = boardIdNum;
   const replyId = item.replyId;
-  const memberId = item.memberId;
+  const memberId = useRecoilValue(userStatus).id;
 
+  // 댓글 수정하기
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredUpdateComment = commentContent.current!.value;
 
-    if (enteredUpdateComment.trim().length) {
+    if (enteredUpdateComment.trim().length === 0) {
       return;
     }
+
     handleCommentUpdate(enteredUpdateComment);
   };
 
   const updateComment = useMutation(
-    (comment: {
-      boardId: number;
-      content: string;
-      memberId: number;
-      replyId: number;
-    }) => updateReply(comment),
+    (reply: { boardId: number; content: string; memberId: number }) =>
+      updateReply(replyId, reply),
     {
       onSuccess: () => {
         refetch();
@@ -59,9 +66,10 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   );
 
   const handleCommentUpdate = (comment: string) => {
-    updateComment.mutate({ boardId, content: comment, memberId, replyId });
+    updateComment.mutate({ boardId, content: comment, memberId });
   };
 
+  // 삭제 관련
   function closeModalHandler() {
     setShowModal(false);
   }
@@ -70,23 +78,34 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
     deleteComment.mutate(replyId);
   }
 
+  // Community 내의 마이 페이지로 이동시킴
+  const goToMyPage = (memberId: number) => {
+    navigate(`/community/mypage/${memberId}`);
+  };
+
   return (
-    <div className="w-full flex justify-center">
-      <div className="w-10/12 m-3">
+    <div className="w-full flex justify-center border-b border-black mt-3">
+      <div className="w-11/12 m-3 max-w-4xl">
         <div className="flex w-full justify-between items-start gap-3">
-          {item.member.file ? (
-            <img src={item.member.file} alt="" className="w-10 h-10" />
-          ) : (
-            <img src={images.main_logo} alt="" className="w-10 h-10" />
-          )}
+          {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
+          <img
+            className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem] cursor-pointer hover:scale-110"
+            src={images.profile_img}
+            onClick={() => {
+              goToMyPage(item.member.memberId);
+            }}
+          />
 
           <div className="flex w-full flex-col justify-center items-end">
             <div className="flex w-full justify-between items-center">
-              <p className="flex-grow-0 flex-shrink-0 text-sm font-bold text-left text-[#555a64]">
+              <p
+                className="flex-grow-0 flex-shrink-0 text-sm font-bold text-left text-[#555a64] cursor-pointer hover:text-white"
+                onClick={() => goToMyPage(item.member.memberId)}
+              >
                 {item.member.nickname}
               </p>
               <p className="flex-grow-0 flex-shrink-0 text-xs text-right text-[#555a64]">
-                {date}
+                {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
               </p>
             </div>
 
@@ -97,43 +116,44 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                     defaultValue={item.content}
                     ref={commentContent}
                     maxLength={70}
-                    className="w-full focus:outline-none"
+                    className="w-full focus:outline-none bg-white/50 resize-none"
                   />
-                  <div className="flex justify-end gap-2">
+                  <div className="flex justify-end gap-5">
                     {/* 누르면 update 반영되게 !! */}
-                    <button
-                      // onClick={() => setShowModal(true)}
-                      className="cursor-pointer hover:text-[#FF0076]"
-                    >
-                      <FontAwesomeIcon icon={faCheck} />
+                    <button className="cursor-pointer hover:text-[#FF0076]">
+                      <FontAwesomeIcon icon={faCheck} className="text-2xl" />
                     </button>
-                    <FontAwesomeIcon
-                      icon={faXmark}
-                      onClick={() => setShowUpdate(false)}
-                      className="cursor-pointer hover:text-[#FDFFA7]"
-                    />
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        onClick={() => setShowUpdate(false)}
+                        className="cursor-pointer hover:text-[#FDFFA7] text-2xl"
+                      />
+                    </div>
                   </div>
                 </form>
               </div>
             ) : (
-              <div>
+              <div className="w-full">
                 <div>
-                  <p>{item.content}</p>
+                  <p className="text-left">{item.content}</p>
                 </div>
-                <div className="flex justify-end gap-2">
-                  <button
-                    onClick={() => setShowModal(true)}
-                    className="cursor-pointer hover:text-[#FF0076]"
-                  >
-                    삭제
-                  </button>
-                  <button
-                    onClick={() => setShowUpdate(true)}
-                    className="cursor-pointer hover:text-[#FDFFA7]"
-                  >
-                    수정
-                  </button>
-                </div>
+                {memberId === item.member.memberId && (
+                  <div className="flex justify-end gap-2">
+                    <button
+                      onClick={() => setShowModal(true)}
+                      className="cursor-pointer hover:text-[#FF0076]"
+                    >
+                      삭제
+                    </button>
+                    <button
+                      onClick={() => setShowUpdate(true)}
+                      className="cursor-pointer hover:text-[#FDFFA7]"
+                    >
+                      수정
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>

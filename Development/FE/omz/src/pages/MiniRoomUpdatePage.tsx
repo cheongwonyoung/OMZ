@@ -8,7 +8,11 @@ import { useState } from "react";
 import { MiniroomBeta } from "../assets/3DMiniRoom/MiniroomBeta";
 import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
 import { MiniroomBeta3 } from "../assets/3DMiniRoom/MiniroomBeta3";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 export default function MiniRoomUpdatePage() {
+  const memberId = useRecoilValue(userStatus).id;
+
   const [itemStatus, setItemStatus] = useState({
     table: "1",
     lamp: "1",
@@ -26,7 +30,7 @@ export default function MiniRoomUpdatePage() {
       <TitleBar
         icon={images.mini_room_img}
         title={"000님의 MiniRoom"}
-        goto={"/miniroom"}
+        goto={`/miniroom/${memberId}`}
       />
       <div className="w-full aspect-square">
         {/* <Camera3D
