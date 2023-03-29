@@ -55,7 +55,7 @@ export default function MainPage() {
             </div>
           </Link>
           <Link
-            to="/chatting/1"
+            to={`chatting/${memberId}`}
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img
