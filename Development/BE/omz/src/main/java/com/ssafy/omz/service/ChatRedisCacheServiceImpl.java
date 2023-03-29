@@ -137,10 +137,11 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         ChatMessage cursorDto = ChatMessage.builder()
                 .type(ChatMessage.MessageType.TALK)
                 .roomId(chatRoomId)
-                .createdTime(chatPagingDto.getCursor()) // ChatMessage에서는 LocalDateTime으로 되어있음
+                .createdTime(chatPagingDto.getCursor())
                 .message(chatPagingDto.getMessage())
                 .memberId(chatPagingDto.getMemberId())
                 .nickName(chatPagingDto.getNickname())
+                .isChecked(false)
                 .build();
 
         //  마지막 chat_data cursor Rank 조회
@@ -153,7 +154,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 
         //  Redis로부터 chat_data 조회
         Set<ChatMessage> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + chatRoomId, rank, rank + 10);
-        log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size());
+        log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size()); // 11
 //        List<ChatPagingResponseDto> chatMessageDtoList =
 //                chatMessageSaveDtoSet
 //                        .stream()

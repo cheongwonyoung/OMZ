@@ -43,6 +43,7 @@ public class ChatMessage {
                 .type(MessageType.TALK)
                 .roomId(chat.getChatRoom().getChatRoomId())
                 .memberId(chat.getFromMember().getMemberId())
+                .nickName(chat.getFromMember().getNickname())
                 .message(chat.getMessage())
                 .createdTime(chat.getCreatedTime())
                 .isChecked(chat.isChecked())
