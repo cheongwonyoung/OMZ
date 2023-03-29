@@ -90,12 +90,6 @@ public class ChatController {
     }
 
     @ApiOperation(value = "채팅 상대방 친구 추가", notes = "채팅 상대방을 친구 추가한다.")
-//    @ApiImplicitParam(
-//            name = "chatMembersInfo"
-//            , value = "memberId와 chatOtherInfo의 memberId값은 필수로 들어가야 한다."
-//    )
-//    @PostMapping("/{roomId}/addFriend")
-//    public ResponseEntity<?> addFriendInRoom(@PathVariable Long roomId, @RequestBody(required = false) ChatMembersInfoRequestDto chatMembersInfo){
     @PostMapping("/addFriend")
     public ResponseEntity<?> addFriendInChat(@RequestBody ChatMembersInfoRequestDto chatMembersInfo){
 
@@ -104,6 +98,24 @@ public class ChatController {
 
             //  친구 추가 버튼 여부 반환
             return new ResponseEntity<>(chatOtherInfo, HttpStatus.OK);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "친구에게 말 걸기", notes = "친구와의 채팅방에 접속하기 위한 채팅방 번호(roomId)를 반환한다.")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "memberId", value = "나의 memberId"),
+            @ApiImplicitParam(name = "friendMemberId", value = "친구 memberId")
+    })
+    @GetMapping("/{memberId}/{friendMemberId}")
+    public ResponseEntity<?> getChatRoomIdInFriendList(@PathVariable Long memberId, @PathVariable Long friendMemberId){
+        try {
+
+            long roomId = chatRoomService.getChatRoomIdInFriendList(memberId, friendMemberId);
+            return new ResponseEntity<>(roomId, HttpStatus.OK);
         }
         catch (Exception e){
             e.printStackTrace();

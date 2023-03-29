@@ -21,4 +21,6 @@ public interface ChatRoomService {
     ChatRoomResponseDto getChatRoomInfo(long chatRoomId, long memberId);
 
     ChatOtherInfoResponseDto addChatMemeberToFriend(ChatMembersInfoRequestDto chatMembersInfo) throws RollbackException;
+
+    Long getChatRoomIdInFriendList(long memberId, long friendMemberId);
 }
