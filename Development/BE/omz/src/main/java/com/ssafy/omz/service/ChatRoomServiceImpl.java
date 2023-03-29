@@ -207,5 +207,23 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         return chatMembersInfo.getChatOtherInfo();
     }
 
+    @Override
+    public Long getChatRoomIdInFriendList(long memberId, long friendMemberId) {
+
+        ChatRoom chatRoomFromFriend = chatRoomRepository.findByToMemberId_MemberIdAndFromMemberId_MemberId(memberId, friendMemberId);
+        ChatRoom chatRoomFromMe = chatRoomRepository.findByToMemberId_MemberIdAndFromMemberId_MemberId(friendMemberId, memberId);
+
+        if(chatRoomFromFriend != null || chatRoomFromMe != null){
+            return chatRoomFromFriend != null ? chatRoomFromFriend.getChatRoomId() : chatRoomFromMe.getChatRoomId();
+        }else{
+            ChatRoom createdRoom = chatRoomRepository.save(ChatRoom.builder()
+                    .toMemberId(memberRepository.findByMemberId(memberId))
+                    .fromMemberId(memberRepository.findByMemberId(friendMemberId))
+                    .build());
+            return createdRoom.getChatRoomId();
+        }
+
+    }
+
 
 }
