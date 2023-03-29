@@ -48,7 +48,7 @@ export default function CommunityPage() {
 
   if (isLoading) return <Loading />;
   if (isError) return <p className="title">isError...</p>;
-
+  console.log(data)
   return (
     <div className="flex flex-col items-center">
       <TitleBar goto="/" title="Community" icon={images.community_img} />
@@ -56,7 +56,7 @@ export default function CommunityPage() {
       <CommunityCreateSmall onArticleSubmit={handleArticleSubmit} />
       <div className="m-3"></div>
       <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data?.data.content.map((article: Article) => (
+        {data?.data.map((article: Article) => (
           <CommunityArticleItem
             key={article.boardId}
             item={article}

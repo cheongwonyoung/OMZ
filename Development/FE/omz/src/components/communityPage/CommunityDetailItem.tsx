@@ -20,7 +20,7 @@ import {
 import { imageUrl } from "../../api";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
-import moment from "moment"
+import moment from "moment";
 // import CommunityCommentModal from "./CommunityCommentModal";
 
 type Article = {
@@ -145,7 +145,13 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
     <>
       <div className="w-10/12 flex justify-center m-5 max-w-4xl">
         <div className="w-full bg-white flex flex-col justify-center rounded-xl p-5">
-          <div className="flex justify-start gap-5 items-center">
+          <div
+            className="flex justify-start gap-5 items-center hover:scale-105 cursor-pointer"
+            onClick={(e) => {
+              e?.stopPropagation();
+              goToMyPage(item.member.memberId);
+            }}
+          >
             {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
             <img
               className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem]"
@@ -156,17 +162,11 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
               }}
             />
             <div className="flex flex-col">
-              <p
-                className="flex-grow-0 flex-shrink-0 text-ml cursor-pointer hover:text-white font-bold"
-                onClick={(e) => {
-                  e?.stopPropagation();
-                  goToMyPage(item.member.memberId);
-                }}
-              >
+              <p className="flex-grow-0 flex-shrink-0 text-ml font-bold">
                 {item.member.nickname}
               </p>
               <p className="flex-grow-0 flex-shrink-0 text-sm ">
-              {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
+                {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
               </p>
             </div>
           </div>
@@ -188,13 +188,13 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
                 ></textarea>
                 <div className="flex justify-end">
                   <button
-                    className="cursor-pointer hover:text-white"
+                    className="cursor-pointer hover:text-blue-400"
                     onClick={(e) => e.stopPropagation()}
                   >
                     수정
                   </button>
                   <button
-                    className="cursor-pointer hover:text-white ml-5"
+                    className="cursor-pointer hover:text-red-600 ml-5"
                     onClick={() => setShowUpdate(false)}
                   >
                     취소
@@ -212,15 +212,13 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
               <div className="flex w-3/12 justify-start gap-3">
                 <FontAwesomeIcon
                   icon={faComment}
-                  className="cursor-pointer hover:text-white text-lg"
+                  className="text-lg"
                 />
-                <p className="text-sm font-bold">
-                  {item.replyCnt}
-                </p>
+                <p className="text-sm font-bold">{item.replyCnt}</p>
                 {!item.ilikeBoard ? (
                   <FontAwesomeIcon
                     icon={faHeart}
-                    className="hover:text-white text-lg"
+                    className="hover:text-red-600 text-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       goLoveArticle();
@@ -229,23 +227,21 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
                 ) : (
                   <FontAwesomeIcon
                     icon={faHeart}
-                    className="text-red-600 hover:scale-110 text-lg"
+                    className="text-red-600 hover:text-black text-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       goDisloveArticle();
                     }}
                   />
                 )}
-                <p className="text-sm font-bold">
-                  {item.likeCnt}
-                </p>
+                <p className="text-sm font-bold">{item.likeCnt}</p>
               </div>
             )}
             <div>
               {memberId === item?.member.memberId && !showUpdate && (
                 <div className="flex justify-start gap-5 items-center">
                   <p
-                    className="p-1 cursor-pointer hover:text-white text-lg"
+                    className="p-1 cursor-pointer hover:text-blue-400"
                     onClick={(e) => {
                       e.stopPropagation();
                       if (showUpdate) {
@@ -258,7 +254,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
                     수정
                   </p>
                   <p
-                    className="p-1 cursor-pointer hover:text-white text-lg"
+                    className="p-1 cursor-pointer hover:text-red-600"
                     onClick={(e) => {
                       e.stopPropagation();
                       setShowModal(true);

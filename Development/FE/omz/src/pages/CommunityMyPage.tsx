@@ -19,9 +19,10 @@ export default function CommunityMyPage() {
     return <h3>Invalid memberId</h3>;
   }
   const memberIdNumber = parseInt(memberId);
-
+  let page = 0;
+  const sort = "registeredTime,DESC";
   const { data, isLoading, isError, refetch } = useQuery("articlemy", () =>
-    getMemberArticle(memberIdNumber)
+    getMemberArticle(memberIdNumber, page, 100, sort)
   );
 
   useEffect(() => {
@@ -30,13 +31,15 @@ export default function CommunityMyPage() {
 
   if (isLoading) return <Loading />;
   if (isError) return <p className="title">Error...</p>;
-  const memberNickname = data?.data.content[0].member.nickname;
+  // const memberNickname = data?.data.content[0].member.nickname;
+  const memberNickname = data?.data.member.nickname;
+  const file = data?.data.member.file;
   return (
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
-      <CommunityMyPageBanner item={memberNickname} memberId={memberIdNumber} />
+      <CommunityMyPageBanner item={memberNickname} memberId={memberIdNumber} file={file}/>
       <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data?.data.content.map((article: Article) => (
+        {data?.data.articles.content.map((article: Article) => (
           <CommunityArticleItem
             key={article.boardId}
             item={article}
