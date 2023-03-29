@@ -58,8 +58,15 @@ export const deleteArticle = (boardId: number) => {
 }
 
 // 사용자가 쓴 글 목록 GET (O) 
-export const getMemberArticle = (memberId: number) => {
-  return instance.get(`/board/${memberId}`)  
+export const getMemberArticle = (memberId: number, page: number, size: number, sort: string) => {
+  return instance.get(`/board/${memberId}`, {
+    params: {
+      memberId: memberId,
+      page: page, 
+      size: size, 
+      sort: sort 
+    }
+  })  
 }; 
 
 // 글 좋아요

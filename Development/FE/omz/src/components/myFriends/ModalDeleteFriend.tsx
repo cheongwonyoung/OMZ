@@ -8,9 +8,14 @@ import { userStatus } from "../../recoil/userAtom";
 type Props = {
   closeModal(): void;
   deleteMember: { name: string; id: number };
+  refetch(): void;
 };
 
-export default function ModalDeleteFriend({ closeModal, deleteMember }: Props) {
+export default function ModalDeleteFriend({
+  closeModal,
+  deleteMember,
+  refetch,
+}: Props) {
   const fromMember = useRecoilValue(userStatus).id;
 
   const deleteFriend = useMutation(
@@ -25,6 +30,7 @@ export default function ModalDeleteFriend({ closeModal, deleteMember }: Props) {
   const finishFriend = () => {
     deleteFriend.mutate();
     closeModal();
+    refetch();
   };
 
   return (

@@ -45,38 +45,36 @@ export default function CommunitySearchBar() {
   };
 
   return (
-    <div className="w-full">
-      <div className="flex justify-center items-center">
-        <div className="w-11/12 flex justify-between items-center">
-          <select
-            name="검색"
-            className="w-[20%] relative h-[30px] m-2"
-            onChange={(e) => setKey(e.target.value)}
+    <div className="w-full flex flex-col justify-center items-center">
+      <div className="w-11/12 flex justify-center items-center">
+        <select
+          name="검색"
+          className="w-[30%] h-[45px] relative border rounded-xl m-2 p-3  border-slate-500 text-[14px] focus:outline-none"
+          onChange={(e) => setKey(e.target.value)}
+        >
+          <option value="content">내용</option>
+          <option value="nickname">닉네임</option>
+        </select>
+        <div className="w-[70%] relative flex m-2 p-3 justify-center items-center">
+          <button
+            className="absolute right-0 text-[15px] rounded-full w-[30px] h-[30px] my-[5px] mr-[20px]"
+            onClick={onClick}
           >
-            <option value="content">내용</option>
-            <option value="nickname">닉네임</option>
-          </select>
-          <div className="w-[60%] relative flex my-5">
-            <button
-              className="absolute right-0 text-[15px] rounded-full w-[30px] h-[30px] my-[5px] mr-[5px]"
-              onClick={onClick}
-            >
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-            <input
-              type="text"
-              placeholder="내용, 닉네임을 검색해보세요."
-              className="w-full h-[40px] border text-[14px] border-slate-500 rounded-xl pl-4 focus:outline-none focus:ring focus:ring-E2EDFF"
-              onChange={(e) => setWord(e.target.value)}
-              onKeyDown={onKeyDown}
-            />
-          </div>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+          <input
+            type="text"
+            placeholder="검색"
+            className="w-full h-[45px] border text-[14px] border-slate-500 rounded-xl focus:outline-none pl-5"
+            onChange={(e) => setWord(e.target.value)}
+            onKeyDown={onKeyDown}
+          />
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center mt-4">
         {isLoading && <Loading />}
-        {isError && <div>isError...</div>}
-        <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {isError && <div className="title">isError...</div>}
+        <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.data.map((article: Article) => (
             <CommunityArticleItem
               key={uuidv4()}

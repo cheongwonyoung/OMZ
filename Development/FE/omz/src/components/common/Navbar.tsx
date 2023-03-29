@@ -40,26 +40,26 @@ export default function NavBar() {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/">Home</Link>
+              <li className="hover:text-blue-600">
+                <Link to="/" className="title">Home</Link>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/newfriends">New Friends</Link>
+              <li className=" hover:text-blue-600">
+                <Link to="/newfriends" className="title">New Friends</Link>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/miniroom">Mini Room</Link>
+              <li className=" hover:text-blue-600">
+                <Link to="/miniroom" className="title">Mini Room</Link>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to={`/mypage/${memberId}`}>My Page</Link>
+              <li className=" hover:text-blue-600">
+                <Link to={`/mypage/${memberId}`} className="title">My Page</Link>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/myfriends">My Friends</Link>
+              <li className=" hover:text-blue-600">
+                <Link to="/myfriends" className="title">My Friends</Link>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/chatting/1">Chatting</Link>
+              <li className=" hover:text-blue-600">
+                <Link to="/chatting/1" className="title">Chatting</Link>
               </li>
-              <li className="text-gray-600 hover:text-blue-600">
-                <Link to="/community">Community</Link>
+              <li className=" hover:text-blue-600">
+                <Link to="/community" className="title">Community</Link>
               </li>
             </ul>
           </div>

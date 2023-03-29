@@ -9,7 +9,7 @@ type Props = {
 export default function YoutubeBgm({title} : Props){
   const q = title + " official";
   const part = "snippet";
-  const key = "AIzaSyASpgho1Gp-d1pUAPK2KHzwxYqnmqhqEVk";
+  const key = import.meta.env.VITE_YOUTUBE_API_KEY;
   const type  = "video";
   const maxResult = 1;
   const regionCode = "KR";

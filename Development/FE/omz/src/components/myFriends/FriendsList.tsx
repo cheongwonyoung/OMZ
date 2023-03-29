@@ -8,20 +8,21 @@ import { userStatus } from "../../recoil/userAtom";
 
 type Props = {
   handleDeleteMember(name: string, id: number): void;
+  friends: any;
 };
 
-export default function FriendsList({ handleDeleteMember }: Props) {
+export default function FriendsList({ handleDeleteMember, friends }: Props) {
   // TODO 여기 멤버아이디 로그인한 유저로 바꾸고 나중에 DB 생기면 그때 변경
   const memberId = useRecoilValue(userStatus).id;
-  const { data: friends } = useQuery(
-    "friendlist",
-    () => getMyFriendsList(memberId),
-    {
-      onSuccess(data) {
-        console.log(data);
-      },
-    }
-  );
+  // const { data: friends, refetch } = useQuery(
+  //   "friendlist",
+  //   () => getMyFriendsList(memberId),
+  //   {
+  //     onSuccess(data) {
+  //       console.log(data);
+  //     },
+  //   }
+  // );
   return (
     <div className="w-full flex flex-col items-center">
       {friends !== undefined &&
@@ -29,11 +30,12 @@ export default function FriendsList({ handleDeleteMember }: Props) {
           (friend: {
             nickname: string;
             stateMessage: string;
+            file: string;
             memberId: number;
           }) => (
             <FriendsItem
               name={friend.nickname}
-              imgsrc={"rabbit_img"}
+              imgsrc={friend.file}
               content={friend.stateMessage}
               key={uuidv4()}
               bottom={

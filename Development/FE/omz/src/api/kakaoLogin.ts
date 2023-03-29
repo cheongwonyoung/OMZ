@@ -1,8 +1,5 @@
-import { config } from "@fortawesome/fontawesome-svg-core";
 import axios from "axios";
-import { useRecoilValue } from "recoil";
 import { instance } from ".";
-import { userToken } from "../recoil/userAtom";
 
 export const getKakaoToken = (code: string) => {
   const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
