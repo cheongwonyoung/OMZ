@@ -22,9 +22,9 @@ public class ChatMessage {
         ENTER, TALK, QUIT
     }
 
-    private String roomId;
+    private Long roomId;
 
-    private String memberId; // 보낸 사람 memberId
+    private Long memberId; // 보낸 사람 memberId
 
     private String nickName;
 
@@ -36,13 +36,16 @@ public class ChatMessage {
 //    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private String createdTime;
 
+    private boolean isChecked;
+
     public static ChatMessage of (Chat chat){
         return ChatMessage.builder()
                 .type(MessageType.TALK)
-                .roomId(String.valueOf(chat.getChatRoom().getChatRoomId()))
-                .memberId(String.valueOf(chat.getFromMember().getMemberId()))
+                .roomId(chat.getChatRoom().getChatRoomId())
+                .memberId(chat.getFromMember().getMemberId())
                 .message(chat.getMessage())
                 .createdTime(chat.getCreatedTime())
+                .isChecked(chat.isChecked())
                 .build();
     }
 

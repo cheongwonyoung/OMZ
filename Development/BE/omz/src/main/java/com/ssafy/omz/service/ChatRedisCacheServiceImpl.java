@@ -9,6 +9,7 @@ import com.ssafy.omz.repository.ChatRepository;
 import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.util.ChatUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,6 +24,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.ssafy.omz.dto.resp.ChatPagingResponseDto.byChatMessageDto;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
@@ -126,36 +130,70 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         return recentChatMessage;
     }
 
-    //  해당 채팅방(roomId)
     @Override
-    public List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, ChatPagingRequestDto chatPagingDto) {
+    public List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, Long memberId, ChatPagingRequestDto chatPagingDto) {
 
-        //마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
+        //  마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
         ChatMessage cursorDto = ChatMessage.builder()
                 .type(ChatMessage.MessageType.TALK)
-                .roomId(chatRoomId.toString())
+                .roomId(chatRoomId)
                 .createdTime(chatPagingDto.getCursor()) // ChatMessage에서는 LocalDateTime으로 되어있음
                 .message(chatPagingDto.getMessage())
                 .memberId(chatPagingDto.getMemberId())
                 .nickName(chatPagingDto.getNickname())
                 .build();
 
-        //마지막 chat_data cursor Rank 조회
+        //  마지막 chat_data cursor Rank 조회
         Long rank = zSetOperations.reverseRank(CHAT_SORTED_SET_ + chatRoomId, cursorDto);
-
-        //Cursor 없을 경우 -> 최신채팅 조회
+        log.info("[Cursor Pagination] rank : {}", rank);
+        //  Cursor 없을 경우 -> 최신채팅 조회
         if (rank == null)
             rank = 0L;
         else rank = rank + 1;
 
         //  Redis로부터 chat_data 조회
         Set<ChatMessage> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + chatRoomId, rank, rank + 10);
+        log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size());
+//        List<ChatPagingResponseDto> chatMessageDtoList =
+//                chatMessageSaveDtoSet
+//                        .stream()
+//                        .map(ChatPagingResponseDto::byChatMessageDto)
+//                        .collect(Collectors.toList());
 
-        List<ChatPagingResponseDto> chatMessageDtoList =
-                chatMessageSaveDtoSet
-                        .stream()
-                        .map(ChatPagingResponseDto::byChatMessageDto)
-                        .collect(Collectors.toList());
+        //  isChecked를 위해 for문 세분화
+        List<ChatPagingResponseDto> chatMessageDtoList = chatMessageSaveDtoSet.stream().map(
+                chatMessage -> { // chatMessage : Redis에 저장되어 있는 채팅 메세지
+                    ChatPagingResponseDto chatPagingResponseDto = byChatMessageDto(chatMessage);
+                    
+                    //  상대방이 보낸 채팅 메세지
+                    if(chatMessage.getMemberId() != memberId && !chatMessage.isChecked()){
+                        //  isChecked 값 변환 후 NEW_CHAT, CHAT_SORTED_SET_?에 다시 삽입
+//                        log.info("[ChatRedisCacheService isChecked] isChecked : {}", chatMessage.isChecked());
+                        chatPagingResponseDto.setChecked(true);
+                        
+                        //  현재 Redis 의 CHAT_SORTED_SET_?에 해당 메세지가 존재한다면 Redis, MySQL에 있는 값 변경 .. ? n
+                        //  아냐 근데 애초에 NEW_CHAT에서 잡아주면 됨
+
+                        if(zSetOperations.reverseRank(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage) != null) {
+                            zSetOperations.remove(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage);
+                            chatMessage.setChecked(true);
+                            redisTemplate.opsForZSet().add(CHAT_SORTED_SET_ + chatMessage.getRoomId(), chatMessage, chatUtils.changeLocalDateTimeToDouble(chatMessage.getCreatedTime()));
+                        }
+                        chatMessage.setChecked(false);
+                        zSetOperations.remove(NEW_CHAT, chatMessage);
+                        chatMessage.setChecked(true);
+
+                        //  zrange NEW_CHAT 0 -1
+                        redisTemplate.opsForZSet().add(NEW_CHAT, chatMessage, chatUtils.changeLocalDateTimeToDouble(chatMessage.getCreatedTime()));
+
+                        // 만약 NEW_CHAT에 있으면
+                        //  zrange CHAT_SORTED_SET_? 0 -1
+                        //  isChecked가 false에서 true로 바뀌어서 다른거 다 같아도 없다고 뜰 수도 있음... 순서를 일단 제일 먼저로 바꿔야하나?
+
+                    }
+                    return chatPagingResponseDto;
+                }
+        ).collect(Collectors.toList());
 
         //  Chat_data 부족할경우 MYSQL 추가 조회
         if (chatMessageDtoList.size() != 10) {
@@ -164,11 +202,10 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
 
         //  Redis caching 닉네임으로 작성자 삽입
         for (ChatPagingResponseDto chatPagingResponseDto : chatMessageDtoList) {
-            chatPagingResponseDto.setNickname(findNicknameByMemberId(Long.parseLong(chatPagingResponseDto.getMemberId())));
+            chatPagingResponseDto.setNickname(findNicknameByMemberId(chatPagingResponseDto.getMemberId()));
         }
 
         return chatMessageDtoList;
-//        return new ArrayList<>();
     }
 
     @Override
