@@ -20,13 +20,13 @@ export default function FriendsRecommend({
   handleModalFor,
 }: Props) {
   return (
-    <div className="flex flex-col w-11/12 h-full pt-8">
-      <p className=" text-purple-500 font-semibold ml-6">추천 친구</p>
-      <div className="w-full flex justify-center h-3/4 mt-4 px-4 items-center">
+    <div className="flex flex-col w-11/12 h-full">
+      <p className="font-semibold w-full text-center my-5">추천 친구</p>
+      <div className="w-full flex justify-center h-3/4 px-4 items-center">
         {/* <div className="w-1/12 flex justify-center items-center">
           <FontAwesomeIcon icon={faChevronLeft} className="cursor-pointer" />
         </div> */}
-        <Carousel className="w-full" showThumbs={false} showStatus={false}>
+        <Carousel className="max-w-2xl w-11/12" showThumbs={false} showStatus={false}>
           <div className="slide">
             <FriendsCard
               handleRefuseModal={handleRefuseModal}
