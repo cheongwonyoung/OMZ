@@ -13,7 +13,7 @@ type Props = {
 export default function FriendsList({ handleDeleteMember }: Props) {
   // TODO 여기 멤버아이디 로그인한 유저로 바꾸고 나중에 DB 생기면 그때 변경
   const memberId = useRecoilValue(userStatus).id;
-  const { data: friends } = useQuery(
+  const { data: friends, refetch } = useQuery(
     "friendlist",
     () => getMyFriendsList(memberId),
     {
