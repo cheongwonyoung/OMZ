@@ -5,15 +5,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
+import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.KakaoUserInfoDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
-import com.ssafy.omz.entity.Face;
-import com.ssafy.omz.entity.Member;
-import com.ssafy.omz.entity.MiniRoom;
-import com.ssafy.omz.repository.FaceRepository;
-import com.ssafy.omz.repository.MemberRepository;
-import com.ssafy.omz.repository.MiniRoomRepository;
+import com.ssafy.omz.entity.*;
+import com.ssafy.omz.repository.*;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import com.google.cloud.storage.*;
 
@@ -34,15 +32,13 @@ import javax.imageio.ImageIO;
 import javax.persistence.RollbackException;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.UUID;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Map.Entry;
+
 
 @RequiredArgsConstructor
 @Service("MemberService")
@@ -54,6 +50,10 @@ public class MemberServiceImpl implements MemberService{
     private final Storage storage;
     private final FaceRepository faceRepository;
     private final MiniRoomRepository miniRoomRepository;
+    private final ItemRepository itemRepository;
+    private static final String SECRET_KEY  = "CREATEDBYWY";
+    private final ItemTypeRepository itemTypeRepository;
+    private final GuestBookRepository guestBookRepository;
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
@@ -90,49 +90,154 @@ public class MemberServiceImpl implements MemberService{
 
 
     // 회원 정보 수정
-//    @Override
-//    public void updateMemberInfo(Long memberId, MemberRequestDto.Write memberDto){
-//        String bucketName = "omz-bucket";
-//        MultipartFile file = memberDto.getProfile();
-//        String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
-//        try(InputStream inputStream = file.getInputStream()) {
-//            Image processedImage = ImageIO.read(inputStream);
-//
-//            BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
-//            Graphics2D g = scaledBI.createGraphics();
-//            g.drawImage(processedImage, 0, 0, 200, 200, null);
-//            g.dispose();
-//
-//            ByteArrayOutputStream os = new ByteArrayOutputStream();
-//            ImageIO.write(scaledBI, "jpg", os);
-//
-//            InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
-//
-//            storage.create(BlobInfo.newBuilder(bucketName, saveFileName).build(), processedInputStream);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        memberRepository.save(
-//                memberRepository.findByMemberId(memberId).updateMemberInfo(
-//                        memberDto.getMbti(),
-//                        memberDto.getNickname(),
-//                        saveFileName,
-//                        faceRepository.save(faceRepository.findByFaceId(memberDto.getMyFace()).updateFace()),
-//                        faceRepository.findByFaceId(memberDto.getPreferFace()),
-//                        "asdf"
-//                )
-//
-//        );
-//
-//        user.updateSaveName(saveFileName);
-////        String result = "/" + saveFileName;
-////        return result;
-//
-//    }
+    @Override
+    public void updateMemberInfo(String token, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFaceInfo) throws UnsupportedEncodingException {
+        String bucketName = "omz-bucket";
+        String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
+        try(InputStream inputStream = file.getInputStream()) {
+            Image processedImage = ImageIO.read(inputStream);
+
+            BufferedImage scaledBI = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = scaledBI.createGraphics();
+            g.drawImage(processedImage, 0, 0, 200, 200, null);
+            g.dispose();
+
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(scaledBI, "jpg", os);
+
+            InputStream processedInputStream = new ByteArrayInputStream(os.toByteArray());
+
+            storage.create(BlobInfo.newBuilder(bucketName, saveFileName).build(), processedInputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
+
+        FaceRequestDto.Write face = faceInfo;
+        FaceRequestDto.Write preferFace = prefeFaceInfo;
+
+        // 가장 닮은 관상 찾기
+        // HashMap 준비
+        Map<String, Double> map = new HashMap<>();
+        map.put("강아지", face.getDog());
+        map.put("고양이", face.getCat());
+        map.put("곰", face.getBear());
+        map.put("토끼", face.getRabbit());
+        map.put("공룡", face.getDino());
+        map.put("여우", face.getFox());
+
+        // Max
+        Entry<String, Double> maxEntry = null;
+
+        // Iterator
+        Set<Entry<String, Double>> entrySet = map.entrySet();
+        for (Entry<String, Double> entry : entrySet) {
+            if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
+                maxEntry = entry;
+            }
+        }
+        String myFace = maxEntry.getKey();
+
+        // 미니룸 저장
+//        miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
+
+        // 아이템 정보 저장
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("hat").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("glasses").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("wing").build());
+
+        // 아이템 정보 저장
+//        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("bed").build());
+//        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("table").build());
+//        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("lamp").build());
+//        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("drawer").build());
+//        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("clock").build());
+
+        memberRepository.save(
+                memberRepository.findByEmail(email).get().updateMemberInfo(
+                        memberInfo.getMbti(),
+                        memberInfo.getNickname(),
+                        saveFileName,
+                        // 내 관상 저장
+                        faceRepository.save(Face.builder()
+                                .dogProbability(face.getDog())
+                                .catProbability(face.getCat())
+                                .bearProbability(face.getBear())
+                                .rabbitProbability(face.getRabbit())
+                                .dinoProbability(face.getDino())
+                                .foxProbability(face.getFox())
+                                .build()),
+                        // 선호하는 관상 저장
+                        faceRepository.save(Face.builder()
+                                .dogProbability(preferFace.getDog())
+                                .catProbability(preferFace.getCat())
+                                .bearProbability(preferFace.getBear())
+                                .rabbitProbability(preferFace.getRabbit())
+                                .dinoProbability(preferFace.getDino())
+                                .foxProbability(preferFace.getFox())
+                                .build()),
+                        myFace
+
+                )
+
+        );
+
+
+    }
+
+    // 회원정보 조회 (회원가입용)
+    @Override
+    public MemberResponseDto.MemberInfo getJoinMemberInfo(String token) throws UnsupportedEncodingException {
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
+        if(member.getFaceName()==null){
+            return null;
+        }
+
+        return MemberResponseDto.MemberInfo.fromEntity(member);
+    }
+
+    // 회원정보 조회
+    @Override
+    public MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException {
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
+
+        return MemberResponseDto.MemberInfo.fromEntity(member);
+    }
+
+    // 회원정보 조회 (채팅)
+    @Override
+    public MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException {
+        String email = (String) Jwts.parser().
+                setSigningKey(SECRET_KEY.
+                        getBytes("UTF-8"))
+                .parseClaimsJws(token)
+                .getBody()
+                .get("userEmail");
+        Member member = memberRepository.findByEmail(email).orElse(null);
+        return MemberResponseDto.LittleInfo.fromEntity(member);
+    }
+
 
     // 카카오 id로 회원가입 처리 ( 없으면 해당 유저정보 반환 )
-
     private TokenDto registerKakaoUserIfNeed(KakaoUserInfoDto kakaoUserInfo) {
         // 이미 회원인지 확인
         String email = kakaoUserInfo.getEmail();
@@ -195,3 +300,4 @@ public class MemberServiceImpl implements MemberService{
 
     }
 }
+

@@ -7,7 +7,6 @@ import lombok.Data;
 public class FriendResponseDto {
     @Data
     @Builder
-//    @Schema
     public static class Info {
         private Long friendId;
         private String message;
@@ -28,12 +27,12 @@ public class FriendResponseDto {
     public static class WaitingListInfo {
         private Long friendId;
         private String message;
-        private MemberResponseDto.LittleInfo toMember;
+        private MemberResponseDto.LittleInfo fromMember;
         public static FriendResponseDto.WaitingListInfo fromEntity(com.ssafy.omz.entity.Friend friendEntity) {
             return WaitingListInfo.builder()
                     .friendId(friendEntity.getFriendId())
                     .message(friendEntity.getMessage())
-                    .toMember(MemberResponseDto.LittleInfo.fromEntity(friendEntity.getToMember()))
+                    .fromMember(MemberResponseDto.LittleInfo.fromEntity(friendEntity.getFromMember()))
                     .build();
         }
     }

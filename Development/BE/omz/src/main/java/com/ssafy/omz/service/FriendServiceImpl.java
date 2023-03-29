@@ -40,21 +40,19 @@ public class FriendServiceImpl implements FriendService {
                 .build()));
     }
 
-//    @Override
-//    public Boolean requestFriendPossibleCheck(Long toMemberId, Long fromMemberId) {
-//        return !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(toMemberId, fromMemberId)
-//                || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(fromMemberId, toMemberId);
-//    }
-
     @Override
     public List<MemberResponseDto.FriendSearch> getSearchMemberList(Long memberId, String word) {
-        return memberRepository.findByNicknameContaining(word)
-                .map(member -> {
-                    MemberResponseDto.FriendSearch res = MemberResponseDto.FriendSearch.fromEntity(member);
-                    res.setRequestPossble(!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, res.getMemberId())
-                            || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(res.getMemberId(), memberId));
-                    return res;
-                }).stream().collect(Collectors.toList());
+        List<MemberResponseDto.FriendSearch> res = new ArrayList<>();
+
+        List<Member> memberList = memberRepository.findByNicknameContainingAndMemberIdIsNot(word, memberId);
+        for (Member m : memberList){
+            MemberResponseDto.FriendSearch search = MemberResponseDto.FriendSearch.fromEntity(m);
+            search.setRequestPossible(!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, search.getMemberId())
+                    || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(search.getMemberId(), memberId));
+            res.add(search);
+        }
+
+        return res;
     }
 
     @Override

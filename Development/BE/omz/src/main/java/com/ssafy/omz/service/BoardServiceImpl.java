@@ -87,16 +87,20 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void memberLikeBoard(Long memberId, Long boardId) {
-        log.info(memberId + " " + boardId);
-        boardLikesRepository.save(BoardLikes.builder()
-                .member(memberRepository.findByMemberId(memberId))
-                .board(boardRepository.findByBoardId(boardId))
-                .build());
+        if(!boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+            boardLikesRepository.save(BoardLikes.builder()
+                    .member(memberRepository.findByMemberId(memberId))
+                    .board(boardRepository.findByBoardId(boardId))
+                    .build());
+        }
     }
 
     @Override
     public void memberCancleLikeBoard(Long memberId, Long boardId) {
-        boardLikesRepository.deleteById(boardLikesRepository.findByMember_MemberIdAndBoard_BoardId(memberId, boardId).getBoardLikesId());
+        if(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+            boardLikesRepository.deleteById(boardLikesRepository
+                    .findByMember_MemberIdAndBoard_BoardId(memberId, boardId).getBoardLikesId());
+        }
     }
 
     @Override
@@ -129,13 +133,13 @@ public class BoardServiceImpl implements BoardService {
     @Override
     @Transactional
     public void updateBoard(Long boardId, MultipartFile file, BoardRequestDto.Write writeInfo) throws RollbackException, IOException {
-        Board board = boardRepository.findByBoardId(boardId);
-
         BoardRequestDto.Info.fromEntity(boardRepository.save(
                 boardRepository.findById(boardId).get()
-                        .updateContent(board.getContent())));
+                        .updateContent(writeInfo.getContent())));
 
-        if (file != null || !file.isEmpty())
+        Board board = boardRepository.findByBoardId(boardId);
+
+        if (file != null)
             gcsService.uploadBoardImage(file, board);
     }
 
