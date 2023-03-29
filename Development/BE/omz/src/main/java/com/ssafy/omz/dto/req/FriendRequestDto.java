@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class FriendRequestDto {
 
     @Data
-    @NoArgsConstructor
+    @Builder
     @ApiModel(value = "친구 신청 정보", description = "신청 메세지, toMemberId, fromMemberId를 가진 Class")
     public static class Write {
         @Size(min=1, max=20, message = "바르지 않은 message 크기 입니다")

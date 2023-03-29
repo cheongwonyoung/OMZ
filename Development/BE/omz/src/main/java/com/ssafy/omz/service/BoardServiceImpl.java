@@ -3,6 +3,7 @@ package com.ssafy.omz.service;
 import com.google.cloud.storage.BlobInfo;
 import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.dto.resp.BoardResponseDto;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.entity.Board;
 import com.ssafy.omz.entity.BoardLikes;
 import com.ssafy.omz.repository.BoardLikesRepository;
@@ -25,9 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -151,13 +151,16 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardResponseDto.Info> getMemberBoardList(Long memberId, Pageable pageable) {
-        return boardRepository.findAllByIsDeletedIsFalseAndMember_MemberId(memberId, pageable)
-                .map(board -> {
-                    BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
-                    res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
-                    return res;
-                });
+    public Map<String, Object> getMemberBoardList(Long memberId, Pageable pageable) {
+        Map<String, Object> res = new HashMap<>();
+        res.put("member", MemberResponseDto.LittleInfo.fromEntity(memberRepository.findByMemberId(memberId)));
+        res.put("articles",
+                boardRepository.findAllByIsDeletedIsFalseAndMember_MemberId(memberId, pageable)
+                        .map(board -> {
+                            BoardResponseDto.Info info = BoardResponseDto.Info.fromEntity(board);
+                            info.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+                            return info;
+                        }));
+        return res;
     }
-
 }

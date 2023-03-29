@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.RollbackException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public interface BoardService {
@@ -33,5 +34,5 @@ public interface BoardService {
 
     void deleteBoard(Long boardId) throws RollbackException;
 
-    Page<BoardResponseDto.Info> getMemberBoardList(Long memberId, Pageable pageable);
+    Map<String, Object> getMemberBoardList(Long memberId, Pageable pageable);
 }

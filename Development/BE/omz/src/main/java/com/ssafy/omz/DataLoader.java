@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,10 @@ public class DataLoader implements CommandLineRunner {
     private ItemTypeRepository itemTypeRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ChatRoomRepository chatRoomRepository;
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -50,8 +56,9 @@ public class DataLoader implements CommandLineRunner {
         addFace();
         addItemType();
         addItem();
+        addChatRoom();
+        addChat();
     }
-
     private void addItem() {
         List<Member> memberList = memberRepository.findAll();
         List<ItemType> itemTypeList = itemTypeRepository.findAll();
@@ -75,36 +82,36 @@ public class DataLoader implements CommandLineRunner {
                     .name("wing")
                     .state(1)
                     .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("bed")
-//                    .state(1)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("table")
-//                    .state(1)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("lamp")
-//                    .state(1)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("drawer")
-//                    .state(1)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("clock")
-//                    .state(1)
-//                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("bed")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("table")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("lamp")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("drawer")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("clock")
+                    .state(1)
+                    .build()));
         }
         for (int i = 2; i < 4; i++) {
             itemList.add(itemRepository.save(Item.builder()
@@ -125,36 +132,36 @@ public class DataLoader implements CommandLineRunner {
                     .name("wing")
                     .state(2)
                     .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("bed")
-//                    .state(2)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("table")
-//                    .state(2)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("lamp")
-//                    .state(2)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("drawer")
-//                    .state(2)
-//                    .build()));
-//            itemList.add(itemRepository.save(Item.builder()
-//                    .itemType(itemTypeList.get(1))
-//                    .member(memberList.get(i))
-//                    .name("clock")
-//                    .state(2)
-//                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("bed")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("table")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("lamp")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("drawer")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("clock")
+                    .state(2)
+                    .build()));
         }
         itemList.add(itemRepository.save(Item.builder()
                 .itemType(itemTypeList.get(0))
@@ -436,4 +443,119 @@ public class DataLoader implements CommandLineRunner {
 
         memberRepository.saveAllAndFlush(memberList);
     }
+
+    private void addChatRoom() {
+        List<ChatRoom> chatRoomList = new ArrayList<>();
+
+        // 유태 서니
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(1)
+                .fromMemberId(memberRepository.findByMemberId(1L))
+                .toMemberId(memberRepository.findByMemberId(4L))
+                .build());
+        // 채리 서니
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(2)
+                .fromMemberId(memberRepository.findByMemberId(3L))
+                .toMemberId(memberRepository.findByMemberId(4L))
+                .build());
+        // 워녕 주강
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(3)
+                .fromMemberId(memberRepository.findByMemberId(2L))
+                .toMemberId(memberRepository.findByMemberId(5L))
+                .build());
+        // 워녕 서니
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(4)
+                .fromMemberId(memberRepository.findByMemberId(2L))
+                .toMemberId(memberRepository.findByMemberId(4L))
+                .build());
+        // 체리 워녕
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(5)
+                .fromMemberId(memberRepository.findByMemberId(3L))
+                .toMemberId(memberRepository.findByMemberId(2L))
+                .build());
+        chatRoomRepository.saveAllAndFlush(chatRoomList);
+    }
+
+    private void addChat() {
+        List<Chat> chatList = new ArrayList<>();
+
+        chatList.add(Chat.builder()
+                        .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                        .isChecked(true)
+                        .message("살려주세요")
+                        .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                        .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(true)
+                .message("아아아아")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(true)
+                .message("아아앙")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(true)
+                .message("아아아")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(true)
+                .message("d")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(false)
+                .message("닉네임")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(4l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(false)
+                .message("어디갔어")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(4l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(false)
+                .message("d")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(false)
+                .message("아아아")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .isChecked(false)
+                .message("ㅇㄹㅇㅇㄹ")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+
+        chatRepository.saveAllAndFlush(chatList);
+
+    }
+
 }
