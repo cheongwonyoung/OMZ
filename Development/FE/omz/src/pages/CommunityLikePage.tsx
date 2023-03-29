@@ -8,6 +8,7 @@ import CommunityArticleItem from "../components/communityPage/CommunityArticleIt
 import Loading from "../components/common/Loading";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
+import { useEffect } from "react";
 
 type Article = {
   [key: string]: any;
@@ -15,12 +16,13 @@ type Article = {
 
 export default function CommunityLikePage() {
   const memberId = useRecoilValue(userStatus).id;
+  const membernickname = useRecoilValue(userStatus).nickname;
   // 좋아요한 게시물 가져오기
   const { data, isLoading, isError, refetch } = useQuery("articlelike", () =>
-  likeArticles(memberId)
+  likeArticles(memberId),{
+    staleTime:0
+  }
   );
-  console.log(data)
-  const membernickname = data?.data[0].member.nickname;
   if (isLoading) return <Loading />;
   if (isError) return <p className="title">Error...</p>;
 
