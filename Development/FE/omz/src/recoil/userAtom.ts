@@ -17,7 +17,7 @@ export const userToken = atom({
 export const userStatus = atom({
   key: "userStatus",
   default: {
-    id: 3,
+    id: 2,
     nickname: "",
     profile_img: "",
   },

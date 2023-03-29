@@ -13,7 +13,7 @@ type Props = {
 export default function ProposalList({ handleRefuseModal }: Props) {
   const memberId = useRecoilValue(userStatus).id;
   //TODO 여기 친구신청 리스트 받는곳 나중에 db에 데이터 넣어달라고 하자
-  const { data: proposals } = useQuery(
+  const { data: proposals, refetch } = useQuery(
     "proposalList",
     () => getProposalList(memberId),
     {
@@ -41,6 +41,7 @@ export default function ProposalList({ handleRefuseModal }: Props) {
                   handleRefuseModal={handleRefuseModal}
                   id={proposal.friendId}
                   name={proposal.toMember.nickname}
+                  refetch={refetch}
                 />
               }
               key={uuidv4()}
