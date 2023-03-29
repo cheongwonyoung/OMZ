@@ -1,5 +1,9 @@
 # 도커에 설치될 python 버전
 FROM python:3.9
+RUN python -V
+
+FROM continuumio/miniconda3
+RUN conda install tensorflow
 
 RUN pip install --upgrade pip
 # 필요한 모듈 설치
