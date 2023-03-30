@@ -57,7 +57,7 @@ export default function ChattingInfoBar({ item, refetch }: Props) {
 
   const imageUrlRoot = imageUrl + item?.file;
   return (
-    <div className="flex w-full justify-between items-center p-2.5 border-t-0 border-r-0 border-b border-l-0 border-black">
+    <div className="flex w-full justify-between items-center p-2.5 border-t-0 border-r-0 border-b border-l-0 border-black fixed z-50 bg-white">
       <div className="flex items-center">
         {item?.file && (
           <img src={imageUrlRoot} alt="" className="h-12 aspect-square mr-4" />

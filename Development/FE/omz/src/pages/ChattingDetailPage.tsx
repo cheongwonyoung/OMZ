@@ -190,7 +190,7 @@ export default function ChattingDetailPage() {
   return (
     <div>
       <ChattingInfoBar item={chatOtherInfo} refetch={goRefetch} />
-      <div ref={setTarget}></div>
+      <div className="pt-24" ref={setTarget}></div>
       <div>
         {chatData?.map((chat) =>
           chat.memberId === memberId ? (
