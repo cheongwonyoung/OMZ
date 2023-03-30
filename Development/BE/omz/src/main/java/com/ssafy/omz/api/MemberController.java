@@ -124,7 +124,7 @@ public class MemberController {
     @PatchMapping(value = "/image")
     public ResponseEntity<?> changeImage(@RequestHeader(value = "access_token") String token, @RequestParam(value="file") MultipartFile file) throws Exception {
         try {
-            MemberResponseDto.MemberInfo result = memberService.changeImage(token, file);
+            String result = memberService.changeImage(token, file);
             return new ResponseEntity<>(result,HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();

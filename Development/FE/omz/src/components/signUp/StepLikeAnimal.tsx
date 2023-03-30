@@ -3,31 +3,39 @@ import NextBtn from "./NextBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
+import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
+import { getUserInfo } from "../../api/kakaoLogin";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { userStatus, userToken } from "../../recoil/userAtom";
+
+interface AnimalPrefer {
+  [key: string]: number;
+}
+
 type Props = {
-  plusPage(): void;
+  changePrefer(e: any): void;
+  animalPrefer: AnimalPrefer;
+  signUpSubmit(): void;
 };
 
-export default function StepLikeAnimal({ plusPage }: Props) {
+export default function StepLikeAnimal({
+  changePrefer,
+  animalPrefer,
+  signUpSubmit,
+}: Props) {
   const animalList = ["강아지", "고양이", "곰", "여우", "토끼", "공룡"];
-  interface AnimalPrefer {
-    [key: string]: number;
-  }
 
-  const [animalPrefer, setAnimalPrefer] = useState<AnimalPrefer>({
-    강아지: 0,
-    고양이: 0,
-    곰: 0,
-    여우: 0,
-    토끼: 0,
-    공룡: 0,
-  });
-
-  const changePrefer = (e: any) => {
-    const name = e.target.id;
-    const value = e.target.value;
-    setAnimalPrefer({ ...animalPrefer, [name]: value });
-    console.log(animalPrefer);
+  const animalEng: { [key: string]: string } = {
+    강아지: "dog",
+    고양이: "cat",
+    곰: "bear",
+    여우: "fox",
+    토끼: "rabbit",
+    공룡: "dino",
   };
+
   const imgsrc = (i: string): string => {
     switch (i) {
       case "강아지":
@@ -48,44 +56,46 @@ export default function StepLikeAnimal({ plusPage }: Props) {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <p className="text-xl mb-8 font-bold">동물상 좋아하는 정도</p>
-      <div className="flex flex-col  w-8/12 gap-2">
+    <div className="flex flex-col justify-center items-center w-11/12 gap-10">
+      <div className="flex flex-col items-center gap-2">
+        <p className="text-2xl font-bold">좋아하는 동물상</p>
+        <p className="text-base">내가 좋아하는 동물상을 퍼센트로 표현해주세요</p>
+      </div>
+      <div className="flex flex-col w-11/12 gap-2">
         {animalList.map((item) => (
-          <div className="grid grid-cols-4 gap-4 items-center">
-            <div className="flex flex-col items-center">
+          <div className="flex gap-4 items-center" key={item}>
+            <div className="w-[25%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""
                 className="w-full rounded-full object-cover aspect-square"
               />
-              <p>{item}</p>
+              <p className="text-lg">{item}</p>
             </div>
-            <div className="col-span-2 h-1/2">
-              <input
-                className="w-full appearance-none h-1 shadow-md bg-purple-300"
-                id={item}
-                value={animalPrefer[item]}
-                type="range"
-                min={0}
-                max={100}
-                step={5}
-                onChange={(e) => changePrefer(e)}
-              />
-            </div>
-            <div className="h-1/2">
-              <p className="text-end ">{animalPrefer[item]}%</p>
-            </div>
+            <input
+              className="w-full bg-white accent-black"
+              id={animalEng[item]}
+              value={animalPrefer[animalEng[item]]}
+              type="range"
+              min={0}
+              max={1}
+              step={0.1}
+              onChange={(e) => changePrefer(e)}
+            />
+            <p className="min-w-[30px] text-xl font-bold text-center">
+              {animalPrefer[animalEng[item]] * 100}%
+            </p>
           </div>
         ))}
       </div>
-      <div className="mt-8">
-        <NextBtn
-          comment="다음 스텝으로"
-          icon={<FontAwesomeIcon icon={faArrowRight} />}
-          logic={plusPage}
-        />
-      </div>
+
+      <NextBtn
+        comment="다음 스텝으로"
+        icon={<FontAwesomeIcon icon={faArrowRight} />}
+        logic={() => {
+          signUpSubmit();
+        }}
+      />
     </div>
   );
 }
