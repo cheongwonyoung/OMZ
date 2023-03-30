@@ -12,7 +12,6 @@ beautifulsoup4==4.11.2
 bleach==6.0.0
 bootstrap4==0.1.0
 cachetools==5.3.0
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
 cffi==1.15.1
 charset-normalizer==3.1.0
 colorama==0.4.6
