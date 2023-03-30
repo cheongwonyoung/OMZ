@@ -8,20 +8,26 @@ import { userStatus } from "../../recoil/userAtom";
 
 type Props = {
   handleRefuseModal(id: number, name: string): void;
+  proposals: any;
+  refetch(): void;
 };
 
-export default function ProposalList({ handleRefuseModal }: Props) {
+export default function ProposalList({
+  handleRefuseModal,
+  proposals,
+  refetch,
+}: Props) {
   const memberId = useRecoilValue(userStatus).id;
   //TODO 여기 친구신청 리스트 받는곳 나중에 db에 데이터 넣어달라고 하자
-  const { data: proposals, refetch } = useQuery(
-    "proposalList",
-    () => getProposalList(memberId),
-    {
-      onSuccess(data) {
-        console.log(data);
-      },
-    }
-  );
+  // const { data: proposals, refetch } = useQuery(
+  //   "proposalList",
+  //   () => getProposalList(memberId),
+  //   {
+  //     onSuccess(data) {
+  //       console.log(data);
+  //     },
+  //   }
+  // );
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -29,18 +35,18 @@ export default function ProposalList({ handleRefuseModal }: Props) {
         proposals.data.map(
           (proposal: {
             friendId: number;
-            toMember: { memberId: number; nickname: string; file: string };
+            fromMember: { memberId: number; nickname: string; file: string };
             message: string;
           }) => (
             <FriendsItem
-              name={proposal.toMember.nickname}
+              name={proposal.fromMember.nickname}
               content={proposal.message}
-              imgsrc={proposal.toMember.file}
+              imgsrc={proposal.fromMember.file}
               bottom={
                 <ProposalBottom
                   handleRefuseModal={handleRefuseModal}
                   id={proposal.friendId}
-                  name={proposal.toMember.nickname}
+                  name={proposal.fromMember.nickname}
                   refetch={refetch}
                 />
               }

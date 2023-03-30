@@ -51,11 +51,13 @@ export default function MainPage() {
               className="w-[80%] hover:scale-110 mb-3"
             />
             <div className="flex-grow-0 flex-shrink-0 w-[95px] h-[30px]">
-              <p className="title text-base text-center font-bold">My Friends</p>
+              <p className="title text-base text-center font-bold">
+                My Friends
+              </p>
             </div>
           </Link>
           <Link
-            to="/chatting/1"
+            to={`chatting/${memberId}`}
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img
@@ -76,7 +78,9 @@ export default function MainPage() {
             />
             <div className="flex-grow-0 flex-shrink-0 w-[95px] h-[30px]">
               <div className="w-[72px] h-4">
-                <p className="title text-base text-center font-bold">Community</p>
+                <p className="title text-base text-center font-bold">
+                  Community
+                </p>
               </div>
             </div>
           </Link>

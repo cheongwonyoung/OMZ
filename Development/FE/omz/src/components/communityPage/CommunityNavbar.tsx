@@ -19,7 +19,7 @@ export default function CommunityNavbar() {
           <NavLink
             to="/community/"
             className={({ isActive }) =>
-              isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#5B5685]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faHouse} className="text-2xl" />
@@ -30,7 +30,7 @@ export default function CommunityNavbar() {
           <NavLink
             to="/community/search"
             className={({ isActive }) =>
-              isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#5B5685]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faSearch} className="text-2xl" />
@@ -38,9 +38,9 @@ export default function CommunityNavbar() {
           </NavLink>
         </div>
         <div className="flex flex-1 justify-center items-center font-bold text-center">
-          <div className="flex justify-center items-center w-[50px] h-[50px]  p-[5px] rounded-[10px] bg-white">
+          <div className="flex justify-center items-center w-[50px] h-[50px] rounded-[10px] bg-white">
             <div
-              className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2 p-2 rounded-[10px] bg-white border border-black"
+              className="flex justify-center items-center relative w-[45px] h-[45px] rounded-[10px] bg-white border border-black"
               id="btn"
             >
               <NavLink
@@ -59,7 +59,7 @@ export default function CommunityNavbar() {
           <NavLink
             to="/community/like"
             className={({ isActive }) =>
-              isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#5B5685]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faHeart} className="text-2xl" />
@@ -70,7 +70,7 @@ export default function CommunityNavbar() {
           <NavLink
             to={`/community/mypage/${memberId}`}
             className={({ isActive }) =>
-              isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#5B5685]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faUser} className="text-2xl" />

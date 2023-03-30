@@ -13,11 +13,23 @@ import { userStatus } from "../recoil/userAtom";
 export default function MiniRoomUpdatePage() {
   const memberId = useRecoilValue(userStatus).id;
 
-  const [itemStatus, setItemStatus] = useState({
+  const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
     table: "1",
     lamp: "1",
     bed: "1",
   });
+
+  const submitChange = () => {
+    const data = [];
+    const itemNames = Object.keys(itemStatus);
+    for (const name of itemNames) {
+      data.push({ name: name, state: itemStatus[name] });
+    }
+    console.log(data);
+    // TODO 여기 이거 제출하면 댐
+  };
+
+  submitChange();
 
   const handleItems = (item: string) => {
     const variety = item.split("_")[0];

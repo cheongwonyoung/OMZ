@@ -14,8 +14,8 @@ export default function MyPageBox({ handleItems }: Props) {
 
   const titleColor = (name: string): string => {
     return showedItem === name
-      ? "text-xl font-bold text-purple-400"
-      : "text-xl font-bold";
+      ? "text-xl font-bold text-blue-500 cursor-pointer"
+      : "text-xl font-bold hover:text-blue-500 cursor-pointer";
   };
 
   const itemTitle = (
@@ -33,9 +33,8 @@ export default function MyPageBox({ handleItems }: Props) {
     </div>
   );
   return (
-    <div className="w-full h-full bg-slate-100/50 flex flex-col items-center">
-      <div className="w-11/12 mt-2">{itemTitle}</div>
-      <div className="w-11/12 bg-purple-500 h-0.5 my-2"></div>
+    <div className="w-full h-full min-h-fit bg-white bg-opacity-50 flex flex-col items-center">
+      <div className="w-11/12 border-b border-black py-5 mb-5">{itemTitle}</div>
       <MyPageBoxList showedItem={showedItem} handleItems={handleItems} />
     </div>
   );

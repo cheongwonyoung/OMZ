@@ -160,25 +160,31 @@ export default function SignUpPage() {
   };
 
   const [userState, setUserState] = useRecoilState(userStatus);
-  const getInfo = useMutation((token: string) => getUserInfo(token), {
-    onSuccess(data) {
-      console.log(data);
-      setUserState({
-        ...userState,
-        id: data.data.memberId,
-        nickname: data.data.nickname,
-        profile_img: data.data.file,
-      });
-      navigate("end");
-      // data.data === false ? navigate("/signup") : navigate("/");
-    },
-  });
+  // const getInfo = useMutation((token: string) => getUserInfo(token), {
+  //   onSuccess(data) {
+  //     console.log(data);
+  //     setUserState({
+  //       ...userState,
+  //       id: data.data.memberId,
+  //       nickname: data.data.nickname,
+  //       profile_img: data.data.file,
+  //     });
+  //     navigate("end");
+  //     // data.data === false ? navigate("/signup") : navigate("/");
+  //   },
+  // });
 
   const goSignUp = useMutation(
     (inp: { formData: any; tok: string }) => signUp(inp.formData, inp.tok),
     {
-      onSuccess() {
-        getInfo.mutate(token);
+      onSuccess(data) {
+        setUserState({
+          ...userState,
+          id: data.data.memberId,
+          nickname: data.data.nickname,
+          profile_img: data.data.file,
+        });
+        navigate("end");
       },
     }
   );

@@ -145,34 +145,26 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
   function confirmModalHandler(boardId: number) {
     deleteArticleItem.mutate(boardId);
   }
-
+  const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
   return (
     <>
       <div className="min-w-full max-w-full">
         <div
-          className="bg-white w-full justify-start rounded-xl cursor-pointer p-2"
+          className="bg-white w-full justify-start rounded-xl cursor-pointer p-2 hover:bg-opacity-60"
           onClick={() => handleClick(item.boardId)}
         >
           <div className="px-5 py-2">
             <div className="justify-start mt-3">
-              <div className="flex justify-start gap-4 items-center">
-                {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
-                <img
-                  className="w-[3rem] h-[3rem] hover:scale-105"
-                  src={images.profile_img}
-                  onClick={(e) => {
-                    e?.stopPropagation();
-                    goToMyPage(item.member.memberId);
-                  }}
-                />
+              <div
+                className="flex justify-start gap-4 items-center hover:scale-105"
+                onClick={(e) => {
+                  e?.stopPropagation();
+                  goToMyPage(item.member.memberId);
+                }}
+              >
+                <img className="w-[3rem] h-[3rem] border rounded-full" src={IMAGE_ROOT + item.member.file} />
                 <div className="flex flex-col">
-                  <p
-                    className="text-ml cursor-pointer hover:text-white font-bold"
-                    onClick={(e) => {
-                      e?.stopPropagation();
-                      goToMyPage(item.member.memberId);
-                    }}
-                  >
+                  <p className="text-ml cursor-pointer font-bold">
                     {item.member.nickname}
                   </p>
                   {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
@@ -222,16 +214,16 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                   {item.content}
                 </p>
               )} */}
-              <p className="w-full text-ml text-left break-all my-5">
+              <p className="w-full text-ml text-left break-all my-5 pl-2">
                 {item.content}
               </p>
             </div>
-            <div className="flex justify-between items-center my-5">
+            <div className="flex justify-between items-center my-5 pl-2">
               {!showUpdate && (
                 <div className="flex w-3/12 justify-start gap-3">
                   <FontAwesomeIcon
                     icon={faComment}
-                    className="cursor-pointer hover:text-white text-lg"
+                    className="cursor-pointer hover:text-teal-400 text-lg"
                   />
                   <p className="flex-grow-0 flex-shrink-0 text-sm font-bold">
                     {item.replyCnt}
@@ -239,7 +231,7 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                   {!item.ilikeBoard ? (
                     <FontAwesomeIcon
                       icon={faHeart}
-                      className="hover:text-white text-lg ml-5"
+                      className="hover:text-red-600 text-lg ml-5"
                       onClick={(e) => {
                         e.stopPropagation();
                         goLoveArticle();
@@ -248,7 +240,7 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                   ) : (
                     <FontAwesomeIcon
                       icon={faHeart}
-                      className="text-red-600 hover:scale-110 text-lg"
+                      className="text-red-600 hover:text-black text-lg ml-5"
                       onClick={(e) => {
                         e.stopPropagation();
                         goDisloveArticle();

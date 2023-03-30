@@ -50,19 +50,24 @@ export default function CommunityCreatePage() {
     contentInputRef.current!.value = "";
     setFile([]);
   };
-
+  const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
+  const profile = useRecoilValue(userStatus).profile_img;
   return (
     <div className="flex flex-col items-center justify-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
       <div className="mb-5"></div>
-      <form action="" className="w-11/12 pb-10" onSubmit={submitHandler}>
+      <form action="" className="w-10/12 pb-10" onSubmit={submitHandler}>
         <div className="w-full flex justify-between items-start gap-2">
-          <img src={images.profile_img} alt="" className="w-15 h-15" />
+          <img
+            src={IMAGE_ROOT + profile}
+            alt=""
+            className="w-14 h-14 rounded-full border"
+          />
           <textarea
             maxLength={140}
-            placeholder="아무말이나 일단 써"
+            placeholder="무슨 일이 일어나고 있나요?"
             ref={contentInputRef}
-            className="bg-inherit focus:outline-none w-full h-[200px] resize-none"
+            className="bg-inherit focus:outline-none w-full h-[200px] resize-none pl-5"
           />
         </div>
         <div className="flex justify-center mb-2">
@@ -83,13 +88,13 @@ export default function CommunityCreatePage() {
           >
             <FontAwesomeIcon
               icon={faImage}
-              className="text-2xl cursor-pointer hover:text-white"
+              className="text-2xl cursor-pointer hover:opacity-30"
             />
           </div>
           <button>
             <FontAwesomeIcon
               icon={faCheck}
-              className="text-2xl cursor-pointer hover:text-white"
+              className="text-2xl cursor-pointer hover:opacity-30"
             />
           </button>
         </div>

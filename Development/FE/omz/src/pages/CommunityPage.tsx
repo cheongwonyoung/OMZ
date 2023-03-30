@@ -1,7 +1,7 @@
 import CommunityNavbar from "../components/communityPage/CommunityNavbar";
 import CommunityArticleItem from "../components/communityPage/CommunityArticleItem";
 import { getArticles } from "../api/community";
-import { useMutation, useQuery, useInfiniteQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
 import CommunityCreateSmall from "../components/communityPage/CommunityCreateSmall";
@@ -9,6 +9,7 @@ import { createArticle } from "../api/community";
 import Loading from "../components/common/Loading";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
+import { useEffect } from "react";
 
 // import InfiniteScroll from "react-infinite-scroller";
 
@@ -26,6 +27,9 @@ export default function CommunityPage() {
     ["articles", memberId, page, sort],
     () => getArticles(memberId, page, 100, sort)
   );
+  useEffect(() => {
+    refetch();
+  }, []);
 
   // 게시글 만들기(POST)
   const addArticle = useMutation(
@@ -56,7 +60,7 @@ export default function CommunityPage() {
       <CommunityCreateSmall onArticleSubmit={handleArticleSubmit} />
       <div className="m-3"></div>
       <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {data?.data.content.map((article: Article) => (
+        {data?.data.map((article: Article) => (
           <CommunityArticleItem
             key={article.boardId}
             item={article}

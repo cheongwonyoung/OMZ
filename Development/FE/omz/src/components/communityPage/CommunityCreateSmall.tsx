@@ -4,7 +4,8 @@ import { faImage, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useRef } from "react";
 import ImageUploader from "../common/ImageUploader";
 import { useState } from "react";
-
+import { userStatus } from "../../recoil/userAtom";
+import { useRecoilValue } from "recoil";
 type Props = {
   onArticleSubmit: (article: string, image: File) => void;
 };
@@ -31,16 +32,18 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
     onArticleSubmit(enteredArticle, file[0]);
     articleInputRef.current!.value = "";
     setFile([]);
+    setShowUploader(false);
   };
 
+  const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
+  const profile = useRecoilValue(userStatus).profile_img;
   return (
     <>
-      {/* TODO: img 방식 나중에 바꾸기  */}
       <form onSubmit={submitHandler} className="w-[90%]">
         <div className="w-full flex flex-col items-center">
           <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2 mb-5">
             <img
-              src={images.profile_img}
+              src={IMAGE_ROOT + profile}
               alt=""
               className="w-[3rem] h-[3rem] object-cover rounded-full"
             />
@@ -54,7 +57,7 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
               />
               <FontAwesomeIcon
                 icon={faImage}
-                className="text-xl mx-5"
+                className="text-xl mx-5 cursor-pointer hover:opacity-30"
                 onClick={() => {
                   if (showUploader) {
                     setShowUploader(false);
@@ -64,7 +67,10 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
                 }}
               />
               <button>
-                <FontAwesomeIcon icon={faCheck} className="text-xl" />
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className="text-xl hover:opacity-30"
+                />
               </button>
             </div>
           </div>

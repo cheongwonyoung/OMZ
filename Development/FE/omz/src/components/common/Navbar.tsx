@@ -41,25 +41,39 @@ export default function NavBar() {
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
               <li className="hover:text-blue-600">
-                <Link to="/" className="title">Home</Link>
+                <Link to="/" className="title">
+                  Home
+                </Link>
               </li>
               <li className=" hover:text-blue-600">
-                <Link to="/newfriends" className="title">New Friends</Link>
+                <Link to="/newfriends" className="title">
+                  New Friends
+                </Link>
               </li>
               <li className=" hover:text-blue-600">
-                <Link to="/miniroom" className="title">Mini Room</Link>
+                <Link to={`miniroom/${memberId}`} className="title">
+                  Mini Room
+                </Link>
               </li>
               <li className=" hover:text-blue-600">
-                <Link to={`/mypage/${memberId}`} className="title">My Page</Link>
+                <Link to={`/mypage/${memberId}`} className="title">
+                  My Page
+                </Link>
               </li>
               <li className=" hover:text-blue-600">
-                <Link to="/myfriends" className="title">My Friends</Link>
+                <Link to="/myfriends" className="title">
+                  My Friends
+                </Link>
               </li>
               <li className=" hover:text-blue-600">
-                <Link to="/chatting/1" className="title">Chatting</Link>
+                <Link to={`/chatting/${memberId}`} className="title">
+                  Chatting
+                </Link>
               </li>
               <li className=" hover:text-blue-600">
-                <Link to="/community" className="title">Community</Link>
+                <Link to="/community" className="title">
+                  Community
+                </Link>
               </li>
             </ul>
           </div>

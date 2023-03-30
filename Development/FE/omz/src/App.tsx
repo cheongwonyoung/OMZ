@@ -25,6 +25,7 @@ import MyPageUpdatePage from "./pages/MyPageUpdatePage";
 import MyPageCustomPage from "./pages/MyPageCustomPage";
 import SignUpEnd from "./pages/SignUpEndPage";
 import SignUpEndPage from "./pages/SignUpEndPage";
+import CheckIsLoginPage from "./pages/CheckIsLoginPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,41 +42,43 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      // {
+      //   path: "",
+      //   element: <MainPage />,
+      // },
       {
         path: "",
-        element: <MainPage />,
+        element: <CheckIsLoginPage component={<MainPage />} />,
       },
       {
         path: "/newfriends",
-        element: <NewFriendsPage />,
+        element: <CheckIsLoginPage component={<NewFriendsPage />} />,
       },
       // TODO 나중에 path 뒤에 /:id 추가
       {
         path: "mypage/:id",
-        element: <MyPage />,
+        element: <CheckIsLoginPage component={<MyPage />} />,
       },
       {
         path: "myfriends",
-        element: <MyFriendsPage />,
+        element: <CheckIsLoginPage component={<MyFriendsPage />} />,
       },
       // TODO 나중에 path 뒤에 /:id 추가
       {
         path: "miniroom/:id",
-        element: <MiniRoomPage />,
+        element: <CheckIsLoginPage component={<MiniRoomPage />} />,
       },
       {
         path: "community",
-        element: <CommunityPage />,
+        element: <CheckIsLoginPage component={<CommunityPage />} />,
       },
       {
-        // 아마 useId
-        path: "chatting/1",
-        element: <ChattingPage />,
+        path: "chatting/:id",
+        element: <CheckIsLoginPage component={<ChattingPage />} />,
       },
       {
-        // 나중에 룸 넘버로?
-        path: "chatting/1/1",
-        element: <ChattingDetailPage />,
+        path: "chatting/:id/:roomId",
+        element: <CheckIsLoginPage component={<ChattingDetailPage />} />,
       },
       {
         path: "login",
@@ -91,39 +94,39 @@ const router = createBrowserRouter([
       },
       {
         path: "community/like",
-        element: <CommunityLikePage />,
+        element: <CheckIsLoginPage component={<CommunityLikePage />} />,
       },
       {
         path: "community/mypage/:memberId",
-        element: <CommunityMyPage />,
+        element: <CheckIsLoginPage component={<CommunityMyPage />} />,
       },
       {
         path: "community/search",
-        element: <CommunitySearchPage />,
+        element: <CheckIsLoginPage component={<CommunitySearchPage />} />,
       },
       {
         path: "community/create",
-        element: <CommunityCreatePage />,
+        element: <CheckIsLoginPage component={<CommunityCreatePage />} />,
       },
       {
         path: "miniroom/update",
-        element: <MiniRoomUpdatePage />,
+        element: <CheckIsLoginPage component={<MiniRoomUpdatePage />} />,
       },
       {
         path: "community/:board_id",
-        element: <CommunityDetailPage />,
+        element: <CheckIsLoginPage component={<CommunityDetailPage />} />,
       },
       {
         path: "mypage/update",
-        element: <MyPageUpdatePage />,
+        element: <CheckIsLoginPage component={<MyPageUpdatePage />} />,
       },
       {
         path: "mypage/custom",
-        element: <MyPageCustomPage />,
+        element: <CheckIsLoginPage component={<MyPageCustomPage />} />,
       },
       {
         path: "signup/end",
-        element: <SignUpEndPage />,
+        element: <CheckIsLoginPage component={<SignUpEndPage />} />,
       },
     ],
   },

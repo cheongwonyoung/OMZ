@@ -26,13 +26,13 @@ export default function ProposalBottom({
   };
 
   return (
-    <div className="flex w-full mt-2 gap-2 text-xs justify-evenly">
-      <div className="flex items-center gap-1" onClick={accept}>
+    <div className="flex w-full mt-2 ml-2 gap-8 text-base">
+      <div className="flex items-center gap-2 cursor-pointer hover:font-bold hover:scale-105" onClick={accept}>
         <FontAwesomeIcon icon={faHeart} className="text-red-400" />
         <p>수락</p>
       </div>
       <div
-        className="flex items-center gap-1"
+        className="flex items-center gap-2 cursor-pointer hover:font-bold hover:scale-105"
         onClick={() => handleRefuseModal(id, name)}
       >
         <FontAwesomeIcon icon={faHeartCrack} className="text-blue-400" />
