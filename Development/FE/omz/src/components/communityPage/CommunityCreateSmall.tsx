@@ -39,7 +39,6 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
   const profile = useRecoilValue(userStatus).profile_img;
   return (
     <>
-      {/* TODO: img 방식 나중에 바꾸기  */}
       <form onSubmit={submitHandler} className="w-[90%]">
         <div className="w-full flex flex-col items-center">
           <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2 mb-5">

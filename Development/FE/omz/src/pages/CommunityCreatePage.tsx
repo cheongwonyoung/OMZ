@@ -58,7 +58,11 @@ export default function CommunityCreatePage() {
       <div className="mb-5"></div>
       <form action="" className="w-10/12 pb-10" onSubmit={submitHandler}>
         <div className="w-full flex justify-between items-start gap-2">
-          <img src={IMAGE_ROOT + profile} alt="" className="w-14 h-14 rounded-full border" />
+          <img
+            src={IMAGE_ROOT + profile}
+            alt=""
+            className="w-14 h-14 rounded-full border"
+          />
           <textarea
             maxLength={140}
             placeholder="무슨 일이 일어나고 있나요?"
