@@ -20,12 +20,12 @@ public interface MiniRoomService {
     void updateMiniRoomCustom(long memberId, List<ItemRequestDto.Write> itemInfo) throws TransactionalException;
 
     // 상태메세지 조회
-    MiniRoomResponseDto getStateMessage(long miniRoomId);
+    MiniRoomResponseDto getStateMessage(long memberId);
 
     // 상태메세지 작성
-    void updateStateMessage(long miniRoomId, String stateMessage) throws RollbackException;
+    void updateStateMessage(long memberId, String stateMessage) throws RollbackException;
 
     // 상태메세지 삭제
-    void deleteStateMessage(long miniRoomId) throws RollbackException;
+    void deleteStateMessage(long memberId) throws RollbackException;
 
 }
