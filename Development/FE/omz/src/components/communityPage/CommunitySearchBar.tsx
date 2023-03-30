@@ -9,11 +9,6 @@ import { KeyboardEvent } from "react";
 import Loading from "../common/Loading";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
-type Search = {
-  memberId: number;
-  key: string;
-  word: string;
-};
 
 type Article = {
   [key: string]: any;
