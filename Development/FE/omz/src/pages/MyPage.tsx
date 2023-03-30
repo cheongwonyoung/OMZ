@@ -75,7 +75,7 @@ export default function MyPage() {
       )}
 
       <MyPageBasicInformation member={member} isOwner={isOwner} />
-      <button onClick={() => setShowModal(true)}>모달 바로가기</button>
+      {/* <button onClick={() => setShowModal(true)}>모달 바로가기</button> */}
       {showModal && <MbtiUpdateModal onCancel={closeModalHandler} />}
     </div>
   );

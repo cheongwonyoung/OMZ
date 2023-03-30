@@ -56,7 +56,7 @@ export default function StepLikeAnimal({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-11/12 gap-10">
+    <div className="max-w-3xl flex flex-col justify-center items-center w-11/12 gap-10">
       <div className="flex flex-col items-center gap-2">
         <p className="text-2xl font-bold">좋아하는 동물상</p>
         <p className="text-base">내가 좋아하는 동물상을 퍼센트로 표현해주세요</p>
@@ -64,7 +64,7 @@ export default function StepLikeAnimal({
       <div className="flex flex-col w-11/12 gap-2">
         {animalList.map((item) => (
           <div className="flex gap-4 items-center" key={item}>
-            <div className="w-[25%] flex flex-col h-full items-center">
+            <div className="w-[20%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""

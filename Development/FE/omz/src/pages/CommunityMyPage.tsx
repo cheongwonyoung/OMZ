@@ -36,7 +36,7 @@ export default function CommunityMyPage() {
   const file = data?.data.member.file;
   return (
     <div className="flex flex-col items-center">
-      <TitleBar title="Community" icon={images.community_img} goto="/" />
+      <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
       <CommunityMyPageBanner item={memberNickname} memberId={memberIdNumber} file={file}/>
       <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.data.articles.content.map((article: Article) => (
