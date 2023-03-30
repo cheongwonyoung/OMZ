@@ -62,7 +62,6 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     // 상태메세지 조회
     @Override
     public MiniRoomResponseDto getStateMessage(long miniRoomId){
-        log.info(miniRoomId + "번 미니룸 상메 가져오기");
         MiniRoom m = miniRoomRepository.findByMiniRoomId(miniRoomId);
         MiniRoomResponseDto miniRoomDto = new MiniRoomResponseDto(m.getMiniRoomId(),m.getMember().getMemberId(),m.getStateMessage(),m.getLikes());
         log.info(miniRoomDto.getStateMessage() + "이것이 상메");
