@@ -15,19 +15,22 @@ public class ChatPagingResponseDto {
 
     private String message;
 
-    private String memberId;
+    private Long memberId;
 
     private String nickname;
 
     private String createdTime;
 
+//    private boolean isChecked;
+
     public static ChatPagingResponseDto of(Chat chat){
         return ChatPagingResponseDto.builder()
-                .memberId(String.valueOf(chat.getFromMember().getMemberId()))
+                .memberId(chat.getFromMember().getMemberId())
                 .nickname(chat.getFromMember().getNickname())
                 .chatRoomId(chat.getChatRoom().getChatRoomId())
                 .createdTime(chat.getCreatedTime())
                 .message(chat.getMessage())
+//                .isChecked(chat.isChecked())
                 .build();
     }
 
@@ -38,6 +41,7 @@ public class ChatPagingResponseDto {
                 .createdTime(chatMessage.getCreatedTime())
                 .chatRoomId(Long.valueOf(chatMessage.getRoomId()))
                 .message(chatMessage.getMessage())
+//                .isChecked(chatMessage.isChecked())
                 .build();
     }
 }

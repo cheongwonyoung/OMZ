@@ -3,6 +3,7 @@ package com.ssafy.omz.dto.req;
 import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 public class FriendRequestDto {
 
     @Data
+    @Builder
+    @AllArgsConstructor
     @NoArgsConstructor
     @ApiModel(value = "친구 신청 정보", description = "신청 메세지, toMemberId, fromMemberId를 가진 Class")
     public static class Write {

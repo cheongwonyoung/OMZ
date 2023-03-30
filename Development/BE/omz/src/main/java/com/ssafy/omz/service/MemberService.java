@@ -26,7 +26,7 @@ public interface MemberService{
     String memberEmail(String token);
 
     // 회원가입
-    void updateMemberInfo(String token, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo) throws UnsupportedEncodingException;
+    MemberResponseDto.MemberInfo updateMemberInfo(String token, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo) throws UnsupportedEncodingException;
 
     // 회원정보 조회
     MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException;
@@ -37,4 +37,5 @@ public interface MemberService{
     // 회원정보 조회(채팅)
     MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException;
 
+    String changeImage(String token, MultipartFile file) throws UnsupportedEncodingException;
 }

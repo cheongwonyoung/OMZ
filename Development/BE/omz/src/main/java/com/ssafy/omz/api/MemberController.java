@@ -111,10 +111,21 @@ public class MemberController {
             MemberRequestDto.MemberInfo memberInfo = mapper.readValue(member, MemberRequestDto.MemberInfo.class);
             FaceRequestDto.Write faceInfo = mapper.readValue(face, FaceRequestDto.Write.class);
             FaceRequestDto.Write prefeFacerInfo = mapper.readValue(preferFace, FaceRequestDto.Write.class);
-//            Long id = memberService.getMemberInfo(token).getMemberId();
-//            memberService.updateMemberInfo(id, file, memberInfo,faceInfo,prefeFacerInfo);
-            memberService.updateMemberInfo(token, file, memberInfo,faceInfo,prefeFacerInfo);
-            return new ResponseEntity<>(file.getOriginalFilename(),HttpStatus.ACCEPTED);
+
+            MemberResponseDto.MemberInfo result = memberService.updateMemberInfo(token, file, memberInfo,faceInfo,prefeFacerInfo);
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "사진 변경", notes = "프로필 사진정보 변경")
+    @PatchMapping(value = "/image")
+    public ResponseEntity<?> changeImage(@RequestHeader(value = "access_token") String token, @RequestParam(value="file") MultipartFile file) throws Exception {
+        try {
+            String result = memberService.changeImage(token, file);
+            return new ResponseEntity<>(result,HttpStatus.ACCEPTED);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
