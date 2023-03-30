@@ -14,6 +14,23 @@ export const getKakaoToken = (code: string) => {
   });
 };
 
-// export const getServerToken = (token:string) => {
-//   return instance
-// }
+export const getServerToken = (token: string) => {
+  const config = {
+    headers: { access_token: token },
+  };
+  return instance.post("/member/login", {}, config);
+};
+
+export const getUserInfo = (token: string) => {
+  const config = {
+    headers: { access_token: token },
+  };
+  return instance.get("/member/info", config);
+};
+
+export const signUp = (formData: any, token: string) => {
+  const config = {
+    headers: { access_token: token, "Content-Type": "multipart/form-data" },
+  };
+  return instance.post("/member/update", formData, config);
+};

@@ -10,6 +10,7 @@ import { images } from "../assets/images";
 import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
 import ModalBlackBg from "../components/common/ModalBlackBg";
 import GuestBookModal from "../components/miniRoom/GuestBookModal";
+import YoutubeBgm from "../components/miniRoom/YoutubeBgm";
 
 export default function MiniRoomPage() {
   // BGM 설정 모달
@@ -32,6 +33,9 @@ export default function MiniRoomPage() {
   const handleMessage = (e: any) => {
     setMessage(e.target.value);
   };
+
+  // Youtube 확인용 노래 제목
+  const [bgm, setBgm] = useState("hype boy");
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -60,6 +64,7 @@ export default function MiniRoomPage() {
         >
           BGM 선택
         </button>
+        <YoutubeBgm title={bgm}/>
         <div className="mt-8">
           <Heart />
         </div>
