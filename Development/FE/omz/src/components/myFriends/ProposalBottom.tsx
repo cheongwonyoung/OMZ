@@ -18,7 +18,7 @@ export default function ProposalBottom({
 }: Props) {
   const acceptFriend = useMutation((id: number) => acceptProposal(id), {
     onSuccess() {
-      refetch;
+      refetch();
     },
   });
   const accept = () => {
@@ -27,7 +27,10 @@ export default function ProposalBottom({
 
   return (
     <div className="flex w-full mt-2 ml-2 gap-8 text-base">
-      <div className="flex items-center gap-2 cursor-pointer hover:font-bold hover:scale-105" onClick={accept}>
+      <div
+        className="flex items-center gap-2 cursor-pointer hover:font-bold hover:scale-105"
+        onClick={accept}
+      >
         <FontAwesomeIcon icon={faHeart} className="text-red-400" />
         <p>수락</p>
       </div>

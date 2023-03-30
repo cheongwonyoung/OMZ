@@ -3,7 +3,12 @@ import { useState } from "react";
 import { Model } from "../assets/3DAvatar/Rabbit";
 import MyPageMiniRoomBanner from "../components/mypage/MyPageMiniRoomBanner";
 import MyPageBasicInformation from "../components/mypage/MyPageBasicInformation";
-import { useNavigate, useParams } from "react-router-dom";
+import {
+  useLoaderData,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
 import CameraAvatar from "../components/common/CameraAvatar";
@@ -14,6 +19,10 @@ import { getMyPageInfos } from "../api/myPage";
 
 export default function MyPage() {
   const [showModal, setShowModal] = useState(false);
+
+  const ggg = useLocation();
+  console.log(ggg);
+
   const navigate = useNavigate();
   const [animal, setAnimal] = useState("");
 

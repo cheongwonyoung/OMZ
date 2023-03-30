@@ -22,7 +22,7 @@ export default function ModalDeleteFriend({
     () => removeFriend(deleteMember.id, fromMember),
     {
       onSuccess(data, variables, context) {
-        console.log(data);
+        refetch();
       },
     }
   );
@@ -30,7 +30,6 @@ export default function ModalDeleteFriend({
   const finishFriend = () => {
     deleteFriend.mutate();
     closeModal();
-    refetch();
   };
 
   return (
@@ -38,7 +37,11 @@ export default function ModalDeleteFriend({
       <div className="flex text-xl justify-between w-11/12 my-4 items-center">
         <FontAwesomeIcon icon={faHeartCrack} className="text-rose-500" />
         <p className="font-bold">친구삭제</p>
-        <FontAwesomeIcon icon={faXmark} onClick={closeModal} className="hover:text-red-600 cursor-pointer" />
+        <FontAwesomeIcon
+          icon={faXmark}
+          onClick={closeModal}
+          className="hover:text-red-600 cursor-pointer"
+        />
       </div>
       <div className="flex flex-col items-center my-4 font-bold text-lg">
         <p>
@@ -50,7 +53,10 @@ export default function ModalDeleteFriend({
         <p>⁙ 친구 삭제를 하면</p>
         <p>다시 친구 신청이 불가능해집니다.</p>
       </div>
-      <button className="font-bold w-20 hover:text-blue-400" onClick={finishFriend}>
+      <button
+        className="font-bold w-20 hover:text-blue-400"
+        onClick={finishFriend}
+      >
         예
       </button>
     </div>
