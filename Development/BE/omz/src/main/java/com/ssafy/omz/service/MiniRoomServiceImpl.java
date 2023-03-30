@@ -64,6 +64,7 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     public MiniRoomResponseDto getStateMessage(long miniRoomId){
         MiniRoom m = miniRoomRepository.findByMiniRoomId(miniRoomId);
         MiniRoomResponseDto miniRoomDto = new MiniRoomResponseDto(m.getMiniRoomId(),m.getMember().getMemberId(),m.getStateMessage(),m.getLikes());
+        log.info(miniRoomDto.getStateMessage() + "이것이 상메");
         return miniRoomDto;
     }
 
