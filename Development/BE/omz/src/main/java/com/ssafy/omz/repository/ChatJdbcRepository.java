@@ -21,8 +21,6 @@ public class ChatJdbcRepository {
 
         String sql = "INSERT INTO chat"
                 +  "(chat_room_id, message, from_member_id, created_time) VALUE(?,?,?,?)";
-//        +  "(chat_room_id, message, from_member_id, created_time, is_checked) VALUE(?,?,?,?)";
-
 
         jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
 

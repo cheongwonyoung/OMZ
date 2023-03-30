@@ -11,7 +11,7 @@ public interface ChatRedisCacheService {
 
     ChatMessage getRecentMessageByChatRoomId(Long chatRoomId);
 
-    List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, ChatPagingRequestDto chatPagingDto);
+    List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, Long memberId, ChatPagingRequestDto chatPagingDto);
 
     void findOtherChatsFromMysql(List<ChatPagingResponseDto> chatMessageDtoList, Long chatRoomId, String cursor);
 

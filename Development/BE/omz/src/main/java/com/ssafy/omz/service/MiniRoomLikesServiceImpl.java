@@ -22,18 +22,33 @@ public class MiniRoomLikesServiceImpl implements MiniRoomLikesService{
     
     // 좋아요 조회
     @Override
-    public long getLikes(long miniRoomId) {
-        MiniRoom miniRoom = miniRoomRepository.findById(miniRoomId).get();
+    public long getLikes(long memberId) {
+        MiniRoom miniRoom = miniRoomRepository.findByMember_MemberId(memberId);
         return miniRoom.getLikes();
     }
 
+
+    // memberId별 좋아요 여부 판단
+    public boolean isAlreadyLiked(long friendId, long myId){
+        MiniRoom miniRoom = miniRoomRepository.findByMember_MemberId(friendId);
+        Member member = memberRepository.findById(myId).get();
+        // 좋아요 누른 적 없을 때
+        if(likesRepository.findByMiniRoomAndMember(miniRoom, member) == null)
+            return false;
+        // 좋아요 누른 적 있을 때
+        else
+            return true;
+    }
+
+
+
     // 좋아요 누르기 및 취소
-    public void likeMiniRoom(long miniRoomId, long memberId){
-        MiniRoom miniRoom = miniRoomRepository.findById(miniRoomId).get();
-        Member member = memberRepository.findById(memberId).get();
+    public void likeMiniRoom(long friendId, long myId, boolean isLiked){
+        MiniRoom miniRoom = miniRoomRepository.findByMember_MemberId(friendId);
+        Member member = memberRepository.findById(myId).get();
 
         // 좋아요 누른 적 없을 때
-        if(likesRepository.findByMiniRoomAndMember(miniRoom, member) == null){
+        if(!isLiked){
             miniRoom.setLikes(miniRoom.getLikes() + 1);
             MiniRoomLikes miniRoomLikes = new MiniRoomLikes(miniRoom, member);
             likesRepository.save(miniRoomLikes);

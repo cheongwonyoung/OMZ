@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MiniRoomRepository extends JpaRepository<MiniRoom,Long> {
 
     MiniRoom findByMiniRoomId(long miniRoomId);
-
     MiniRoom findByMember_MemberId(long memberId);
 }

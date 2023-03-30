@@ -33,29 +33,35 @@ public class FriendServiceImpl implements FriendService {
     @Override
     @Transactional
     public void requestFriend(FriendRequestDto.Write friend) throws RollbackException {
-        FriendRequestDto.Info.fromEntity(friendRepository.save(Friend.builder()
-                .message(friend.getMessage())
-                .toMember(memberRepository.findByMemberId(friend.getToMemberId()))
-                .fromMember(memberRepository.findByMemberId(friend.getFromMemberId()))
-                .build()));
+        if (!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(friend.getToMemberId(), friend.getFromMemberId()) &&
+                !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(friend.getFromMemberId(), friend.getToMemberId()))
+            FriendRequestDto.Info.fromEntity(friendRepository.save(Friend.builder()
+                    .message(friend.getMessage())
+                    .toMember(memberRepository.findByMemberId(friend.getToMemberId()))
+                    .fromMember(memberRepository.findByMemberId(friend.getFromMemberId()))
+                    .build()));
     }
 
     @Override
     public List<MemberResponseDto.FriendSearch> getSearchMemberList(Long memberId, String word) {
-        return memberRepository.findByNicknameContaining(word)
-                .map(member -> {
-                    MemberResponseDto.FriendSearch res = MemberResponseDto.FriendSearch.fromEntity(member);
-                    res.setRequestPossible(!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, res.getMemberId())
-                            || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(res.getMemberId(), memberId));
-                    return res;
-                }).stream().collect(Collectors.toList());
+        List<MemberResponseDto.FriendSearch> res = new ArrayList<>();
+
+        List<Member> memberList = memberRepository.findByNicknameContainingAndMemberIdIsNot(word, memberId);
+        for (Member m : memberList) {
+            MemberResponseDto.FriendSearch search = MemberResponseDto.FriendSearch.fromEntity(m);
+            search.setRequestPossible(!friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(memberId, search.getMemberId())
+                    || !friendRepository.existsByToMember_MemberIdAndFromMember_MemberId(search.getMemberId(), memberId));
+            res.add(search);
+        }
+
+        return res;
     }
 
     @Override
     public List<MemberResponseDto.FriendListInfo> getFriendList(Long memberId) {
         List<Friend> friends = friendRepository.findByFromMember_MemberIdAndState(memberId, 1);
         List<MemberResponseDto.FriendListInfo> res = new ArrayList<>();
-        for(Friend friend : friends){
+        for (Friend friend : friends) {
             Member member = memberRepository.findByMemberId(friend.getToMember().getMemberId());
             res.add(MemberResponseDto.FriendListInfo.fromEntity(member));
         }
@@ -71,24 +77,30 @@ public class FriendServiceImpl implements FriendService {
     @Override
     @Transactional
     public void friendAccept(Long friendId) throws RollbackException {
-        FriendResponseDto.Info info = FriendResponseDto.Info.fromEntity(
-                friendRepository.findById(friendId).get());
-        FriendResponseDto.Info.fromEntity(friendRepository.save(
-                friendRepository.findById(info.getFriendId()).get()
-                        .updateState(1)));
-        FriendResponseDto.Info.fromEntity(friendRepository.save(
-                Friend.builder()
-                        .message(info.getMessage())
-                        .toMember(memberRepository.findByMemberId(info.getFromMember().getMemberId()))
-                        .fromMember(memberRepository.findByMemberId(info.getToMember().getMemberId()))
-                        .state(1)
-                        .build()));
+        Friend friend = friendRepository.findById(friendId).get();
+        int state = friendRepository.findByToMember_MemberIdAndFromMember_MemberId(
+                friend.getToMember().getMemberId(), friend.getFromMember().getMemberId()).getState();
+        if (state == 0) {
+            FriendResponseDto.Info info = FriendResponseDto.Info.fromEntity(
+                    friendRepository.findById(friendId).get());
+            FriendResponseDto.Info.fromEntity(friendRepository.save(
+                    friendRepository.findById(info.getFriendId()).get()
+                            .updateState(1)));
+            FriendResponseDto.Info.fromEntity(friendRepository.save(
+                    Friend.builder()
+                            .message(info.getMessage())
+                            .toMember(memberRepository.findByMemberId(info.getFromMember().getMemberId()))
+                            .fromMember(memberRepository.findByMemberId(info.getToMember().getMemberId()))
+                            .state(1)
+                            .build()));
+        }
     }
 
     @Override
     @Transactional
     public void friendReject(Long friendId) throws RollbackException {
-        friendRepository.deleteById(friendId);
+        if (friendRepository.findById(friendId).get() != null)
+            friendRepository.deleteById(friendId);
     }
 
     @Override

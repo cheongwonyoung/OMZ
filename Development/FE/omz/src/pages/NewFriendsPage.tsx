@@ -9,7 +9,20 @@ import { useEffect, useState } from "react";
 import FriendsProposalModal from "../components/newFriends/FriendsProposalModal";
 import FriendSearchItems from "../components/newFriends/FriendSearchItems";
 import FriendSearchList from "../components/newFriends/FriendSearchList";
+import { useMutation } from "react-query";
+import { searchFriend } from "../api/newFriend";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 export default function NewFriendsPage() {
+  const [modalFor, setModalFor] = useState<{
+    memberId: number;
+    nickname: string;
+  }>({ memberId: 0, nickname: "" });
+
+  const handleModalFor = (memberId: number, nickname: string) => {
+    setModalFor({ memberId, nickname });
+  };
+
   const [isRefuse, setIsRefuse] = useState(false);
   const handleRefuseModal = () => {
     setIsRefuse((prev) => !prev);
@@ -20,16 +33,43 @@ export default function NewFriendsPage() {
     setIsProposal((prev) => !prev);
   };
 
-  const [search, setSearch] = useState("");
+  const [word, setWord] = useState("");
   const handleSearch = (e: any) => {
-    setSearch(e.target.value);
+    setWord(e.target.value);
   };
+
+  const [searchList, setSearchList] = useState<
+    {
+      memberId?: number;
+      nickname?: string;
+      requestPossible?: boolean;
+      file?: null;
+    }[]
+  >([]);
+
+  const goSearchFriends = useMutation(
+    (gogo: { memberId: number; word: string }) =>
+      searchFriend(gogo.memberId, gogo.word),
+    {
+      onSuccess(data) {
+        setSearchList(data.data);
+        console.log(data);
+      },
+    }
+  );
+
+  const memberId = useRecoilValue(userStatus).id;
 
   const [searchActive, setSearchActive] = useState(false);
 
   useEffect(() => {
-    search === "" ? setSearchActive(false) : setSearchActive(true);
-  }, [search]);
+    if (word === "") {
+      setSearchActive(false);
+    } else {
+      setSearchActive(true);
+      goSearchFriends.mutate({ memberId, word });
+    }
+  }, [word]);
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -41,13 +81,16 @@ export default function NewFriendsPage() {
       {isProposal && (
         <ModalBlackBg
           modal={
-            <FriendsProposalModal handleProposalModal={handleProposalModal} />
+            <FriendsProposalModal
+              handleProposalModal={handleProposalModal}
+              modalFor={modalFor}
+            />
           }
         />
       )}
 
       <TitleBar icon={images.my_friends_img} title="New Friends" goto="/" />
-      <div className="w-11/12 border border-solid rounded-lg border-black h-12 bg-white flex px-2 mt-4">
+      <div className="w-10/12 max-w-2xl border border-solid rounded-lg border-black h-12 bg-white flex px-2 mt-4">
         <div className="h-full w-12 flex justify-center items-center">
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </div>
@@ -56,14 +99,19 @@ export default function NewFriendsPage() {
           type="search"
           placeholder="Search"
           onChange={(e) => handleSearch(e)}
-          value={search}
+          value={word}
         />
       </div>
       {searchActive ? (
-        <FriendSearchList />
+        <FriendSearchList
+          searchList={searchList}
+          handleModalFor={handleModalFor}
+          handleProposalModal={handleProposalModal}
+        />
       ) : (
         <FriendsRecommend
           handleRefuseModal={handleRefuseModal}
+          handleModalFor={handleModalFor}
           handleProposalModal={handleProposalModal}
         />
       )}

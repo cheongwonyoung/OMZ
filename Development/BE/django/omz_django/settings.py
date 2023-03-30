@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-3=$c6y6q%t+h@2^g%a+-f%e^3fpbc4lir@hkk(17ll5fsjstba
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['web']
+ALLOWED_HOSTS = ['*']
 
 ROOT_PATH = 'django/'
 
@@ -36,6 +36,7 @@ ROOT_PATH = 'django/'
 
 INSTALLED_APPS = [
     "music_choice",
+    "reco_friend",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

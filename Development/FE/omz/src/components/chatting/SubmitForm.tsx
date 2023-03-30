@@ -4,7 +4,6 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const SubmitForm = (props: any) => {
   const [ms, setMs] = useState("");
-  // const {sendMessage, ms, setMs} = props;
   const { sendMessage } = props;
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {

@@ -38,12 +38,9 @@ public class ChatUtils {
     }
 
     //  채팅 데이터 생성일자 Double 형으로 형변환
-//    public Double changeLocalDateTimeToDouble(LocalDateTime createdAt) {
-        public Double changeLocalDateTimeToDouble(String createdAt) {
+    public Double changeLocalDateTimeToDouble(String createdAt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
         LocalDateTime localDateTime = LocalDateTime.parse(createdAt, formatter);
-
-//        createdAt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"));
         return ((Long) localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()).doubleValue();
     }
 
