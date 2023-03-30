@@ -3,13 +3,14 @@ import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 type Props = {
   Avatar: any;
+  keepRender?: boolean;
 };
-export default function CameraAvatar({ Avatar }: Props) {
+export default function CameraAvatar({ Avatar, keepRender }: Props) {
   return (
     <Canvas
       camera={{ position: [-10, 5, 10], zoom: 5.7 }}
       className="w-full h-full"
-      gl={{ preserveDrawingBuffer: true }}
+      gl={{ preserveDrawingBuffer: keepRender }}
     >
       <ambientLight intensity={0.6} />
       <directionalLight intensity={0.8} />

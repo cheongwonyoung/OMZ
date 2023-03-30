@@ -3,9 +3,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NextBtn from "./NextBtn";
 import CameraAvatar from "../common/CameraAvatar";
-import html2canvas from "html2canvas";
-import { useEffect, useState } from "react";
-import { blob } from "stream/consumers";
+
 type Props = {
   animal: string;
   getNickname(e: any): void;
@@ -24,7 +22,12 @@ export default function StepFaceResult({
   const showAvatar = () => {
     switch (animal) {
       case "토끼":
-        return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={<Model position={[0, 0, 0]} />}
+          />
+        );
     }
   };
 

@@ -40,3 +40,10 @@ export const updateMyPreference = (
 ) => {
   return instance.put(`/mypage/modify/face/${memberId}`, faceInfo);
 };
+
+export const changeProfileImg = (data: any, token: string) => {
+  const config = {
+    headers: { access_token: token },
+  };
+  return instance.patch("/member/image", data, config);
+};

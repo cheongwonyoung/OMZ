@@ -6,10 +6,15 @@ import CameraAvatar from "../components/common/CameraAvatar";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
 import { useRecoilValue } from "recoil";
-import { userStatus } from "../recoil/userAtom";
+import { userStatus, userToken } from "../recoil/userAtom";
 import { useMutation, useQuery } from "react-query";
-import { getMyCustomInfo, updateCustom } from "../api/myPage";
+import { changeProfileImg, getMyCustomInfo, updateCustom } from "../api/myPage";
 import { useNavigate } from "react-router-dom";
+import html2canvas from "html2canvas";
+import { v4 as uuidv4 } from "uuid";
+import ModalBlackBg from "../components/common/ModalBlackBg";
+import ProfileImgModal from "../components/mypage/ProfileImgModal";
+
 export default function MyPageCustomPage() {
   const memberId = useRecoilValue(userStatus).id;
   const navigate = useNavigate();
@@ -30,7 +35,9 @@ export default function MyPageCustomPage() {
   const showAvatar = () => {
     // switch (animal) {
     //   case "rabbit":
-    return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
+    return (
+      <CameraAvatar keepRender={true} Avatar={<Model position={[0, 0, 0]} />} />
+    );
     // }
   };
 
@@ -64,8 +71,62 @@ export default function MyPageCustomPage() {
     changeCustom.mutate(data);
   };
 
+  const [profileImg, setProfileImg] = useState<any>();
+  const [imgUrl, setImgUrl] = useState("");
+  const screenShot = () => {
+    const target = document.getElementById("capture");
+    if (target !== null) {
+      html2canvas(target).then((canvas) => {
+        canvas.toBlob((blob) => {
+          if (blob !== null) {
+            const myfile = new File([blob], `${uuidv4()}.png`, {
+              type: "image/png",
+            });
+            setProfileImg(myfile);
+            const img = URL.createObjectURL(myfile);
+            console.log(img);
+            setImgUrl(img);
+            handleIsProfile();
+          }
+        });
+      });
+    }
+  };
+
+  const access_token = useRecoilValue(userToken).access_token;
+  const updateProfileImg = useMutation((file: FormData) =>
+    changeProfileImg(file, access_token)
+  );
+  const goUpdateImg = () => {
+    const formdata = new FormData();
+    formdata.append("file", profileImg);
+
+    updateProfileImg.mutate(formdata);
+  };
+
+  const deleteUrl = () => {
+    URL.revokeObjectURL(imgUrl);
+  };
+
+  const [isProfile, setIsProfile] = useState(false);
+  const handleIsProfile = () => {
+    setIsProfile((prev) => !prev);
+  };
   return (
     <div className="w-full flex flex-col justify-center items-center">
+      {isProfile && (
+        <ModalBlackBg
+          modal={
+            <ProfileImgModal
+              img={imgUrl}
+              deleteUrl={deleteUrl}
+              handleIsProfile={handleIsProfile}
+              goUpdateImg={goUpdateImg}
+            />
+          }
+        />
+      )}
+
       <TitleBar
         goto={`/mypage/${memberId}`}
         title="My Page"
@@ -74,7 +135,15 @@ export default function MyPageCustomPage() {
       <div className="w-full px-8">
         <p className="text-2xl mt-4 font-bold">꾸미기</p>
       </div>
-      <div className="w-[90%] aspect-square">{showAvatar()}</div>
+      <div className="w-[90%] aspect-square" id="capture">
+        {showAvatar()}
+      </div>
+      <button
+        onClick={screenShot}
+        className="border border-solid border-purple-200 bg-white p-2 rounded-xl"
+      >
+        프로필 사진 촬영
+      </button>
       <div
         onClick={changeCustomSubmit}
         className="w-[50%] flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2.5 px-5 py-2.5 rounded-[10px] bg-white/50 border border-black cursor-pointer hover:bg-black/20"

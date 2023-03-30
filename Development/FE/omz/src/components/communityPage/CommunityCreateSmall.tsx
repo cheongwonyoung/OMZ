@@ -32,6 +32,7 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
     onArticleSubmit(enteredArticle, file[0]);
     articleInputRef.current!.value = "";
     setFile([]);
+    setShowUploader(false);
   };
 
   const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
@@ -67,7 +68,10 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
                 }}
               />
               <button>
-                <FontAwesomeIcon icon={faCheck} className="text-xl hover:opacity-30" />
+                <FontAwesomeIcon
+                  icon={faCheck}
+                  className="text-xl hover:opacity-30"
+                />
               </button>
             </div>
           </div>

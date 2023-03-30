@@ -28,3 +28,7 @@ export const addFriends = (chatMembersInfo: {
   return instance.post(`/chatting/addFriend`, chatMembersInfo) 
 }
 
+// 친구에게 말 걸기 
+export const talkToFriends = (memberId: number, friendMemberId: number) => {
+  return instance.get(`/chatting/${memberId}/${friendMemberId}`)      
+}; 
