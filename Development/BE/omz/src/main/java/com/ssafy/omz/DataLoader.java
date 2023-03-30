@@ -47,17 +47,17 @@ public class DataLoader implements CommandLineRunner {
         // JPA DDL 설정 보고 실행 판단
         if (!DDL_CONFIG.equals("create")) return;
 
-        addMember();
-        addBoard();
-        addReply();
-        addBoardLikes();
-        addFriend();
-        addMiniRoom();
-        addFace();
+//        addMember();
+//        addBoard();
+//        addReply();
+//        addBoardLikes();
+//        addFriend();
+//        addMiniRoom();
+//        addFace();
         addItemType();
-        addItem();
-        addChatRoom();
-        addChat();
+//        addItem();
+//        addChatRoom();
+//        addChat();
     }
     private void addItem() {
         List<Member> memberList = memberRepository.findAll();
