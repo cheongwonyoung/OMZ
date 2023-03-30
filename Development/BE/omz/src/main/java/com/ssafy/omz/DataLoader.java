@@ -52,7 +52,7 @@ public class DataLoader implements CommandLineRunner {
         addReply();
         addBoardLikes();
         addFriend();
-//        addMiniRoom();
+        addMiniRoom();
         addFace();
         addItemType();
         addItem();
@@ -311,17 +311,17 @@ public class DataLoader implements CommandLineRunner {
         }
     }
 
-//    private void addMiniRoom() {
-//        List<Member> memberList = memberRepository.findAll();
-//        List<MiniRoom> miniRoomList = new ArrayList<>();
-//        for (int i = 0; i < memberList.size(); i++) {
-//            miniRoomList.add(MiniRoom.builder()
-//                    .member(memberList.get(i))
-//                    .stateMessage("미니룸 상태메세지는 140자까지 쓸 수 있어요 좀 길죠? 저는 40자예용")
-//                    .build());
-//        }
-//        miniRoomRepository.saveAllAndFlush(miniRoomList);
-//    }
+    private void addMiniRoom() {
+        List<Member> memberList = memberRepository.findAll();
+        List<MiniRoom> miniRoomList = new ArrayList<>();
+        for (int i = 0; i < memberList.size(); i++) {
+            miniRoomList.add(MiniRoom.builder()
+                    .member(memberList.get(i))
+                    .stateMessage("미니룸 상태메세지는 140자까지 쓸 수 있어요 좀 길죠? 저는 40자예용")
+                    .build());
+        }
+        miniRoomRepository.saveAllAndFlush(miniRoomList);
+    }
 
     private void addFriend() {
         List<Member> memberList = memberRepository.findAll();
@@ -484,10 +484,10 @@ public class DataLoader implements CommandLineRunner {
         List<Chat> chatList = new ArrayList<>();
 
         chatList.add(Chat.builder()
-                        .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
-                        .message("살려주세요")
-                        .chatRoom(chatRoomRepository.findByChatRoomId(2l))
-                        .fromMember(memberRepository.findByMemberId(3l))
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("살려주세요")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
                 .build());
         chatList.add(Chat.builder()
                 .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
