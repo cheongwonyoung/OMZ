@@ -1,5 +1,13 @@
 # 도커에 설치될 python 버전
-FROM python:3.10.9
+FROM python:3.9
+RUN python -V
+
+FROM continuumio/miniconda3
+RUN conda install tensorflow
+RUN conda install tensorflow-estimator
+
+
+RUN conda list
 
 RUN pip install --upgrade pip
 # 필요한 모듈 설치
@@ -18,7 +26,6 @@ COPY . .
 WORKDIR .
 
 RUN pip install -r requirements.txt
-
 # django를 가동시켜주는 코드
 CMD ["python3", "manage.py", "runserver", "0.0.0.0:8080"]
 

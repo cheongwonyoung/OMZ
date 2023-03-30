@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ChatRoomInfoResponseDto {
+public class ChatRoomInfoResponseDto implements Comparable<ChatRoomInfoResponseDto>{
 
     //  채팅방 번호
     private long roomId;
@@ -19,7 +19,8 @@ public class ChatRoomInfoResponseDto {
     //  가장 최근 채팅 메세지 생성 일자
     private String recentMessageCreatedTime;
 
-    //  채팅 메세지 읽음 여부 (최근 채팅 메세지가 상대방이 보낸 메세지일 때 아직 읽지 않았으면 false)
-    private boolean isChecked;
-
+    @Override
+    public int compareTo(ChatRoomInfoResponseDto otherChatRoomInfo) {
+        return otherChatRoomInfo.recentMessageCreatedTime.compareTo(this.getRecentMessageCreatedTime());
+    }
 }

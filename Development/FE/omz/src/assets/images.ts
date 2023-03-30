@@ -32,5 +32,7 @@ export const images: Images = {
   lamp_1_img: "/images/lamp_1.png",
   lamp_2_img: "/images/lamp_2.png",
   lamp_3_img: "/images/lamp_3.png",
-  profile_img: "/images/pink_rabbit.png", 
+  profile_img: "/images/pink_rabbit.png",
+  loading_img: "/images/loading.png",  
+  animate_star: "/images/meteor-rain.gif", 
 };

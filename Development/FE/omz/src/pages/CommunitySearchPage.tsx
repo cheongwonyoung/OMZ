@@ -8,6 +8,7 @@ export default function CommunitySearchPage() {
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto="/" />
       <CommunitySearchBar />
+      <div className="pb-20"></div>
       <CommunityNavbar />
     </div>
   );
