@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 type Props = {
   nickname?: string;
-  memberId?: number;
+  memberId: number;
   requestPossible?: boolean;
   handleModalFor(memberId: number, nickname: string): void;
   handleProposalModal(): void;
@@ -52,14 +52,13 @@ export default function FriendSearchItems({
           {nickname}
         </p>
         <div className="flex gap-2">
-          {requestPossible && (
-            <button
-              className="text-base hover:font-bold hover:scale-105 mr-5"
-              onClick={onClick}
-            >
-              <FontAwesomeIcon icon={faMessage} /> &nbsp; 말 걸기
-            </button>
-          )}
+          <button
+            className="text-base hover:font-bold hover:scale-105 mr-5"
+            onClick={onClick}
+          >
+            <FontAwesomeIcon className="text-pink-400" icon={faMessage} />{" "}
+            &nbsp; 말 걸기
+          </button>
 
           {requestPossible && (
             <button
