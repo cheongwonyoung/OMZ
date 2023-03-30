@@ -90,7 +90,7 @@ const router = createBrowserRouter([
       },
       {
         path: "signup",
-        element: <CheckIsLoginPage component={<SignUpPage />} />,
+        element: <SignUpPage />,
       },
       {
         path: "community/like",

@@ -17,6 +17,6 @@ export default function CheckIsLoginPage({ component }: Props) {
     } else if (noSignup) {
       navigate("/signup");
     }
-  });
+  }, []);
   return <>{noLogin === false && noSignup === false && component}</>;
 }

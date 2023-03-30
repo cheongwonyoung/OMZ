@@ -5,7 +5,7 @@ import { Model } from "../assets/3DAvatar/Rabbit";
 import CameraAvatar from "../components/common/CameraAvatar";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userStatus, userToken } from "../recoil/userAtom";
 import { useMutation, useQuery } from "react-query";
 import { changeProfileImg, getMyCustomInfo, updateCustom } from "../api/myPage";
@@ -94,8 +94,15 @@ export default function MyPageCustomPage() {
   };
 
   const access_token = useRecoilValue(userToken).access_token;
-  const updateProfileImg = useMutation((file: FormData) =>
-    changeProfileImg(file, access_token)
+  const [profile, setProfile] = useRecoilState(userStatus);
+  const updateProfileImg = useMutation(
+    (file: FormData) => changeProfileImg(file, access_token),
+    {
+      onSuccess(data) {
+        console.log(data);
+        setProfile({ ...profile, profile_img: data.data.file });
+      },
+    }
   );
   const goUpdateImg = () => {
     const formdata = new FormData();
