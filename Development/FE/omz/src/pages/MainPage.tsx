@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 export default function MainPage() {
   const memberId = useRecoilValue(userStatus).id;
-  console.log(memberId);
+
   return (
     <div className="flex flex-col justify-center items-center gap-[60px]">
       <div className="flex flex-col justify-center items-center mt-16">
@@ -51,7 +51,9 @@ export default function MainPage() {
               className="w-[80%] hover:scale-110 mb-3"
             />
             <div className="flex-grow-0 flex-shrink-0 w-[95px] h-[30px]">
-              <p className="title text-base text-center font-bold">My Friends</p>
+              <p className="title text-base text-center font-bold">
+                My Friends
+              </p>
             </div>
           </Link>
           <Link
@@ -76,7 +78,9 @@ export default function MainPage() {
             />
             <div className="flex-grow-0 flex-shrink-0 w-[95px] h-[30px]">
               <div className="w-[72px] h-4">
-                <p className="title text-base text-center font-bold">Community</p>
+                <p className="title text-base text-center font-bold">
+                  Community
+                </p>
               </div>
             </div>
           </Link>
