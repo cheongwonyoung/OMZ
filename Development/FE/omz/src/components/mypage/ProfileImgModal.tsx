@@ -1,3 +1,5 @@
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 
 type Props = {
@@ -13,18 +15,20 @@ export default function ProfileImgModal({
   handleIsProfile,
   goUpdateImg,
 }: Props) {
-  // useEffect(() => {
-  //   // return deleteUrl();
-  // }, [img]);
-
   return (
     <div className="flex flex-col items-center p-8">
+      <FontAwesomeIcon
+        icon={faXmark}
+        className="absolute right-4 top-4"
+        onClick={handleIsProfile}
+      />
       <img src={img} alt="" />
       <button
-        className="border border-solid border-purple-200 bg-white"
+        className="bg-white border-2 border-solid border-purple-200 rounded-xl p-4"
         onClick={() => {
           goUpdateImg();
           handleIsProfile();
+          deleteUrl();
         }}
       >
         프로필 사진 저장

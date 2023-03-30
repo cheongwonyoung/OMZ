@@ -113,9 +113,10 @@ export default function MyPageCustomPage() {
     setIsProfile((prev) => !prev);
   };
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <div className="w-full flex h-full flex-col items-center">
       {isProfile && (
         <ModalBlackBg
+          closeModal={handleIsProfile}
           modal={
             <ProfileImgModal
               img={imgUrl}
