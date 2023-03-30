@@ -18,7 +18,7 @@ export default function MainPage() {
         />
       </div>
       <div className="flex flex-col justify-center items-center gap-[50px]">
-        <div className="flex justify-end items-end gap-[25px]">
+        <div className="w-full flex justify-around items-end gap-[25px]">
           <Link
             to="/newfriends"
             className="flex flex-col justify-center items-center hover:scale-105"
@@ -41,7 +41,7 @@ export default function MainPage() {
             <p className="title text-base text-center font-bold">My Page</p>
           </Link>
         </div>
-        <div className="flex justify-center items-end gap-[25px]">
+        <div className="w-full flex justify-around items-end gap-[25px]">
           <Link
             to="/myfriends"
             className="flex flex-col justify-center items-center hover:scale-105"
