@@ -2,7 +2,7 @@ import { images } from "../../assets/images";
 import BackBtn from "../common/BackBtn";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { addFriends } from "../../api/chatting";
 import { useMutation } from "react-query";
 import { useRecoilValue } from "recoil";
@@ -79,7 +79,13 @@ export default function ChattingInfoBar({ item, refetch }: Props) {
         </div>
       </div>
       <div className="w-10 h-10 flex content-center">
-        <BackBtn goBack={goBack} />
+        {/* 얘는 Main으로 가는 게 아니라서 따로 해줬음  */}
+        <div
+          onClick={goBack}
+          className="text-black w-full h-full flex justify-center items-center text-xl hover:scale-105 cursor-pointer"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </div>
       </div>
     </div>
   );

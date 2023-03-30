@@ -28,9 +28,9 @@ export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
   );
   const onClick = () => {
     refetch();
-    const roomid = data!.data;
-    navigate(`/chatting/${memberId}/${roomid}`, {
-      state: { roomid },
+    const roomId = data!.data;
+    navigate(`/chatting/${memberId}/${roomId}`, {
+      state: { roomId },
     });
   };
   return (
