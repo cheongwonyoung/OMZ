@@ -13,9 +13,9 @@ public class ChatPagingRequestDto {
 
     private String message;
 
-    private String memberId;
+    private Long memberId;
 
     private String nickname;
-//    private String writer; // nickname or memberId
-    private String cursor; // LocalDateTime ? 
+
+    private String cursor;
 }

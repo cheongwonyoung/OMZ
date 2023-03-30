@@ -37,7 +37,7 @@ public class ChatWriteBackScheduling {
 
     //  매일 1?시부터 1시간마다 Redis Cache에 있는 채팅 데이터를 MySql에 저장
 //    @Scheduled(cron = "0 0 0/1 * * *")
-    @Scheduled(cron = "0 16/3 9 * * *") // 오전 9시 50분부터 3분 간격으로 MySql에 저장
+    @Scheduled(cron = "0 4/3 14 * * *") // 오전 9시 50분부터 3분 간격으로 MySql에 저장
     @Transactional
     public void writeBack(){
         log.info("[ChatWriteBackScheduling writeBack] Scheduling start");
@@ -53,17 +53,16 @@ public class ChatWriteBackScheduling {
                 ZSetOperations.TypedTuple<ChatMessage> chatMessage = cursor.next();
 
                 ChatRoom chatroom = chatRoomRepository
-                        .findById(Long.valueOf(chatMessage.getValue().getRoomId()))
+                        .findById(chatMessage.getValue().getRoomId())
                         .orElse(null);
 
                 Member member = memberRepository
 //                        .findById(chatMessage.getValue().getMemberId()).orElse(null);
-                        .findByMemberId(Long.valueOf(chatMessage.getValue().getMemberId()));
+                        .findByMemberId(chatMessage.getValue().getMemberId());
 
                 if(chatroom == null || member == null) {
                     continue;
                 }
-
                 chatList.add(Chat.of(chatMessage.getValue(), chatroom, member));
             }
             chatJdbcRepository.batchInsertChats(chatList);

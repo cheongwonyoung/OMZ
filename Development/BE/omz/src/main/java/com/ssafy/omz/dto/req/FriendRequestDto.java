@@ -5,6 +5,7 @@ import com.ssafy.omz.dto.resp.MemberResponseDto;
 import io.swagger.annotations.ApiModel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,7 +32,6 @@ public class FriendRequestDto {
 
     @Data
     @Builder
-//    @Schema
     public static class Info {
         private String message;
         private MemberResponseDto.LittleInfo toMember;

@@ -11,5 +11,5 @@ public interface MemberRepository extends JpaRepository<Member,Long> {
     Optional<Member> findByToken(String token);
     Member findByMemberId(Long memberId);
 
-    Optional<Member> findByNicknameContaining(String word);
+    List<Member> findByNicknameContainingAndMemberIdIsNot(String word, Long memberId);
 }
