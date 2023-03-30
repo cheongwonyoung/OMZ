@@ -13,7 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.interfaces.PBEKey;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Api("miniRoomController API v1")
@@ -91,10 +94,14 @@ public class MiniRoomController {
     
     @ApiOperation(value = "좋아요 수 조회")
     @GetMapping("/like")
-    public ResponseEntity<?> getLikesMiniRoom(@RequestParam(required = true) long miniRoomId){
+    public ResponseEntity<?> getLikesMiniRoom(@RequestParam(required = true) long miniRoomId, @RequestParam(required = true) long memberId){
+        Map<String,Object> result = new HashMap<String, Object>();
         try{
             long likesNum = miniRoomLikesService.getLikes(miniRoomId);
-            return new ResponseEntity<>(likesNum, HttpStatus.ACCEPTED);
+            boolean isLiked = miniRoomLikesService.isAlreadyLiked(miniRoomId, memberId);
+            result.put("likes",likesNum);
+            result.put("isLiked", isLiked);
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,9 +110,10 @@ public class MiniRoomController {
 
     @ApiOperation(value = "미니룸 좋아요 & 좋아요 취소")
     @PutMapping("/like")
-    public ResponseEntity<?> likeMiniRoom(@RequestParam(required = true) long miniRoomId, @RequestParam(required = true) long memberId){
+    public ResponseEntity<?> likeMiniRoom(@RequestParam(required = true) long miniRoomId, @RequestParam(required = true) long memberId, @RequestParam(required = true) boolean isLiked){
         try{
-            return new ResponseEntity<>(miniRoomService.getStateMessage(miniRoomId), HttpStatus.ACCEPTED);
+            miniRoomLikesService.likeMiniRoom(miniRoomId, memberId, isLiked);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

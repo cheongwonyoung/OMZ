@@ -140,15 +140,27 @@ public class MemberServiceImpl implements MemberService{
         String myFace = maxEntry.getKey();
 
         // 미니룸 저장
-        miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
+        miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("이얏호~! 상태메세지로 내 기분을 표현해봐~!").build());
 
         // 아이템 정보 저장
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("hat").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("glasses").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("wing").build());
 
+<<<<<<< Updated upstream
         memberRepository.save(
                 memberRepository.findByMemberId(memberId).updateMemberInfo(
+=======
+        // 아이템 정보 저장
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(1).name("bed").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(1).name("table").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(1).name("lamp").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(1).name("drawer").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(1).name("clock").build());
+
+        Member result = memberRepository.save(
+                memberRepository.findByEmail(email).get().updateMemberInfo(
+>>>>>>> Stashed changes
                         memberInfo.getMbti(),
                         memberInfo.getNickname(),
                         saveFileName,
