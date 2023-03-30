@@ -77,24 +77,29 @@ public class FriendServiceImpl implements FriendService {
     @Override
     @Transactional
     public void friendAccept(Long friendId) throws RollbackException {
-        FriendResponseDto.Info info = FriendResponseDto.Info.fromEntity(
-                friendRepository.findById(friendId).get());
-        FriendResponseDto.Info.fromEntity(friendRepository.save(
-                friendRepository.findById(info.getFriendId()).get()
-                        .updateState(1)));
-        FriendResponseDto.Info.fromEntity(friendRepository.save(
-                Friend.builder()
-                        .message(info.getMessage())
-                        .toMember(memberRepository.findByMemberId(info.getFromMember().getMemberId()))
-                        .fromMember(memberRepository.findByMemberId(info.getToMember().getMemberId()))
-                        .state(1)
-                        .build()));
+        Friend friend = friendRepository.findById(friendId).get();
+        int state = friendRepository.findByToMember_MemberIdAndFromMember_MemberId(
+                friend.getToMember().getMemberId(), friend.getFromMember().getMemberId()).getState();
+        if (state == 0) {
+            FriendResponseDto.Info info = FriendResponseDto.Info.fromEntity(
+                    friendRepository.findById(friendId).get());
+            FriendResponseDto.Info.fromEntity(friendRepository.save(
+                    friendRepository.findById(info.getFriendId()).get()
+                            .updateState(1)));
+            FriendResponseDto.Info.fromEntity(friendRepository.save(
+                    Friend.builder()
+                            .message(info.getMessage())
+                            .toMember(memberRepository.findByMemberId(info.getFromMember().getMemberId()))
+                            .fromMember(memberRepository.findByMemberId(info.getToMember().getMemberId()))
+                            .state(1)
+                            .build()));
+        }
     }
 
     @Override
     @Transactional
     public void friendReject(Long friendId) throws RollbackException {
-        if(friendRepository.findById(friendId).get() != null)
+        if (friendRepository.findById(friendId).get() != null)
             friendRepository.deleteById(friendId);
     }
 
