@@ -77,7 +77,7 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
       <div className="flex flex-col gap-2">
         {animalList.map((item) => (
           <div className="flex gap-4 items-center" key={uuidv4()}>
-            <div className="w-[25%] flex flex-col h-full items-center">
+            <div className="w-[20%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""
