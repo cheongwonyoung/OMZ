@@ -9,6 +9,7 @@ import { useQuery } from "react-query";
 import { talkToFriends } from "../../api/chatting";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
+import { useEffect } from "react";
 
 type Props = {
   id: number;
@@ -19,6 +20,7 @@ type Props = {
 export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
   const navigate = useNavigate();
   const memberId = useRecoilValue(userStatus).id;
+
   const { data, refetch } = useQuery(
     "talkfriends",
     () => talkToFriends(memberId, id),
@@ -26,6 +28,11 @@ export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
       enabled: false,
     }
   );
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   const onClick = () => {
     refetch();
     const roomId = data!.data;
@@ -33,6 +40,7 @@ export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
       state: { roomId },
     });
   };
+
   return (
     <div className="flex justify-between mt-2 mx-5 text-sm">
       <div
