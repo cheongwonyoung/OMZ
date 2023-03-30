@@ -49,13 +49,13 @@ export default function CommunitySearchBar() {
       <div className="w-11/12 flex justify-center items-center">
         <select
           name="검색"
-          className="w-[30%] h-[45px] relative border rounded-xl m-2 p-3  border-slate-500 text-[14px] focus:outline-none"
+          className="w-[30%] h-[45px] relative border rounded-xl my-2 p-3 border-slate-500 text-[14px] focus:outline-none"
           onChange={(e) => setKey(e.target.value)}
         >
           <option value="content">내용</option>
           <option value="nickname">닉네임</option>
         </select>
-        <div className="w-[70%] relative flex m-2 p-3 justify-center items-center">
+        <div className="w-[70%] relative flex my-2 p-3 justify-center items-center">
           <button
             className="absolute right-0 text-[15px] rounded-full w-[30px] h-[30px] my-[5px] mr-[20px]"
             onClick={onClick}
@@ -64,7 +64,7 @@ export default function CommunitySearchBar() {
           </button>
           <input
             type="text"
-            placeholder="검색"
+            placeholder="Search"
             className="w-full h-[45px] border text-[14px] border-slate-500 rounded-xl focus:outline-none pl-5"
             onChange={(e) => setWord(e.target.value)}
             onKeyDown={onKeyDown}

@@ -188,10 +188,10 @@ export default function ChattingDetailPage() {
 
   const chatData = chatMessages?.slice(0).reverse();
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <ChattingInfoBar item={chatOtherInfo} refetch={goRefetch} />
       <div ref={setTarget}></div>
-      <div>
+      <div className="w-full max-w-3xl">
         {chatData?.map((chat) =>
           chat.memberId === memberId ? (
             <MyChatting

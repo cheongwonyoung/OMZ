@@ -83,14 +83,16 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
     navigate(`/community/mypage/${memberId}`);
   };
 
+  const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
+
   return (
-    <div className="w-full flex justify-center border-b border-black mt-3">
-      <div className="w-11/12 m-3 max-w-4xl">
+    <div className="w-full flex justify-center mt-3">
+      <div className="w-11/12 m-3 max-w-4xl border-b border-black pb-3">
         <div className="flex w-full justify-between items-start gap-3">
           {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
           <img
-            className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem] cursor-pointer hover:scale-110"
-            src={images.profile_img}
+            className="w-[3rem] h-[3rem] cursor-pointer hover:scale-110 rounded-full border"
+            src={IMAGE_ROOT + item.member.file}
             onClick={() => {
               goToMyPage(item.member.memberId);
             }}
@@ -104,7 +106,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
               >
                 {item.member.nickname}
               </p>
-              <p className="flex-grow-0 flex-shrink-0 text-xs text-right text-[#555a64]">
+              <p className="text-xs text-right text-[#555a64]">
                 {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
               </p>
             </div>

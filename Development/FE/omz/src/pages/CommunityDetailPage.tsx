@@ -53,7 +53,7 @@ export default function CommunityDetailPage() {
 
   return (
     <div className="flex flex-col items-center">
-      <TitleBar title="Community" icon={images.community_img} goto="/" />
+      <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
       <CommunityDetailItem
         key={data?.data.boardId}
         item={data?.data}

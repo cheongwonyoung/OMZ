@@ -10,7 +10,6 @@ import { createArticle } from "../api/community";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
-
 export default function CommunityCreatePage() {
   const navigate = useNavigate();
   // 게시글 내용
@@ -54,7 +53,7 @@ export default function CommunityCreatePage() {
   const profile = useRecoilValue(userStatus).profile_img;
   return (
     <div className="flex flex-col items-center justify-center">
-      <TitleBar title="Community" icon={images.community_img} goto="/" />
+      <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
       <div className="mb-5"></div>
       <form action="" className="w-10/12 pb-10" onSubmit={submitHandler}>
         <div className="w-full flex justify-between items-start gap-2">

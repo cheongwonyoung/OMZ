@@ -156,7 +156,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
             }}
           >
             <img
-              className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem]"
+              className="rounded-full border w-[3rem] h-[3rem] "
               src={imageUrl + item.member.file}
               onClick={(e) => {
                 e?.stopPropagation();

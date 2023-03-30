@@ -30,7 +30,7 @@ export default function CommunityLikePage() {
 
   return (
     <div className="flex flex-col items-center">
-      <TitleBar title="Community" icon={images.community_img} goto="/" />
+      <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
       <div className="w-11/12 flex flex-col justify-start p-5">
         <div className="flex gap-3">
           <span className="font-bold text-2xl text-">
