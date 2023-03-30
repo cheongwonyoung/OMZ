@@ -21,7 +21,6 @@ import { imageUrl } from "../../api";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 import moment from "moment";
-// import CommunityCommentModal from "./CommunityCommentModal";
 
 type Article = {
   [key: string]: any;
@@ -54,6 +53,9 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
   const file = item.file;
 
   const memberId = useRecoilValue(userStatus).id;
+  const profile = useRecoilValue(userStatus).profile_img;
+
+  const profileRoot = imageUrl + profile;
 
   // Community 내의 마이 페이지로 이동시킴
   const goToMyPage = (memberId: number) => {
@@ -139,6 +141,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
 
   function confirmModalHandler(boardId: number) {
     deleteArticleItem.mutate(boardId);
+    navigate("/community");
   }
 
   return (
@@ -152,10 +155,9 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
               goToMyPage(item.member.memberId);
             }}
           >
-            {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
             <img
               className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem]"
-              src={images.profile_img}
+              src={profileRoot}
               onClick={(e) => {
                 e?.stopPropagation();
                 goToMyPage(item.member.memberId);
@@ -210,10 +212,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
           <div className="flex justify-between items-center mx-5">
             {!showUpdate && (
               <div className="flex w-3/12 justify-start gap-3">
-                <FontAwesomeIcon
-                  icon={faComment}
-                  className="text-lg"
-                />
+                <FontAwesomeIcon icon={faComment} className="text-lg" />
                 <p className="text-sm font-bold">{item.replyCnt}</p>
                 {!item.ilikeBoard ? (
                   <FontAwesomeIcon

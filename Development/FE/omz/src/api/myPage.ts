@@ -43,7 +43,7 @@ export const updateMyPreference = (
 
 export const changeProfileImg = (data: any, token: string) => {
   const config = {
-    headers: { access_token: token },
+    headers: { access_token: token, "Content-Type": "multipart/form-data" },
   };
   return instance.patch("/member/image", data, config);
 };
