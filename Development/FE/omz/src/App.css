@@ -9,6 +9,7 @@
   height: auto;
   min-height: 100vh;
   padding-bottom: 2rem;
+  margin: 0;
 }
 
 #btn {
@@ -21,11 +22,11 @@
     #ffffff;
 }
 
-*{
-  font-family: 'Noto Sans KR', sans-serif;
+* {
+  font-family: "Noto Sans KR", sans-serif;
   /* font-family: "Poor Story", cursive; */
 }
 
 .title {
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 }
