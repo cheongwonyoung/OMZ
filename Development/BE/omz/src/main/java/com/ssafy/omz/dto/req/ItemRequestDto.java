@@ -3,6 +3,7 @@ package com.ssafy.omz.dto.req;
 import com.ssafy.omz.entity.ItemType;
 import com.ssafy.omz.entity.Member;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,9 @@ import javax.validation.constraints.NotEmpty;
 
 public class ItemRequestDto {
     @Data
+    @Builder
     @NoArgsConstructor
+    @AllArgsConstructor
     @ApiModel(value = "아이템 정보")
     public static class Write {
         @NotEmpty(message="name은 빈값 일 수 없습니다")
