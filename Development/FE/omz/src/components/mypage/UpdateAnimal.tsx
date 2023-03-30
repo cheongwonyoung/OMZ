@@ -42,8 +42,8 @@ export default function UpdateAnimal({ animalPrefer, changePrefer }: Props) {
   return (
     <div className="flex flex-col gap-2">
       {animalList.map((item) => (
-        <div className="grid grid-cols-4 gap-4 items-center" key={item}>
-          <div className="flex flex-col items-center">
+        <div className="flex gap-4 items-center" key={item}>
+          <div className="w-[25%] flex flex-col h-full items-center">
             <img
               src={images[imgsrc(item)]}
               alt=""
@@ -51,21 +51,17 @@ export default function UpdateAnimal({ animalPrefer, changePrefer }: Props) {
             />
             <p>{item}</p>
           </div>
-          <div className="col-span-2 h-1/2">
-            <input
-              className="w-full appearance-none h-1 shadow-md bg-purple-300"
-              id={animalEng[item]}
-              value={animalPrefer[animalEng[item]]}
-              type="range"
-              min={0}
-              max={1}
-              step={0.1}
-              onChange={(e) => changePrefer(e)}
-            />
-          </div>
-          <div className="h-1/2">
-            <p className="text-end ">{animalPrefer[animalEng[item]] * 100}%</p>
-          </div>
+          <input
+            className="w-full bg-white accent-black"
+            id={animalEng[item]}
+            value={animalPrefer[animalEng[item]]}
+            type="range"
+            min={0}
+            max={1}
+            step={0.1}
+            onChange={(e) => changePrefer(e)}
+          />
+          <p className="text-end">{animalPrefer[animalEng[item]] * 100}%</p>
         </div>
       ))}
     </div>

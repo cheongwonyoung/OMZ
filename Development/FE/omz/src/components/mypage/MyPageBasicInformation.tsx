@@ -49,17 +49,17 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
 
   return (
     <div className="flex flex-col w-full max-w-3xl gap-[27px] px-8 items-center justify-center">
-      <div className="flex justify-between items-center w-full">
-        <div className="flex items-center justify-center gap-5">
-          <p className="text-[32px] font-bold ">{member?.nickname}</p>
+      <div className="w-full flex justify-between items-end">
+        <div className="w-flex flex-col items-start justify-center gap-1 ml-2">
           <p className="text-2xl title">{member?.mbti}</p>
+          <p className="text-2xl font-bold ">{member?.nickname}</p>
         </div>
         {isOwner && (
           <button
             onClick={goToUpdate}
             className="text-sm font-medium text-center text-black rounded-[10px] bg-white/50 border border-black hover:bg-black/20 px-5 py-2.5"
           >
-            기본 정보 수정
+            정보 수정
           </button>
         )}
       </div>
@@ -95,9 +95,9 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
               step={0.1}
               readOnly
             />
-              <p className="min-w-[30px] text-xl font-bold text-center">
-                {Math.floor(member?.face[animalEng[item]] * 100)}%
-              </p>
+            <p className="text-end">
+              {Math.floor(member?.face[animalEng[item]] * 100)}%
+            </p>
           </div>
         ))}
       </div>
