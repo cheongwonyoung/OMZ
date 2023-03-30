@@ -39,28 +39,28 @@ export default function FriendsProposalModal({
   const [message, setMessage] = useState("");
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-80">
       <div className="flex text-xl justify-between w-11/12 my-4 items-center">
         <img src={images.new_friends_img} alt="" className="h-10" />
         <p className="font-bold">New Friends</p>
         <FontAwesomeIcon
           icon={faXmark}
-          className="w-10"
+          className="w-10 hover:text-red-600 cursor-pointer"
           onClick={handleProposalModal}
         />
       </div>
       <div className="w-full">
         <p className="font-bold mb-2 ml-4">To. {modalFor.nickname}</p>
         <textarea
-          className="border-4 border-solid rounded-xl w-full focus:outline-none resize-none h-32 p-2"
+          className="border-2 border-solid rounded-xl w-full focus:outline-none resize-none h-32 p-2"
           maxLength={30}
-          placeholder="친구 신청 메시지를 작성해주세요. (최대 30자)"
+          placeholder="신청 메시지를 작성해주세요. (최대 30자)"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         ></textarea>
       </div>
       <button
-        className="font-bold mt-2 shadow-lg w-16 h-8 rounded-xl"
+        className="flex w-8/12 justify-center items-center py-1 rounded-[10px] bg-white/50 border border-black cursor-pointer hover:bg-black/20  mt-3"
         onClick={goApply}
       >
         전송
