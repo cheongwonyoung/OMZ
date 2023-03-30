@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board,Long> {
     Page<Board> findAllByIsDeletedIsFalse(Pageable pageable);
     Page<Board> findAllByIsDeletedIsFalseAndMember_MemberId(Long memberId, Pageable pageable);
-    Optional<Board> findAllByIsDeletedIsFalseAndContentContaining(String word);
+    List<Board> findAllByIsDeletedIsFalseAndContentContaining(String word);
     List<Board> findAllByIsDeletedIsFalseAndMember_NicknameContaining(String word);
     Board findByIsDeletedIsFalseAndBoardId(Long boardId);
     Board findByBoardId(Long boardId);
