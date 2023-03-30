@@ -64,13 +64,13 @@ export default function MyPage() {
     <div className="flex flex-col justify-center items-center w-full">
       <TitleBar goto="/" title="My Page" icon={images.my_page_img} />
       <MyPageMiniRoomBanner />
-      <div className="w-[90%] aspect-square my-8">{showAvatar()}</div>
+      <div className="h-56 my-5">{showAvatar()}</div>
       {isOwner && (
         <div
-          className="flex w-[80%] justify-center mb-8 items-center flex-grow-0 flex-shrink-0 relative gap-2.5 p-2.5 rounded-[10px] bg-white/50 border border-black px-10 cursor-pointer hover:bg-black/20"
+          className="flex max-w-sm w-6/12 justify-center mb-8 items-center flex-grow-0 flex-shrink-0 relative gap-2.5 p-2.5 rounded-[10px] bg-white/50 border border-black px-10 cursor-pointer hover:bg-black/20"
           onClick={goToCustom}
         >
-          <p className="flex-grow text-sm font-medium text-center">꾸미기</p>
+          <p className="text-sm font-medium text-center">꾸미기</p>
         </div>
       )}
 
