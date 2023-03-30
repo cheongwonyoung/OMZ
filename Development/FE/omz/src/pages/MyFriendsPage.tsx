@@ -87,7 +87,7 @@ export default function MyFriendsPage() {
           }
         />
       )}
-      <div className="w-11/12 mt-4 flex flex-col justify-center">
+      <div className="w-11/12 max-w-3xl mt-4 flex flex-col justify-center">
         <label className="relative inline-flex items-center cursor-pointer my-3">
           <input
             type="checkbox"

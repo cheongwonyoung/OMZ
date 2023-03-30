@@ -113,7 +113,7 @@ export default function MyPageCustomPage() {
     setIsProfile((prev) => !prev);
   };
   return (
-    <div className="w-full flex h-full flex-col items-center">
+    <div className="flex flex-col justify-center items-center w-full">
       {isProfile && (
         <ModalBlackBg
           closeModal={handleIsProfile}
@@ -133,28 +133,26 @@ export default function MyPageCustomPage() {
         title="My Page"
         icon={images.my_page_img}
       />
-      <div className="w-full px-8">
-        <p className="text-2xl mt-4 font-bold">꾸미기</p>
-      </div>
-      <div className="w-[90%] aspect-square" id="capture">
-        {showAvatar()}
-      </div>
-      <button
-        onClick={screenShot}
-        className="border border-solid border-purple-200 bg-white p-2 rounded-xl"
-      >
-        프로필 사진 촬영
-      </button>
-      <div
-        onClick={changeCustomSubmit}
-        className="w-[50%] flex justify-center items-center flex-grow-0 flex-shrink-0 relative gap-2.5 px-5 py-2.5 rounded-[10px] bg-white/50 border border-black cursor-pointer hover:bg-black/20"
-      >
-        <p className="flex-grow-0 flex-shrink-0 text-xs text-left text-black">
+      <div className="w-11/12 max-w-3xl  h-full flex flex-col items-center gap-2">
+        <p className="w-11/12 font-bold text-2xl mb-8 ml-1 mt-8">꾸미기</p>
+        <div className="h-96 aspect-square" id="capture">
+          {showAvatar()}
+        </div>
+        <div
+          onClick={changeCustomSubmit}
+          className="flex w-8/12 justify-center items-center py-2 rounded-[10px] bg-white/50 border border-black cursor-pointer hover:bg-black/20 my-3"
+        >
           저장
-        </p>
-      </div>
-      <div className="w-full h-1/4 mt-8">
-        <MyPageBox handleItems={handleItems} />
+        </div>
+        <div
+          onClick={screenShot}
+          className="flex w-8/12 justify-center items-center py-2 rounded-[10px] bg-white/50 border border-black cursor-pointer hover:bg-black/20"
+        >
+          프로필 사진 촬영
+        </div>
+        <div className="w-full mt-5">
+          <MyPageBox handleItems={handleItems} />
+        </div>
       </div>
     </div>
   );

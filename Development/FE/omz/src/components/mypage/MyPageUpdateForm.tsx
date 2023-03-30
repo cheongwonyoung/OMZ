@@ -129,11 +129,13 @@ export default function MyPageUpdateForm() {
   );
   const updatePreference = changePreference.mutate;
   return (
-    <div className="w-full p-8">
-      <p className="font-bold text-2xl mb-8">내 정보 수정</p>
-      <UpdateItem tag={nameInp} logic={updateName} />
-      <UpdateItem tag={mbtiInp} logic={updateMbti} />
-      <UpdateItem tag={animalInp} logic={updatePreference} />
+    <div className="max-w-3xl p-8">
+      <p className="font-bold text-2xl mb-8 ml-1">회원 정보 수정</p>
+      <div className="flex flex-col gap-4">
+        <UpdateItem tag={nameInp} logic={updateName} />
+        <UpdateItem tag={mbtiInp} logic={updateMbti} />
+        <UpdateItem tag={animalInp} logic={updatePreference} />
+      </div>
       <UpdateAnimal animalPrefer={animalPrefer} changePrefer={changePrefer} />
     </div>
   );

@@ -48,25 +48,22 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
   };
 
   return (
-    <div className="flex flex-col  gap-[27px] px-8 w-full">
-      <div className="flex w-full">
-        <div className="flex flex-col justify-center items-center  relative gap-[15px] w-full">
-          <p className="text-[32px] font-bold text-left text-black align-middle">
-            {member?.nickname}
-          </p>
-          <div className="flex w-full justify-between gap-4">
-            <p className="text-2xl text-center text-black">{member?.mbti}</p>
-            {isOwner && (
-              <button
-                onClick={goToUpdate}
-                className="text-sm font-medium text-center text-black rounded-[10px] bg-white/50 border border-black hover:bg-black/20 px-5 py-2.5"
-              >
-                기본 정보 수정
-              </button>
-            )}
-          </div>
+    <div className="flex flex-col w-full max-w-3xl gap-[27px] px-8 items-center justify-center">
+      <div className="w-full flex justify-between items-end">
+        <div className="w-flex flex-col items-start justify-center gap-1 ml-2">
+          <p className="text-2xl title">{member?.mbti}</p>
+          <p className="text-2xl font-bold ">{member?.nickname}</p>
         </div>
-        {/* <div
+        {isOwner && (
+          <button
+            onClick={goToUpdate}
+            className="text-sm font-medium text-center text-black rounded-[10px] bg-white/50 border border-black hover:bg-black/20 px-5 py-2.5"
+          >
+            정보 수정
+          </button>
+        )}
+      </div>
+      {/* <div
           className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-5 py-2.5 rounded-[10px] bg-white/50 border border-black hover:bg-black/20"
           onClick={goToUpdate}
         >
@@ -77,11 +74,10 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
             기본 정보 수정
           </button>
         </div> */}
-      </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-2">
         {animalList.map((item) => (
-          <div className="grid grid-cols-4 gap-4 items-center" key={uuidv4()}>
-            <div className="flex flex-col items-center">
+          <div className="flex gap-4 items-center" key={uuidv4()}>
+            <div className="w-[20%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""
@@ -89,23 +85,19 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
               />
               <p>{item}</p>
             </div>
-            <div className="col-span-2 h-1/2">
-              <input
-                className="w-full appearance-none h-1 shadow-md bg-purple-300"
-                id={animalEng[item]}
-                value={member?.face[animalEng[item]]}
-                type="range"
-                min={0}
-                max={1}
-                step={0.1}
-                readOnly
-              />
-            </div>
-            <div className="h-1/2">
-              <p className="text-end ">
-                {Math.floor(member?.face[animalEng[item]] * 100)}%
-              </p>
-            </div>
+            <input
+              className="w-full bg-white accent-black"
+              id={animalEng[item]}
+              value={member?.face[animalEng[item]]}
+              type="range"
+              min={0}
+              max={1}
+              step={0.1}
+              readOnly
+            />
+            <p className="text-end">
+              {Math.floor(member?.face[animalEng[item]] * 100)}%
+            </p>
           </div>
         ))}
       </div>
