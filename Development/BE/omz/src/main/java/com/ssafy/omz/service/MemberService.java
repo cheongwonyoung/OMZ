@@ -37,5 +37,5 @@ public interface MemberService{
     // 회원정보 조회(채팅)
     MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException;
 
-    MemberResponseDto.MemberInfo changeImage(String token, MultipartFile file) throws UnsupportedEncodingException;
+    String changeImage(String token, MultipartFile file) throws UnsupportedEncodingException;
 }

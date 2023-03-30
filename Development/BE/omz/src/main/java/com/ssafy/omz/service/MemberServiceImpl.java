@@ -194,7 +194,7 @@ public class MemberServiceImpl implements MemberService{
 
     // 프로필 사진 수정
     @Override
-    public MemberResponseDto.MemberInfo changeImage(String token, MultipartFile file) throws UnsupportedEncodingException {
+    public String changeImage(String token, MultipartFile file) throws UnsupportedEncodingException {
         String bucketName = "omz-bucket";
         String saveFileName = UUID.randomUUID() + StringUtils.cleanPath(file.getOriginalFilename());
         try(InputStream inputStream = file.getInputStream()) {
@@ -226,7 +226,7 @@ public class MemberServiceImpl implements MemberService{
         member.setFile(saveFileName);
         memberRepository.save(member);
 
-        return MemberResponseDto.MemberInfo.fromEntity(member);
+        return saveFileName;
     }
 
     // 회원정보 조회 (회원가입용)

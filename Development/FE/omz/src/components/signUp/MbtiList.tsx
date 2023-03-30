@@ -26,7 +26,7 @@ export default function MbtiList({ handlePickedMbti, pickedMbti }: Props) {
   ];
 
   return (
-    <div className="w-full grid grid-cols-4 gap-2">
+    <div className="w-11/12 grid grid-cols-4 gap-3 max-w-xl">
       {mbtiList.map((item) => (
         <MbtiItem
           mbti={item}

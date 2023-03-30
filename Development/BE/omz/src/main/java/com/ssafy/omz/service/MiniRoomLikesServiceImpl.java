@@ -27,13 +27,28 @@ public class MiniRoomLikesServiceImpl implements MiniRoomLikesService{
         return miniRoom.getLikes();
     }
 
+
+    // memberId별 좋아요 여부 판단
+    public boolean isAlreadyLiked(long miniRoomId, long memberId){
+        MiniRoom miniRoom = miniRoomRepository.findById(miniRoomId).get();
+        Member member = memberRepository.findById(memberId).get();
+        // 좋아요 누른 적 없을 때
+        if(likesRepository.findByMiniRoomAndMember(miniRoom, member) == null)
+            return false;
+        // 좋아요 누른 적 있을 때
+        else
+            return true;
+    }
+
+
+
     // 좋아요 누르기 및 취소
-    public void likeMiniRoom(long miniRoomId, long memberId){
+    public void likeMiniRoom(long miniRoomId, long memberId, boolean isLiked){
         MiniRoom miniRoom = miniRoomRepository.findById(miniRoomId).get();
         Member member = memberRepository.findById(memberId).get();
 
         // 좋아요 누른 적 없을 때
-        if(likesRepository.findByMiniRoomAndMember(miniRoom, member) == null){
+        if(!isLiked){
             miniRoom.setLikes(miniRoom.getLikes() + 1);
             MiniRoomLikes miniRoomLikes = new MiniRoomLikes(miniRoom, member);
             likesRepository.save(miniRoomLikes);

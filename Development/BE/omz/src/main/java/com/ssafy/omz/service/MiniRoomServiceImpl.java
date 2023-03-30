@@ -62,8 +62,9 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     // 상태메세지 조회
     @Override
     public MiniRoomResponseDto getStateMessage(long miniRoomId){
-        MiniRoom m = miniRoomRepository.findById(miniRoomId).get();
+        MiniRoom m = miniRoomRepository.findByMiniRoomId(miniRoomId);
         MiniRoomResponseDto miniRoomDto = new MiniRoomResponseDto(m.getMiniRoomId(),m.getMember().getMemberId(),m.getStateMessage(),m.getLikes());
+        log.info(miniRoomDto.getStateMessage() + "이것이 상메");
         return miniRoomDto;
     }
 
@@ -71,7 +72,7 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     @Override
     @Transactional
     public void updateStateMessage(long miniRoomId, String stateMessage) throws RollbackException {
-        MiniRoom miniRoom = miniRoomRepository.findById(miniRoomId).get();
+        MiniRoom miniRoom = miniRoomRepository.findByMiniRoomId(miniRoomId);
 //        log.info(miniRoom.getMiniRoomId() + "번 미니룸 상메 수정할거얌");
         miniRoom.updateStateMessage(stateMessage).getStateMessage();
     }
@@ -80,7 +81,7 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     @Override
     @Transactional
     public void deleteStateMessage(long miniRoomId) throws RollbackException {
-        MiniRoom miniRoom = miniRoomRepository.findById(miniRoomId).get();
+        MiniRoom miniRoom = miniRoomRepository.findByMiniRoomId(miniRoomId);
         miniRoom.updateStateMessage("상메로 감정을 표현해봐! 이얏호 레츠고");
     }
     
