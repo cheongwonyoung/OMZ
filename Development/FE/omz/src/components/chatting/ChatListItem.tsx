@@ -77,49 +77,46 @@ export default function ChatListItem({ item, refetch }: Props) {
     <>
       <div
         onClick={() => handleClick(item?.roomId)}
-        className="flex flex-col justify-start items-start w-full h-2/12 gap-2.5 px-5 py-[5px] border-t-0 border-r-0 border-b border-l-0 border-white"
+        className="flex py-2 w-11/12 justify-center items-center border-b border-black gap-5"
       >
-        <div className="flex justify-center items-center self-stretch flex-grow-0 flex-shrink-0 relative overflow-hidden gap-3 py-2.5">
-          {item?.chatOtherInfo.file && (
-            <img
-              className="flex-grow-0 flex-shrink-0 h-full w-2/12"
-              src={imageUrlRoot}
-            />
-          )}
-          <div className="flex flex-col justify-start items-start flex-grow-0 flex-shrink-0 w-8/12 gap-[7px]">
-            <div className="flex justify-start items-start flex-grow-0 flex-shrink-0">
-              <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-2.5">
-                <p className="flex-grow-0 flex-shrink-0 text-base font-semibold text-center text-[#3d3d3d]">
-                  {item?.chatOtherInfo.nickName}
-                </p>
-              </div>
-              {/* friendState가 0일 때 친구 추가 버튼 띄워주기  */}
-              {!item?.chatOtherInfo.friendState && (
-                <button
-                  className="border-black border-2 p-2 hover:bg-black/20"
-                  onClick={(e) => {
-                    e?.stopPropagation();
-                    handleFriend();
-                  }}
-                >
-                  친구추가
-                </button>
-              )}
-            </div>
-            <div className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-2.5">
-              <p className="flex-grow-0 flex-shrink-0 text-[11px] text-left text-[#636363]">
-                {item?.recentMessage}
+        {item?.chatOtherInfo.file && (
+          <img
+            className="max-h-20 object-cover rounded-full border"
+            src={imageUrlRoot}
+          />
+        )}
+        <div className="flex flex-col justify-around py-1 w-[90%] gap-3">
+          {/* <div className="flex flex-col justify-start items-start"> */}
+          <div className="flex flex-col gap-1">
+            <div className="w-full flex justify-between">
+              <p className="text-base font-semibold">
+                {item?.chatOtherInfo.nickName}
+              </p>
+              <p className="text-sm pr-3">
+                {/* 60분 보다 많으면 시간으로 적으면 분으로 표시하기  */}
+                {timeGapMinute > 60
+                  ? timeGapHour + "시간 전"
+                  : timeGapMinute + "분 전"}
               </p>
             </div>
+            {/* friendState가 0일 때 친구 추가 버튼 띄워주기  */}
+            {!item?.chatOtherInfo.friendState && (
+              <p className="text-xs">친구가 아닌 사용자</p>
+              // <button
+              //   className="border-black border-2 p-2 hover:bg-black/20"
+              //   onClick={(e) => {
+              //     e?.stopPropagation();
+              //     handleFriend();
+              //   }}
+              // >
+              //   친구추가
+              // </button>
+            )}
           </div>
-          <div className="flex flex-col justify-end items-end flex-grow-0 flex-shrink-0 relative gap-4">
-            <p className="flex-grow-0 flex-shrink-0 text-[10px] text-left">
-              {/* 60분 보다 많으면 시간으로 적으면 분으로 표시하기  */}
-              {timeGapMinute > 60
-                ? timeGapHour + "시간 전"
-                : timeGapMinute + "분 전"}
-            </p>
-          </div>
+          {/* </div> */}
+          <p className="text-sm">
+          {item?.recentMessage}
+          </p>
         </div>
       </div>
     </>
