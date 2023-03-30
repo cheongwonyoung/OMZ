@@ -61,10 +61,11 @@ export default function MyFriendsPage() {
   );
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <div className="w-full flex flex-col items-center">
       <TitleBar goto="/" title="My Friends" icon={images.new_friends_img} />
       {isDeleteModal && (
         <ModalBlackBg
+          closeModal={closeModal}
           modal={
             <ModalDeleteFriend
               closeModal={closeModal}
@@ -76,6 +77,7 @@ export default function MyFriendsPage() {
       )}
       {isRefuseModal && (
         <ModalBlackBg
+          closeModal={closeRefuseModal}
           modal={
             <ModalRefuseProposal
               closeRefuseModal={closeRefuseModal}
