@@ -28,9 +28,9 @@ export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
   );
   const onClick = () => {
     refetch();
-    const roomid = data!.data;
-    navigate(`/chatting/${memberId}/${roomid}`, {
-      state: { roomid },
+    const roomId = data!.data;
+    navigate(`/chatting/${memberId}/${roomId}`, {
+      state: { roomId },
     });
   };
   return (
@@ -42,7 +42,10 @@ export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
         <FontAwesomeIcon icon={faHome} className="text-teal-400" />
         <p>놀러가기</p>
       </div>
-      <div onClick={onClick} className="flex items-center gap-1">
+      <div
+        onClick={onClick}
+        className="flex items-center gap-2 cursor-pointer hover:scale-105 hover:font-bold"
+      >
         <FontAwesomeIcon icon={faMessage} className="text-pink-400" />
         <p>말 걸기</p>
       </div>

@@ -4,7 +4,6 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 export default function MainPage() {
   const memberId = useRecoilValue(userStatus).id;
-  console.log(memberId);
 
   return (
     <div className="flex flex-col justify-center items-center gap-[60px]">

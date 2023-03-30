@@ -14,16 +14,20 @@ type Chat = {
 
 const ChattingPage = () => {
   const memberId = useRecoilValue(userStatus).id;
-  const { data, isLoading, isError, error, refetch } = useQuery(
+
+  // 채팅방 목록 가져오기
+  const { data, isLoading, isError, refetch } = useQuery(
     ["chatting", memberId],
     () => getChatting(memberId)
   );
+
   useEffect(() => {
     refetch();
   }, []);
 
   if (isLoading) return <Loading />;
   if (isError) return <h3>Error...</h3>;
+
   return (
     <div className="w-full flex flex-col items-center">
       <TitleBar goto="/" title="Chatting" icon={images.chatting_img} />
