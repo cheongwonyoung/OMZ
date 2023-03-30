@@ -3,6 +3,7 @@ package com.ssafy.omz.service;
 import com.google.cloud.storage.BlobInfo;
 import com.ssafy.omz.dto.req.BoardRequestDto;
 import com.ssafy.omz.dto.resp.BoardResponseDto;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.entity.Board;
 import com.ssafy.omz.entity.BoardLikes;
 import com.ssafy.omz.repository.BoardLikesRepository;
@@ -25,9 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -40,23 +40,25 @@ public class BoardServiceImpl implements BoardService {
     private final GCSService gcsService;
 
     @Override
-    public Page<BoardResponseDto.Info> getBoardList(Long memberId, Pageable pageable) {
-        return boardRepository.findAllByIsDeletedIsFalse(pageable)
-                .map(board -> {
-                    BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
-                    res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
-                    log.info("" + res.getReplyCnt());
-                    return res;
-                });
+    public List<BoardResponseDto.Info> getBoardList(Long memberId, Pageable pageable) {
+        Page<Board> boards = boardRepository.findAllByIsDeletedIsFalse(pageable);
+        List<BoardResponseDto.Info> res = new ArrayList<>();
+        for(Board b : boards){
+            BoardResponseDto.Info info = BoardResponseDto.Info.fromEntity(b);
+            info.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, b.getBoardId()));
+
+            res.add(info);
+        }
+        return res;
     }
 
     @Override
     public List<BoardResponseDto.Info> searchBoardByContent(Long memberId, String word) {
         List<Board> boards = boardRepository.findAllByIsDeletedIsFalseAndContentContaining(word);
         List<BoardResponseDto.Info> res = new ArrayList<>();
-        for (Board board : boards) {
-            BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(board);
-            respDto.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+        for (int i = boards.size() - 1; i >= 0; i--) {
+            BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(boards.get(i));
+            respDto.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boards.get(i).getBoardId()));
 
             res.add(respDto);
         }
@@ -67,9 +69,9 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardResponseDto.Info> searchBoardByNickname(Long memberId, String word) {
         List<Board> boards = boardRepository.findAllByIsDeletedIsFalseAndMember_NicknameContaining(word);
         List<BoardResponseDto.Info> res = new ArrayList<>();
-        for (Board board : boards) {
-            BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(board);
-            respDto.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+        for (int i = boards.size() - 1; i >= 0; i--) {
+            BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(boards.get(i));
+            respDto.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boards.get(i).getBoardId()));
 
             res.add(respDto);
         }
@@ -87,7 +89,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void memberLikeBoard(Long memberId, Long boardId) {
-        if(!boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+        if (!boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)) {
             boardLikesRepository.save(BoardLikes.builder()
                     .member(memberRepository.findByMemberId(memberId))
                     .board(boardRepository.findByBoardId(boardId))
@@ -97,7 +99,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public void memberCancleLikeBoard(Long memberId, Long boardId) {
-        if(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)){
+        if (boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, boardId)) {
             boardLikesRepository.deleteById(boardLikesRepository
                     .findByMember_MemberIdAndBoard_BoardId(memberId, boardId).getBoardLikesId());
         }
@@ -107,8 +109,8 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardResponseDto.Info> getLikeList(Long memberId) {
         List<BoardLikes> likeInfo = boardLikesRepository.findAllByMember_MemberId(memberId);
         List<BoardResponseDto.Info> res = new ArrayList<>();
-        for (BoardLikes info : likeInfo) {
-            Board board = boardRepository.findByIsDeletedIsFalseAndBoardId(info.getBoard().getBoardId());
+        for (int i = likeInfo.size() -1; i >= 0; i--) {
+            Board board = boardRepository.findByIsDeletedIsFalseAndBoardId(likeInfo.get(i).getBoard().getBoardId());
             if (board != null) {
                 BoardResponseDto.Info respDto = BoardResponseDto.Info.fromEntity(board);
                 respDto.setILikeBoard(true);
@@ -122,9 +124,9 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     public void writeBoard(MultipartFile file, BoardRequestDto.Write writeInfo) throws RollbackException, IOException {
         Long boardId = BoardRequestDto.Info.fromEntity(boardRepository.save(Board.builder()
-                        .content(writeInfo.getContent())
-                        .member(memberRepository.findByMemberId(writeInfo.getMemberId()))
-                        .build())).getBoardId();
+                .content(writeInfo.getContent())
+                .member(memberRepository.findByMemberId(writeInfo.getMemberId()))
+                .build())).getBoardId();
         Board board = boardRepository.findByBoardId(boardId);
         if (file != null)
             gcsService.uploadBoardImage(file, board);
@@ -151,13 +153,17 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardResponseDto.Info> getMemberBoardList(Long memberId, Pageable pageable) {
-        return boardRepository.findAllByIsDeletedIsFalseAndMember_MemberId(memberId, pageable)
-                .map(board -> {
-                    BoardResponseDto.Info res = BoardResponseDto.Info.fromEntity(board);
-                    res.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
-                    return res;
-                });
+    public Map<String, Object> getMemberBoardList(Long memberId, Pageable pageable) {
+        Map<String, Object> res = new HashMap<>();
+        res.put("member", MemberResponseDto.LittleInfo.fromEntity(memberRepository.findByMemberId(memberId)));
+        res.put("articles",
+                boardRepository.findAllByIsDeletedIsFalseAndMember_MemberId(memberId, pageable)
+                        .map(board -> {
+                            BoardResponseDto.Info info = BoardResponseDto.Info.fromEntity(board);
+                            info.setILikeBoard(boardLikesRepository.existsByMember_MemberIdAndBoard_BoardId(memberId, board.getBoardId()));
+                            return info;
+                        }));
+        return res;
     }
 
 }

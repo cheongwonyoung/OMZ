@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,10 @@ public class DataLoader implements CommandLineRunner {
     private ItemTypeRepository itemTypeRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ChatRoomRepository chatRoomRepository;
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -50,8 +56,9 @@ public class DataLoader implements CommandLineRunner {
         addFace();
         addItemType();
         addItem();
+        addChatRoom();
+        addChat();
     }
-
     private void addItem() {
         List<Member> memberList = memberRepository.findAll();
         List<ItemType> itemTypeList = itemTypeRepository.findAll();
@@ -75,6 +82,36 @@ public class DataLoader implements CommandLineRunner {
                     .name("wing")
                     .state(1)
                     .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("bed")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("table")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("lamp")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("drawer")
+                    .state(1)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("clock")
+                    .state(1)
+                    .build()));
         }
         for (int i = 2; i < 4; i++) {
             itemList.add(itemRepository.save(Item.builder()
@@ -93,6 +130,36 @@ public class DataLoader implements CommandLineRunner {
                     .itemType(itemTypeList.get(0))
                     .member(memberList.get(i))
                     .name("wing")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("bed")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("table")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("lamp")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("drawer")
+                    .state(2)
+                    .build()));
+            itemList.add(itemRepository.save(Item.builder()
+                    .itemType(itemTypeList.get(1))
+                    .member(memberList.get(i))
+                    .name("clock")
                     .state(2)
                     .build()));
         }
@@ -130,52 +197,52 @@ public class DataLoader implements CommandLineRunner {
         List<Face> faceList = new ArrayList<>();
 
         faceList.add(Face.builder()
-                .bearProbability(90)
-                .catProbability(0)
-                .dinoProbability(0)
-                .dogProbability(5)
-                .foxProbability(0)
-                .rabbitProbability(5)
+                .bearProbability(0.1)
+                .catProbability(0.1)
+                .dinoProbability(0.3)
+                .dogProbability(0.15)
+                .foxProbability(0.1)
+                .rabbitProbability(0.25)
                 .member(memberList.get(0))
                 .build());
 
         faceList.add(Face.builder()
-                .bearProbability(15)
-                .catProbability(5)
-                .dinoProbability(60)
-                .dogProbability(20)
-                .foxProbability(0)
-                .rabbitProbability(0)
+                .bearProbability(0.0)
+                .catProbability(0.0)
+                .dinoProbability(0.7)
+                .dogProbability(0.0)
+                .foxProbability(0.0)
+                .rabbitProbability(0.3)
                 .member(memberList.get(1))
                 .build());
 
         faceList.add(Face.builder()
-                .bearProbability(0)
-                .catProbability(5)
-                .dinoProbability(4)
-                .dogProbability(76)
-                .foxProbability(5)
-                .rabbitProbability(10)
+                .bearProbability(0.1)
+                .catProbability(0.15)
+                .dinoProbability(0.0)
+                .dogProbability(0.0)
+                .foxProbability(0.0)
+                .rabbitProbability(0.75)
                 .member(memberList.get(2))
                 .build());
 
         faceList.add(Face.builder()
-                .bearProbability(0)
-                .catProbability(0)
-                .dinoProbability(0)
-                .dogProbability(2)
-                .foxProbability(12)
-                .rabbitProbability(86)
+                .bearProbability(0.0)
+                .catProbability(0.0)
+                .dinoProbability(0.1)
+                .dogProbability(0.9)
+                .foxProbability(0.0)
+                .rabbitProbability(0.0)
                 .member(memberList.get(3))
                 .build());
 
         faceList.add(Face.builder()
-                .bearProbability(36)
-                .catProbability(45)
-                .dinoProbability(16)
-                .dogProbability(3)
-                .foxProbability(0)
-                .rabbitProbability(0)
+                .bearProbability(0.5)
+                .catProbability(0.0)
+                .dinoProbability(0.0)
+                .dogProbability(0.0)
+                .foxProbability(0.0)
+                .rabbitProbability(0.95)
                 .member(memberList.get(4))
                 .build());
 
@@ -185,52 +252,52 @@ public class DataLoader implements CommandLineRunner {
         List<Face> preferFaceList = new ArrayList<>();
 
         preferFaceList.add(Face.builder()
-                .bearProbability(20)
-                .catProbability(90)
-                .dinoProbability(50)
-                .dogProbability(40)
-                .foxProbability(80)
-                .rabbitProbability(100)
+                .bearProbability(0.1)
+                .catProbability(0.2)
+                .dinoProbability(0.0)
+                .dogProbability(0.0)
+                .foxProbability(0.5)
+                .rabbitProbability(0.2)
                 .member(memberList.get(0))
                 .build());
 
         preferFaceList.add(Face.builder()
-                .bearProbability(100)
-                .catProbability(100)
-                .dinoProbability(100)
-                .dogProbability(100)
-                .foxProbability(100)
-                .rabbitProbability(80)
+                .bearProbability(0.8)
+                .catProbability(0.05)
+                .dinoProbability(0.0)
+                .dogProbability(0.0)
+                .foxProbability(0.1)
+                .rabbitProbability(0.5)
                 .member(memberList.get(1))
                 .build());
 
         preferFaceList.add(Face.builder()
-                .bearProbability(70)
-                .catProbability(90)
-                .dinoProbability(70)
-                .dogProbability(50)
-                .foxProbability(80)
-                .rabbitProbability(20)
+                .bearProbability(0.0)
+                .catProbability(0.0)
+                .dinoProbability(0.7)
+                .dogProbability(0.0)
+                .foxProbability(0.1)
+                .rabbitProbability(0.2)
                 .member(memberList.get(2))
                 .build());
 
         preferFaceList.add(Face.builder()
-                .bearProbability(10)
-                .catProbability(80)
-                .dinoProbability(30)
-                .dogProbability(60)
-                .foxProbability(50)
-                .rabbitProbability(90)
+                .bearProbability(0.1)
+                .catProbability(0.2)
+                .dinoProbability(0.0)
+                .dogProbability(0.0)
+                .foxProbability(0.5)
+                .rabbitProbability(0.2)
                 .member(memberList.get(3))
                 .build());
 
         preferFaceList.add(Face.builder()
-                .bearProbability(0)
-                .catProbability(50)
-                .dinoProbability(50)
-                .dogProbability(20)
-                .foxProbability(100)
-                .rabbitProbability(30)
+                .bearProbability(0.9)
+                .catProbability(0.0)
+                .dinoProbability(0.5)
+                .dogProbability(0.0)
+                .foxProbability(0.0)
+                .rabbitProbability(0.5)
                 .member(memberList.get(4))
                 .build());
 
@@ -376,4 +443,109 @@ public class DataLoader implements CommandLineRunner {
 
         memberRepository.saveAllAndFlush(memberList);
     }
+
+    private void addChatRoom() {
+        List<ChatRoom> chatRoomList = new ArrayList<>();
+
+        // 유태 서니
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(1)
+                .fromMemberId(memberRepository.findByMemberId(1L))
+                .toMemberId(memberRepository.findByMemberId(4L))
+                .build());
+        // 채리 서니
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(2)
+                .fromMemberId(memberRepository.findByMemberId(3L))
+                .toMemberId(memberRepository.findByMemberId(4L))
+                .build());
+        // 워녕 주강
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(3)
+                .fromMemberId(memberRepository.findByMemberId(2L))
+                .toMemberId(memberRepository.findByMemberId(5L))
+                .build());
+        // 워녕 서니
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(4)
+                .fromMemberId(memberRepository.findByMemberId(2L))
+                .toMemberId(memberRepository.findByMemberId(4L))
+                .build());
+        // 체리 워녕
+        chatRoomList.add(ChatRoom.builder()
+                .chatRoomId(5)
+                .fromMemberId(memberRepository.findByMemberId(3L))
+                .toMemberId(memberRepository.findByMemberId(2L))
+                .build());
+        chatRoomRepository.saveAllAndFlush(chatRoomList);
+    }
+
+    private void addChat() {
+        List<Chat> chatList = new ArrayList<>();
+
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("살려주세요")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("아아아아")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("아아앙")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("아아아")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("d")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("닉네임")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(4l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("어디갔어")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(4l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("d")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("아아아")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+        chatList.add(Chat.builder()
+                .createdTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")))
+                .message("ㅇㄹㅇㅇㄹ")
+                .chatRoom(chatRoomRepository.findByChatRoomId(2l))
+                .fromMember(memberRepository.findByMemberId(3l))
+                .build());
+
+        chatRepository.saveAllAndFlush(chatList);
+
+    }
+
 }
