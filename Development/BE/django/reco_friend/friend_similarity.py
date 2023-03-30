@@ -3,6 +3,8 @@ import numpy as np
 import pandas as pd
 from numpy import dot
 from numpy.linalg import norm
+import json
+from collections import OrderedDict
  
 #------------------ 코사인 유사도 ----------------#
 #------------------ 벡터 두개를 넣으면 됨 (np.array([0,1,1,1])) ----------------#
@@ -63,6 +65,17 @@ def othermbti(cursor, memberId):
     cursor.execute(sql, (memberId,))
 #------------------------------------------------------#
 
+#------------------ 입력 받은 id유저의 아바타 아이템 정보 받기----------------#
+def items(cursor, memberId):
+    sql = "select name, state from item where item_type_id=1 and member_id=%s;"
+    cursor.execute(sql, (memberId,))
+#------------------------------------------------------#
+
+#------------------ 입력 받은 id유저의 얼굴상, mbti, 닉네임 받기----------------#
+def userinfo(cursor, memberId):
+    sql = "select face_name, mbti, nickname from member where member_id=%s; "
+    cursor.execute(sql, (memberId,))
+#------------------------------------------------------#
 
 def friend_recom(memberId):
 
@@ -162,9 +175,40 @@ def friend_recom(memberId):
 #         print(result)
 #         print(result.shape)
         
-        return(result[result[:, 1].argsort()][::-1][:3])
+        result = result[result[:, 1].argsort()][::-1][:3]
         
+        userInfo = []
+        userInfo.append(OrderedDict())
+        userInfo.append(OrderedDict())
+        userInfo.append(OrderedDict())
+        mysql_cursor = mysql_con.cursor(dictionary=True)  
         
+        for i in range(3):
+    
+            userinfo(mysql_cursor, result[i][0])
+            
+            for j, row in enumerate(mysql_cursor):
+                userInfo[i]['mbti'] = row['mbti']
+                userInfo[i]['nickname'] = row['nickname']
+                userInfo[i]['animal'] = row['face_name']
+                
+            userInfo[i]['memberId'] = int(result[i][0])
+                
+            items(mysql_cursor, result[i][0])
+            
+            for j, row in enumerate(mysql_cursor):
+                if(row['name'] == 'hat'):
+                    hat = row['state']
+                elif(row['name'] == 'glasses'):
+                    glasses = row['state']
+                elif(row['name'] == 'wing'):
+                    wing = row['state']
+            userInfo[i]['items'] = {'hat': hat, 'sunglasses' : glasses, 'wing':wing,}
+                
+            userInfo[i]['result'] = result[i][1]
+        
+        return json.dumps(userInfo, ensure_ascii=False, indent="\t")
+
     except Exception as e:
         print(e.message)
 
