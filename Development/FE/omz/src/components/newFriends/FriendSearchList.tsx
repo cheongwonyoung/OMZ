@@ -2,7 +2,7 @@ import FriendSearchItems from "./FriendSearchItems";
 import { v4 as uuidv4 } from "uuid";
 
 interface searchList {
-  memberId?: number;
+  memberId: number;
   nickname?: string;
   requestPossible?: boolean;
   file?: null;
