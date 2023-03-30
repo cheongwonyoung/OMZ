@@ -157,7 +157,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
           >
             <img
               className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem]"
-              src={profileRoot}
+              src={imageUrl + item.member.file}
               onClick={(e) => {
                 e?.stopPropagation();
                 goToMyPage(item.member.memberId);
