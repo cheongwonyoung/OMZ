@@ -14,4 +14,6 @@ public interface GuestBookRepository extends JpaRepository<GuestBook,Long> {
     List<GuestBook> findAllByMiniRoom(MiniRoom miniRoom);
 //    List<GuestBook> findAllByMiniRoomId(long mini_room_id);
 
+    void deleteByGuestBookId(long guestBookId);
+
 }

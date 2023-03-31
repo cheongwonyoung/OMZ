@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.RollbackException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -130,6 +131,8 @@ public class ChatRoomServiceImpl implements ChatRoomService{
                             .build()
             );
         }
+        //  최근 메세지 시간 기준 정렬
+        Collections.sort(chatRoomList);
         return chatRoomList;
     }
 

@@ -45,8 +45,8 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 //        // JPA DDL 설정 보고 실행 판단
-//        if (!DDL_CONFIG.equals("create")) return;
-//
+        if (!DDL_CONFIG.equals("create")) return;
+
 //        addMember();
 //        addBoard();
 //        addReply();
@@ -54,7 +54,7 @@ public class DataLoader implements CommandLineRunner {
 //        addFriend();
 //        addMiniRoom();
 //        addFace();
-//        addItemType();
+        addItemType();
 //        addItem();
 //        addChatRoom();
 //        addChat();

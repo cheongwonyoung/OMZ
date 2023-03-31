@@ -32,15 +32,15 @@ public class GuestBookServiceImpl implements GuestBookService{
 
     // 방명록 전체 리스트
     @Override
-    public List<GuestBookResponseDto> getGuestBookList(long miniRoomId) {
+    public List<GuestBookResponseDto> getGuestBookList(long memberId) {
         List<GuestBookResponseDto> list = new ArrayList<>();
 
-        MiniRoom miniRoom = miniRoomRepository.findById(miniRoomId).get();
+        MiniRoom miniRoom = miniRoomRepository.findByMember_MemberId(memberId);
         List<GuestBook> entityList = guestBookRepository.findAllByMiniRoom(miniRoom);
 
         for (int i = 0; i < entityList.size(); i++){
             GuestBook g = entityList.get(i);
-            GuestBookResponseDto guestBookDto = new GuestBookResponseDto(g.getMiniRoom().getMiniRoomId(), g.getMember().getMemberId(), g.getContent(), g.getRegisteredTime());
+            GuestBookResponseDto guestBookDto = new GuestBookResponseDto(g.getGuestBookId(), g.getMember().getMemberId(), g.getContent(), g.getRegisteredTime());
             list.add(guestBookDto);
         }
         return list;
@@ -52,7 +52,7 @@ public class GuestBookServiceImpl implements GuestBookService{
     public void writeGuestBook(GuestBookRequestDto.Write guestBook) throws RollbackException {
         log.info(guestBook.getContent());
         guestBookRepository.save(GuestBook.builder()
-                .miniRoom(miniRoomRepository.findById(guestBook.getMiniRoomId()).get())
+                .miniRoom(miniRoomRepository.findByMember_MemberId(guestBook.getFriendId()))
                 .member(memberRepository.findByMemberId(guestBook.getMemberId()))
                 .content(guestBook.getContent())
                 .build());
@@ -62,6 +62,6 @@ public class GuestBookServiceImpl implements GuestBookService{
     @Override
     @Transactional
     public void deleteGuestBook(long guestBookId) throws RollbackException {
-        guestBookRepository.deleteById(guestBookId);
+        guestBookRepository.deleteByGuestBookId(guestBookId);
     }
 }

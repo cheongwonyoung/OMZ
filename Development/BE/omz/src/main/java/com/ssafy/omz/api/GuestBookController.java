@@ -23,9 +23,9 @@ public class GuestBookController {
 
     @ApiOperation(value = "방명록 조회")
     @GetMapping("")
-    public ResponseEntity<?> guestBookList(@RequestParam(required = true, value = "miniRoomId") Long miniRoomId){
+    public ResponseEntity<?> guestBookList(@RequestParam(required = true, value = "memberId") Long memberId){
         try{
-            return new ResponseEntity<>(guestBookService.getGuestBookList(miniRoomId), HttpStatus.OK);
+            return new ResponseEntity<>(guestBookService.getGuestBookList(memberId), HttpStatus.OK);
         } catch ( Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
