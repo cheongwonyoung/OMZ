@@ -146,17 +146,11 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
 
   return (
     <>
-      <div className="w-10/12 flex justify-center m-5 max-w-4xl">
+      <div className="w-11/12 max-w-3xl flex justify-center m-5">
         <div className="w-full bg-white flex flex-col justify-center rounded-xl p-5">
-          <div
-            className="flex justify-start gap-5 items-center hover:scale-105 cursor-pointer"
-            onClick={(e) => {
-              e?.stopPropagation();
-              goToMyPage(item.member.memberId);
-            }}
-          >
+          <div className="flex justify-start gap-5 items-center">
             <img
-              className="rounded-full border w-[3rem] h-[3rem] "
+              className="rounded-full border w-[3rem] h-[3rem] hover:scale-105 cursor-pointer"
               src={imageUrl + item.member.file}
               onClick={(e) => {
                 e?.stopPropagation();
@@ -164,10 +158,16 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
               }}
             />
             <div className="flex flex-col">
-              <p className="flex-grow-0 flex-shrink-0 text-ml font-bold">
+              <p
+                className="text-ml font-bold hover:scale-105 cursor-pointer"
+                onClick={(e) => {
+                  e?.stopPropagation();
+                  goToMyPage(item.member.memberId);
+                }}
+              >
                 {item.member.nickname}
               </p>
-              <p className="flex-grow-0 flex-shrink-0 text-sm ">
+              <p className="text-sm ">
                 {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
               </p>
             </div>

@@ -9,6 +9,13 @@ import { KeyboardEvent } from "react";
 import Loading from "../common/Loading";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
+import Masonry from "react-masonry-css";
+
+type Search = {
+  memberId: number;
+  key: string;
+  word: string;
+};
 
 type Article = {
   [key: string]: any;
@@ -41,7 +48,7 @@ export default function CommunitySearchBar() {
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div className="w-11/12 flex justify-center items-center">
+      <div className="w-11/12 max-w-3xl flex justify-center items-center">
         <select
           name="검색"
           className="w-[30%] h-[45px] relative border rounded-xl my-2 p-3 border-slate-500 text-[14px] focus:outline-none"
@@ -69,7 +76,7 @@ export default function CommunitySearchBar() {
       <div className="flex flex-col items-center mt-4">
         {isLoading && <Loading />}
         {isError && <div className="title">isError...</div>}
-        <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.data.map((article: Article) => (
             <CommunityArticleItem
               key={uuidv4()}
@@ -77,8 +84,21 @@ export default function CommunitySearchBar() {
               refetch={refetch}
             />
           ))}
-        </div>
+        </div> */}
       </div>
+        <Masonry
+          breakpointCols={{ default: 1, 3000: 3, 1000: 2, 600: 1 }}
+          className="my-masonry-grid w-11/12 gap-4"
+          columnClassName="my-masonry-grid_column"
+        >
+          {data?.data.map((article: Article) => (
+            <CommunityArticleItem
+              key={uuidv4()}
+              item={article}
+              refetch={refetch}
+            />
+          ))}
+        </Masonry>
     </div>
   );
 }
