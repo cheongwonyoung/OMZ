@@ -1,6 +1,4 @@
-import { faImage } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 
 type Props = {
@@ -39,8 +37,7 @@ export default function ImageUploader({ file, onFile, shape }: Props) {
 
   const circle_img = "object-cover w-full h-full rounded-full";
 
-  const square =
-    "dropzone w-full h-30";
+  const square = "dropzone w-full h-30";
 
   // "dropzone w-60 h-60 border border-red-200 border-4 border-dashed";
   const square_img = "object-cover w-full h-full";
@@ -60,9 +57,12 @@ export default function ImageUploader({ file, onFile, shape }: Props) {
           />
         ) : (
           <div className="flex h-full justify-center items-center">
-              <div className=" flex flex-col items-center text-center p-5">
-                <p>여기를 클릭하거나 <br/>파일을 드래그하세요.</p>
-              </div>
+            <div className=" flex flex-col items-center text-center p-5">
+              <p>
+                여기를 클릭하거나 <br />
+                파일을 드래그하세요.
+              </p>
+            </div>
             <input {...getInputProps()} />
           </div>
         )}

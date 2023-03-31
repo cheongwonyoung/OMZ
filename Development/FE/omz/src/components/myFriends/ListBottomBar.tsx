@@ -5,41 +5,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router";
-import { useQuery } from "react-query";
-import { talkToFriends } from "../../api/chatting";
-import { useRecoilValue } from "recoil";
-import { userStatus } from "../../recoil/userAtom";
-import { useEffect } from "react";
 
 type Props = {
   id: number;
   name: string;
   handleDeleteMember(name: string, id: number): void;
+  handletalkFriends(id: number): void;
 };
 
-export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
+export default function ListBottomBar({
+  id,
+  name,
+  handleDeleteMember,
+  handletalkFriends,
+}: Props) {
   const navigate = useNavigate();
-  const memberId = useRecoilValue(userStatus).id;
-
-  const { data, refetch } = useQuery(
-    "talkfriends",
-    () => talkToFriends(memberId, id),
-    {
-      enabled: false,
-    }
-  );
-
-  useEffect(() => {
-    refetch();
-  }, []);
-
-  const onClick = () => {
-    refetch();
-    const roomId = data!.data;
-    navigate(`/chatting/${memberId}/${roomId}`, {
-      state: { roomId },
-    });
-  };
 
   return (
     <div className="flex justify-between mt-2 mx-5 text-sm">
@@ -51,7 +31,7 @@ export default function ListBottomBar({ id, name, handleDeleteMember }: Props) {
         <p>놀러가기</p>
       </div>
       <div
-        onClick={onClick}
+        onClick={() => handletalkFriends(id)}
         className="flex items-center gap-2 cursor-pointer hover:scale-105 hover:font-bold"
       >
         <FontAwesomeIcon icon={faMessage} className="text-pink-400" />

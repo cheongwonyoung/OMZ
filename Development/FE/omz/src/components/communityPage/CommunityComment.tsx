@@ -86,8 +86,8 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
 
   return (
-    <div className="w-full flex justify-center mt-3">
-      <div className="w-11/12 m-3 max-w-4xl border-b border-black pb-3">
+    <div className="w-full flex justify-center mt-1">
+      <div className="w-11/12 m-3 max-w-3xl border-b border-black pb-1">
         <div className="flex w-full justify-between items-start gap-3">
           {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
           <img
@@ -122,14 +122,14 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                   />
                   <div className="flex justify-end gap-5">
                     {/* 누르면 update 반영되게 !! */}
-                    <button className="cursor-pointer hover:text-[#FF0076]">
-                      <FontAwesomeIcon icon={faCheck} className="text-2xl" />
+                    <button className="cursor-pointer hover:text-blue-400 ">
+                      <FontAwesomeIcon icon={faCheck} className="text-base" />
                     </button>
                     <div>
                       <FontAwesomeIcon
                         icon={faXmark}
                         onClick={() => setShowUpdate(false)}
-                        className="cursor-pointer hover:text-[#FDFFA7] text-2xl"
+                        className="cursor-pointer hover:text-[#FF0076] text-base"
                       />
                     </div>
                   </div>
@@ -143,16 +143,16 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
                 {memberId === item.member.memberId && (
                   <div className="flex justify-end gap-2">
                     <button
-                      onClick={() => setShowModal(true)}
-                      className="cursor-pointer hover:text-[#FF0076]"
-                    >
-                      삭제
-                    </button>
-                    <button
                       onClick={() => setShowUpdate(true)}
-                      className="cursor-pointer hover:text-[#FDFFA7]"
+                      className="cursor-pointer hover:text-blue-400 text-sm"
                     >
                       수정
+                    </button>
+                    <button
+                      onClick={() => setShowModal(true)}
+                      className="cursor-pointer hover:text-[#FF0076] text-sm"
+                    >
+                      삭제
                     </button>
                   </div>
                 )}

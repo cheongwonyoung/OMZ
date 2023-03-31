@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import StepEnd from "../components/signUp/StepEnd";
+import { useState } from "react";
 import StepFaceResult from "../components/signUp/StepFaceResult";
 import StepImgUpload from "../components/signUp/StepImgUpload";
 import StepLikeAnimal from "../components/signUp/StepLikeAnimal";

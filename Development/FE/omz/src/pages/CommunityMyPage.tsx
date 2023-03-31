@@ -8,6 +8,7 @@ import CommunityArticleItem from "../components/communityPage/CommunityArticleIt
 import Loading from "../components/common/Loading";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import Masonry from "react-masonry-css";
 
 type Article = {
   [key: string]: any;
@@ -38,7 +39,7 @@ export default function CommunityMyPage() {
     <div className="flex flex-col items-center">
       <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
       <CommunityMyPageBanner item={memberNickname} memberId={memberIdNumber} file={file}/>
-      <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* <div className="w-11/12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.data.articles.content.map((article: Article) => (
           <CommunityArticleItem
             key={article.boardId}
@@ -46,7 +47,20 @@ export default function CommunityMyPage() {
             refetch={refetch}
           />
         ))}
-      </div>
+      </div> */}
+      <Masonry
+        breakpointCols={{ default: 1, 3000: 3, 1000: 2, 600: 1 }}
+        className="my-masonry-grid w-11/12 gap-4"
+        columnClassName="my-masonry-grid_column"
+      >
+        {data?.data.articles.content.map((article: Article) => (
+          <CommunityArticleItem
+            key={article.boardId}
+            item={article}
+            refetch={refetch}
+          />
+        ))}
+      </Masonry>
       <div className="pb-20"></div>
       <CommunityNavbar />
     </div>

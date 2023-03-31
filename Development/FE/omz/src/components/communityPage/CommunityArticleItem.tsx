@@ -1,12 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faComment,
-  faHeart,
-  faPencil,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { images } from "../../assets/images";
+import { faComment, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import DeleteCommentModal from "../common/DeletetModal";
@@ -21,7 +14,6 @@ import { imageUrl } from "../../api";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 import moment from "moment";
-// import CommunityCommentModal from "./CommunityCommentModal";
 
 type Article = {
   [key: string]: any;
@@ -48,7 +40,6 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
   // 시간 원하는 걸로 바꾸기
   const date = new Date(item.registeredTime);
 
-  // TODO: imageUrl은 이렇게 하기 (이건 커뮤니티 내 사진)
   const imageUrlRoot = imageUrl + item.file;
   const boardId = item.boardId;
   const file = item.file;
@@ -162,7 +153,10 @@ export default function CommunityArticleItem({ item, refetch }: Props) {
                   goToMyPage(item.member.memberId);
                 }}
               >
-                <img className="w-[3rem] h-[3rem] border rounded-full" src={IMAGE_ROOT + item.member.file} />
+                <img
+                  className="w-[3rem] h-[3rem] border rounded-full"
+                  src={IMAGE_ROOT + item.member.file}
+                />
                 <div className="flex flex-col">
                   <p className="text-ml cursor-pointer font-bold">
                     {item.member.nickname}

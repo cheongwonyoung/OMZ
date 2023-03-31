@@ -10,7 +10,7 @@ import Loading from "../components/common/Loading";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useEffect } from "react";
-
+import Masonry from "react-masonry-css";
 // import InfiniteScroll from "react-infinite-scroller";
 
 type Article = {
@@ -59,7 +59,7 @@ export default function CommunityPage() {
       <div className="m-3"></div>
       <CommunityCreateSmall onArticleSubmit={handleArticleSubmit} />
       <div className="m-3"></div>
-      <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.data.map((article: Article) => (
           <CommunityArticleItem
             key={article.boardId}
@@ -67,7 +67,23 @@ export default function CommunityPage() {
             refetch={refetch}
           />
         ))}
-      </div>
+      </div> */}
+      <Masonry
+        breakpointCols={{default: 1,
+          3000: 3,
+          1000: 2,
+          600: 1}}
+        className="my-masonry-grid w-11/12 gap-4"
+        columnClassName="my-masonry-grid_column"
+      >
+        {data?.data.map((article: Article) => (
+          <CommunityArticleItem
+            key={article.boardId}
+            item={article}
+            refetch={refetch}
+          />
+        ))}
+      </Masonry>
       <div className="pb-20"></div>
       <CommunityNavbar />
     </div>

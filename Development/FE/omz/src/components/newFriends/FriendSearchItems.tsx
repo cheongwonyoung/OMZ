@@ -1,4 +1,4 @@
-import { NavigateFunction, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faHome, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue } from "recoil";
