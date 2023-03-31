@@ -5,8 +5,12 @@ import { rejectProposal } from "../../api/myFriends";
 
 type Props = {
   handleRefuseModal(): void;
+  modalFor: { memberId: number; nickname: string };
 };
-export default function FriendRefuseModal({ handleRefuseModal }: Props) {
+export default function FriendRefuseModal({
+  handleRefuseModal,
+  modalFor,
+}: Props) {
   const refuseFriend = useMutation((id: number) => rejectProposal(id));
 
   return (
@@ -22,7 +26,7 @@ export default function FriendRefuseModal({ handleRefuseModal }: Props) {
       </div>
       <div className="flex flex-col items-center my-4 font-bold text-lg">
         <p>
-          <span className="text-purple-500">최유태</span>님을
+          <span className="text-purple-500">{modalFor.nickname}</span>님을
         </p>
         <p>더이상 추천받지 않습니다.</p>
       </div>

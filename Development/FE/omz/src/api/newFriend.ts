@@ -1,4 +1,4 @@
-import { instance } from ".";
+import { djInstance, instance } from ".";
 
 // 친구 신청
 interface Friend {
@@ -10,4 +10,8 @@ export const friendProposal = (friend: Friend) => {
 
 export const searchFriend = (memberId: number, word: string) => {
   return instance.get(`/friend/${memberId}/${word}`);
+};
+
+export const getFriendRecommend = (memberId: number) => {
+  return djInstance.get(`/reco_friend/?memberId=${memberId}`);
 };
