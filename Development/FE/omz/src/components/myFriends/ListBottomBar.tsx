@@ -5,11 +5,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router";
-import { useMutation } from "react-query";
-import { talkToFriends } from "../../api/chatting";
-import { useRecoilValue } from "recoil";
-import { userStatus } from "../../recoil/userAtom";
-import { useState } from "react";
 
 type Props = {
   id: number;

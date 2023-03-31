@@ -8,7 +8,6 @@ import CommunityArticleItem from "../components/communityPage/CommunityArticleIt
 import Loading from "../components/common/Loading";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
-import { useEffect } from "react";
 import Masonry from "react-masonry-css";
 
 type Article = {
