@@ -12,16 +12,16 @@ def cos_sim(A, B):
     return dot(A, B)/(norm(A)*norm(B))
 #------------------------------------------------------#
 
-#---------------- 멤버 수------------------------#
-def membercnt(cursor):
-    sql = "select count(*) from member where face_id is not null;"
-    cursor.execute(sql)
+#---------------- 나, 차단 멤버 제외 멤버 수------------------------#
+def membercnt(cursor, memberId):
+    sql = "select count(*) from member where not member_id=%s and face_id is not null and member_id not in (select to_member_id from friend where state=-1 and from_member_id = %s)"
+    cursor.execute(sql, (memberId, memberId,))
 #------------------------------------------------------#
 
-#---------------- 해당 id 제외 다른 멤버 id들 반환------------------------#
+#---------------- 해당 id, 차단 멤버 제외 다른 멤버 id들 반환------------------------#
 def membersid(cursor, memberId):
-    sql = "select member_id from member where not member_id=%s and face_id is not null;"
-    cursor.execute(sql, (memberId,))
+    sql = "select member_id from member where not member_id=%s and face_id is not null and member_id not in (select to_member_id from friend where state=-1 and from_member_id = %s);"
+    cursor.execute(sql, (memberId,memberId,))
 #------------------------------------------------------#
 
 # =================================================================================================================================
@@ -47,23 +47,24 @@ def mymbti(cursor, memberId):
 # =================================================================================================================================
 
 
-#------------------ 입력 받은 id를 제외한 다른 유저들 동물상 조회 ----------------#
+#------------------ 입력 받은 id, 차단 유저를 제외한 다른 유저들 동물상 조회 ----------------#
 def otherface(cursor, memberId):
-    sql = "select * from face where face_id in (select face_id from member where not member_id=%s);"
-    cursor.execute(sql, (memberId,))
+    sql = "select * from face where face_id in (select face_id from member where member_id not in (select to_member_id from friend where state=-1 and from_member_id = %s ) and not member_id=%s);"
+    cursor.execute(sql, (memberId, memberId,))
 #------------------------------------------------------#
 
 #------------------ 입력 받은 id를 제외한 다른 유저들이 선호하는 동물상 조회 ----------------#
 def otherpreferface(cursor, memberId):
-    sql = "select * from face where face_id in (select prefer_face_id from member where not member_id=%s);"
-    cursor.execute(sql, (memberId,))
+    sql = "select * from face where face_id in (select prefer_face_id from member where member_id not in (select to_member_id from friend where state=-1 and from_member_id = %s ) and not member_id=%s);"
+    cursor.execute(sql, (memberId, memberId,))
 #------------------------------------------------------#
 
 #------------------ 입력 받은 id를 제외한 다른 유저들의 mbti 가져오기----------------#
 def othermbti(cursor, memberId):
-    sql = "select member_id, mbti from member where not member_id=%s and mbti is not null;"
-    cursor.execute(sql, (memberId,))
+    sql = "select member_id, mbti from member where member_id not in (select to_member_id from friend where state=-1 and from_member_id = %s ) and not member_id=%s and mbti is not null;"
+    cursor.execute(sql, (memberId, memberId,))
 #------------------------------------------------------#
+
 
 #------------------ 입력 받은 id유저의 아바타 아이템 정보 받기----------------#
 def items(cursor, memberId):
@@ -82,7 +83,7 @@ def friend_recom(memberId):
     try:
 
 # #       나의 멤버인덱스 ( 장고로 api작성해서 받아올 것 )
-        # memberId = 1
+        memberId = 4
         myinfo = [] # 나의 유저정보
         mbtiinfo = [] # 나와 다른 유저의 mbti 궁합도
         otherinfo = []    # 본인 제외 나머지 유저리스트 생성
@@ -92,7 +93,7 @@ def friend_recom(memberId):
         mysql_cursor = mysql_con.cursor(dictionary=True)        
       
 #       멤버 수 찾기
-        membercnt(mysql_cursor, )
+        membercnt(mysql_cursor, memberId)
         
         for row in mysql_cursor:
             usercnt = row['count(*)']
@@ -129,7 +130,7 @@ def friend_recom(memberId):
 #       나를 제외한 다른 유저정보 (선호하는 동물상 정도 (강아지, 고양이, ..., 공룡), 본인의 동물상 정도 (강아지, 고양이, ..., 공룡))
 #       {'face_id': 6, 'bear_probability': 0.1, 'cat_probability': 0.2, 'dino_probability': 0.0, 'dog_probability': 0.0, 'fox_probability': 0.5, 'rabbit_probability': 0.2, 'dinosaur_probability': 0.0}            
 #       나를 제외한 다른 유저들 정보 저장 
-        for i in range(usercnt-1):
+        for i in range(usercnt):
             otherinfo.append([])
             
 #       본인이 선호하는 동물상
@@ -174,8 +175,12 @@ def friend_recom(memberId):
         result = np.concatenate([np.array(memberIds).reshape(-1,1), np.array(similaritylist).reshape(-1,1)], -1)
 #         print(result)
 #         print(result.shape)
-        
         result = result[result[:, 1].argsort()][::-1][:3]
+#         print(result)
+        
+        
+        
+
         
         userInfo = []
         userInfo.append(OrderedDict())
@@ -207,8 +212,8 @@ def friend_recom(memberId):
                 
             userInfo[i]['result'] = result[i][1]
         
-        return json.dumps(userInfo, ensure_ascii=False, indent="\t")
-
+        return(json.dumps(userInfo, ensure_ascii=False, indent="\t"))
+        
     except Exception as e:
         print(e.message)
 
