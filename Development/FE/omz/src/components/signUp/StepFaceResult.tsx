@@ -3,6 +3,8 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NextBtn from "./NextBtn";
 import CameraAvatar from "../common/CameraAvatar";
+import { Bear } from "../../assets/3DAvatar/Bear";
+import { Fox } from "../../assets/3DAvatar/Fox";
 
 type Props = {
   animal: string;
@@ -28,6 +30,20 @@ export default function StepFaceResult({
             Avatar={<Model position={[0, 0, 0]} />}
           />
         );
+      case "곰":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={<Bear position={[0, 0.3, 0]} />}
+          />
+        );
+      case "여우":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={<Fox position={[0, 0.3, 0]} />}
+          />
+        );
     }
   };
 
@@ -35,10 +51,16 @@ export default function StepFaceResult({
     switch (animal) {
       case "토끼":
         return "상큼발랄한 매력의 토끼!";
+      case "곰":
+        return "듬직한 매력의 곰!";
+      case "여우":
+        return "남을 홀리는 매력의 여우!";
     }
   };
 
-  setTimeout(() => screenShot(), 100);
+  setTimeout(() => {
+    screenShot();
+  }, 500);
 
   return (
     <div className="flex justify-center items-center flex-col w-11/12 gap-10">

@@ -44,7 +44,10 @@ export default function SignUpPage() {
     setFaceResult(result);
     for (const res of result) {
       if (maxVal < res.probability) {
+        console.log(res.probability);
+        maxVal = res.probability;
         maxAni = res.className;
+        console.log(maxAni);
       }
     }
     setAnimal(maxAni);
@@ -74,13 +77,14 @@ export default function SignUpPage() {
   const [profileImg, setProfileImg] = useState<any>();
   const screenShot = () => {
     const target = document.getElementById("capture");
-    if (target !== null) {
+    if (target !== null && profileImg === undefined) {
       html2canvas(target).then((canvas) => {
         canvas.toBlob((blob) => {
           if (blob !== null) {
             const myfile = new File([blob], `${uuidv4()}.png`, {
               type: "image/png",
             });
+            const g = URL.createObjectURL(myfile);
             setProfileImg(myfile);
           }
         });
@@ -152,26 +156,11 @@ export default function SignUpPage() {
     }
     formData.append("face", JSON.stringify(face));
     formData.append("file", profileImg);
-    console.log(profileImg);
-    console.log(face);
 
     goSignUp.mutate({ formData, tok: token });
   };
 
   const [userState, setUserState] = useRecoilState(userStatus);
-  // const getInfo = useMutation((token: string) => getUserInfo(token), {
-  //   onSuccess(data) {
-  //     console.log(data);
-  //     setUserState({
-  //       ...userState,
-  //       id: data.data.memberId,
-  //       nickname: data.data.nickname,
-  //       profile_img: data.data.file,
-  //     });
-  //     navigate("end");
-  //     // data.data === false ? navigate("/signup") : navigate("/");
-  //   },
-  // });
 
   const goSignUp = useMutation(
     (inp: { formData: any; tok: string }) => signUp(inp.formData, inp.tok),
