@@ -6,6 +6,7 @@ from numpy.linalg import norm
 import json
 from collections import OrderedDict
  
+
 #------------------ 코사인 유사도 ----------------#
 #------------------ 벡터 두개를 넣으면 됨 (np.array([0,1,1,1])) ----------------#
 def cos_sim(A, B):
@@ -82,8 +83,29 @@ def friend_recom(memberId):
 
     try:
 
+        arr = np.array([
+            [3, 3, 3, 4, 3, 4, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0],
+            [3, 3, 4, 3, 4, 3, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0],
+            [3, 4, 3, 3, 3, 3, 3, 4, 0, 0, 0, 0, 0, 0, 0, 0],
+            [4, 3, 3, 3, 3, 3, 3, 3, 4, 0, 0, 0, 0, 0, 0, 0],
+            [3, 4, 3, 3, 3, 3, 3, 4, 2, 2, 2, 2, 1, 1, 1, 1],
+            [4, 3, 3, 3, 3, 3, 4, 3, 2, 2, 2, 2, 1, 1, 1, 1],
+            [3, 3, 3, 3, 3, 4, 3, 3, 2, 2, 2, 2, 1, 1, 1, 4],
+            [3, 3, 4, 3, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1],
+            [0, 0, 0, 4, 2, 2, 2, 2, 1, 1, 1, 1, 2, 4, 2, 4],
+            [0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 4, 2, 4, 2],
+            [0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 2, 4, 2, 4],
+            [0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 1, 1, 4, 2, 2, 2],
+            [0, 0, 0, 0, 1, 2, 1, 1, 2, 4, 2, 4, 3, 3, 3, 3],
+            [0, 0, 0, 0, 1, 2, 1, 1, 4, 2, 4, 2, 3, 3, 3, 3],
+            [0, 0, 0, 0, 1, 2, 1, 1, 2, 4, 2, 2, 3, 3, 3, 3],
+            [0, 0, 0, 0, 1, 2, 4, 1, 4, 2, 4, 2, 3, 3, 3, 3],
+            ])
+        mbti = pd.DataFrame(arr, index=['INFP','ENFP','INFJ','ENFJ','INTJ','ENTJ','INTP','ENTP','ISFP','ESFP','ISTP','ESTP','ISFJ','ESFJ','ISTJ','ESTJ'],  columns=['INFP','ENFP','INFJ','ENFJ','INTJ','ENTJ','INTP','ENTP','ISFP','ESFP','ISTP','ESTP','ISFJ','ESFJ','ISTJ','ESTJ'])
+
+
 # #       나의 멤버인덱스 ( 장고로 api작성해서 받아올 것 )
-        memberId = 4
+        # memberId = 4
         myinfo = [] # 나의 유저정보
         mbtiinfo = [] # 나와 다른 유저의 mbti 궁합도
         otherinfo = []    # 본인 제외 나머지 유저리스트 생성
@@ -148,7 +170,7 @@ def friend_recom(memberId):
             for j in range(6):
                 otherinfo[i].append(face[facename[j]])
 
-        mysql_cursor.close()
+        
         
 #         print(type(myinfo))
 #         print(myinfo)
@@ -164,7 +186,9 @@ def friend_recom(memberId):
 #             print("=======================")
 #             print(np.array(otheruserinfo).reshape(-1).shape)
 #             print("=======================")
+        
             similarity = cos_sim(np.array(myinfo).reshape(-1), np.array(otheruserinfo).reshape(-1))
+        
 #             print(otheruserinfo[0])
 #             print(type(otheruserinfo))
             similaritylist.append(similarity)
@@ -172,15 +196,33 @@ def friend_recom(memberId):
 #         print("====================결과=================")
 #         print(np.array(memberIds).reshape(-1,1))
 #         print(np.array(similaritylist).reshape(-1,1))
-        result = np.concatenate([np.array(memberIds).reshape(-1,1), np.array(similaritylist).reshape(-1,1)], -1)
-#         print(result)
-#         print(result.shape)
-        result = result[result[:, 1].argsort()][::-1][:3]
-#         print(result)
         
+    
+#       mbti 점수 (빨강 ~ 파랑)
+        vallist = []
+        simimean = np.mean(np.array(similaritylist))
+        simistd = np.std(np.array(similaritylist))
+        for i in range(-2, 3):
+            vallist.append(simimean + simistd*i)
+    
         
+        mymbti(mysql_cursor, memberId)
         
+        for row in mysql_cursor:
+            mymbtival = row['mbti']
+        
+        othermbti(mysql_cursor, memberId)
+        
+        mbtisimi = []
+        for row in mysql_cursor: 
+            mbtisimi.append(vallist[mbti[mymbtival][row['mbti']]])
 
+        simi = np.array(mbtisimi) + np.array(similaritylist)
+        
+        result = np.concatenate([np.array(memberIds).reshape(-1,1), simi.reshape(-1,1)], -1)
+        result = result[result[:, 1].argsort()][::-1][:3]
+
+        mysql_cursor.close()
         
         userInfo = []
         userInfo.append(OrderedDict())
@@ -201,6 +243,10 @@ def friend_recom(memberId):
                 
             items(mysql_cursor, result[i][0])
             
+            hat = 0
+            glasses = 0
+            wing = 0
+
             for j, row in enumerate(mysql_cursor):
                 if(row['name'] == 'hat'):
                     hat = row['state']
