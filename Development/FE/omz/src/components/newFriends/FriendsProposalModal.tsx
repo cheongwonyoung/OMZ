@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeartCrack, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { useMutation } from "react-query";
 import { friendProposal } from "../../api/newFriend";

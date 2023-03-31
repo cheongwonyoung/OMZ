@@ -1,4 +1,3 @@
-import { images } from "../../assets/images";
 import { useNavigate } from "react-router-dom";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

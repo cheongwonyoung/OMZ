@@ -1,5 +1,3 @@
-import { useQuery } from "react-query";
-import { getMyFriendsList } from "../../api/myFriends";
 import FriendsItem from "./FriendsItem";
 import ListBottomBar from "./ListBottomBar";
 import { v4 as uuidv4 } from "uuid";
@@ -15,19 +13,7 @@ type Props = {
 
 export default function FriendsList({ handleDeleteMember, friends }: Props) {
   const navigate = useNavigate();
-
-  // TODO 여기 멤버아이디 로그인한 유저로 바꾸고 나중에 DB 생기면 그때 변경
   const memberId = useRecoilValue(userStatus).id;
-  // const { data: friends, refetch } = useQuery(
-  //   "friendlist",
-  //   () => getMyFriendsList(memberId),
-  //   {
-  //     onSuccess(data) {
-  //       console.log(data);
-  //     },
-  //   }
-  // );
-
   const talkFriends = useMutation(
     (member: { memberId: number; id: number }) =>
       talkToFriends(member.memberId, member.id),

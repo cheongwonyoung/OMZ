@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDove, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { searchArticles } from "../../api/community";
@@ -86,19 +86,19 @@ export default function CommunitySearchBar() {
           ))}
         </div> */}
       </div>
-        <Masonry
-          breakpointCols={{ default: 1, 3000: 3, 1000: 2, 600: 1 }}
-          className="my-masonry-grid w-11/12 gap-4"
-          columnClassName="my-masonry-grid_column"
-        >
-          {data?.data.map((article: Article) => (
-            <CommunityArticleItem
-              key={uuidv4()}
-              item={article}
-              refetch={refetch}
-            />
-          ))}
-        </Masonry>
+      <Masonry
+        breakpointCols={{ default: 1, 3000: 3, 1000: 2, 600: 1 }}
+        className="my-masonry-grid w-11/12 gap-4"
+        columnClassName="my-masonry-grid_column"
+      >
+        {data?.data.map((article: Article) => (
+          <CommunityArticleItem
+            key={uuidv4()}
+            item={article}
+            refetch={refetch}
+          />
+        ))}
+      </Masonry>
     </div>
   );
 }

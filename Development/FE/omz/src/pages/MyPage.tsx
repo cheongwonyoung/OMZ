@@ -3,12 +3,7 @@ import { useState } from "react";
 import { Model } from "../assets/3DAvatar/Rabbit";
 import MyPageMiniRoomBanner from "../components/mypage/MyPageMiniRoomBanner";
 import MyPageBasicInformation from "../components/mypage/MyPageBasicInformation";
-import {
-  useLoaderData,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
 import CameraAvatar from "../components/common/CameraAvatar";

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { images } from "../../assets/images";
 
 type Props = {
