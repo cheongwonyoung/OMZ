@@ -230,6 +230,10 @@ def friend_recom(memberId):
         userInfo.append(OrderedDict())
         mysql_cursor = mysql_con.cursor(dictionary=True)  
         
+        if result[0][1] > 1:
+            for i in range(3):
+                result[i][1] -= (result[0][1]-1)
+
         for i in range(3):
     
             userinfo(mysql_cursor, result[i][0])
