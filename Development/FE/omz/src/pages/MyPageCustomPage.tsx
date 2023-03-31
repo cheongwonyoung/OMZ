@@ -14,20 +14,21 @@ import html2canvas from "html2canvas";
 import { v4 as uuidv4 } from "uuid";
 import ModalBlackBg from "../components/common/ModalBlackBg";
 import ProfileImgModal from "../components/mypage/ProfileImgModal";
+import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
 
 export default function MyPageCustomPage() {
   const memberId = useRecoilValue(userStatus).id;
   const navigate = useNavigate();
   // 처음 값은 다 1로 설정 (모자, 안경, 날개)
-  const [itemStatus, setItemStatus] = useState<{ [key: string]: number }>({
-    hat: 0,
-    glasses: 0,
-    wing: 0,
+  const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
+    hat: "1",
+    glasses: "1",
+    wing: "1",
   });
 
   const handleItems = (item: string) => {
     const variety = item.split("_")[0];
-    const num = Number(item.split("_")[1]);
+    const num = item.split("_")[1];
     console.log(itemStatus);
     setItemStatus({ ...itemStatus, [variety]: num });
   };
@@ -36,23 +37,27 @@ export default function MyPageCustomPage() {
     // switch (animal) {
     //   case "rabbit":
     return (
-      <CameraAvatar keepRender={true} Avatar={<Model position={[0, 0, 0]} />} />
+      // <CameraAvatar keepRender={true} Avatar={<Model position={[0, 0, 0]} />} />
+      <CameraAvatar
+        keepRender={true}
+        Avatar={<Custom_rabbit position={[0, 0, 0]} itemStatus={itemStatus} />}
+      />
     );
     // }
   };
 
   useQuery(["customUpdate", memberId], () => getMyCustomInfo(memberId), {
     onSuccess(data) {
-      const existingCustom: { [key: string]: number } = {};
+      const existingCustom: { [key: string]: string } = {};
       for (const custom of data.data.items) {
-        existingCustom[custom.name] = custom.state;
+        existingCustom[custom.name] = custom.state.toString();
       }
       setItemStatus(existingCustom);
     },
   });
 
   const changeCustom = useMutation(
-    (body: { name: string; state: number }[]) => updateCustom(memberId, body),
+    (body: { name: string; state: string }[]) => updateCustom(memberId, body),
     {
       onSuccess() {
         alert("아바타 수정 성공");
