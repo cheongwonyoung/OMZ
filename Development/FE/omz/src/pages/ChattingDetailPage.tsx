@@ -59,16 +59,12 @@ export default function ChattingDetailPage() {
   } = useMutation((dto: Dto) => getChattingList(roomId, memberId, dto), {
     onSuccess(data) {
       setChatOtherInfo(data.data.chatOtherInfo);
-      console.log(data);
       const chatBefore = data.data.chatList;
-      console.log(chatBefore);
       if (chatBefore.length !== 0) {
         setChatMessages((prev: { [key: string]: any }[]) => [
           ...prev,
           ...chatBefore,
         ]);
-        console.log(chatBefore[chatBefore.length - 1]);
-        console.log(chatPaging);
         const last = chatBefore[chatBefore.length - 1];
         setChatPaging({
           cursor: last.createdTime,
@@ -94,7 +90,6 @@ export default function ChattingDetailPage() {
     new IntersectionObserver(
       (entries) => {
         const isIntersecting = entries[0].isIntersecting;
-        console.log("ggg");
         if (isIntersecting) {
           setPage((prev) => prev + 1);
         }
@@ -179,7 +174,7 @@ export default function ChattingDetailPage() {
     if (connected) {
       client.current.deactivate();
       setConnected(false);
-      console.log("deactivate!");
+      // console.log("deactivate!");
     }
   };
 
