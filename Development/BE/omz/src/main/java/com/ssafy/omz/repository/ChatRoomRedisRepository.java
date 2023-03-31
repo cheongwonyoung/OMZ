@@ -32,7 +32,7 @@ public class ChatRoomRedisRepository { // ChatRoomRedisRepository
     }
 
     //채팅 SubScribe 할 때, WebSocket SessionId 를 통해서 redis에 저장
-    public void enterChatRoom(String roomId, String sessionId, String username) {
+    public void enterChatRoom(String roomId, String sessionId, String nickname) {
 
         //  매개변수 String username -> nickName? memberId?
 
@@ -47,7 +47,7 @@ public class ChatRoomRedisRepository { // ChatRoomRedisRepository
         //  roomId$sessionId
         //  roomId\x06닉네임
         // \x06 : & 의미하는 듯 ( ASCII )
-        opsHashEnterRoom.put(CHAT_ROOM_ID_ + roomId, sessionId, username);
+        opsHashEnterRoom.put(CHAT_ROOM_ID_ + roomId, sessionId, nickname);
 
 
         System.out.println("[ChatRoomRedisRepository enterChatRoom] getRoomIdByRedisCache : " +  opsHashEnterRoom.get(SESSION_ID, sessionId));

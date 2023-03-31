@@ -1,8 +1,12 @@
 package com.ssafy.omz.dto.resp;
 
+import com.ssafy.omz.entity.Face;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
 
 public class MemberResponseDto {
@@ -27,7 +31,7 @@ public class MemberResponseDto {
         private Long memberId;
         private String nickname;
         private String file;
-        private boolean isRequestPossble;
+        private boolean isRequestPossible;
         public static FriendSearch fromEntity(com.ssafy.omz.entity.Member memberEntity) {
             return FriendSearch.builder()
                     .memberId(memberEntity.getMemberId())
@@ -53,4 +57,63 @@ public class MemberResponseDto {
                     .build();
         }
     }
+    @Data
+    @Builder
+    public static class MyPageMainInfo {
+        private Long memberId;
+        private String nickname;
+        private String mbti;
+        private FaceResponseDto.Info face;
+        private String faceName;
+        public static MyPageMainInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+            return MyPageMainInfo.builder()
+                    .memberId(memberEntity.getMemberId())
+                    .nickname(memberEntity.getNickname())
+                    .mbti(memberEntity.getMbti())
+                    .face(FaceResponseDto.Info.fromEntity(memberEntity.getFace()))
+                    .faceName(memberEntity.getFaceName())
+                    .build();
+        }
+    }
+
+    @Data
+    @Builder
+    public static class MyPageModifyInfo {
+        private Long memberId;
+        private String nickname;
+        private String mbti;
+        private FaceResponseDto.Info preferFace;
+        public static MyPageModifyInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+            return MyPageModifyInfo.builder()
+                    .memberId(memberEntity.getMemberId())
+                    .nickname(memberEntity.getNickname())
+                    .mbti(memberEntity.getMbti())
+                    .preferFace(FaceResponseDto.Info.fromEntity(memberEntity.getPreferFace()))
+                    .build();
+        }
+    }
+    @Data
+    @Builder
+    public static class MemberInfo {
+        private Long memberId;
+        private String email;
+        private String mbti;
+        private String nickname;
+        private String file;
+        private FaceResponseDto.Info face;
+        private FaceResponseDto.Info preferFace;
+
+        public static MemberInfo fromEntity(com.ssafy.omz.entity.Member memberEntity) {
+            return MemberInfo.builder()
+                    .memberId(memberEntity.getMemberId())
+                    .email(memberEntity.getEmail())
+                    .mbti(memberEntity.getMbti())
+                    .nickname(memberEntity.getNickname())
+                    .file(memberEntity.getFile())
+                    .face(FaceResponseDto.Info.fromEntity(memberEntity.getFace()))
+                    .preferFace(FaceResponseDto.Info.fromEntity(memberEntity.getPreferFace()))
+                    .build();
+        }
+    }
+
 }

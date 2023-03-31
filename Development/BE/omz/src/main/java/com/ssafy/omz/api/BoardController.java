@@ -108,7 +108,7 @@ public class BoardController {
     }
     @ApiOperation(value = "커뮤니티 글 작성", notes = "커뮤니티 글 작성하기")
     @PostMapping("")
-    public ResponseEntity<?> boardWrite(@RequestParam MultipartFile file,
+    public ResponseEntity<?> boardWrite(@RequestParam(required = false) MultipartFile file,
                                         @RequestParam String dto) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -120,10 +120,12 @@ public class BoardController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기")
+    @ApiOperation(value = "커뮤니티 글 수정", notes = "커뮤니티 글 수정하기\n " +
+            "dto는 이렇게 쥬시면 감사하겠습니당 \n" +
+            "{\"content\": \"content 내용\", \"memberId\": memberId}")
     @PutMapping("/{boardId}")
     public ResponseEntity<?> boardUpdate(@PathVariable Long boardId,
-                                         @RequestParam MultipartFile file,
+                                         @RequestParam(required = false) MultipartFile file,
                                          @RequestParam String dto) {
         try {
             ObjectMapper mapper = new ObjectMapper();
