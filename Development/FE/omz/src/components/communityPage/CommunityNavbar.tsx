@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
@@ -38,21 +38,21 @@ export default function CommunityNavbar() {
           </NavLink>
         </div>
         <div className="flex flex-1 justify-center items-center font-bold text-center">
-          <div className="flex justify-center items-center w-[50px] h-[50px] rounded-[10px] bg-white">
-            <div
-              className="flex justify-center items-center relative w-[45px] h-[45px] rounded-[10px] bg-white border border-black"
-              id="btn"
-            >
-              <NavLink
-                to="/community/create"
-                className={({ isActive }) =>
-                  isActive ? "text-[#5B5685]" : "text-black"
-                }
+          <NavLink
+            to="/community/create"
+            className={({ isActive }) =>
+              isActive ? "text-[#5B5685]" : "text-black"
+            }
+          >
+            <div className="flex justify-center items-center w-[50px] h-[50px] rounded-[10px] bg-white">
+              <div
+                className="flex justify-center items-center relative w-[45px] h-[45px] rounded-[10px] bg-white border border-black"
+                id="btn"
               >
                 <FontAwesomeIcon icon={faPlus} className="text-2xl" />
-              </NavLink>
+              </div>
             </div>
-          </div>
+          </NavLink>
         </div>
 
         <div className="flex flex-1 justify-center text-xs font-bold text-center">

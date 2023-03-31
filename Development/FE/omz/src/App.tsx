@@ -23,7 +23,6 @@ import MiniRoomUpdatePage from "./pages/MiniRoomUpdatePage";
 import CommunityDetailPage from "./pages/CommunityDetailPage";
 import MyPageUpdatePage from "./pages/MyPageUpdatePage";
 import MyPageCustomPage from "./pages/MyPageCustomPage";
-import SignUpEnd from "./pages/SignUpEndPage";
 import SignUpEndPage from "./pages/SignUpEndPage";
 import CheckIsLoginPage from "./pages/CheckIsLoginPage";
 
@@ -42,10 +41,6 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   path: "",
-      //   element: <MainPage />,
-      // },
       {
         path: "",
         element: <CheckIsLoginPage component={<MainPage />} />,
@@ -54,7 +49,6 @@ const router = createBrowserRouter([
         path: "/newfriends",
         element: <CheckIsLoginPage component={<NewFriendsPage />} />,
       },
-      // TODO 나중에 path 뒤에 /:id 추가
       {
         path: "mypage/:id",
         element: <CheckIsLoginPage component={<MyPage />} />,
@@ -63,7 +57,6 @@ const router = createBrowserRouter([
         path: "myfriends",
         element: <CheckIsLoginPage component={<MyFriendsPage />} />,
       },
-      // TODO 나중에 path 뒤에 /:id 추가
       {
         path: "miniroom/:id",
         element: <CheckIsLoginPage component={<MiniRoomPage />} />,

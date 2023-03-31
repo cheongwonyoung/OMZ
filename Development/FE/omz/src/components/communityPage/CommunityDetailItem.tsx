@@ -1,12 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faComment,
-  faHeart,
-  faPencil,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { images } from "../../assets/images";
+import { faComment, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef } from "react";
 import DeleteCommentModal from "../common/DeletetModal";
@@ -47,7 +40,6 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
   // 시간 원하는 걸로 바꾸기
   const date = new Date(item.registeredTime);
 
-  // TODO: imageUrl은 이렇게 하기 (이건 커뮤니티 내 사진)
   const imageUrlRoot = imageUrl + item.file;
   const boardId = item.boardId;
   const file = item.file;
@@ -146,17 +138,11 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
 
   return (
     <>
-      <div className="w-10/12 flex justify-center m-5 max-w-4xl">
+      <div className="w-11/12 max-w-3xl flex justify-center m-5">
         <div className="w-full bg-white flex flex-col justify-center rounded-xl p-5">
-          <div
-            className="flex justify-start gap-5 items-center hover:scale-105 cursor-pointer"
-            onClick={(e) => {
-              e?.stopPropagation();
-              goToMyPage(item.member.memberId);
-            }}
-          >
+          <div className="flex justify-start gap-5 items-center">
             <img
-              className="flex-grow-0 flex-shrink-0 w-[3rem] h-[3rem]"
+              className="rounded-full border w-[3rem] h-[3rem] hover:scale-105 cursor-pointer"
               src={imageUrl + item.member.file}
               onClick={(e) => {
                 e?.stopPropagation();
@@ -164,10 +150,16 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
               }}
             />
             <div className="flex flex-col">
-              <p className="flex-grow-0 flex-shrink-0 text-ml font-bold">
+              <p
+                className="text-ml font-bold hover:scale-105 cursor-pointer"
+                onClick={(e) => {
+                  e?.stopPropagation();
+                  goToMyPage(item.member.memberId);
+                }}
+              >
                 {item.member.nickname}
               </p>
-              <p className="flex-grow-0 flex-shrink-0 text-sm ">
+              <p className="text-sm ">
                 {moment(date).format("YYYY년 MM월 DD일 HH:mm")}
               </p>
             </div>

@@ -12,9 +12,11 @@ export default function LoginPage() {
     isLogin && navigate("/");
   });
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center">
-      <img src={images.main_logo} alt="" className="w-52" />
-      <img src={images.sub_logo} alt="" className="w-56" />
+    <div className="w-full h-screen flex flex-col justify-start items-center">
+      <div className="mt-48">
+        <img src={images.main_logo} alt="" className="w-52" />
+        <img src={images.sub_logo} alt="" className="w-56" />
+      </div>
       <LoginBtn />
     </div>
   );

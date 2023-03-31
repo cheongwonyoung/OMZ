@@ -2,10 +2,10 @@ import FriendSearchItems from "./FriendSearchItems";
 import { v4 as uuidv4 } from "uuid";
 
 interface searchList {
-  memberId?: number;
-  nickname?: string;
-  requestPossible?: boolean;
-  file?: null;
+  memberId: number;
+  nickname: string;
+  requestPossible: boolean;
+  file: null;
 }
 
 type Props = {
@@ -18,6 +18,7 @@ export default function FriendSearchList({
   handleProposalModal,
   handleModalFor,
 }: Props) {
+  console.log(searchList);
   return (
     <div className="w-11/12 mt-8 flex flex-col gap-4">
       {searchList.map((search) => (

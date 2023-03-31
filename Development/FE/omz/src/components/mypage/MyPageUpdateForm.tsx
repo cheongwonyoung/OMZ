@@ -1,9 +1,9 @@
 import UpdateItem from "./UpdateItem";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UpdateAnimal from "./UpdateAnimal";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowDown, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useMutation, useQuery } from "react-query";
 import {
   getMyUserInfo,

@@ -11,7 +11,6 @@ export default function BackBtn({ goBack }: Props) {
       className="text-black w-full h-full flex justify-center items-center text-xl hover:scale-105 cursor-pointer"
       // className="bg-black text-white w-full h-full flex justify-center items-center rounded-xl"
     >
-      <p className="title pr-3">Main</p>
       <FontAwesomeIcon icon={faArrowLeft} />
     </div>
   );

@@ -1,10 +1,15 @@
-import { NavigateFunction, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faHome, faMessage } from "@fortawesome/free-solid-svg-icons";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
+import { useQuery } from "react-query";
+import { talkToFriends } from "../../api/chatting";
+import { useEffect } from "react";
 
 type Props = {
   nickname?: string;
-  memberId?: number;
+  memberId: number;
   requestPossible?: boolean;
   handleModalFor(memberId: number, nickname: string): void;
   handleProposalModal(): void;
@@ -18,6 +23,27 @@ export default function FriendSearchItems({
   handleProposalModal,
 }: Props) {
   const navigate = useNavigate();
+  const myId = useRecoilValue(userStatus).id;
+
+  const { data, refetch } = useQuery(
+    "talkfriends",
+    () => talkToFriends(myId, memberId),
+    {
+      enabled: false,
+    }
+  );
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
+  const onClick = () => {
+    refetch();
+    const roomId = data!.data;
+    navigate(`/chatting/${myId}/${roomId}`, {
+      state: { roomId },
+    });
+  };
 
   return (
     <div className="w-full">
@@ -26,6 +52,14 @@ export default function FriendSearchItems({
           {nickname}
         </p>
         <div className="flex gap-2">
+          <button
+            className="text-base hover:font-bold hover:scale-105 mr-5"
+            onClick={onClick}
+          >
+            <FontAwesomeIcon className="text-pink-400" icon={faMessage} />{" "}
+            &nbsp; 말 걸기
+          </button>
+
           {requestPossible && (
             <button
               className="text-base hover:font-bold hover:scale-105 mr-5"
@@ -34,8 +68,8 @@ export default function FriendSearchItems({
                 handleProposalModal();
               }}
             >
-              <FontAwesomeIcon icon={faHeart} className="text-pink-400" /> &nbsp;
-              친구신청
+              <FontAwesomeIcon icon={faHeart} className="text-pink-400" />{" "}
+              &nbsp; 친구신청
             </button>
           )}
 
