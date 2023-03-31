@@ -28,4 +28,10 @@ public class MiniRoomLikes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "mini_room_id")
     private MiniRoom miniRoom;
+
+
+    public MiniRoomLikes(MiniRoom miniRoom, Member member){
+        this.miniRoom = miniRoom;
+        this.member = member;
+    }
 }

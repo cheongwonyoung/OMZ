@@ -38,4 +38,16 @@ public class MiniRoom {
         this.member = member;
         this.stateMessage = stateMessage;
     }
+
+
+    public MiniRoom updateStateMessage(String stateMessage){
+        this.stateMessage = stateMessage;
+        return this;
+    }
+
+    public MiniRoom setLikes(int likes){
+        this.likes = likes;
+        return this;
+    }
+
 }

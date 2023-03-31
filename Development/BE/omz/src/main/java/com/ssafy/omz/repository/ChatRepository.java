@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ChatRepository extends JpaRepository<Chat,Long> {
-//    Slice<Chat> findAllByCreatedTimeBeforeAndChatRoomIdOrderByCreatedTimeDesc(String cursorCreatedTime, Long chatRoomId, Pageable pageable);
+    Slice<Chat> findAllByCreatedTimeBeforeAndChatRoomChatRoomIdOrderByCreatedTimeDesc(String cursorCreatedTime, Long chatRoomId, Pageable pageable);
 
-    List<Chat> findAllByCreatedTimeAfterOrderByCreatedTimeDesc(LocalDateTime cursorCreatedTime);
+    List<Chat> findAllByCreatedTimeAfterOrderByCreatedTimeDesc(String cursorCreatedTime);
 
 }

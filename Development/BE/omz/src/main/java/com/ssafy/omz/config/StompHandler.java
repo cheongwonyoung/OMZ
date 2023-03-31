@@ -1,7 +1,10 @@
 package com.ssafy.omz.config;
 
 import com.ssafy.omz.dto.req.ChatMessage;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
+import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.service.ChatRoomService;
+import com.ssafy.omz.service.MemberService;
 import com.ssafy.omz.service.RedisPublisher;
 import com.ssafy.omz.util.ChatUtils;
 import lombok.RequiredArgsConstructor;
@@ -9,11 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
+import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @Slf4j
@@ -21,11 +27,13 @@ import java.util.Optional;
 @Component
 public class StompHandler implements ChannelInterceptor {
 
-    public static final String TOKEN = "token"; // Authorization ?
+    public static final String TOKEN = "token";
 
     public static final String SIMP_DESTINATION = "simpDestination";
     public static final String SIMP_SESSION_ID = "simpSessionId";
     public static final String INVALID_ROOM_ID = "InvalidRoomId";
+
+    private final MemberService memberService;
 
     private final ChatRoomService chatRoomService;
 
@@ -39,14 +47,33 @@ public class StompHandler implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
 //        String sessionId = (String) message.getHeaders().get("simpSessionId");
+//        String token = accessor.getFirstNativeHeader("Authorization").substring(7);
+//        String token = accessor.getFirstNativeHeader("Authorization").substring(7);
+
+//        MemberResponseDto.LittleInfo memberInfo = null;
+
 
         // 최초 소켓 연결
         if (StompCommand.CONNECT == accessor.getCommand()) {
-            // 토큰 추출 -> 사용자 정보 확인
-            String token = accessor.getFirstNativeHeader(TOKEN);
-            log.info("[StompHandler preSend] : CONNECT Token : "+token);
 
-//            String token = accessor.getFirstNativeHeader("Authorization").substring(7); // 7?
+            // 토큰 추출 -> FE에서 connectHeaders : {token : "토큰값"}
+
+//            log.info("[StompHandler preSend] : CONNECT Authorization : " + accessor.getFirstNativeHeader("Authorization"));
+
+
+//            String token = accessor.getFirstNativeHeader("Authorization").substring(7);
+//            String token = accessor.getFirstNativeHeader(TOKEN);
+
+            log.info("[StompHandler preSend] : CONNECT Authorization : ");
+//            try {
+//                memberInfo = memberService.getLittleInfo(token);
+//                log.info("[CONNECT] memberInfo : {}", memberInfo.toString());
+//            } catch (UnsupportedEncodingException e) {
+//                throw new RuntimeException(e);
+//            }
+
+//            log.info("[StompHandler preSend] : CONNECT token : " + accessor.getFirstNativeHeader(TOKEN));
+
 //            if(jwtDecoder.decodeUserId(token) == null) {
 //                throw new LoginUserNotFoundException("로그인을 해주시기 바랍니다.");
 //            }
@@ -54,11 +81,26 @@ public class StompHandler implements ChannelInterceptor {
         // 소켓 연결 후, SUBSCRIBE 등록 ( 구독 요청 )
         else if (StompCommand.SUBSCRIBE == accessor.getCommand()) {
 
-            log.info("[StompHandler preSend] : SUBSCRIBE");
+            log.info("[SubScribe destination] : " + message.getHeaders().get(SIMP_DESTINATION));
+            log.info("[SubScribe sessionId] : " + message.getHeaders().get(SIMP_SESSION_ID));
 
-            // 토큰 추출 -> 사용자 정보 확인
-            String token = accessor.getFirstNativeHeader(TOKEN);
-//            String token = accessor.getFirstNativeHeader("Authorization").substring(7);
+            log.info("[StompHandler preSend] : SUBSCRIBE ");
+
+
+//            log.info("[StompHandler preSend] : SUBSCRIBE {}", token);
+
+            // 토큰 추출 -> FE에서 connectHeaders : {token : "토큰값"}
+//            token = accessor.getFirstNativeHeader(TOKEN);
+//            String token1 = accessor.getFirstNativeHeader("Authorization");
+
+//            String token2 = accessor.getFirstNativeHeader(TOKEN);
+//
+//
+//            try {
+//                memberInfo = memberService.getLittleInfo(token2);
+//            } catch (UnsupportedEncodingException e) {
+//                throw new RuntimeException(e);
+//            }
 
             // ---  blog start ----
 
@@ -98,14 +140,15 @@ public class StompHandler implements ChannelInterceptor {
 
             String roomId = chatUtils.getRoomIdFromDestination(destination);
 
-            // for Test를 위해 token 값 일단 넣어주기
-//            String username = token; // null값 들어가는게 맞긴 한데 확인을 못해보내 ㅈ금 ...
+//            String nickname = memberInfo.getNickname();
+//            String memberId = String.valueOf(memberInfo.getMemberId());
 
-            // ***********TEST*****************
-            String username = "sunheeTestStompHandler";
+//            log.info("[Subscribe] memberInfo nickname : {}, memberId : {}", nickname, memberId);
+
+            String nickname = "StompHandler";
 
             //redis에  key(roomId) :  Value( sessionId , nickname ) 저장
-            chatRoomService.enterChatRoom(roomId, sessionId, username); // 닉네임으로? 아니면 memberId로?
+            chatRoomService.enterChatRoom(roomId, sessionId, nickname); // 닉네임으로? 아니면 memberId로?
             //  SESSION_ID - sessionId - roomId
             //  CHAT_ROOM_ID_roomId - sessionId - 유저 아이디
 
@@ -114,10 +157,10 @@ public class StompHandler implements ChannelInterceptor {
 
             redisPublisher.publish(topic,
                     ChatMessage.builder()
-//                            .memberId()
+//                            .memberId(memberId)
+//                            .nickName(nickname)
                             .type(ChatMessage.MessageType.ENTER)
                             .roomId(Long.valueOf(roomId))
-//                            .userList(chatRoomService.findUser(roomId, sessionId))
                             .build()
             );
             // publish ENTER 보내서 RedisSubscriber 호출됨
@@ -131,6 +174,9 @@ public class StompHandler implements ChannelInterceptor {
         //  소켓 연결 후, 소켓 연결 해제 시 ( 근본 GitHub )
         else if (StompCommand.DISCONNECT == accessor.getCommand()) {
             log.info("[StompHandler preSend] : DISCONNECT");
+
+            // 토큰 추출 -> FE에서 connectHeaders : {token : "토큰값"}
+//            String token = accessor.getFirstNativeHeader(TOKEN);
 
 //            String rawToken = Optional.ofNullable(accessor.getFirstNativeHeader("Authorization"))
 //                    .orElse("unknownUser");
@@ -148,14 +194,6 @@ public class StompHandler implements ChannelInterceptor {
 //                // HashOperations에서 delete(sessionId)
 //            }
 
-            //  채팅방 나가면 Disconnect 되고 세션 아이디까지 잘 출력되는데
-            //  이걸 두번을 해서 두번째에서 null 발생해서 ExceptionWebSocketHandlerDecorator
-            //  왜 ㅅㅂ 2번 하는겨?;;;;;
-            //  걍 화면 꺼버리고 나가면 에러 안 나는데
-            //  그 뒤로 가기 버튼 누르면 2번 먹힘ㅋㅋㅋ ㅜ 후ㅜ -> 프론트 뒤로가기 버튼 때문인가..?
-            //  참고 깃허브 보고 뒤로 가기 버튼을 UNSUBSCRIBE로 바꿔줌
-            //  근데 이게 맞나..? 그리고 프론트 부분 sub-0으로 바꿨는데 이부분은 맞는 부분으로 가야하는디
-
             String sessionId = Optional.ofNullable(
                     (String) message.getHeaders().get(SIMP_SESSION_ID)
             ).orElse(null);
@@ -168,7 +206,7 @@ public class StompHandler implements ChannelInterceptor {
             redisPublisher.publish(topic,
                     ChatMessage.builder()
                             .type(ChatMessage.MessageType.QUIT)
-                            .roomId(roomId != null ? Long.parseLong(roomId) : null)
+                            .roomId(Long.valueOf(roomId))
 //                            .userList(chatRoomService.findUser(roomId, sessionId))
                             .build()
             );
