@@ -55,7 +55,7 @@ export default function CommunityCreatePage() {
     <div className="flex flex-col items-center justify-center">
       <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
       <div className="mb-5"></div>
-      <form action="" className="w-10/12 pb-10" onSubmit={submitHandler}>
+      <form action="" className="w-10/12 pb-10 max-w-3xl" onSubmit={submitHandler}>
         <div className="w-full flex justify-between items-start gap-2">
           <img
             src={IMAGE_ROOT + profile}

@@ -25,7 +25,7 @@ export default function CommunityCommentInput({ onCommentSubmit }: Props) {
   const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
   const profile = useRecoilValue(userStatus).profile_img;
   return (
-    <div className="w-11/12 flex justify-between items-center gap-[15px] px-[30px] p-[15px] max-w-4xl border-b border-t border-black bg-white">
+    <div className="w-11/12 max-w-3xl flex justify-between items-center gap-[15px] px-[30px] p-[15px] border-b border-t border-black bg-white">
         <img
           className="w-10 h-10 rounded-full border"
           src={IMAGE_ROOT + profile}
@@ -42,7 +42,7 @@ export default function CommunityCommentInput({ onCommentSubmit }: Props) {
             maxLength={70}
             ref={commentInputRef}
           />
-          <button>
+          <button className="hover:text-blue-400">
             <FontAwesomeIcon icon={faCheck} />
           </button>
         </form>
