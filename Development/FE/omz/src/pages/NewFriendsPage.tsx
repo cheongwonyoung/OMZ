@@ -40,10 +40,10 @@ export default function NewFriendsPage() {
 
   const [searchList, setSearchList] = useState<
     {
-      memberId?: number;
-      nickname?: string;
-      requestPossible?: boolean;
-      file?: null;
+      memberId: number;
+      nickname: string;
+      requestPossible: boolean;
+      file: null;
     }[]
   >([]);
 
