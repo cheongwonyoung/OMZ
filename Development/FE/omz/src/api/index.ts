@@ -9,8 +9,8 @@ export const instance = axios.create({
 });
 
 
-// 음악추천 api Django Url
 export const djInstance = axios.create({
+  // baseURL: "http://localhosst:8000",
   baseURL: "http://127.0.0.1:8000/django",
   headers: { "Content-Type": "application/json" },
 });
