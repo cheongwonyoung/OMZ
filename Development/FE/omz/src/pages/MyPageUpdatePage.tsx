@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 export default function MyPageUpdatePage() {
   const memberId = useRecoilValue(userStatus).id;
+
   return (
     <div className="flex flex-col items-center">
       <TitleBar

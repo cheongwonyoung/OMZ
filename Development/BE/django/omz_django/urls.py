@@ -34,7 +34,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path(ROOT_PATH + 'admin/', admin.site.urls),
     path(ROOT_PATH + "music_choice/",include('music_choice.urls')),
-    
+    path(ROOT_PATH + "reco_friend/", include('reco_friend.urls')),
 ]
 
 if settings.DEBUG:

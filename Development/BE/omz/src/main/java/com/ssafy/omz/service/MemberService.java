@@ -1,13 +1,17 @@
 package com.ssafy.omz.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ssafy.omz.dto.req.MemberRequestDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.TokenDto;
 import com.ssafy.omz.dto.req.FaceRequestDto;
 import com.ssafy.omz.dto.req.MemberRequestDto;
 
+import com.ssafy.omz.entity.Member;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -21,5 +25,17 @@ public interface MemberService{
     // refresh code에 해당하는 유저 email 반환
     String memberEmail(String token);
 
-//    void updateMemberInfo(Long memberId, MemberRequestDto.Write member);
+    // 회원가입
+    MemberResponseDto.MemberInfo updateMemberInfo(String token, MultipartFile file, MemberRequestDto.MemberInfo memberInfo, FaceRequestDto.Write faceInfo, FaceRequestDto.Write prefeFacerInfo) throws UnsupportedEncodingException;
+
+    // 회원정보 조회
+    MemberResponseDto.MemberInfo getMemberInfo(String token) throws UnsupportedEncodingException;
+
+    // 회원정보 조회 (회원가입용)
+    MemberResponseDto.MemberInfo getJoinMemberInfo(String token) throws UnsupportedEncodingException;
+
+    // 회원정보 조회(채팅)
+    MemberResponseDto.LittleInfo getLittleInfo(String token) throws UnsupportedEncodingException;
+
+    String changeImage(String token, MultipartFile file) throws UnsupportedEncodingException;
 }

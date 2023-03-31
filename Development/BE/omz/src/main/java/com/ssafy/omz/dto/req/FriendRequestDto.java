@@ -3,8 +3,10 @@ package com.ssafy.omz.dto.req;
 import com.ssafy.omz.dto.resp.BoardResponseDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -15,6 +17,8 @@ public class FriendRequestDto {
 
     @Data
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     @ApiModel(value = "친구 신청 정보", description = "신청 메세지, toMemberId, fromMemberId를 가진 Class")
     public static class Write {
         @Size(min=1, max=20, message = "바르지 않은 message 크기 입니다")
@@ -31,7 +35,6 @@ public class FriendRequestDto {
 
     @Data
     @Builder
-//    @Schema
     public static class Info {
         private String message;
         private MemberResponseDto.LittleInfo toMember;

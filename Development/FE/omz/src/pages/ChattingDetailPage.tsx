@@ -122,7 +122,8 @@ export default function ChattingDetailPage() {
 
   const connect = () => {
     client.current = new StompJS.Client({
-      brokerURL: "ws://localhost:8080/api/stomp-chat/websocket",
+      // brokerURL: "ws://localhost:8080/api/stomp-chat/websocket",
+      brokerURL: "ws://j8a705.p.ssafy.io:8080/api/stomp-chat/websocket",
       connectHeaders: {
         login: "user",
         password: "password",
