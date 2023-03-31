@@ -11,6 +11,7 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useQuery } from "react-query";
 import { getMyPageInfos } from "../api/myPage";
+import { Bear } from "../assets/3DAvatar/Bear";
 
 export default function MyPage() {
   const [showModal, setShowModal] = useState(false);
@@ -31,6 +32,8 @@ export default function MyPage() {
     switch (animal) {
       case "토끼":
         return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
+      case "곰":
+        return <CameraAvatar Avatar={<Bear position={[0, 0.3, 0]} />} />;
     }
   };
 

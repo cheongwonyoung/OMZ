@@ -1,6 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import { useMutation } from "react-query";
+import { changeStateMessage } from "../../api/myRoom";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../../recoil/userAtom";
 
 type Props = {
   handleMessage(e: any): void;
@@ -9,18 +13,33 @@ type Props = {
 export default function StateMessage({ handleMessage, message }: Props) {
   const [update, setUpdate] = useState(true);
 
-  const btn = update ? (
-    <FontAwesomeIcon icon={faPen} />
-  ) : (
-    <p className="font-bold text-purple-600">작성</p>
-  );
-
   const changeReadOnly = () => {
     setUpdate((prev) => !prev);
     const inp = document.getElementById("message");
     inp?.focus();
   };
 
+  const memberId = useRecoilValue(userStatus).id;
+  const updateMessage = useMutation(
+    () => changeStateMessage(memberId, message),
+    {
+      onSuccess(data) {
+        console.log(data);
+      },
+    }
+  );
+
+  const goupdate = () => {
+    updateMessage.mutate();
+  };
+
+  const btn = update ? (
+    <FontAwesomeIcon icon={faPen} />
+  ) : (
+    <p className="font-bold text-purple-600" onClick={goupdate}>
+      작성
+    </p>
+  );
   return (
     <div className="relative flex justify-between w-full items-center bg-white h-12 rounded-lg shadow-xl">
       <input
