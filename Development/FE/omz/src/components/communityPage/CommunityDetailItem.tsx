@@ -92,9 +92,13 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
       onSuccess: () => {
         setShowModal(false);
         refetch();
+        navigate("/community");
       },
     }
   );
+  const goDeleteArticle = async () => {
+    deleteArticleItem.mutate(boardId);
+  };
 
   // 게시글 좋아요
   const loveArticle = useMutation(
@@ -132,8 +136,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
   }
 
   function confirmModalHandler(boardId: number) {
-    deleteArticleItem.mutate(boardId);
-    navigate("/community");
+    goDeleteArticle();
   }
 
   return (
