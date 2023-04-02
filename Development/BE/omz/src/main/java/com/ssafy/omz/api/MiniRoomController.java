@@ -1,7 +1,9 @@
 package com.ssafy.omz.api;
 
-import com.ssafy.omz.dto.req.ItemRequestDto;
-import com.ssafy.omz.dto.req.MiniRoomRequestDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.omz.dto.req.*;
+import com.ssafy.omz.dto.resp.BgmResponseDto;
+import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.entity.MiniRoomLikes;
 import com.ssafy.omz.service.MiniRoomLikesService;
 import com.ssafy.omz.service.MiniRoomService;
@@ -10,8 +12,10 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.crypto.interfaces.PBEKey;
 import java.util.HashMap;
@@ -120,6 +124,28 @@ public class MiniRoomController {
         }
     }
 
-    
+    @ApiOperation(value = "미니룸 배경음악 조회", notes = "미니룸 아이디 받아 조회")
+    @GetMapping(value = "/music")
+    public ResponseEntity<?> updateMusicInfo(@RequestParam(required = true) long miniRoomId) {
+        try{
+            BgmResponseDto.BgmInfo bgmInfo = miniRoomService.getBgm(miniRoomId);
+            return new ResponseEntity<>(bgmInfo, HttpStatus.ACCEPTED);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "미니룸 배경음악 등록", notes = "제목, 가수를 받아 저장")
+    @PostMapping(value = "/music")
+    public ResponseEntity<?> updateMusicInfo(@RequestParam(required = true) long miniRoomId, @RequestBody BgmRequestDto.Write musicInfo) {
+        try{
+            miniRoomService.updateBgm(miniRoomId, musicInfo);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
     
 }

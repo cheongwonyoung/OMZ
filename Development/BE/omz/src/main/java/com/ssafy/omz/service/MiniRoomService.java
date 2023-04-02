@@ -1,8 +1,10 @@
 package com.ssafy.omz.service;
 
 
+import com.ssafy.omz.dto.req.BgmRequestDto;
 import com.ssafy.omz.dto.req.ItemRequestDto;
 import com.ssafy.omz.dto.req.MiniRoomRequestDto;
+import com.ssafy.omz.dto.resp.BgmResponseDto;
 import com.ssafy.omz.dto.resp.ItemResponseDto;
 import com.ssafy.omz.dto.resp.MiniRoomResponseDto;
 
@@ -28,4 +30,9 @@ public interface MiniRoomService {
     // 상태메세지 삭제
     void deleteStateMessage(long miniRoomId) throws RollbackException;
 
+    // bgm 정보 등록
+    void updateBgm(long miniRoomId, BgmRequestDto.Write musicInfo);
+
+    // miniroom의 bgm정보
+    BgmResponseDto.BgmInfo getBgm(long miniRoomId);
 }

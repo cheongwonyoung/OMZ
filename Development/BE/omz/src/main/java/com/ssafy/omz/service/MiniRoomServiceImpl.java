@@ -1,17 +1,17 @@
 package com.ssafy.omz.service;
 
+import com.ssafy.omz.dto.req.BgmRequestDto;
 import com.ssafy.omz.dto.req.ItemRequestDto;
 import com.ssafy.omz.dto.req.MiniRoomRequestDto;
+import com.ssafy.omz.dto.resp.BgmResponseDto;
 import com.ssafy.omz.dto.resp.ItemResponseDto;
 import com.ssafy.omz.dto.resp.MemberResponseDto;
 import com.ssafy.omz.dto.resp.MiniRoomResponseDto;
+import com.ssafy.omz.entity.Bgm;
 import com.ssafy.omz.entity.GuestBook;
 import com.ssafy.omz.entity.Item;
 import com.ssafy.omz.entity.MiniRoom;
-import com.ssafy.omz.repository.ItemRepository;
-import com.ssafy.omz.repository.ItemTypeRepository;
-import com.ssafy.omz.repository.MemberRepository;
-import com.ssafy.omz.repository.MiniRoomRepository;
+import com.ssafy.omz.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,6 +31,7 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     private final MiniRoomRepository miniRoomRepository;
     final private ItemRepository itemRepository;
     final private ItemTypeRepository itemTypeRepository;
+    final private BgmRepository bgmRepository;
 
     // 미니룸 3D 불러오기
     @Override
@@ -84,5 +85,20 @@ public class MiniRoomServiceImpl implements MiniRoomService{
         MiniRoom miniRoom = miniRoomRepository.findByMiniRoomId(miniRoomId);
         miniRoom.updateStateMessage("상메로 감정을 표현해봐! 이얏호 레츠고");
     }
-    
+
+    // 음악정보 등록
+    @Override
+    public void updateBgm(long miniRoomId, BgmRequestDto.Write musicInfo) {
+        bgmRepository.save(Bgm.builder().miniRoom(miniRoomRepository.findByMiniRoomId(miniRoomId))
+                .title(musicInfo.getTitle()).singer(musicInfo.getSinger()).build());
+    }
+
+    // miniroom의 bgm 정보 조회
+    @Override
+    public BgmResponseDto.BgmInfo getBgm(long miniRoomId) {
+        Bgm bgm = bgmRepository.findByMiniRoom_MiniRoomId(miniRoomId);
+        BgmResponseDto.BgmInfo bgmInfo = BgmResponseDto.BgmInfo.fromEntity(bgm);
+        return bgmInfo;
+    }
+
 }
