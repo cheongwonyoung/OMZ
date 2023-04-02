@@ -24,11 +24,9 @@ type GLTFResult = GLTF & {
     magic_object: THREE.Mesh;
     magic_object_1: THREE.Mesh;
     angel_wing: THREE.Mesh;
-    ddong_glasses: THREE.Mesh;
     star_glasses: THREE.Mesh;
     alien_glasses: THREE.Mesh;
     circle_glasses: THREE.Mesh;
-    winter_hat: THREE.Mesh;
     arab_object: THREE.Mesh;
     arab_object_1: THREE.Mesh;
     angel_hat: THREE.Mesh;
@@ -41,6 +39,10 @@ type GLTFResult = GLTF & {
     bat_object_1: THREE.Mesh;
     balloon_object: THREE.Mesh;
     balloon_object_1: THREE.Mesh;
+    mouse_cap: THREE.Mesh;
+    yellow_cap: THREE.Mesh;
+    ddong_glasses: THREE.Mesh;
+    my_glasses: THREE.Mesh;
   };
   materials: {
     ["bunny texturee"]: THREE.MeshStandardMaterial;
@@ -55,11 +57,9 @@ type GLTFResult = GLTF & {
     magic_material_1: THREE.MeshStandardMaterial;
     magic_material_2: THREE.MeshStandardMaterial;
     angel_wing_material: THREE.MeshStandardMaterial;
-    ddong_material: THREE.MeshStandardMaterial;
     star_material: THREE.MeshStandardMaterial;
     alien_material: THREE.MeshStandardMaterial;
     circle_glasses_material: THREE.MeshStandardMaterial;
-    winter_material: THREE.MeshStandardMaterial;
     arab_material_1: THREE.MeshStandardMaterial;
     arab_material_2: THREE.MeshStandardMaterial;
     angel_hat_material: THREE.MeshStandardMaterial;
@@ -72,6 +72,10 @@ type GLTFResult = GLTF & {
     bat_object_2: THREE.MeshStandardMaterial;
     balloon_material_1: THREE.MeshStandardMaterial;
     balloon_material_2: THREE.MeshStandardMaterial;
+    mousecap_material: THREE.MeshStandardMaterial;
+    yellow_cap_material: THREE.MeshStandardMaterial;
+    ddong_material: THREE.MeshStandardMaterial;
+    mymaterial: THREE.MeshStandardMaterial;
   };
 };
 interface Item {
@@ -95,8 +99,8 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
             <mesh
               geometry={nodes.heart_glasses.geometry}
               material={materials.heart_glasses_material}
-              position={[-0.5, 2.8, 0.58]}
-              rotation={[-0.01, -0.8, -0.04]}
+              position={[-0.53, 2.81, 0.61]}
+              rotation={[0.23, -0.74, 0.15]}
               scale={0.33}
             />
           </>
@@ -109,7 +113,7 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
               geometry={nodes.star_glasses.geometry}
               material={materials.star_material}
               position={[-0.49, 2.71, 0.52]}
-              rotation={[3.14, -0.95, -3.14]}
+              rotation={[3.12, -0.81, 3.14]}
               scale={0.31}
             />
           </>
@@ -121,8 +125,8 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
             <mesh
               geometry={nodes.alien_glasses.geometry}
               material={materials.alien_material}
-              position={[-0.36, 2.82, 0.43]}
-              rotation={[-3.14, -0.78, -3.14]}
+              position={[-0.32, 2.82, 0.37]}
+              rotation={[-3.14, -0.82, -3.13]}
               scale={0.42}
             />
           </>
@@ -135,21 +139,33 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
               geometry={nodes.circle_glasses.geometry}
               material={materials.circle_glasses_material}
               position={[-0.44, 2.71, 0.51]}
-              rotation={[-3.11, -0.72, -3.06]}
+              rotation={[-3.1, -0.8, -3.05]}
               scale={0.3}
             />
           </>
         );
+      // case "5":
+      //   // 똥 안경
+      //   return (
+      //     <>
+      //       <mesh
+      //         geometry={nodes.ddong_glasses.geometry}
+      //         material={materials.ddong_material}
+      //         position={[-0.51, 2.91, 0.59]}
+      //         rotation={[-3.13, -0.81, -2.91]}
+      //         scale={0.27}
+      //       />
+      //     </>
+      //   );
       case "5":
-        // 똥 안경
         return (
           <>
             <mesh
-              geometry={nodes.ddong_glasses.geometry}
-              material={materials.ddong_material}
-              position={[-0.56, 2.93, 0.65]}
-              rotation={[-3.14, -0.81, -2.91]}
-              scale={0.29}
+              geometry={nodes.my_glasses.geometry}
+              material={materials.mymaterial}
+              position={[-0.31, 2.71, 0.38]}
+              rotation={[-3.13, -0.77, -3.12]}
+              scale={0.39}
             />
           </>
         );
@@ -228,18 +244,30 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
           </>
         );
       case "5":
-        // 털 모자
+        // mouse cap
         return (
           <>
             <mesh
-              geometry={nodes.winter_hat.geometry}
-              material={materials.winter_material}
-              position={[0.67, 4.83, -0.16]}
-              rotation={[1.45, 0, 0]}
-              scale={[-0.02, -0.01, -0.03]}
+              geometry={nodes.mouse_cap.geometry}
+              material={materials.mousecap_material}
+              position={[0.02, 3.45, 0]}
+              rotation={[-0.02, 0.77, 0.03]}
+              scale={0.01}
             />
           </>
         );
+      // case "6":
+      //   return (
+      //     <>
+      //       <mesh
+      //         geometry={nodes.yellow_cap.geometry}
+      //         material={materials.yellow_cap_material}
+      //         position={[-0.19, 4.45, -0.24]}
+      //         rotation={[0.06, 0.12, -0.42]}
+      //         scale={0.41}
+      //       />
+      //     </>
+      //   );
     }
   };
   // 날개 custom
@@ -252,8 +280,8 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
             <mesh
               geometry={nodes.angel_wing.geometry}
               material={materials.angel_wing_material}
-              position={[-0.33, 1.48, -0.63]}
-              rotation={[2.97, 0.71, -3.01]}
+              position={[0.1, -0.03, -0.12]}
+              rotation={[-Math.PI, 0.81, -Math.PI]}
               scale={0.16}
             />
           </>
@@ -263,8 +291,8 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
         return (
           <>
             <group
-              position={[0.36, 1.04, -0.45]}
-              rotation={[-1.33, -0.18, -0.81]}
+              position={[0.45, 1.05, -0.38]}
+              rotation={[-1.36, -0.21, -0.8]}
               scale={0.44}
             >
               <mesh

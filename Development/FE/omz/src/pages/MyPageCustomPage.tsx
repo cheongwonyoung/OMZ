@@ -15,6 +15,9 @@ import { v4 as uuidv4 } from "uuid";
 import ModalBlackBg from "../components/common/ModalBlackBg";
 import ProfileImgModal from "../components/mypage/ProfileImgModal";
 import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
+import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
+import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
+import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
 
 export default function MyPageCustomPage() {
   const memberId = useRecoilValue(userStatus).id;
@@ -40,7 +43,12 @@ export default function MyPageCustomPage() {
       // <CameraAvatar keepRender={true} Avatar={<Model position={[0, 0, 0]} />} />
       <CameraAvatar
         keepRender={true}
-        Avatar={<Custom_rabbit position={[0, 0, 0]} itemStatus={itemStatus} />}
+        Avatar={
+          //<Custom_rabbit position={[0, -0.2, 0]} itemStatus={itemStatus} />
+          // <Custom_dog position={[0, 0, 0]} itemStatus={itemStatus} />
+          //<Custom_fox position={[0, 0.2, 0]} itemStatus={itemStatus} />
+          <Custom_bear position={[0, 0.2, 0]} itemStatus={itemStatus} />
+        }
       />
     );
     // }
