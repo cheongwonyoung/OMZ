@@ -5,6 +5,7 @@ RUN python -V
 RUN pip install --upgrade pip
 # 필요한 모듈 설치
 RUN pip3 install django
+RUN pip install django-cors-headers
 RUN pip uninstall mysql-connector
 RUN pip install mysql-connector-python
 
