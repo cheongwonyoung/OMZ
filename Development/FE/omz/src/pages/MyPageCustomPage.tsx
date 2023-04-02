@@ -18,6 +18,8 @@ import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
 import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
 import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
 import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MyPageCustomPage() {
   const memberId = useRecoilValue(userStatus).id;
@@ -68,7 +70,10 @@ export default function MyPageCustomPage() {
     (body: { name: string; state: string }[]) => updateCustom(memberId, body),
     {
       onSuccess() {
-        alert("아바타 수정 성공");
+        toast.success("아바타 수정 완료", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         navigate(-1);
       },
     }
@@ -134,6 +139,7 @@ export default function MyPageCustomPage() {
   };
   return (
     <div className="flex flex-col justify-center items-center w-full">
+      <ToastContainer />
       {isProfile && (
         <ModalBlackBg
           closeModal={handleIsProfile}
