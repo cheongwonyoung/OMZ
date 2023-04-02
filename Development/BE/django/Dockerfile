@@ -5,6 +5,8 @@ RUN python -V
 RUN pip install --upgrade pip
 # 필요한 모듈 설치
 RUN pip3 install django
+RUN pip uninstall mysql-connector
+RUN pip install mysql-connector-python
 
 # 컨테이너 내 프로젝트 root directory 설정
 # /usr/src/app 디렉토리 생성
