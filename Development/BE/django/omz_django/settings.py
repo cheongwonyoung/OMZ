@@ -86,7 +86,7 @@ TEMPLATES = [
 
 # CORS 추가
 CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:8000', 'http://localhost:5173')
+    'http://127.0.0.1:8000', 'http://localhost:5173', 'http://j8a705.p.ssafy.io:5173','https://j8a705.p.ssafy.io:5173')
 CORS_ALLOW_CREDENTIALS = True
 
 WSGI_APPLICATION = 'omz_django.wsgi.application'
