@@ -27,7 +27,6 @@ export default function FriendsCard({
   handleModalFor,
   info,
 }: Props) {
-  // const tags = ["곰상", "ISFP", "짝꿍", "가능성", "95%"];
   const info_tags = [`${info.animal}상`, `${info.mbti}`];
   const possibility_tags = [
     `${Math.ceil(info.result * 100)}%`,
@@ -53,10 +52,7 @@ export default function FriendsCard({
         return (
           <CameraAvatar
             Avatar={
-              <Custom_rabbit
-                position={[0, 0, 0]}
-                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
-              />
+              <Custom_rabbit position={[0, 0, 0]} itemStatus={info.items} />
             }
           />
         );
@@ -64,55 +60,34 @@ export default function FriendsCard({
         return (
           <CameraAvatar
             Avatar={
-              <Custom_bear
-                position={[0, 0.3, 0]}
-                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
-              />
+              <Custom_bear position={[0, 0.3, 0]} itemStatus={info.items} />
             }
           />
         );
       case "여우":
         return (
           <CameraAvatar
-            Avatar={
-              <Custom_fox
-                position={[0, 0, 0]}
-                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
-              />
-            }
+            Avatar={<Custom_fox position={[0, 0, 0]} itemStatus={info.items} />}
           />
         );
       case "공룡":
         return (
           <CameraAvatar
             Avatar={
-              <Custom_dino
-                position={[0, 0, 0]}
-                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
-              />
+              <Custom_dino position={[0, 0, 0]} itemStatus={info.items} />
             }
           />
         );
       case "고양이":
         return (
           <CameraAvatar
-            Avatar={
-              <Custom_cat
-                position={[0, 0, 0]}
-                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
-              />
-            }
+            Avatar={<Custom_cat position={[0, 0, 0]} itemStatus={info.items} />}
           />
         );
       case "강아지":
         return (
           <CameraAvatar
-            Avatar={
-              <Custom_dog
-                position={[0, 0, 0]}
-                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
-              />
-            }
+            Avatar={<Custom_dog position={[0, 0, 0]} itemStatus={info.items} />}
           />
         );
     }
