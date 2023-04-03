@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { getMusicToPick } from "../../api/myRoom";
+import { getMusicToPick } from "../../api/miniRoom";
 import MusicModalItem from "./MusicModalItem";
 import { v4 as uuidv4 } from "uuid";
 

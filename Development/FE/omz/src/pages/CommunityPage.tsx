@@ -11,7 +11,8 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useEffect } from "react";
 import Masonry from "react-masonry-css";
-// import InfiniteScroll from "react-infinite-scroller";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Article = {
   boardId: number;
@@ -22,6 +23,7 @@ export default function CommunityPage() {
   const memberId = useRecoilValue(userStatus).id;
   let page = 0;
   const sort = "registeredTime,DESC";
+
   // 모든 게시글 리스트 불러오기(GET)
   const { data, isLoading, isError, refetch } = useQuery(
     ["articles", memberId, page, sort],
@@ -37,8 +39,11 @@ export default function CommunityPage() {
       createArticle(board),
     {
       onSuccess: () => {
+        toast.success("게시글이 작성되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         refetch();
-        alert("게시글 생성 완료");
       },
     }
   );
@@ -55,10 +60,12 @@ export default function CommunityPage() {
 
   return (
     <div className="flex flex-col items-center">
+      <ToastContainer />
       <TitleBar goto="/" title="Community" icon={images.community_img} />
       <div className="m-3"></div>
       <CommunityCreateSmall onArticleSubmit={handleArticleSubmit} />
       <div className="m-3"></div>
+
       {/* <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.data.map((article: Article) => (
           <CommunityArticleItem
@@ -69,10 +76,7 @@ export default function CommunityPage() {
         ))}
       </div> */}
       <Masonry
-        breakpointCols={{default: 1,
-          3000: 3,
-          1000: 2,
-          600: 1}}
+        breakpointCols={{ default: 1, 3000: 3, 1000: 2, 600: 1 }}
         className="my-masonry-grid w-11/12 gap-4"
         columnClassName="my-masonry-grid_column"
       >

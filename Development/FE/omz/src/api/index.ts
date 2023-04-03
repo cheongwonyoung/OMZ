@@ -1,15 +1,13 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  // baseURL: 'http://127.0.0.1:8080/api',
-  baseURL: 'http://j8a705.p.ssafy.io:8080/api',
-  headers: { 
-    "Content-Type": "application/json", 
-},
+  baseURL: "http://127.0.0.1:8080/api",
+  // baseURL: 'http://j8a705.p.ssafy.io:8080/api',
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-
-// 음악추천 api Django Url
 export const djInstance = axios.create({
   // baseURL: "http://127.0.0.1:8000/django",
   baseURL: 'http://j8a705.p.ssafy.io:8000/django',

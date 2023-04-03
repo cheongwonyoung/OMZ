@@ -1,7 +1,5 @@
 import { useState } from "react";
 import MyPageBox from "../components/mypage/MyPageBox";
-import Camera3D from "../components/common/Camera3D";
-import { Model } from "../assets/3DAvatar/Rabbit";
 import CameraAvatar from "../components/common/CameraAvatar";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
@@ -14,6 +12,14 @@ import html2canvas from "html2canvas";
 import { v4 as uuidv4 } from "uuid";
 import ModalBlackBg from "../components/common/ModalBlackBg";
 import ProfileImgModal from "../components/mypage/ProfileImgModal";
+import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
+import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
+import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
+import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Custom_dino } from "../assets/3DAvatar/Custom_dino";
+import { Custom_cat } from "../assets/3DAvatar/Custom_cat";
 
 export default function MyPageCustomPage() {
   const memberId = useRecoilValue(userStatus).id;
@@ -25,37 +31,92 @@ export default function MyPageCustomPage() {
     wing: 0,
   });
 
+  const [animal, setAnimal] = useState("");
+
   const handleItems = (item: string) => {
     const variety = item.split("_")[0];
     const num = Number(item.split("_")[1]);
-    console.log(itemStatus);
     setItemStatus({ ...itemStatus, [variety]: num });
   };
 
   const showAvatar = () => {
-    // switch (animal) {
-    //   case "rabbit":
-    return (
-      <CameraAvatar keepRender={true} Avatar={<Model position={[0, 0, 0]} />} />
-    );
-    // }
+    switch (animal) {
+      case "토끼":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_rabbit position={[0, 0, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "곰":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_bear position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "여우":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_fox position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "공룡":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_dino position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "고양이":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_cat position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "강아지":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_dog position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+    }
   };
-
   useQuery(["customUpdate", memberId], () => getMyCustomInfo(memberId), {
     onSuccess(data) {
+      setAnimal(data.data.faceName);
       const existingCustom: { [key: string]: number } = {};
       for (const custom of data.data.items) {
         existingCustom[custom.name] = custom.state;
       }
       setItemStatus(existingCustom);
     },
+    staleTime: 0,
   });
 
   const changeCustom = useMutation(
     (body: { name: string; state: number }[]) => updateCustom(memberId, body),
     {
       onSuccess() {
-        alert("아바타 수정 성공");
+        toast.success("아바타 수정 완료", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         navigate(-1);
       },
     }
@@ -121,6 +182,7 @@ export default function MyPageCustomPage() {
   };
   return (
     <div className="flex flex-col justify-center items-center w-full">
+      <ToastContainer />
       {isProfile && (
         <ModalBlackBg
           closeModal={handleIsProfile}

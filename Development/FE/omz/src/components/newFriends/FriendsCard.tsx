@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Model } from "../../assets/3DAvatar/Rabbit";
 import CameraAvatar from "../common/CameraAvatar";
 import {
   faHome,
@@ -9,6 +8,13 @@ import {
 import TagList from "./TagList";
 import FriendBtn from "./FriendBtn";
 import { useNavigate } from "react-router-dom";
+import { Custom_rabbit } from "../../assets/3DAvatar/Custom_rabbit";
+import { Custom_bear } from "../../assets/3DAvatar/Custom_bear";
+import { Custom_fox } from "../../assets/3DAvatar/Custom_fox";
+import { Custom_dino } from "../../assets/3DAvatar/Custom_dino";
+import { Custom_cat } from "../../assets/3DAvatar/Custom_cat";
+import { Custom_dog } from "../../assets/3DAvatar/Custom_dog";
+
 type Props = {
   handleRefuseModal(): void;
   handleProposalModal(): void;
@@ -28,7 +34,7 @@ export default function FriendsCard({
     "가능성",
     "짝꿍",
   ];
-
+  console.log(info);
   const goProposal = () => {
     handleModalFor(info.memberId, info.nickname);
     handleProposalModal();
@@ -41,13 +47,80 @@ export default function FriendsCard({
 
   const navigate = useNavigate();
 
+  const showAvatar = () => {
+    switch (info.animal) {
+      case "토끼":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_rabbit
+                position={[0, 0, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "곰":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_bear
+                position={[0, 0.3, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "여우":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_fox
+                position={[0, 0, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "공룡":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_dino
+                position={[0, 0, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "고양이":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_cat
+                position={[0, 0, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "강아지":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_dog
+                position={[0, 0, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+    }
+  };
+
   return (
     <div className="w-full bg-slate-500/50 rounded-2xl flex flex-col items-center gap-5 pt-10 pb-20">
-      {/* <CameraAvatar Avatar={<Bear />} /> */}
-      {/* <CameraAvatar Avatar={<Fox />} /> */}
-      <div className="h-60">
-        <CameraAvatar Avatar={<Model />} />
-      </div>
+      <div className="h-60">{showAvatar()}</div>
       <div className="text-2xl text-white">{info.nickname}</div>
       <div className="flex flex-col gap-2">
         <TagList tags={info_tags} />

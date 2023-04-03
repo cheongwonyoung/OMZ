@@ -13,6 +13,10 @@ import {
 } from "../../api/myPage";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
+import { data } from "@tensorflow/tfjs";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const mbtiList = [
   "INFP",
   "INFJ",
@@ -64,7 +68,6 @@ export default function MyPageUpdateForm() {
 
   const { refetch } = useQuery("mypageUpdate", () => getMyUserInfo(memberId), {
     onSuccess(data) {
-      console.log(data);
       setName(data.data.nickname);
       setMbti(data.data.mbti);
       setAnimalPrefer(data.data.preferFace);
@@ -120,16 +123,39 @@ export default function MyPageUpdateForm() {
 
   const animalInp = <p>선호하는 동물상</p>;
 
-  const changeName = useMutation(() => updateMyName(memberId, name));
+  const changeName = useMutation(() => updateMyName(memberId, name), {
+    onSuccess: () => {
+      toast.success("닉네임이 수정되었습니다.", {
+        autoClose: 3000,
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    },
+  });
   const updateName = changeName.mutate;
-  const changeMbti = useMutation(() => updateMyMbti(memberId, mbti));
+  const changeMbti = useMutation(() => updateMyMbti(memberId, mbti), {
+    onSuccess: () => {
+      toast.success("MBTI가 수정되었습니다.", {
+        autoClose: 3000,
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    },
+  });
   const updateMbti = changeMbti.mutate;
-  const changePreference = useMutation(() =>
-    updateMyPreference(memberId, animalPrefer)
+  const changePreference = useMutation(
+    () => updateMyPreference(memberId, animalPrefer),
+    {
+      onSuccess: () => {
+        toast.success("선호하는 동물상이 수정되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      },
+    }
   );
   const updatePreference = changePreference.mutate;
   return (
     <div className="max-w-3xl p-8">
+      <ToastContainer />
       <p className="font-bold text-2xl mb-8 ml-1">회원 정보 수정</p>
       <div className="flex flex-col gap-4">
         <UpdateItem tag={nameInp} logic={updateName} />
