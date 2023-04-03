@@ -8,6 +8,19 @@ export const getMusicRecommended = async (data: {}) => {
   return await djInstance.post("music_choice/recommendation", {}, { data });
 };
 
+// BGM 조회
+export const getBGM = (memberId: number) => {
+  return instance.get(`/miniroom/music/?memberId=${memberId}`);
+};
+
+// BGM 업데이트
+export const updateBGM = (
+  memberId: number,
+  info: { singer: string; title: string }[]
+) => {
+  return instance.post(`/miniroom/music/?memberId=${memberId}`, info);
+};
+
 // 상태 메세지 조회
 export const getStateMessage = (id: string) => {
   return instance.get(`/miniroom/?memberId=${id}`);
