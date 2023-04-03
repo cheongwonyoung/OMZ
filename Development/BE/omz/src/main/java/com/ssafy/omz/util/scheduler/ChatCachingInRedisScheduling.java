@@ -19,13 +19,11 @@ import static com.ssafy.omz.service.ChatRedisCacheServiceImpl.CHAT_SORTED_SET_;
 public class ChatCachingInRedisScheduling {
 
     private final ChatUtils chatUtils;
+
     private final RedisTemplate<String, Object> redisTemplate;
 
-    private final RedisTemplate<String, ChatMessage> chatRedisTemplate;
-
     //  매일 새벽 2시 현재로부터 일주일 전 채팅 데이터를 MySql에서 가져와 Redis Cache에 적재
-//    @Scheduled(cron = "0 0 2 * * *")
-    @Scheduled(cron = "0 3/3 14 * * *")
+    @Scheduled(cron = "0 0 2 * * *")
     @Transactional
     public void chatCaching() {
         log.info("[ChatCachingInRedisScheduling chatCaching] redis chat caching start");
