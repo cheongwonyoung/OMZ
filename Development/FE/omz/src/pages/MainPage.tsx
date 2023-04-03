@@ -2,9 +2,18 @@ import { images } from "../assets/images";
 import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
 export default function MainPage() {
   const memberId = useRecoilValue(userStatus).id;
-  console.log(memberId);
+
+  const logOut = () => {
+    const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+    const LOGOUT_REDIRECT_URI = import.meta.env.VITE_LOGOUT_URI;
+    const KAKAO_LOGOUT_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
+    window.location.href = KAKAO_LOGOUT_URI;
+  };
+
   return (
     <div className="flex flex-col justify-center items-center gap-[60px]">
       <div className="flex flex-col justify-center items-center mt-16">
@@ -84,6 +93,12 @@ export default function MainPage() {
               </div>
             </div>
           </Link>
+        </div>
+        <div onClick={logOut} className="cursor-pointer">
+          <FontAwesomeIcon
+            className="text-4xl hover:text-red-500"
+            icon={faPowerOff}
+          />
         </div>
       </div>
     </div>

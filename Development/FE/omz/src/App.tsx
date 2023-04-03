@@ -25,6 +25,7 @@ import MyPageUpdatePage from "./pages/MyPageUpdatePage";
 import MyPageCustomPage from "./pages/MyPageCustomPage";
 import SignUpEndPage from "./pages/SignUpEndPage";
 import CheckIsLoginPage from "./pages/CheckIsLoginPage";
+import LogoutRedirectPage from "./pages/LogoutRedirectPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -120,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "signup/end",
         element: <CheckIsLoginPage component={<SignUpEndPage />} />,
+      },
+      {
+        path: "logout",
+        element: <LogoutRedirectPage />,
       },
     ],
   },
