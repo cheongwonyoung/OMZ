@@ -33,7 +33,7 @@ export default function StepFaceResult({
             Avatar={
               <Custom_rabbit
                 position={[0, 0, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
               />
             }
           />
@@ -45,7 +45,7 @@ export default function StepFaceResult({
             Avatar={
               <Custom_bear
                 position={[0, 0.3, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
               />
             }
           />
@@ -57,7 +57,7 @@ export default function StepFaceResult({
             Avatar={
               <Custom_fox
                 position={[0, 0.3, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
               />
             }
           />
@@ -69,7 +69,7 @@ export default function StepFaceResult({
             Avatar={
               <Custom_dino
                 position={[0, 0.3, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
               />
             }
           />
@@ -81,7 +81,7 @@ export default function StepFaceResult({
             Avatar={
               <Custom_cat
                 position={[0, 0.3, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
               />
             }
           />
@@ -93,7 +93,7 @@ export default function StepFaceResult({
             Avatar={
               <Custom_dog
                 position={[0, 0.3, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
               />
             }
           />

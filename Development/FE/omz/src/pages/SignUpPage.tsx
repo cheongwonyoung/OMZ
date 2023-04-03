@@ -84,7 +84,6 @@ export default function SignUpPage() {
             const myfile = new File([blob], `${uuidv4()}.png`, {
               type: "image/png",
             });
-            const g = URL.createObjectURL(myfile);
             setProfileImg(myfile);
           }
         });

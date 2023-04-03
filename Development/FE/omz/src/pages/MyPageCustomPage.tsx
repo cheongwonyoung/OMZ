@@ -25,17 +25,17 @@ export default function MyPageCustomPage() {
   const memberId = useRecoilValue(userStatus).id;
   const navigate = useNavigate();
   // 처음 값은 다 1로 설정 (모자, 안경, 날개)
-  const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
-    hat: "",
-    glasses: "0",
-    wing: "0",
+  const [itemStatus, setItemStatus] = useState<{ [key: string]: number }>({
+    hat: 0,
+    glasses: 0,
+    wing: 0,
   });
 
   const [animal, setAnimal] = useState("");
 
   const handleItems = (item: string) => {
     const variety = item.split("_")[0];
-    const num = item.split("_")[1];
+    const num = Number(item.split("_")[1]);
     setItemStatus({ ...itemStatus, [variety]: num });
   };
 
@@ -100,16 +100,17 @@ export default function MyPageCustomPage() {
   useQuery(["customUpdate", memberId], () => getMyCustomInfo(memberId), {
     onSuccess(data) {
       setAnimal(data.data.faceName);
-      const existingCustom: { [key: string]: string } = {};
+      const existingCustom: { [key: string]: number } = {};
       for (const custom of data.data.items) {
-        existingCustom[custom.name] = custom.state.toString();
+        existingCustom[custom.name] = custom.state;
       }
       setItemStatus(existingCustom);
     },
+    staleTime: 0,
   });
 
   const changeCustom = useMutation(
-    (body: { name: string; state: string }[]) => updateCustom(memberId, body),
+    (body: { name: string; state: number }[]) => updateCustom(memberId, body),
     {
       onSuccess() {
         toast.success("아바타 수정 완료", {
