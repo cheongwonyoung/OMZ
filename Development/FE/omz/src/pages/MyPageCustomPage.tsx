@@ -145,7 +145,6 @@ export default function MyPageCustomPage() {
             });
             setProfileImg(myfile);
             const img = URL.createObjectURL(myfile);
-            console.log(img);
             setImgUrl(img);
             handleIsProfile();
           }
