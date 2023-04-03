@@ -72,7 +72,7 @@ type GLTFResult = GLTF & {
   };
 };
 interface Item {
-  [key: string]: string;
+  [key: string]: number;
 }
 type Props = {
   position: number[];
@@ -85,7 +85,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
   // 안경 custom
   const selectGlasses = () => {
     switch (itemStatus?.glasses) {
-      case "1":
+      case 1:
         // 하트 안경
         return (
           <>
@@ -98,7 +98,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             />
           </>
         );
-      case "2":
+      case 2:
         // 별 안경
         return (
           <>
@@ -111,7 +111,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             />
           </>
         );
-      case "3":
+      case 3:
         // alien 안경
         return (
           <>
@@ -124,7 +124,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             />
           </>
         );
-      case "4":
+      case 4:
         // 동그란 안경
         return (
           <>
@@ -137,7 +137,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             />
           </>
         );
-      case "5":
+      case 5:
         // 마이안경
         return (
           <>
@@ -155,7 +155,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
   // 모자 custom
   const selectHat = () => {
     switch (itemStatus?.hat) {
-      case "1":
+      case 1:
         // 천사 링
         return (
           <>
@@ -168,7 +168,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             />
           </>
         );
-      case "2":
+      case 2:
         // 아랍 모자
         return (
           <>
@@ -188,7 +188,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             </group>
           </>
         );
-      case "3":
+      case 3:
         // 마법 모자
         return (
           <>
@@ -204,7 +204,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             </group>
           </>
         );
-      case "4":
+      case 4:
         // 산타 모자
         return (
           <>
@@ -224,7 +224,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             </group>
           </>
         );
-      case "5":
+      case 5:
         // 털 모자
         return (
           <>
@@ -242,7 +242,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
   // 날개 custom
   const selectWing = () => {
     switch (itemStatus?.wing) {
-      case "1":
+      case 1:
         // 천사 날개
         return (
           <>
@@ -255,7 +255,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             />
           </>
         );
-      case "2":
+      case 2:
         // 박쥐 날개
         return (
           <>
@@ -275,7 +275,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             </group>
           </>
         );
-      case "3":
+      case 3:
         // 풍선
         return (
           <>
@@ -295,7 +295,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             </group>
           </>
         );
-      case "4":
+      case 4:
         // 뱀파이어 망토
         return (
           <>
@@ -315,7 +315,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
             </group>
           </>
         );
-      case "5":
+      case 5:
         // 랜덤(개껌)
         return (
           <>

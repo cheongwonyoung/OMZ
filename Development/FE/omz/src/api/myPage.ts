@@ -13,7 +13,7 @@ export const getMyCustomInfo = (memberId: number) => {
 // 마이페이지 커스텀 수정
 export const updateCustom = (
   memberId: number,
-  data: { name: string; state: string }[]
+  data: { name: string; state: number }[]
 ) => {
   return instance.put(`/mypage/custom/${memberId}`, data);
 };
