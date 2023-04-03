@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "react-query";
-import { getMusicRecommended } from "../../api/myRoom";
+import { getMusicRecommended } from "../../api/miniRoom";
 import MusicModalItem from "./MusicModalItem";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";

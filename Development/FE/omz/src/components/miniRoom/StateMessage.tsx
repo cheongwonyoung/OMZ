@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useMutation } from "react-query";
-import { changeStateMessage } from "../../api/myRoom";
+import { changeStateMessage } from "../../api/miniRoom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 
