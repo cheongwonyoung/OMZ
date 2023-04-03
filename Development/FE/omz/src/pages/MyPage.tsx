@@ -38,10 +38,7 @@ export default function MyPage() {
         return (
           <CameraAvatar
             Avatar={
-              <Custom_rabbit
-                position={[0, 0, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
-              />
+              <Custom_rabbit position={[0, 0, 0]} itemStatus={itemStatus} />
             }
           />
         );
@@ -49,55 +46,34 @@ export default function MyPage() {
         return (
           <CameraAvatar
             Avatar={
-              <Custom_bear
-                position={[0, 0, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
-              />
+              <Custom_bear position={[0, 0.3, 0]} itemStatus={itemStatus} />
             }
           />
         );
       case "여우":
         return (
           <CameraAvatar
-            Avatar={
-              <Custom_fox
-                position={[0, 0, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
-              />
-            }
+            Avatar={<Custom_fox position={[0, 0, 0]} itemStatus={itemStatus} />}
           />
         );
       case "공룡":
         return (
           <CameraAvatar
             Avatar={
-              <Custom_dino
-                position={[0, 0, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
-              />
+              <Custom_dino position={[0, 0, 0]} itemStatus={itemStatus} />
             }
           />
         );
       case "고양이":
         return (
           <CameraAvatar
-            Avatar={
-              <Custom_cat
-                position={[0, 0, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
-              />
-            }
+            Avatar={<Custom_cat position={[0, 0, 0]} itemStatus={itemStatus} />}
           />
         );
       case "강아지":
         return (
           <CameraAvatar
-            Avatar={
-              <Custom_dog
-                position={[0, 0, 0]}
-                itemStatus={{ hat: "0", glasses: "0", wing: "0" }}
-              />
-            }
+            Avatar={<Custom_dog position={[0, 0, 0]} itemStatus={itemStatus} />}
           />
         );
     }
@@ -109,10 +85,10 @@ export default function MyPage() {
 
   // TODO 아래 itemStatus 이거 아바타에 props로 내려줘서 로직 짜야함
 
-  const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
-    hat: "0",
-    glasses: "0",
-    wing: "0",
+  const [itemStatus, setItemStatus] = useState<{ [key: string]: number }>({
+    hat: 0,
+    glasses: 0,
+    wing: 0,
   });
 
   const { data } = useQuery(
@@ -122,7 +98,7 @@ export default function MyPage() {
       onSuccess(data) {
         console.log(data.data);
         setAnimal(data.data.member.faceName);
-        const existingCustom: { [key: string]: string } = {};
+        const existingCustom: { [key: string]: number } = {};
         for (const custom of data.data.items) {
           existingCustom[custom.name] = custom.state;
         }
