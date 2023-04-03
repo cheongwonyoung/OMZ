@@ -1,12 +1,9 @@
-import { MiniRoom } from "../assets/3DMiniRoom/MiniRoom";
 import { images } from "../assets/images";
 import Camera3D from "../components/common/Camera3D";
 import TitleBar from "../components/common/TitleBar";
 import ItemBox from "../components/miniRoom/ItemBox";
 import NextBtn from "../components/signUp/NextBtn";
 import { useState } from "react";
-import { MiniroomBeta } from "../assets/3DMiniRoom/MiniroomBeta";
-import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
 import { MiniroomBeta3 } from "../assets/3DMiniRoom/MiniroomBeta3";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";

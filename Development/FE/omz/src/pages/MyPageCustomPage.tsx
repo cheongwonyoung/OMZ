@@ -100,7 +100,7 @@ export default function MyPageCustomPage() {
     {
       onSuccess(data) {
         console.log(data);
-        setProfile({ ...profile, profile_img: data.data.file });
+        setProfile({ ...profile, profile_img: data.data });
       },
     }
   );

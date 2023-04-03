@@ -14,7 +14,7 @@ export default function LoginBtn() {
     // </button>
 
     <button
-      className="bg-[#F7E600] w-[250px] h-[50px] rounded-[7px] flex justify-center items-center gap-4 hover:scale-105 mt-12"
+      className="bg-[#F7E600] w-[250px] h-[50px] rounded-[7px] flex justify-center items-center gap-4 hover:scale-105 mt-8"
       onClick={goLogin}
     >
       <FontAwesomeIcon icon={faComment} size="lg" className="text-[#3A1D1D]" />

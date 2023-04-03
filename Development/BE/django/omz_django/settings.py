@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "bootstrap4",
     "rest_framework",
     'drf_yasg', #drf_yasg
+    'corsheaders'
 ]
 
 REST_FRAMEWORK = {
@@ -66,6 +67,28 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
+
 ROOT_URLCONF = 'omz_django.urls'
 
 TEMPLATES = [
@@ -85,9 +108,10 @@ TEMPLATES = [
 ]
 
 # CORS 추가
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:8000', 'http://localhost:5173')
+# CORS_ORIGIN_WHITELIST = (
+#     'http://127.0.0.1:8000', 'http://localhost:5173', 'http://j8a705.p.ssafy.io:5173','https://j8a705.p.ssafy.io:5173','http://j8a705.p.ssafy.io:8000','https://j8a705.p.ssafy.io:8000')
 CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 
 WSGI_APPLICATION = 'omz_django.wsgi.application'
 

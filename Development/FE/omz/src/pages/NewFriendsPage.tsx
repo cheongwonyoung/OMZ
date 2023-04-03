@@ -40,10 +40,10 @@ export default function NewFriendsPage() {
 
   const [searchList, setSearchList] = useState<
     {
-      memberId?: number;
-      nickname?: string;
-      requestPossible?: boolean;
-      file?: null;
+      memberId: number;
+      nickname: string;
+      requestPossible: boolean;
+      file: null;
     }[]
   >([]);
 
@@ -70,16 +70,22 @@ export default function NewFriendsPage() {
       goSearchFriends.mutate({ memberId, word });
     }
   }, [word]);
-
   return (
     <div className="flex flex-col items-center w-full">
       {isRefuse && (
         <ModalBlackBg
-          modal={<FriendRefuseModal handleRefuseModal={handleRefuseModal} />}
+          closeModal={handleRefuseModal}
+          modal={
+            <FriendRefuseModal
+              modalFor={modalFor}
+              handleRefuseModal={handleRefuseModal}
+            />
+          }
         />
       )}
       {isProposal && (
         <ModalBlackBg
+          closeModal={handleProposalModal}
           modal={
             <FriendsProposalModal
               handleProposalModal={handleProposalModal}

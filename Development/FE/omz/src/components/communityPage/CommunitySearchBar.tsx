@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDove, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { searchArticles } from "../../api/community";
@@ -9,6 +9,8 @@ import { KeyboardEvent } from "react";
 import Loading from "../common/Loading";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
+import Masonry from "react-masonry-css";
+
 type Search = {
   memberId: number;
   key: string;
@@ -46,16 +48,16 @@ export default function CommunitySearchBar() {
 
   return (
     <div className="w-full flex flex-col justify-center items-center">
-      <div className="w-11/12 flex justify-center items-center">
+      <div className="w-11/12 max-w-3xl flex justify-center items-center">
         <select
           name="검색"
-          className="w-[30%] h-[45px] relative border rounded-xl m-2 p-3  border-slate-500 text-[14px] focus:outline-none"
+          className="w-[30%] h-[45px] relative border rounded-xl my-2 p-3 border-slate-500 text-[14px] focus:outline-none"
           onChange={(e) => setKey(e.target.value)}
         >
           <option value="content">내용</option>
           <option value="nickname">닉네임</option>
         </select>
-        <div className="w-[70%] relative flex m-2 p-3 justify-center items-center">
+        <div className="w-[70%] relative flex my-2 p-3 justify-center items-center">
           <button
             className="absolute right-0 text-[15px] rounded-full w-[30px] h-[30px] my-[5px] mr-[20px]"
             onClick={onClick}
@@ -64,7 +66,7 @@ export default function CommunitySearchBar() {
           </button>
           <input
             type="text"
-            placeholder="검색"
+            placeholder="Search"
             className="w-full h-[45px] border text-[14px] border-slate-500 rounded-xl focus:outline-none pl-5"
             onChange={(e) => setWord(e.target.value)}
             onKeyDown={onKeyDown}
@@ -74,7 +76,7 @@ export default function CommunitySearchBar() {
       <div className="flex flex-col items-center mt-4">
         {isLoading && <Loading />}
         {isError && <div className="title">isError...</div>}
-        <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {data?.data.map((article: Article) => (
             <CommunityArticleItem
               key={uuidv4()}
@@ -82,8 +84,21 @@ export default function CommunitySearchBar() {
               refetch={refetch}
             />
           ))}
-        </div>
+        </div> */}
       </div>
+      <Masonry
+        breakpointCols={{ default: 1, 3000: 3, 1000: 2, 600: 1 }}
+        className="my-masonry-grid w-11/12 gap-4"
+        columnClassName="my-masonry-grid_column"
+      >
+        {data?.data.map((article: Article) => (
+          <CommunityArticleItem
+            key={uuidv4()}
+            item={article}
+            refetch={refetch}
+          />
+        ))}
+      </Masonry>
     </div>
   );
 }

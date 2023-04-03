@@ -6,7 +6,7 @@ import CommunitySearchBar from "../components/communityPage/CommunitySearchBar";
 export default function CommunitySearchPage() {
   return (
     <div className="flex flex-col items-center">
-      <TitleBar title="Community" icon={images.community_img} goto="/" />
+      <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
       <CommunitySearchBar />
       <div className="pb-20"></div>
       <CommunityNavbar />

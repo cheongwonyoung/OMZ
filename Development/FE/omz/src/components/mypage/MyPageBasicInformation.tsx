@@ -1,8 +1,6 @@
 import { images } from "../../assets/images";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import { useQuery } from "react-query";
-import { getMyPageInfos } from "../../api/myPage";
 
 type Props = {
   member: {

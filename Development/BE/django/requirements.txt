@@ -117,18 +117,13 @@ sentencepiece==0.1.97
 Serializer==0.2.1
 simplejson==3.18.4
 six==1.16.0
-sklearn==0.0.post1
+# sklearn==0.0.post1
 sniffio==1.3.0
 soupsieve==2.4
 sqlparse==0.4.3
 stack-data==0.6.2
-tensorboard==2.11.2
-tensorboard-data-server==0.6.1
-tensorboard-plugin-wit==1.8.1
 tensorflow==2.11.0
 tensorflow-estimator==2.11.0
-tensorflow-intel==2.11.0
-tensorflow-io-gcs-filesystem==0.31.0
 termcolor==2.2.0
 terminado==0.17.1
 threadpoolctl==3.1.0
