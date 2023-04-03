@@ -12,11 +12,7 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
 
     List<ChatRoom> findAllByToMemberIdOrFromMemberId(Member toMember, Member fromMember);
 
-//    ChatRoom findByToMemberIdOrFromMemberId(Member toMember, Member fromMember);
-
     ChatRoom findByToMemberId_MemberIdAndFromMemberId_MemberId(Long toMemberId, Long fromMemberId);
-
-//    Boolean existsByToMember_MemberIdAndFromMember_MemberId(Long toMemberId, Long fromMemberId);
 
     ChatRoom findByChatRoomId(Long chatRoomId);
 }

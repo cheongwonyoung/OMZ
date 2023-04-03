@@ -1,11 +1,10 @@
 package com.ssafy.omz.service;
 
-import com.ssafy.omz.dto.req.ChatMembersInfoRequestDto;
 import com.ssafy.omz.dto.req.ChatMessage;
+import com.ssafy.omz.dto.req.ChatRequestDto;
 import com.ssafy.omz.dto.req.FriendRequestDto;
-import com.ssafy.omz.dto.resp.ChatOtherInfoResponseDto;
-import com.ssafy.omz.dto.resp.ChatRoomInfoResponseDto;
-import com.ssafy.omz.dto.resp.ChatRoomResponseDto;
+import com.ssafy.omz.dto.resp.ChatResponseDto;
+
 import com.ssafy.omz.entity.ChatRoom;
 import com.ssafy.omz.entity.Friend;
 import com.ssafy.omz.entity.Member;
@@ -64,12 +63,12 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
-    public List<ChatRoomInfoResponseDto> getChatRoomList(long memberId) {
+    public List<ChatResponseDto.ChatRoomInfo> getChatRoomList(long memberId) {
 
         Member member = memberRepository.findByMemberId(memberId);
         List<ChatRoom> chatRooms = chatRoomRepository.findAllByToMemberIdOrFromMemberId(member, member);
 
-        List<ChatRoomInfoResponseDto> chatRoomList = new ArrayList<>();
+        List<ChatResponseDto.ChatRoomInfo> chatRoomList = new ArrayList<>();
         for (ChatRoom chatRoom:
              chatRooms) {
 
@@ -117,10 +116,10 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             }
 
             chatRoomList.add(
-                    ChatRoomInfoResponseDto.builder()
+                    ChatResponseDto.ChatRoomInfo.builder()
                             .roomId(chatRoom.getChatRoomId())
                             .chatOtherInfo(
-                                    ChatOtherInfoResponseDto.builder()
+                                    ChatResponseDto.ChatOtherInfo.builder()
                                             .memberId(other.getMemberId())
                                             .nickName(other.getNickname())
                                             .file(other.getFile())
@@ -137,7 +136,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
-    public ChatRoomResponseDto getChatRoomInfo(long chatRoomId, long memberId) {
+    public ChatResponseDto.ChatRoomChatData getChatRoomInfo(long chatRoomId, long memberId) {
         Member member = memberRepository.findByMemberId(memberId);
         ChatRoom chatRoom = chatRoomRepository.findByChatRoomId(chatRoomId);
         Member other = (chatRoom.getToMemberId().getMemberId() != memberId) ? chatRoom.getToMemberId() : chatRoom.getFromMemberId();
@@ -171,9 +170,9 @@ public class ChatRoomServiceImpl implements ChatRoomService{
         }
 
 
-        return ChatRoomResponseDto.builder()
+        return ChatResponseDto.ChatRoomChatData.builder()
                 .chatOtherInfo(
-                        ChatOtherInfoResponseDto.builder()
+                        ChatResponseDto.ChatOtherInfo.builder()
                                 .memberId(other.getMemberId())
                                 .nickName(other.getNickname())
                                 .file(other.getFile())
@@ -183,7 +182,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
     }
 
     @Override
-    public ChatOtherInfoResponseDto addChatMemeberToFriend(ChatMembersInfoRequestDto chatMembersInfo) throws RollbackException {
+    public ChatResponseDto.ChatOtherInfo addChatMemeberToFriend(ChatRequestDto.ChatMembersInfo chatMembersInfo) throws RollbackException {
         long memberId = chatMembersInfo.getMemberId();
         long otherMemberId = chatMembersInfo.getChatOtherInfo().getMemberId();
 
@@ -207,7 +206,7 @@ public class ChatRoomServiceImpl implements ChatRoomService{
             friendService.friendAccept(isFriendReqeustFromOther.getFriendId());
             chatMembersInfo.getChatOtherInfo().setFriendState(1);
         }
-        return chatMembersInfo.getChatOtherInfo();
+        return ChatResponseDto.ChatOtherInfo.of(chatMembersInfo.getChatOtherInfo());
     }
 
     @Override
