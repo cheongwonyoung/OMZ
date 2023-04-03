@@ -9,6 +9,7 @@
   height: auto;
   min-height: 100vh;
   padding-bottom: 2rem;
+  margin: 0;
 }
 
 #btn {
@@ -19,4 +20,23 @@
       rgba(229, 255, 240, 0.88)
     )
     #ffffff;
+}
+
+* {
+  font-family: "Noto Sans KR", sans-serif;
+  /* font-family: "Poor Story", cursive; */
+}
+
+.title {
+  font-family: "Playfair Display", serif;
+}
+
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+}
+
+.my-masonry-grid_column > div { 
+  margin-bottom: 1rem;
 }

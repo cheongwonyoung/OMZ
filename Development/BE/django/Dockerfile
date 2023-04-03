@@ -1,9 +1,13 @@
 # 도커에 설치될 python 버전
-FROM python:3.10.9
+FROM python:3.9
+RUN python -V
 
 RUN pip install --upgrade pip
 # 필요한 모듈 설치
 RUN pip3 install django
+RUN pip install django-cors-headers
+RUN pip uninstall mysql-connector
+RUN pip install mysql-connector-python
 
 # 컨테이너 내 프로젝트 root directory 설정
 # /usr/src/app 디렉토리 생성
@@ -18,8 +22,7 @@ COPY . .
 WORKDIR .
 
 RUN pip install -r requirements.txt
-
 # django를 가동시켜주는 코드
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8080"]
+CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
 
-EXPOSE 8080
+EXPOSE 8000

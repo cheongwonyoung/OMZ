@@ -1,19 +1,32 @@
-import { MiniRoom } from "../assets/3DMiniRoom/MiniRoom";
 import { images } from "../assets/images";
 import Camera3D from "../components/common/Camera3D";
 import TitleBar from "../components/common/TitleBar";
 import ItemBox from "../components/miniRoom/ItemBox";
 import NextBtn from "../components/signUp/NextBtn";
 import { useState } from "react";
-import { MiniroomBeta } from "../assets/3DMiniRoom/MiniroomBeta";
-import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
 import { MiniroomBeta3 } from "../assets/3DMiniRoom/MiniroomBeta3";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
 export default function MiniRoomUpdatePage() {
-  const [itemStatus, setItemStatus] = useState({
+  const memberId = useRecoilValue(userStatus).id;
+
+  const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
     table: "1",
     lamp: "1",
     bed: "1",
   });
+
+  const submitChange = () => {
+    const data = [];
+    const itemNames = Object.keys(itemStatus);
+    for (const name of itemNames) {
+      data.push({ name: name, state: itemStatus[name] });
+    }
+    console.log(data);
+    // TODO 여기 이거 제출하면 댐
+  };
+
+  submitChange();
 
   const handleItems = (item: string) => {
     const variety = item.split("_")[0];
@@ -26,7 +39,7 @@ export default function MiniRoomUpdatePage() {
       <TitleBar
         icon={images.mini_room_img}
         title={"000님의 MiniRoom"}
-        goto={"/miniroom"}
+        goto={`/miniroom/${memberId}`}
       />
       <div className="w-full aspect-square">
         {/* <Camera3D

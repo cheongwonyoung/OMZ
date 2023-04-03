@@ -17,7 +17,7 @@ import java.util.List;
 public interface GuestBookService {
 
     // 방명록 전체 리스트
-    List<GuestBookResponseDto> getGuestBookList(long miniRoomId);
+    List<GuestBookResponseDto> getGuestBookList(long memberId);
 
     // 방명록 작성
     void writeGuestBook(GuestBookRequestDto.Write guestBook) throws RollbackException;

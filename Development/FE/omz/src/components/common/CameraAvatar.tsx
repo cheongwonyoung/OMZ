@@ -3,17 +3,18 @@ import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 type Props = {
   Avatar: any;
+  keepRender?: boolean;
 };
-export default function CameraAvatar({ Avatar }: Props) {
-  const lookat = new THREE.Vector3(0, 1, 0);
+export default function CameraAvatar({ Avatar, keepRender }: Props) {
   return (
     <Canvas
-      camera={{ position: [-10, 5, 10], zoom: 3 }}
+      camera={{ position: [-10, 5, 10], zoom: 5.7 }}
       className="w-full h-full"
+      gl={{ preserveDrawingBuffer: keepRender }}
     >
       <ambientLight intensity={0.6} />
       <directionalLight intensity={0.8} />
-      <group position={[0, -3, 0]}>{Avatar}</group>
+      <group position={[0, -2.5, 0]}>{Avatar}</group>
       <OrbitControls />
     </Canvas>
   );

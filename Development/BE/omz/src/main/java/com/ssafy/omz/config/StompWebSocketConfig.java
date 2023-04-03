@@ -24,7 +24,7 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
 //        WebSocketMessageBrokerConfigurer.super.registerStompEndpoints(registry);
-        registry.addEndpoint("/stomp-chat") // http://localhost:8080/stomp-chat
+        registry.addEndpoint("/stomp-chat")
 //                .setAllowedOrigins("*")
 // When allowCredentials is true, allowedOrigins cannot contain the special value "*" since that cannot be set on the "Access-Control-Allow-Origin" response header.
                 .setAllowedOriginPatterns("*")
