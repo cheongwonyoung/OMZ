@@ -12,11 +12,13 @@ type Props = {
   handleRefuseModal(): void;
   handleProposalModal(): void;
   handleModalFor(memberId: number, nickname: string): void;
+  handletalkFriends(id: number): void;
 };
 export default function FriendsRecommend({
   handleRefuseModal,
   handleProposalModal,
   handleModalFor,
+  handletalkFriends,
 }: Props) {
   const [recommends, setRecommends] = useState([]);
   const memberId = useRecoilValue(userStatus).id;
@@ -59,6 +61,7 @@ export default function FriendsRecommend({
                   handleRefuseModal={handleRefuseModal}
                   handleProposalModal={handleProposalModal}
                   handleModalFor={handleModalFor}
+                  handletalkFriends={handletalkFriends}
                 />
               </div>
             );

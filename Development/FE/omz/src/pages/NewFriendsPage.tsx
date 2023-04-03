@@ -7,18 +7,19 @@ import ModalBlackBg from "../components/common/ModalBlackBg";
 import FriendRefuseModal from "../components/newFriends/FriendRefuseModal";
 import { useEffect, useState } from "react";
 import FriendsProposalModal from "../components/newFriends/FriendsProposalModal";
-import FriendSearchItems from "../components/newFriends/FriendSearchItems";
 import FriendSearchList from "../components/newFriends/FriendSearchList";
 import { useMutation } from "react-query";
 import { searchFriend } from "../api/newFriend";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
+import { talkToFriends } from "../api/chatting";
+import { useNavigate } from "react-router-dom";
 export default function NewFriendsPage() {
   const [modalFor, setModalFor] = useState<{
     memberId: number;
     nickname: string;
   }>({ memberId: 0, nickname: "" });
-
+  const navigate = useNavigate();
   const handleModalFor = (memberId: number, nickname: string) => {
     setModalFor({ memberId, nickname });
   };
@@ -61,6 +62,22 @@ export default function NewFriendsPage() {
   const memberId = useRecoilValue(userStatus).id;
 
   const [searchActive, setSearchActive] = useState(false);
+  const talkFriends = useMutation(
+    (member: { memberId: number; id: number }) =>
+      talkToFriends(member.memberId, member.id),
+    {
+      onSuccess: (data) => {
+        const roomId = data.data;
+        navigate(`/chatting/${memberId}/${roomId}`, {
+          state: { roomId },
+        });
+      },
+    }
+  );
+
+  const handletalkFriends = (id: number) => {
+    talkFriends.mutate({ memberId, id: id });
+  };
 
   useEffect(() => {
     if (word === "") {
@@ -113,12 +130,14 @@ export default function NewFriendsPage() {
           searchList={searchList}
           handleModalFor={handleModalFor}
           handleProposalModal={handleProposalModal}
+          handletalkFriends={handletalkFriends}
         />
       ) : (
         <FriendsRecommend
           handleRefuseModal={handleRefuseModal}
           handleModalFor={handleModalFor}
           handleProposalModal={handleProposalModal}
+          handletalkFriends={handletalkFriends}
         />
       )}
     </div>

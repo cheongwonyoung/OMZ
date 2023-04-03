@@ -329,7 +329,7 @@ export function Custom_fox({ position, itemStatus }: Props) {
           <>
             <group
               position={[0.9, 1.39, 0.95]}
-              rotation={[-0.78, 0.68, -0.57]}
+              rotation={[-0.74, 0.67, -0.61]}
               scale={0.61}
             >
               <mesh

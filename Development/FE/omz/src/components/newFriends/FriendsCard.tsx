@@ -4,6 +4,7 @@ import {
   faHome,
   faHeart,
   faHeartCrack,
+  faMessage,
 } from "@fortawesome/free-solid-svg-icons";
 import TagList from "./TagList";
 import FriendBtn from "./FriendBtn";
@@ -14,18 +15,21 @@ import { Custom_fox } from "../../assets/3DAvatar/Custom_fox";
 import { Custom_dino } from "../../assets/3DAvatar/Custom_dino";
 import { Custom_cat } from "../../assets/3DAvatar/Custom_cat";
 import { Custom_dog } from "../../assets/3DAvatar/Custom_dog";
+import { talkToFriends } from "../../api/chatting";
 
 type Props = {
   handleRefuseModal(): void;
   handleProposalModal(): void;
   handleModalFor(memberId: number, nickname: string): void;
   info: any;
+  handletalkFriends(id: number): void;
 };
 export default function FriendsCard({
   handleRefuseModal,
   handleProposalModal,
   handleModalFor,
   info,
+  handletalkFriends,
 }: Props) {
   // const tags = ["곰상", "ISFP", "짝꿍", "가능성", "95%"];
   const info_tags = [`${info.animal}상`, `${info.mbti}`];
@@ -126,13 +130,23 @@ export default function FriendsCard({
         <TagList tags={info_tags} />
         <TagList tags={possibility_tags} />
       </div>
-      <button
-        className="text-white text-base opacity-95 hover:text-black"
-        onClick={() => navigate(`/miniroom/${info.memberId}`)}
-      >
-        <FontAwesomeIcon icon={faHome} className="mr-2" />
-        놀러가기
-      </button>
+      <div className="flex justify-center gap-5">
+        <button
+          className="text-white text-base opacity-95 hover:text-black"
+          onClick={() => handletalkFriends(info.memberId)}
+        >
+          <FontAwesomeIcon className="text-pink-400 mr-2" icon={faMessage} />말
+          걸기
+        </button>
+        <button
+          className="text-white text-base opacity-95 hover:text-black"
+          onClick={() => navigate(`/miniroom/${info.memberId}`)}
+        >
+          <FontAwesomeIcon icon={faHome} className="mr-2" />
+          놀러가기
+        </button>
+      </div>
+
       <div className="flex justify-center gap-3">
         <FriendBtn
           icon={<FontAwesomeIcon icon={faHeart} />}

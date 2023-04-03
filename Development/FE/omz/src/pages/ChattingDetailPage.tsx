@@ -32,7 +32,6 @@ export default function ChattingDetailPage() {
   // prop 받아온 roomId
   const location = useLocation();
   const roomId = location.state.roomId;
-  // const roomId = 2;
 
   const client: any = useRef({});
   const memberId = useRecoilValue(userStatus).id;
@@ -157,7 +156,7 @@ export default function ChattingDetailPage() {
       }
     });
   };
-
+  console.log(chatMessages);
   const handler = (message: string) => {
     if (!client.current.connected) return;
     client.current.publish({
@@ -175,7 +174,6 @@ export default function ChattingDetailPage() {
     if (connected) {
       client.current.deactivate();
       setConnected(false);
-      // console.log("deactivate!");
     }
   };
 
