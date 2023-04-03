@@ -13,6 +13,8 @@ import Loading from "../components/common/Loading";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Comment = {
   [key: string]: any;
@@ -35,6 +37,10 @@ export default function CommunityDetailPage() {
       createReply(comment),
     {
       onSuccess: () => {
+        toast.success("댓글이 작성되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         refetch();
       },
     }
@@ -53,7 +59,12 @@ export default function CommunityDetailPage() {
 
   return (
     <div className="flex flex-col items-center">
-      <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
+      <ToastContainer />
+      <TitleBar
+        title="Community"
+        icon={images.community_img}
+        goto={`/community`}
+      />
       <CommunityDetailItem
         key={data?.data.boardId}
         item={data?.data}

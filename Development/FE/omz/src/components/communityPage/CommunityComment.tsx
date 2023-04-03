@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 import moment from "moment";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Comment = {
   [key: string]: any;
@@ -35,6 +37,10 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   const deleteComment = useMutation((replyId: number) => deleteReply(replyId), {
     onSuccess: () => {
       setShowModal(false);
+      toast.success("댓글이 삭제되었습니다.", {
+        autoClose: 3000,
+        position: toast.POSITION.TOP_RIGHT,
+      });
       refetch();
     },
   });
@@ -60,6 +66,10 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
       updateReply(replyId, reply),
     {
       onSuccess: () => {
+        toast.success("댓글이 수정되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         refetch();
       },
     }
@@ -87,6 +97,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
 
   return (
     <div className="w-full flex justify-center mt-1">
+      <ToastContainer />
       <div className="w-11/12 m-3 max-w-3xl border-b border-black pb-1">
         <div className="flex w-full justify-between items-start gap-3">
           {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
