@@ -7,7 +7,6 @@ import ModalBlackBg from "../components/common/ModalBlackBg";
 import FriendRefuseModal from "../components/newFriends/FriendRefuseModal";
 import { useEffect, useState } from "react";
 import FriendsProposalModal from "../components/newFriends/FriendsProposalModal";
-import FriendSearchItems from "../components/newFriends/FriendSearchItems";
 import FriendSearchList from "../components/newFriends/FriendSearchList";
 import { useMutation } from "react-query";
 import { searchFriend } from "../api/newFriend";

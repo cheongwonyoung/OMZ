@@ -130,20 +130,23 @@ export default function FriendsCard({
         <TagList tags={info_tags} />
         <TagList tags={possibility_tags} />
       </div>
-      <button
-        className="text-white text-base opacity-95 hover:text-black"
-        onClick={() => handletalkFriends(info.memberId)}
-      >
-        <FontAwesomeIcon className="text-pink-400" icon={faMessage} />
-        말걸기
-      </button>
-      <button
-        className="text-white text-base opacity-95 hover:text-black"
-        onClick={() => navigate(`/miniroom/${info.memberId}`)}
-      >
-        <FontAwesomeIcon icon={faHome} className="mr-2" />
-        놀러가기
-      </button>
+      <div className="flex justify-center gap-5">
+        <button
+          className="text-white text-base opacity-95 hover:text-black"
+          onClick={() => handletalkFriends(info.memberId)}
+        >
+          <FontAwesomeIcon className="text-pink-400 mr-2" icon={faMessage} />말
+          걸기
+        </button>
+        <button
+          className="text-white text-base opacity-95 hover:text-black"
+          onClick={() => navigate(`/miniroom/${info.memberId}`)}
+        >
+          <FontAwesomeIcon icon={faHome} className="mr-2" />
+          놀러가기
+        </button>
+      </div>
+
       <div className="flex justify-center gap-3">
         <FriendBtn
           icon={<FontAwesomeIcon icon={faHeart} />}
