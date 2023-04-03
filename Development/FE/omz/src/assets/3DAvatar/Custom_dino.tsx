@@ -52,8 +52,12 @@ type GLTFResult = GLTF & {
     star_glasses: THREE.Mesh;
     vampire_object: THREE.Mesh;
     vampire_object_1: THREE.Mesh;
-    dino_egg: THREE.Mesh;
     white_cap: THREE.Mesh;
+    dino_material: THREE.Mesh;
+    dino_material_1: THREE.Mesh;
+    dino_material_2: THREE.Mesh;
+    dino_material_3: THREE.Mesh;
+    dino_material_4: THREE.Mesh;
   };
   materials: {
     ["Material.019"]: THREE.MeshStandardMaterial;
@@ -98,8 +102,12 @@ type GLTFResult = GLTF & {
     star_material: THREE.MeshStandardMaterial;
     vampire_material1: THREE.MeshStandardMaterial;
     vampire_material2: THREE.MeshStandardMaterial;
-    egg_material: THREE.MeshStandardMaterial;
     white_material: THREE.MeshStandardMaterial;
+    dino_material: THREE.MeshStandardMaterial;
+    dino_materiall2: THREE.MeshStandardMaterial;
+    dino_material3: THREE.MeshStandardMaterial;
+    dino_material4: THREE.MeshStandardMaterial;
+    dino_material5: THREE.MeshStandardMaterial;
   };
 };
 interface Item {
@@ -123,7 +131,7 @@ export function Custom_dino({ position, itemStatus }: Props) {
             <mesh
               geometry={nodes.heart_glasses.geometry}
               material={materials.heart_glasses_material}
-              position={[-0.1, 3.29, 0.32]}
+              position={[-0.14, 3.28, 0.34]}
               rotation={[0.23, -0.74, 0.15]}
               scale={0.32}
             />
@@ -350,13 +358,32 @@ export function Custom_dino({ position, itemStatus }: Props) {
         // 랜덤(개껌)
         return (
           <>
-            <mesh
-              geometry={nodes.dino_egg.geometry}
-              material={materials.egg_material}
-              position={[0.99, 1.83, 0.72]}
-              rotation={[-1.03, -1.28, 2.42]}
-              scale={0}
-            />
+            <group
+              position={[1.21, 2.47, 0.86]}
+              rotation={[-1.26, 0.25, -0.39]}
+              scale={0.2}
+            >
+              <mesh
+                geometry={nodes.dino_material.geometry}
+                material={materials.dino_material}
+              />
+              <mesh
+                geometry={nodes.dino_material_1.geometry}
+                material={materials.dino_materiall2}
+              />
+              <mesh
+                geometry={nodes.dino_material_2.geometry}
+                material={materials.dino_material3}
+              />
+              <mesh
+                geometry={nodes.dino_material_3.geometry}
+                material={materials.dino_material4}
+              />
+              <mesh
+                geometry={nodes.dino_material_4.geometry}
+                material={materials.dino_material5}
+              />
+            </group>
           </>
         );
     }
