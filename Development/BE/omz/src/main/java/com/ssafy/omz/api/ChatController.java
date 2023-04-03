@@ -1,11 +1,8 @@
 package com.ssafy.omz.api;
 
-import com.ssafy.omz.dto.req.ChatMembersInfoRequestDto;
-import com.ssafy.omz.dto.req.ChatPagingRequestDto;
+
+import com.ssafy.omz.dto.req.ChatRequestDto;
 import com.ssafy.omz.dto.resp.*;
-import com.ssafy.omz.entity.ChatRoom;
-import com.ssafy.omz.entity.Friend;
-import com.ssafy.omz.repository.FriendRepository;
 import com.ssafy.omz.service.ChatRedisCacheService;
 import com.ssafy.omz.service.ChatRoomService;
 import com.ssafy.omz.service.FriendService;
@@ -47,10 +44,10 @@ public class ChatController {
             //Other Http Status code..
     })
     @GetMapping("")
-    public ResponseEntity<List<ChatRoomInfoResponseDto>> getChatRoomList(@RequestParam(required = false, value = "memberId") Long memberId){
+    public ResponseEntity<List<ChatResponseDto.ChatRoomInfo>> getChatRoomList(@RequestParam(required = false, value = "memberId") Long memberId){
 
         HttpStatus status = HttpStatus.OK;
-        List<ChatRoomInfoResponseDto> chatRoomList = null;
+        List<ChatResponseDto.ChatRoomInfo> chatRoomList = null;
         try {
             chatRoomList = chatRoomService.getChatRoomList(memberId);
             if (chatRoomList.isEmpty() || chatRoomList == null)
@@ -60,7 +57,7 @@ public class ChatController {
             e.printStackTrace();
             status = HttpStatus.BAD_REQUEST;
         }
-        return new ResponseEntity<List<ChatRoomInfoResponseDto>>(chatRoomList, status);
+        return new ResponseEntity<List<ChatResponseDto.ChatRoomInfo>>(chatRoomList, status);
     }
 
     @ApiOperation(value = "채팅방 정보 및 대화 내역 불러오기", notes = "채팅방 번호(roomId)에 해당하는 채팅방의 정보와 대화 내역을 불러온다.")
@@ -69,19 +66,19 @@ public class ChatController {
             , value = "채팅방 번호"
     )
     @PostMapping("/{roomId}")
-    public ResponseEntity<?> getChatRoom(@PathVariable Long roomId, @RequestParam(required = false, value = "memberId") Long memberId, @RequestBody(required = false) ChatPagingRequestDto chatPagingDto){
+    public ResponseEntity<?> getChatRoom(@PathVariable Long roomId, @RequestParam(required = false, value = "memberId") Long memberId, @RequestBody(required = false) ChatRequestDto.ChatPaging chatPagingDto){
 
         //  Cursor 존재하지 않을 경우,현재시간을 기준으로 paging
         try {
             if(chatPagingDto == null || chatPagingDto.getCursor() == null || chatPagingDto.getCursor().equals("")){
-                chatPagingDto= ChatPagingRequestDto.builder()
+                chatPagingDto= ChatRequestDto.ChatPaging.builder()
                         .cursor(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"))).build();
             }
-            ChatRoomResponseDto chatRoomResponseDto = chatRoomService.getChatRoomInfo(roomId, memberId);
-            List<ChatPagingResponseDto> chatList = chatRedisCacheService.getChatsFromRedis(roomId, memberId, chatPagingDto);
+            ChatResponseDto.ChatRoomChatData chatRoomResponseDto = chatRoomService.getChatRoomInfo(roomId, memberId);
+            List<ChatResponseDto.ChatPaging> chatList = chatRedisCacheService.getChatsFromRedis(roomId, memberId, chatPagingDto);
             chatRoomResponseDto.setChatList(chatList);
 
-            return new ResponseEntity<ChatRoomResponseDto>(chatRoomResponseDto, HttpStatus.OK);
+            return new ResponseEntity<ChatResponseDto.ChatRoomChatData>(chatRoomResponseDto, HttpStatus.OK);
         }
         catch (Exception e){
             e.printStackTrace();
@@ -91,10 +88,10 @@ public class ChatController {
 
     @ApiOperation(value = "채팅 상대방 친구 추가", notes = "채팅 상대방을 친구 추가한다.")
     @PostMapping("/addFriend")
-    public ResponseEntity<?> addFriendInChat(@RequestBody ChatMembersInfoRequestDto chatMembersInfo){
+    public ResponseEntity<?> addFriendInChat(@RequestBody ChatRequestDto.ChatMembersInfo chatMembersInfo){
 
         try {
-            ChatOtherInfoResponseDto chatOtherInfo = chatRoomService.addChatMemeberToFriend(chatMembersInfo);
+            ChatResponseDto.ChatOtherInfo chatOtherInfo = chatRoomService.addChatMemeberToFriend(chatMembersInfo);
 
             //  친구 추가 버튼 여부 반환
             return new ResponseEntity<>(chatOtherInfo, HttpStatus.OK);
@@ -113,7 +110,6 @@ public class ChatController {
     @GetMapping("/{memberId}/{friendMemberId}")
     public ResponseEntity<?> getChatRoomIdInFriendList(@PathVariable Long memberId, @PathVariable Long friendMemberId){
         try {
-
             long roomId = chatRoomService.getChatRoomIdInFriendList(memberId, friendMemberId);
             return new ResponseEntity<>(roomId, HttpStatus.OK);
         }

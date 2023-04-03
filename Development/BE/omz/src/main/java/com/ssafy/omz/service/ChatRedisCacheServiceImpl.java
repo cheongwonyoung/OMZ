@@ -1,8 +1,8 @@
 package com.ssafy.omz.service;
 
 import com.ssafy.omz.dto.req.ChatMessage;
-import com.ssafy.omz.dto.req.ChatPagingRequestDto;
-import com.ssafy.omz.dto.resp.ChatPagingResponseDto;
+import com.ssafy.omz.dto.req.ChatRequestDto;
+import com.ssafy.omz.dto.resp.ChatResponseDto;
 import com.ssafy.omz.entity.Chat;
 import com.ssafy.omz.entity.Member;
 import com.ssafy.omz.repository.ChatRepository;
@@ -19,12 +19,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static com.ssafy.omz.dto.resp.ChatPagingResponseDto.byChatMessageDto;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -131,7 +128,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
     }
 
     @Override
-    public List<ChatPagingResponseDto> getChatsFromRedis(Long chatRoomId, Long memberId, ChatPagingRequestDto chatPagingDto) {
+    public List<ChatResponseDto.ChatPaging> getChatsFromRedis(Long chatRoomId, Long memberId, ChatRequestDto.ChatPaging chatPagingDto) {
 
         //  마지막 채팅을 기준으로 redis의 Sorted set에 몇번째 항목인지 파악
         ChatMessage cursorDto = ChatMessage.builder()
@@ -155,10 +152,10 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         Set<ChatMessage> chatMessageSaveDtoSet = zSetOperations.reverseRange(CHAT_SORTED_SET_ + chatRoomId, rank, rank + 10);
         log.info("[Redis에서 조회한 해당 채팅방 메세지 크기] size : {}",chatMessageSaveDtoSet.size()); // 11
 
-        List<ChatPagingResponseDto> chatMessageDtoList =
+        List<ChatResponseDto.ChatPaging> chatMessageDtoList =
                 chatMessageSaveDtoSet
                         .stream()
-                        .map(ChatPagingResponseDto::byChatMessageDto)
+                        .map(ChatResponseDto.ChatPaging::byChatMessageDto)
                         .collect(Collectors.toList());
 
         //  isChecked를 위해 for문 세분화
@@ -202,7 +199,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         }
 
         //  Redis caching 닉네임으로 작성자 삽입
-        for (ChatPagingResponseDto chatPagingResponseDto : chatMessageDtoList) {
+        for (ChatResponseDto.ChatPaging chatPagingResponseDto : chatMessageDtoList) {
             chatPagingResponseDto.setNickname(findNicknameByMemberId(chatPagingResponseDto.getMemberId()));
         }
 
@@ -210,11 +207,12 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
     }
 
     @Override
-    public void findOtherChatsFromMysql(List<ChatPagingResponseDto> chatMessageDtoList, Long chatRoomId, String cursor) {
+    public void findOtherChatsFromMysql(List<ChatResponseDto.ChatPaging> chatMessageDtoList, Long chatRoomId, String cursor) {
+
         String lastCursor;
         // 데이터가 하나도 없을 경우 현재시간을 Cursor로 활용
         if (chatMessageDtoList.size() == 0 && cursor == null) {
-            ; // ?
+            ;
             lastCursor = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS"));
         }
 
@@ -236,7 +234,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
                                 PageRequest.of(0, 30)
                         );
 
-        //  Redis Cache에
+        //  Redis Cache에 적재
         for (Chat chat : chatSlice.getContent()) {
             cachingDBDataToRedis(chat);
         }
@@ -250,7 +248,7 @@ public class ChatRedisCacheServiceImpl implements ChatRedisCacheService{
         for (int i = dtoListSize; i <= 10; i++) {
             try {
                 Chat chat = chatSlice.getContent().get(i - dtoListSize);
-                chatMessageDtoList.add(ChatPagingResponseDto.of(chat));
+                chatMessageDtoList.add(ChatResponseDto.ChatPaging.of(chat));
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();
                 return;
