@@ -38,7 +38,7 @@ type GLTFResult = GLTF & {
     vampire_object_1: THREE.Mesh;
     dog_gum: THREE.Mesh;
     my_glasses: THREE.Mesh;
-    mouse_cap: THREE.Mesh;
+    white_cap: THREE.Mesh;
   };
   materials: {
     ["Material.009"]: THREE.MeshStandardMaterial;
@@ -68,7 +68,7 @@ type GLTFResult = GLTF & {
     vampire_material2: THREE.MeshStandardMaterial;
     dog_gum_material: THREE.MeshStandardMaterial;
     mymaterial: THREE.MeshStandardMaterial;
-    mousecap_material: THREE.MeshStandardMaterial;
+    white_material: THREE.MeshStandardMaterial;
   };
 };
 interface Item {
@@ -229,11 +229,11 @@ export function Custom_dog({ position, itemStatus }: Props) {
         return (
           <>
             <mesh
-              geometry={nodes.mouse_cap.geometry}
-              material={materials.mousecap_material}
-              position={[-0.01, 3.42, -0.02]}
-              rotation={[-0.02, 0.77, 0.03]}
-              scale={0.01}
+              geometry={nodes.white_cap.geometry}
+              material={materials.white_material}
+              position={[0.15, 3.05, -0.09]}
+              rotation={[-1.72, 0.21, -0.83]}
+              scale={0.83}
             />
           </>
         );

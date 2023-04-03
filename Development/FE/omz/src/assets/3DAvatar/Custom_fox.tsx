@@ -10,7 +10,6 @@ import { GLTF } from "three-stdlib";
 
 type GLTFResult = GLTF & {
   nodes: {
-    Cube: THREE.Mesh;
     Cube001: THREE.Mesh;
     Cube002: THREE.Mesh;
     Cube003: THREE.Mesh;
@@ -18,6 +17,7 @@ type GLTFResult = GLTF & {
     Cube005: THREE.Mesh;
     Cube006: THREE.Mesh;
     Cube007: THREE.Mesh;
+    Cube008: THREE.Mesh;
     NurbsPath: THREE.Mesh;
     Cube010: THREE.Mesh;
     Cube010_1: THREE.Mesh;
@@ -39,9 +39,11 @@ type GLTFResult = GLTF & {
     star_glasses: THREE.Mesh;
     vampire_object: THREE.Mesh;
     vampire_object_1: THREE.Mesh;
-    mouse_cap: THREE.Mesh;
     my_glasses: THREE.Mesh;
-    rose: THREE.Mesh;
+    flower_object: THREE.Mesh;
+    flower_object_1: THREE.Mesh;
+    flower_object_2: THREE.Mesh;
+    white_cap: THREE.Mesh;
   };
   materials: {
     ["Material.001"]: THREE.MeshStandardMaterial;
@@ -66,9 +68,11 @@ type GLTFResult = GLTF & {
     star_material: THREE.MeshStandardMaterial;
     vampire_material1: THREE.MeshStandardMaterial;
     vampire_material2: THREE.MeshStandardMaterial;
-    mousecap_material: THREE.MeshStandardMaterial;
     mymaterial: THREE.MeshStandardMaterial;
-    material: THREE.MeshStandardMaterial;
+    flower_material: THREE.MeshStandardMaterial;
+    flower_material2: THREE.MeshStandardMaterial;
+    flower_material3: THREE.MeshStandardMaterial;
+    white_material: THREE.MeshStandardMaterial;
   };
 };
 interface Item {
@@ -233,11 +237,11 @@ export function Custom_fox({ position, itemStatus }: Props) {
         return (
           <>
             <mesh
-              geometry={nodes.mouse_cap.geometry}
-              material={materials.mousecap_material}
-              position={[0.09, 3.71, -0.03]}
-              rotation={[0, 0.86, 0.02]}
-              scale={0.01}
+              geometry={nodes.white_cap.geometry}
+              material={materials.white_material}
+              position={[0.14, 3.05, -0.22]}
+              rotation={[-1.79, 0.15, -0.59]}
+              scale={1.09}
             />
           </>
         );
@@ -323,13 +327,24 @@ export function Custom_fox({ position, itemStatus }: Props) {
         // 랜덤(개껌)
         return (
           <>
-            <mesh
-              geometry={nodes.rose.geometry}
-              material={materials.material}
-              position={[0.51, 1.01, 0.52]}
-              rotation={[0.6, -0.93, 0]}
-              scale={0.26}
-            />
+            <group
+              position={[0.9, 1.39, 0.95]}
+              rotation={[-0.78, 0.68, -0.57]}
+              scale={0.61}
+            >
+              <mesh
+                geometry={nodes.flower_object.geometry}
+                material={materials.flower_material}
+              />
+              <mesh
+                geometry={nodes.flower_object_1.geometry}
+                material={materials.flower_material2}
+              />
+              <mesh
+                geometry={nodes.flower_object_2.geometry}
+                material={materials.flower_material3}
+              />
+            </group>
           </>
         );
     }
@@ -341,54 +356,54 @@ export function Custom_fox({ position, itemStatus }: Props) {
       {selectHat()}
       {selectWing()}
       <mesh
-        geometry={nodes.Cube.geometry}
+        geometry={nodes.Cube001.geometry}
         material={materials["Material.001"]}
         position={[0.07, 2.69, -0.07]}
         rotation={[0, -0.7, 0]}
         scale={[1.21, 1, 1]}
       />
       <mesh
-        geometry={nodes.Cube001.geometry}
+        geometry={nodes.Cube002.geometry}
         material={materials["Material.001"]}
         position={[0.07, 1.27, -0.07]}
         rotation={[0, -0.7, 0]}
         scale={0.68}
       />
       <mesh
-        geometry={nodes.Cube002.geometry}
-        material={materials["Material.002"]}
-        position={[0.07, 2.69, -0.07]}
-        rotation={[0, -0.7, 0]}
-        scale={[1.21, 1, 1]}
-      />
-      <mesh
         geometry={nodes.Cube003.geometry}
         material={materials["Material.002"]}
-        position={[0.11, 2.65, -0.11]}
+        position={[0.07, 2.69, -0.07]}
         rotation={[0, -0.7, 0]}
         scale={[1.21, 1, 1]}
       />
       <mesh
         geometry={nodes.Cube004.geometry}
         material={materials["Material.002"]}
+        position={[0.11, 2.65, -0.11]}
+        rotation={[0, -0.7, 0]}
+        scale={[1.21, 1, 1]}
+      />
+      <mesh
+        geometry={nodes.Cube005.geometry}
+        material={materials["Material.002"]}
         position={[0.07, 1.27, -0.07]}
         rotation={[0, -0.7, 0]}
         scale={0.68}
       />
       <mesh
-        geometry={nodes.Cube005.geometry}
+        geometry={nodes.Cube006.geometry}
         material={materials["Material.003"]}
         position={[0.07, 0.31, -0.07]}
         rotation={[0, -0.7, 0]}
       />
       <mesh
-        geometry={nodes.Cube006.geometry}
+        geometry={nodes.Cube007.geometry}
         material={materials["Material.004"]}
         position={[0.07, 0.61, -0.07]}
         rotation={[0, -0.7, 0]}
       />
       <mesh
-        geometry={nodes.Cube007.geometry}
+        geometry={nodes.Cube008.geometry}
         material={materials["Material.003"]}
         position={[-0.48, 2.51, 0.58]}
         rotation={[0, -0.7, 0]}

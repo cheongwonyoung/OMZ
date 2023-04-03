@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Model } from "../../assets/3DAvatar/Rabbit";
 import CameraAvatar from "../common/CameraAvatar";
 import {
   faHome,
@@ -43,11 +42,7 @@ export default function FriendsCard({
 
   return (
     <div className="w-full bg-slate-500/50 rounded-2xl flex flex-col items-center gap-5 pt-10 pb-20">
-      {/* <CameraAvatar Avatar={<Bear />} /> */}
-      {/* <CameraAvatar Avatar={<Fox />} /> */}
-      <div className="h-60">
-        <CameraAvatar Avatar={<Model />} />
-      </div>
+      <div className="h-60"></div>
       <div className="text-2xl text-white">{info.nickname}</div>
       <div className="flex flex-col gap-2">
         <TagList tags={info_tags} />

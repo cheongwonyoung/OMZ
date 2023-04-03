@@ -39,10 +39,8 @@ type GLTFResult = GLTF & {
     bat_object_1: THREE.Mesh;
     balloon_object: THREE.Mesh;
     balloon_object_1: THREE.Mesh;
-    mouse_cap: THREE.Mesh;
-    yellow_cap: THREE.Mesh;
-    ddong_glasses: THREE.Mesh;
     my_glasses: THREE.Mesh;
+    white_cap: THREE.Mesh;
   };
   materials: {
     ["bunny texturee"]: THREE.MeshStandardMaterial;
@@ -72,10 +70,8 @@ type GLTFResult = GLTF & {
     bat_object_2: THREE.MeshStandardMaterial;
     balloon_material_1: THREE.MeshStandardMaterial;
     balloon_material_2: THREE.MeshStandardMaterial;
-    mousecap_material: THREE.MeshStandardMaterial;
-    yellow_cap_material: THREE.MeshStandardMaterial;
-    ddong_material: THREE.MeshStandardMaterial;
     mymaterial: THREE.MeshStandardMaterial;
+    white_material: THREE.MeshStandardMaterial;
   };
 };
 interface Item {
@@ -144,19 +140,6 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
             />
           </>
         );
-      // case "5":
-      //   // 똥 안경
-      //   return (
-      //     <>
-      //       <mesh
-      //         geometry={nodes.ddong_glasses.geometry}
-      //         material={materials.ddong_material}
-      //         position={[-0.51, 2.91, 0.59]}
-      //         rotation={[-3.13, -0.81, -2.91]}
-      //         scale={0.27}
-      //       />
-      //     </>
-      //   );
       case "5":
         return (
           <>
@@ -248,26 +231,14 @@ export function Custom_rabbit({ position, itemStatus }: Props) {
         return (
           <>
             <mesh
-              geometry={nodes.mouse_cap.geometry}
-              material={materials.mousecap_material}
-              position={[0.02, 3.45, 0]}
-              rotation={[-0.02, 0.77, 0.03]}
-              scale={0.01}
+              geometry={nodes.white_cap.geometry}
+              material={materials.white_material}
+              position={[0.12, 3.06, -0.06]}
+              rotation={[-1.74, 0.2, -0.73]}
+              scale={0.94}
             />
           </>
         );
-      // case "6":
-      //   return (
-      //     <>
-      //       <mesh
-      //         geometry={nodes.yellow_cap.geometry}
-      //         material={materials.yellow_cap_material}
-      //         position={[-0.19, 4.45, -0.24]}
-      //         rotation={[0.06, 0.12, -0.42]}
-      //         scale={0.41}
-      //       />
-      //     </>
-      //   );
     }
   };
   // 날개 custom

@@ -1,7 +1,5 @@
 import { useState } from "react";
 import MyPageBox from "../components/mypage/MyPageBox";
-import Camera3D from "../components/common/Camera3D";
-import { Model } from "../assets/3DAvatar/Rabbit";
 import CameraAvatar from "../components/common/CameraAvatar";
 import TitleBar from "../components/common/TitleBar";
 import { images } from "../assets/images";
@@ -20,44 +18,88 @@ import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
 import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Custom_dino } from "../assets/3DAvatar/Custom_dino";
+import { Custom_cat } from "../assets/3DAvatar/Custom_cat";
 
 export default function MyPageCustomPage() {
   const memberId = useRecoilValue(userStatus).id;
   const navigate = useNavigate();
   // 처음 값은 다 1로 설정 (모자, 안경, 날개)
   const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
-    hat: "1",
-    glasses: "1",
-    wing: "1",
+    hat: "",
+    glasses: "0",
+    wing: "0",
   });
+
+  const [animal, setAnimal] = useState("");
 
   const handleItems = (item: string) => {
     const variety = item.split("_")[0];
     const num = item.split("_")[1];
-    console.log(itemStatus);
     setItemStatus({ ...itemStatus, [variety]: num });
   };
 
   const showAvatar = () => {
-    // switch (animal) {
-    //   case "rabbit":
-    return (
-      // <CameraAvatar keepRender={true} Avatar={<Model position={[0, 0, 0]} />} />
-      <CameraAvatar
-        keepRender={true}
-        Avatar={
-          //<Custom_rabbit position={[0, -0.2, 0]} itemStatus={itemStatus} />
-          // <Custom_dog position={[0, 0, 0]} itemStatus={itemStatus} />
-          //<Custom_fox position={[0, 0.2, 0]} itemStatus={itemStatus} />
-          <Custom_bear position={[0, 0.2, 0]} itemStatus={itemStatus} />
-        }
-      />
-    );
-    // }
+    switch (animal) {
+      case "토끼":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_rabbit position={[0, 0, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "곰":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_bear position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "여우":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_fox position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "공룡":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_dino position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "고양이":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_cat position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "강아지":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_dog position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+    }
   };
-
   useQuery(["customUpdate", memberId], () => getMyCustomInfo(memberId), {
     onSuccess(data) {
+      setAnimal(data.data.faceName);
       const existingCustom: { [key: string]: string } = {};
       for (const custom of data.data.items) {
         existingCustom[custom.name] = custom.state.toString();
