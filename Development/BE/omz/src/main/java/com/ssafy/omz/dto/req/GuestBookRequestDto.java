@@ -17,9 +17,9 @@ public class GuestBookRequestDto {
     @ApiModel(value="방명록 작성 정보", description = "작성자, 내용을 가진 class")
     public static class Write{
 
-        @NotEmpty(message="miniRoomId는 빈값 일 수 없습니다")
-        @NotNull(message="miniRoomId는 null 일 수 없습니다")
-        private long miniRoomId;
+        @NotEmpty(message="friendId는 빈값 일 수 없습니다")
+        @NotNull(message="friendId는 null 일 수 없습니다")
+        private long friendId;
 
         @NotEmpty(message="memberId는 빈값 일 수 없습니다")
         @NotNull(message="memberId는 null 일 수 없습니다")
