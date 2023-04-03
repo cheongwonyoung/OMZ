@@ -18,6 +18,7 @@ export const images: Images = {
   dino_img: "/images/dino.jpg",
   bear_img: "/images/bear.jpg",
   heart_img: "/images/heart.png",
+  player_img: "/images/music_player.jpg",
   foot_print_img: "/images/footPrint.png",
   bed_1_img: "/images/bed_1.png",
   bed_2_img: "/images/bed_2.png",
@@ -33,7 +34,7 @@ export const images: Images = {
   lamp_2_img: "/images/lamp_2.png",
   lamp_3_img: "/images/lamp_3.png",
   profile_img: "/images/pink_rabbit.png",
-  loading_img: "/images/loading.png",  
+  loading_img: "/images/loading.png",
   animate_star: "/images/meteor-rain.gif",
   glasses_0: "/images/x.png",
   glasses_1: "/images/heart_glasses.png",
@@ -52,5 +53,5 @@ export const images: Images = {
   wing_2: "/images/bat_wing.png",
   wing_3: "/images/balloon.png",
   wing_4: "/images/vampire_cape.png",
-  wing_5: "/images/random.png", 
+  wing_5: "/images/random.png",
 };
