@@ -88,7 +88,7 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
-
+APPEND_SLASH = False
 ROOT_URLCONF = 'omz_django.urls'
 
 TEMPLATES = [
