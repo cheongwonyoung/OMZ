@@ -5,7 +5,6 @@ import com.ssafy.omz.repository.MemberRepository;
 import com.ssafy.omz.service.ChatRedisCacheService;
 import com.ssafy.omz.service.MemberService;
 import com.ssafy.omz.service.RedisPublisher;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +24,7 @@ public class ChatStompController { // stomp chat controller
 
     private final RedisPublisher redisPublisher;
 
-    private final ChannelTopic topic; // GitHub for publisher
+    private final ChannelTopic topic;
 
     private final ChatRedisCacheService chatRedisCacheService;
 
@@ -36,11 +35,6 @@ public class ChatStompController { // stomp chat controller
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
      */
-
-//    @MessageMapping("/chat/join")
-//    public void testForJoin(ChatMessage message){
-//        System.out.println("[ChatController Join] message : " + message);
-//    }
 
 
 
@@ -56,16 +50,11 @@ public class ChatStompController { // stomp chat controller
             , defaultValue = "None")
     @MessageMapping("/chat/message")
     public void sendMessage(ChatMessage message){  // @Header("token") String token @Header("Authorization") String token
-log.info("[ChatStompController sendMessage] ChatMessage : {}",message.toString());
-//        GitHub 예시
-//        UserInfo userInfo = jwtDecoder.decodeUsername(headerTokenExtractor.extract(token));
+        log.info("[ChatStompController sendMessage] ChatMessage : {}",message.toString());
 
-//        message.setNickName(memberService.getLittleInfo(message.getMemberId()).getNickname());
         message.setNickName(memberRepository.findByMemberId(Long.valueOf(message.getMemberId())).getNickname());
         message.setCreatedTime(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS")));
         message.setType(ChatMessage.MessageType.TALK);
-
-        //  만약 맨 처음 보낸 메세지면 ...
 
         // Topic에 pub 보내주기
         // 해당 채팅방에 메세지 보내주기
