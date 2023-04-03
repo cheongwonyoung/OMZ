@@ -94,8 +94,8 @@ public class MiniRoomController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    
+
+
     @ApiOperation(value = "좋아요 수 조회")
     @GetMapping("/like")
     public ResponseEntity<?> getLikesMiniRoom(@RequestParam(required = true) long friendId, @RequestParam(required = true) long myId){
@@ -126,9 +126,9 @@ public class MiniRoomController {
 
     @ApiOperation(value = "미니룸 배경음악 조회", notes = "미니룸 아이디 받아 조회")
     @GetMapping(value = "/music")
-    public ResponseEntity<?> updateMusicInfo(@RequestParam(required = true) long miniRoomId) {
+    public ResponseEntity<?> updateMusicInfo(@RequestParam(required = true) long memberId) {
         try{
-            BgmResponseDto.BgmInfo bgmInfo = miniRoomService.getBgm(miniRoomId);
+            BgmResponseDto.BgmInfo bgmInfo = miniRoomService.getBgm(memberId);
             return new ResponseEntity<>(bgmInfo, HttpStatus.ACCEPTED);
         } catch (Exception e){
             e.printStackTrace();
@@ -138,14 +138,14 @@ public class MiniRoomController {
 
     @ApiOperation(value = "미니룸 배경음악 등록", notes = "제목, 가수를 받아 저장")
     @PostMapping(value = "/music")
-    public ResponseEntity<?> updateMusicInfo(@RequestParam(required = true) long miniRoomId, @RequestBody BgmRequestDto.Write musicInfo) {
+    public ResponseEntity<?> updateMusicInfo(@RequestParam(required = true) long memberId, @RequestBody BgmRequestDto.Write musicInfo) {
         try{
-            miniRoomService.updateBgm(miniRoomId, musicInfo);
+            miniRoomService.updateBgm(memberId, musicInfo);
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
 }

@@ -77,7 +77,7 @@ public class MiniRoomServiceImpl implements MiniRoomService{
 //        log.info(miniRoom.getMiniRoomId() + "번 미니룸 상메 수정할거얌");
         miniRoom.updateStateMessage(stateMessage).getStateMessage();
     }
-    
+
     // 상태메세지 삭제
     @Override
     @Transactional
@@ -88,15 +88,15 @@ public class MiniRoomServiceImpl implements MiniRoomService{
 
     // 음악정보 등록
     @Override
-    public void updateBgm(long miniRoomId, BgmRequestDto.Write musicInfo) {
-        bgmRepository.save(Bgm.builder().miniRoom(miniRoomRepository.findByMiniRoomId(miniRoomId))
+    public void updateBgm(long memberId, BgmRequestDto.Write musicInfo) {
+        bgmRepository.save(Bgm.builder().miniRoom(miniRoomRepository.findByMember_MemberId(memberId))
                 .title(musicInfo.getTitle()).singer(musicInfo.getSinger()).build());
     }
 
     // miniroom의 bgm 정보 조회
     @Override
-    public BgmResponseDto.BgmInfo getBgm(long miniRoomId) {
-        Bgm bgm = bgmRepository.findByMiniRoom_MiniRoomId(miniRoomId);
+    public BgmResponseDto.BgmInfo getBgm(long memberId) {
+        Bgm bgm = bgmRepository.findByMiniRoom_MiniRoomId(miniRoomRepository.findByMember_MemberId(memberId).getMiniRoomId());
         BgmResponseDto.BgmInfo bgmInfo = BgmResponseDto.BgmInfo.fromEntity(bgm);
         return bgmInfo;
     }
