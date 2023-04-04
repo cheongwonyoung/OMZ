@@ -67,7 +67,6 @@ export default function MiniRoomUpdatePage() {
     (body: { name: string; state: number }[]) => updateMiniRoom(memberId, body),
     {
       onSuccess() {
-        alert("미니룸 수정 성공");
         navigate("/miniroom/" + memberId);
       },
     }

@@ -32,7 +32,7 @@ export default function CommunityMyPageBanner({ memberId, item, file }: Props) {
             className="text-base rounded-md font-bold cursor-pointer"
             onClick={handleClick}
           >
-            마이룸 구경하기
+            미니룸 구경하기
           </button>
         </div>
       </div>
