@@ -1,11 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CameraAvatar from "../common/CameraAvatar";
-import {
-  faHome,
-  faHeart,
-  faHeartCrack,
-  faMessage,
-} from "@fortawesome/free-solid-svg-icons";
+import { faHome, faHeart, faMessage } from "@fortawesome/free-solid-svg-icons";
 import TagList from "./TagList";
 import FriendBtn from "./FriendBtn";
 import { useNavigate } from "react-router-dom";
@@ -15,17 +10,14 @@ import { Custom_fox } from "../../assets/3DAvatar/Custom_fox";
 import { Custom_dino } from "../../assets/3DAvatar/Custom_dino";
 import { Custom_cat } from "../../assets/3DAvatar/Custom_cat";
 import { Custom_dog } from "../../assets/3DAvatar/Custom_dog";
-import { talkToFriends } from "../../api/chatting";
 
 type Props = {
-  handleRefuseModal(): void;
   handleProposalModal(): void;
   handleModalFor(memberId: number, nickname: string): void;
   info: any;
   handletalkFriends(id: number): void;
 };
 export default function FriendsCard({
-  handleRefuseModal,
   handleProposalModal,
   handleModalFor,
   info,
@@ -41,11 +33,6 @@ export default function FriendsCard({
   const goProposal = () => {
     handleModalFor(info.memberId, info.nickname);
     handleProposalModal();
-  };
-
-  const goReject = () => {
-    handleModalFor(info.memberId, info.nickname);
-    handleRefuseModal();
   };
 
   const navigate = useNavigate();
@@ -127,11 +114,6 @@ export default function FriendsCard({
           icon={<FontAwesomeIcon icon={faHeart} />}
           text={"친구 신청"}
           logic={goProposal}
-        />
-        <FriendBtn
-          icon={<FontAwesomeIcon icon={faHeartCrack} />}
-          text={"친구 거절"}
-          logic={goReject}
         />
       </div>
     </div>
