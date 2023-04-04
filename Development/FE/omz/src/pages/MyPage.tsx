@@ -113,7 +113,7 @@ export default function MyPage() {
     <div className="flex flex-col justify-center items-center w-full">
       <TitleBar goto="/" title="My Page" icon={images.my_page_img} />
       <MyPageMiniRoomBanner />
-      <div className="h-96 my-5">{showAvatar()}</div>
+      <div className="h-96 my-5 w-11/12">{showAvatar()}</div>
       {isOwner && (
         <div
           className="flex max-w-sm w-8/12 justify-center mb-3 items-center flex-grow-0 flex-shrink-0 relative gap-2.5 p-2.5 rounded-[10px] bg-white/50 border border-black px-10 cursor-pointer hover:bg-black/20"
