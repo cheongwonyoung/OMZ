@@ -140,9 +140,8 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
         onClick={closeGuestBook}
       />
       {/* <p className="text-2xl text-purple-500">방명록</p> */}
+
       <div className="flex flex-col p-5 gap-8 w-full xl:max-h-96 sm:max-h-full overflow-y-scroll scroll-bar">
-        {letter}
-        {/* 방명록 등록하기 start*/}
         <div className="flex">
           <div className="foot-print flex flex-col justify-center">
             <span className="flex justify-center my-auto ">
@@ -169,6 +168,8 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
             </button>
           </div>
         </div>
+        {letter}
+        {/* 방명록 등록하기 start*/}
         {/* 방명록 등록하기 end*/}
       </div>
     </div>

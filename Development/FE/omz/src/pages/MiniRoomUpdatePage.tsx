@@ -89,13 +89,19 @@ export default function MiniRoomUpdatePage() {
       /> */}
       <div className="flex w-11/12 justify-between items-center p-2.5 mt-2 ">
         <div className="flex items-center">
-          <img src={images.mini_room_img} alt="" className="h-12 aspect-square mr-4" />
+          <img
+            src={images.mini_room_img}
+            alt=""
+            className="h-12 aspect-square mr-4"
+          />
           <p className="font-bold text-xl">{nickName}</p>
           <p className="title font-bold text-xl"> 's MiniRoom</p>
         </div>
-        <div className="w-10 h-10 flex content-center">{/* <BackBtn goBack={goBack} /> */}</div>
+        <div className="w-10 h-10 flex content-center">
+          {/* <BackBtn goBack={goBack} /> */}
+        </div>
       </div>
-      <div className="h-10/12 w-2/3  aspect-square">
+      <div className="h-72 w-72 aspect-square">
         {/* <Camera3D
           MiniRoom={
             <MiniroomBeta position={[20, -25, -20]} itemStatus={itemStatus} />
@@ -106,7 +112,11 @@ export default function MiniRoomUpdatePage() {
             <MiniroomBeta2 position={[20, -25, -20]} itemStatus={itemStatus} />
           }
         /> */}
-        <Camera3D MiniRoom={<MiniroomBeta4 position={[20, -25, -20]} itemStatus={itemStatus} />} />
+        <Camera3D
+          MiniRoom={
+            <MiniroomBeta4 position={[20, -25, -20]} itemStatus={itemStatus} />
+          }
+        />
       </div>
       <NextBtn comment="저장" logic={() => submitChange()} />
       <div className="w-full h-1/4 mt-8">

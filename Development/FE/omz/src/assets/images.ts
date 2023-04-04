@@ -33,7 +33,7 @@ export const images: Images = {
   sofa_0_img: "/images/x.png",
   sofa_1_img: "/images/sofa_1.png",
   sofa_2_img: "/images/sofa_2.png",
-  lamp_0_img: "/images/lamp_0.png",
+  lamp_0_img: "/images/x.png",
   lamp_1_img: "/images/lamp_1.png",
   lamp_2_img: "/images/lamp_2.png",
   rug_0_img: "/images/x.png",
