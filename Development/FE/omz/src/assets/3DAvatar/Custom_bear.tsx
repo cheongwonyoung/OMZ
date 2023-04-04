@@ -329,7 +329,7 @@ export function Custom_bear({ position, itemStatus }: Props) {
   };
   const props: any = { position };
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} scale={0.95}>
       {selectGlasses()}
       {selectHat()}
       {selectWing()}
