@@ -19,7 +19,7 @@ export default function CommunityNavbar() {
           <NavLink
             to="/community/"
             className={({ isActive }) =>
-              !isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#ffd6e9]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faHouse} className="text-2xl" />
@@ -30,7 +30,7 @@ export default function CommunityNavbar() {
           <NavLink
             to="/community/search"
             className={({ isActive }) =>
-              !isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#ffd6e9]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faSearch} className="text-2xl" />
@@ -41,7 +41,7 @@ export default function CommunityNavbar() {
           <NavLink
             to="/community/create"
             className={({ isActive }) =>
-              isActive ? "text-[#5B5685]" : "text-black"
+              isActive ? "text-[#ffd6e9]" : "text-black"
             }
           >
             <div className="flex justify-center items-center w-[50px] h-[50px] rounded-[10px] bg-white">
@@ -59,7 +59,7 @@ export default function CommunityNavbar() {
           <NavLink
             to="/community/like"
             className={({ isActive }) =>
-              !isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#ffd6e9]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faHeart} className="text-2xl" />
@@ -70,7 +70,7 @@ export default function CommunityNavbar() {
           <NavLink
             to={`/community/mypage/${memberId}`}
             className={({ isActive }) =>
-              !isActive ? "text-[#5B5685]" : "text-white"
+              !isActive ? "text-[#ffd6e9]" : "text-white"
             }
           >
             <FontAwesomeIcon icon={faUser} className="text-2xl" />
