@@ -46,11 +46,13 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-3xl gap-[27px] px-8 items-center justify-center">
+    <div className="flex flex-col w-full max-w-lg gap-[27px] px-8 items-center justify-center">
       <div className="w-full flex justify-between items-end">
         <div className="w-flex flex-col items-start justify-center gap-1 ml-2">
+          <p className="text-2xl font-bold text-purple-500">
+            {member?.nickname}
+          </p>
           <p className="text-2xl title">{member?.mbti}</p>
-          <p className="text-2xl font-bold ">{member?.nickname}</p>
         </div>
         {isOwner && (
           <button
@@ -61,17 +63,7 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
           </button>
         )}
       </div>
-      {/* <div
-          className="flex justify-start items-start flex-grow-0 flex-shrink-0 relative gap-2.5 px-5 py-2.5 rounded-[10px] bg-white/50 border border-black hover:bg-black/20"
-          onClick={goToUpdate}
-        >
-          <button
-            onClick={goToUpdate}
-            className="flex-grow-0 flex-shrink-0 text-sm font-medium text-center text-black"
-          >
-            기본 정보 수정
-          </button>
-        </div> */}
+
       <div className="flex flex-col gap-2">
         {animalList.map((item) => (
           <div className="flex gap-4 items-center" key={uuidv4()}>

@@ -42,7 +42,7 @@ export default function UpdateAnimal({ animalPrefer, changePrefer }: Props) {
     <div className="flex flex-col gap-2">
       {animalList.map((item) => (
         <div className="flex gap-4 items-center" key={item}>
-          <div className="w-[20%] flex flex-col h-full items-center">
+          <div className="w-[30%] flex flex-col h-full items-center">
             <img
               src={images[imgsrc(item)]}
               alt=""
