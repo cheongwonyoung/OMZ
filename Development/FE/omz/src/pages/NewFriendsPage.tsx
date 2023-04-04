@@ -4,7 +4,6 @@ import TitleBar from "../components/common/TitleBar";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import FriendsRecommend from "../components/newFriends/FriendsRecommend";
 import ModalBlackBg from "../components/common/ModalBlackBg";
-import FriendRefuseModal from "../components/newFriends/FriendRefuseModal";
 import { useEffect, useState } from "react";
 import FriendsProposalModal from "../components/newFriends/FriendsProposalModal";
 import FriendSearchList from "../components/newFriends/FriendSearchList";
@@ -22,11 +21,6 @@ export default function NewFriendsPage() {
   const navigate = useNavigate();
   const handleModalFor = (memberId: number, nickname: string) => {
     setModalFor({ memberId, nickname });
-  };
-
-  const [isRefuse, setIsRefuse] = useState(false);
-  const handleRefuseModal = () => {
-    setIsRefuse((prev) => !prev);
   };
 
   const [isProposal, setIsProposal] = useState(false);
@@ -89,17 +83,6 @@ export default function NewFriendsPage() {
   }, [word]);
   return (
     <div className="flex flex-col items-center w-full">
-      {isRefuse && (
-        <ModalBlackBg
-          closeModal={handleRefuseModal}
-          modal={
-            <FriendRefuseModal
-              modalFor={modalFor}
-              handleRefuseModal={handleRefuseModal}
-            />
-          }
-        />
-      )}
       {isProposal && (
         <ModalBlackBg
           closeModal={handleProposalModal}
@@ -134,7 +117,6 @@ export default function NewFriendsPage() {
         />
       ) : (
         <FriendsRecommend
-          handleRefuseModal={handleRefuseModal}
           handleModalFor={handleModalFor}
           handleProposalModal={handleProposalModal}
           handletalkFriends={handletalkFriends}

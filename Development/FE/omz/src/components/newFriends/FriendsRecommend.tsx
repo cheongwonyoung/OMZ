@@ -9,27 +9,20 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 type Props = {
-  handleRefuseModal(): void;
   handleProposalModal(): void;
   handleModalFor(memberId: number, nickname: string): void;
   handletalkFriends(id: number): void;
 };
 export default function FriendsRecommend({
-  handleRefuseModal,
   handleProposalModal,
   handleModalFor,
   handletalkFriends,
 }: Props) {
-  const [recommends, setRecommends] = useState([]);
   const memberId = useRecoilValue(userStatus).id;
   const { data } = useQuery(
     "friendRecommend",
     () => getFriendRecommend(memberId),
-    {
-      onSuccess(data) {
-        setRecommends(data.data);
-      },
-    }
+    {}
   );
 
   return (
@@ -41,24 +34,11 @@ export default function FriendsRecommend({
           showThumbs={false}
           showStatus={false}
         >
-          {/* {recommends.map((info) => {
-            return (
-              <div className="slide" key={uuidv4()}>
-                <FriendsCard
-                  info={info}
-                  handleRefuseModal={handleRefuseModal}
-                  handleProposalModal={handleProposalModal}
-                  handleModalFor={handleModalFor}
-                />
-              </div>
-            );
-          })} */}
           {data?.data.map((info: any) => {
             return (
               <div className="slide" key={uuidv4()}>
                 <FriendsCard
                   info={info}
-                  handleRefuseModal={handleRefuseModal}
                   handleProposalModal={handleProposalModal}
                   handleModalFor={handleModalFor}
                   handletalkFriends={handletalkFriends}
