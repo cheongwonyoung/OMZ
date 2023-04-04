@@ -6,8 +6,6 @@ import { friendProposal } from "../../api/newFriend";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 type Props = {
   handleProposalModal(): void;
@@ -23,10 +21,6 @@ export default function FriendsProposalModal({
       friendProposal(friend),
     {
       onSuccess: () => {
-        toast.success("친구 신청 완료", {
-          autoClose: 3000,
-          position: toast.POSITION.TOP_RIGHT,
-        });
         handleProposalModal();
       },
     }
@@ -46,7 +40,6 @@ export default function FriendsProposalModal({
 
   return (
     <div className="flex flex-col items-center w-80">
-      <ToastContainer />
       <div className="flex text-xl justify-between w-11/12 my-4 items-center">
         <img src={images.new_friends_img} alt="" className="h-10" />
         <p className="font-bold">New Friends</p>

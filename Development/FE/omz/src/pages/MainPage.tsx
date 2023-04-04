@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPowerOff } from "@fortawesome/free-solid-svg-icons";
+import { div } from "@tensorflow/tfjs";
 export default function MainPage() {
   const memberId = useRecoilValue(userStatus).id;
 
@@ -15,8 +16,8 @@ export default function MainPage() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-[60px]">
-      <div className="flex flex-col justify-center items-center mt-16">
+    <div className="flex flex-col justify-center items-center gap-[50px]">
+      <div className="flex flex-col justify-center items-center mt-10">
         <img
           src={images.main_logo}
           className="w-[205px] h-[101px] object-cover"
@@ -26,6 +27,7 @@ export default function MainPage() {
           className="w-[198px] h-[34px] object-cover"
         />
       </div>
+
       <div className="flex flex-col justify-center items-center gap-[50px]">
         <div className="w-full flex justify-around items-end gap-[25px]">
           <Link
@@ -33,21 +35,33 @@ export default function MainPage() {
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img className="w-[80%] mb-3" src={images.new_friends_img} />
-            <p className="title text-base text-center font-bold">New Friends</p>
+            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
+              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+                New Friends
+              </p>
+            </div>
           </Link>
           <Link
             to={`miniroom/${memberId}`}
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img src={images.mini_room_img} className="w-[80%] mb-3" />
-            <p className="title text-base text-center font-bold">Mini Room</p>
+            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
+              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+                Mini Room
+              </p>
+            </div>
           </Link>
           <Link
             to={`/mypage/${memberId}`}
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img src={images.my_page_img} className="w-[80%] mb-3" />
-            <p className="title text-base text-center font-bold">My Page</p>
+            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
+              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+                My Page
+              </p>
+            </div>
           </Link>
         </div>
         <div className="w-full flex justify-around items-end gap-[25px]">
@@ -59,8 +73,9 @@ export default function MainPage() {
               src={images.my_friends_img}
               className="w-[80%] hover:scale-110 mb-3"
             />
-            <div className="flex-grow-0 flex-shrink-0 w-[95px] h-[30px]">
-              <p className="title text-base text-center font-bold">
+
+            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
+              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
                 My Friends
               </p>
             </div>
@@ -73,8 +88,11 @@ export default function MainPage() {
               src={images.chatting_img}
               className="w-[80%] hover:scale-110 mb-3"
             />
-            <div className="flex-grow-0 flex-shrink-0 w-[95px] h-[30px]">
-              <p className="title text-base text-center font-bold">Chatting</p>
+
+            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
+              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+                Chatting
+              </p>
             </div>
           </Link>
           <Link
@@ -85,20 +103,18 @@ export default function MainPage() {
               src={images.community_img}
               className="w-[80%] hover:scale-110 mb-3 "
             />
-            <div className="flex-grow-0 flex-shrink-0 w-[95px] h-[30px]">
-              <div className="w-[72px] h-4">
-                <p className="title text-base text-center font-bold">
-                  Community
-                </p>
-              </div>
+            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
+              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+                Community
+              </p>
             </div>
           </Link>
         </div>
-        <div onClick={logOut} className="cursor-pointer">
-          <FontAwesomeIcon
-            className="text-4xl hover:text-red-500"
-            icon={faPowerOff}
-          />
+      </div>
+      <div onClick={logOut} className="cursor-pointer">
+        <div className="flex justify-center items-center gap-2.5 p-2.5 rounded-[10px] bg-white/50 border border-black hover:bg-black/20">
+          <p className="text-base">LOGOUT</p>
+          <FontAwesomeIcon icon={faPowerOff} />
         </div>
       </div>
     </div>
