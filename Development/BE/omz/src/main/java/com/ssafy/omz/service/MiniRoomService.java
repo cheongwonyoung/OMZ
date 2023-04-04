@@ -31,8 +31,8 @@ public interface MiniRoomService {
     void deleteStateMessage(long memberId) throws RollbackException;
 
     // bgm 정보 등록
-    void updateBgm(long miniRoomId, BgmRequestDto.Write musicInfo);
+    void updateBgm(long memberId, BgmRequestDto.Write musicInfo);
 
     // miniroom의 bgm정보
-    BgmResponseDto.BgmInfo getBgm(long miniRoomId);
+    BgmResponseDto.BgmInfo getBgm(long memberId);
 }
