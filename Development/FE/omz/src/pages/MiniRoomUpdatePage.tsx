@@ -26,7 +26,7 @@ export default function MiniRoomUpdatePage() {
   });
 
   // 미니룸 불러오기
-  useQuery(["customUpdate", memberId], () => getMiniRoom(Number(id)), {
+  useQuery(["customUpdate", memberId], () => getMiniRoom(Number(memberId)), {
     onSuccess(data) {
       console.log(data.data);
 
@@ -42,9 +42,8 @@ export default function MiniRoomUpdatePage() {
   });
 
   // 닉네임 조회
-  const id = useParams().id;
   const access_token = useRecoilValue(userToken).access_token;
-  const [nickName, setNickName] = useState("Cutie BBatie");
+  const [nickName, setNickName] = useState("Cutie");
   useQuery("nickname", () => getMemberInfo(String(access_token)), {
     onSuccess(data) {
       // console.log(data.data.nickname);
@@ -68,7 +67,6 @@ export default function MiniRoomUpdatePage() {
     (body: { name: string; state: number }[]) => updateMiniRoom(memberId, body),
     {
       onSuccess() {
-        alert("미니룸 수정 성공");
         navigate("/miniroom/" + memberId);
       },
     }
@@ -102,7 +100,7 @@ export default function MiniRoomUpdatePage() {
           {/* <BackBtn goBack={goBack} /> */}
         </div>
       </div>
-      <div className="h-10/12 w-2/3  aspect-square">
+      <div className="h-72 w-72 aspect-square">
         {/* <Camera3D
           MiniRoom={
             <MiniroomBeta position={[20, -25, -20]} itemStatus={itemStatus} />

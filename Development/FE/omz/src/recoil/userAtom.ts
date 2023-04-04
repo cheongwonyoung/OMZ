@@ -21,3 +21,11 @@ export const userStatus = atom({
   },
   effects_UNSTABLE: [persistAtom],
 });
+
+export const kakaoToken = atom({
+  key: "kakaoToken",
+  default: {
+    access_token: "",
+  },
+  effects_UNSTABLE: [persistAtom],
+});

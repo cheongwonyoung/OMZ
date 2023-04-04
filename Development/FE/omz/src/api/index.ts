@@ -10,8 +10,8 @@ export const instance = axios.create({
 
 export const djInstance = axios.create({
   // baseURL: "http://127.0.0.1:8000/django",
-  baseURL: 'http://j8a705.p.ssafy.io:8000/django',
+  baseURL: "http://j8a705.p.ssafy.io:8000/django",
   headers: { "Content-Type": "application/json" },
 });
 
-export const imageUrl = 'https://storage.googleapis.com/omz-bucket/' 
+export const imageUrl = "https://storage.googleapis.com/omz-bucket/";

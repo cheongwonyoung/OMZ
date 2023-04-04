@@ -13,19 +13,25 @@ import ModalBlackBg from "../components/common/ModalBlackBg";
 import GuestBookModal from "../components/miniRoom/GuestBookModal";
 import YoutubeBgm from "../components/miniRoom/YoutubeBgm";
 import { getMemberInfo } from "../api/member";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus, userToken } from "../recoil/userAtom";
 import { useNavigate } from "react-router-dom";
-import { getStateMessage, getLikes, getMiniRoom } from "../api/miniRoom";
+import {
+  getStateMessage,
+  getLikes,
+  getMiniRoom,
+  getBGM,
+} from "../api/miniRoom";
+import { getMyPageInfos } from "../api/myPage";
 // import { Scene } from "../assets/3DMiniRoom/Scene";
 // import { MiniroomBeta3 } from "../assets/3DMiniRoom/MiniroomBeta3";
 import { MiniroomBeta4 } from "../assets/3DMiniRoom/MiniroomBeta4";
 
 export default function MiniRoomPage() {
+  const navigate = useNavigate();
   const goBack = () => {
-    const navigate = useNavigate();
     navigate("/");
   };
 
@@ -38,14 +44,38 @@ export default function MiniRoomPage() {
   // 닉네임 조회
   const id = useParams().id;
   const memberId = useRecoilValue(userStatus).id;
-  const access_token = useRecoilValue(userToken).access_token;
+  // const access_token = useRecoilValue(userToken).access_token;
   const [nickName, setNickName] = useState("Cutie BBatie");
-  useQuery("nickname", () => getMemberInfo(String(access_token)), {
+  const [miniRoomId, setMiniRoomId] = useState(0);
+
+  useQuery("info", () => getMyPageInfos(Number(memberId)), {
     onSuccess(data) {
-      console.log(data.data.nickname);
-      setNickName(data.data.nickname + " ");
+      setNickName(data.data.member.nickname);
+      console.log(data.data.member.nickname, " : 닉넴 성공");
+      setMiniRoomId(data.data.miniRoomId);
+      // takeBGM.mutate(data.data.miniRoomId);
+      console.log(data.data.miniRoomId, "미니룸아이디 성공");
     },
     staleTime: 0,
+  });
+
+  // BGM 조회
+  // const ["title", setTitle] = useState("");
+  // const takeBGM = useMutation((id) => getBGM(Number(id)), {
+  //   onSuccess(data, variables, context) {
+  //     console.log(data);
+  //   },
+  // });
+
+  // Youtube 확인용 노래 제목
+  const [bgm, setBgm] = useState("hype boy");
+  useQuery("setbgm", () => getBGM(Number(memberId)), {
+    onSuccess(data) {
+      console.log(data.data);
+      // setBgm(data.data.title + " - " + data.data.singer);
+    },
+    staleTime: 0,
+    // refetchOnMount: false,
   });
 
   // 방명록 모달
@@ -118,9 +148,6 @@ export default function MiniRoomPage() {
     refetch();
   }, []);
 
-  // Youtube 확인용 노래 제목
-  const [bgm, setBgm] = useState("hype boy");
-
   return (
     <div className=" w-full flex flex-col items-center">
       {/* <div className=" w-full h-25 sm:h-5 flex flex-col items-center "> */}
@@ -165,14 +192,14 @@ export default function MiniRoomPage() {
             alt=""
             className="w-72 pt-5 rounded-xl drop-shadow-2xl"
           />
-          <div className="absolute top-10 bottom-0 left-10 opacity-75">
+          <div className="absolute top-10 bottom-0 opacity-75">
             <YoutubeBgm title={bgm} />
           </div>
         </div>
         <div className="mt-8">
           <Heart heart={heart} isLiked={isLiked} refetch={refetch} />
         </div>
-        <div className="h-10/12 w-2/3 aspect-square">
+        <div className="h-72 w-72 aspect-square">
           <Camera3D
             MiniRoom={
               <MiniroomBeta4

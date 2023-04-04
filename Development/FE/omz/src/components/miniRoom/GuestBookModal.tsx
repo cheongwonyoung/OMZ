@@ -16,6 +16,8 @@ import {
   deleteGuestBook,
   writeGuestBook,
 } from "../../api/miniRoom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type GuestBook = {
   [key: string]: any;
@@ -52,7 +54,10 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
     (guestBookId: Number) => deleteGuestBook(Number(guestBookId)),
     {
       onSuccess: () => {
-        console.log("삭제 성공");
+        toast.success("방명록이 삭제되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         refetch();
       },
     }
@@ -71,7 +76,10 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
       writeGuestBook(item),
     {
       onSuccess: () => {
-        console.log("등록 성공");
+        toast.success("방명록이 작성되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         setContent("");
         refetch();
       },
@@ -87,6 +95,7 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
       case 1:
         return (
           <div className="flex justify-end " key={uuidv4()}>
+            <ToastContainer />
             <div className="foot-print flex flex-col justify-self-start pt-5">
               <span className="flex justify-center my-auto">
                 {talk.content}
@@ -140,9 +149,8 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
         onClick={closeGuestBook}
       />
       {/* <p className="text-2xl text-purple-500">방명록</p> */}
+
       <div className="flex flex-col p-5 gap-8 w-full xl:max-h-96 sm:max-h-full overflow-y-scroll scroll-bar">
-        {letter}
-        {/* 방명록 등록하기 start*/}
         <div className="flex">
           <div className="foot-print flex flex-col justify-center">
             <span className="flex justify-center my-auto ">
@@ -169,6 +177,8 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
             </button>
           </div>
         </div>
+        {letter}
+        {/* 방명록 등록하기 start*/}
         {/* 방명록 등록하기 end*/}
       </div>
     </div>

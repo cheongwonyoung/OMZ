@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getKakaoToken, getServerToken, getUserInfo } from "../api/kakaoLogin";
 import { useRecoilState } from "recoil";
-import { userStatus, userToken } from "../recoil/userAtom";
+import { userStatus, userToken, kakaoToken } from "../recoil/userAtom";
 import Loading from "../components/common/Loading";
 export default function KakaoRedirectPage() {
   const [token, setToken] = useRecoilState(userToken);
@@ -42,10 +42,13 @@ export default function KakaoRedirectPage() {
     }
   );
 
+  const [userKakao, setUserKakao] = useRecoilState(kakaoToken);
+
   useQuery("kakao_token", () => getKakaoToken(AUTH_CODE), {
     retry: false,
     onSuccess(data) {
       console.log(data);
+      setUserKakao({ access_token: data.data.access_token });
       getTokken.mutate(data?.data.access_token);
     },
   });

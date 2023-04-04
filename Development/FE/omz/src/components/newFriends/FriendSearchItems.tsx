@@ -13,6 +13,7 @@ type Props = {
   requestPossible?: boolean;
   handleModalFor(memberId: number, nickname: string): void;
   handleProposalModal(): void;
+  handletalkFriends(id: number): void;
 };
 
 export default function FriendSearchItems({
@@ -21,29 +22,10 @@ export default function FriendSearchItems({
   requestPossible,
   handleModalFor,
   handleProposalModal,
+  handletalkFriends,
 }: Props) {
   const navigate = useNavigate();
   const myId = useRecoilValue(userStatus).id;
-
-  const { data, refetch } = useQuery(
-    "talkfriends",
-    () => talkToFriends(myId, memberId),
-    {
-      enabled: false,
-    }
-  );
-
-  useEffect(() => {
-    refetch();
-  }, []);
-
-  const onClick = () => {
-    refetch();
-    const roomId = data!.data;
-    navigate(`/chatting/${myId}/${roomId}`, {
-      state: { roomId },
-    });
-  };
 
   return (
     <div className="w-full">
@@ -54,9 +36,9 @@ export default function FriendSearchItems({
         <div className="flex gap-2">
           <button
             className="text-base hover:font-bold hover:scale-105 mr-5"
-            onClick={onClick}
+            onClick={() => handletalkFriends(memberId)}
           >
-            <FontAwesomeIcon className="text-pink-400" icon={faMessage} />{" "}
+            <FontAwesomeIcon className="text-blue-400" icon={faMessage} />{" "}
             &nbsp; 말 걸기
           </button>
 

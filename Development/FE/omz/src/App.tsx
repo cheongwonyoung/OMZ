@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+// import { ReactQueryDevtools } from "react-query/devtools";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 import LoginPage from "./pages/LoginPage";
@@ -25,6 +25,8 @@ import MyPageUpdatePage from "./pages/MyPageUpdatePage";
 import MyPageCustomPage from "./pages/MyPageCustomPage";
 import SignUpEndPage from "./pages/SignUpEndPage";
 import CheckIsLoginPage from "./pages/CheckIsLoginPage";
+import LogoutRedirectPage from "./pages/LogoutRedirectPage";
+import EnterPage from "./pages/EnterPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +43,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      // {
+      //   path: "",
+      //   element: <CheckIsLoginPage component={<EnterPage />} />,
+      // },
       {
         path: "",
         element: <CheckIsLoginPage component={<MainPage />} />,
@@ -121,6 +127,10 @@ const router = createBrowserRouter([
         path: "signup/end",
         element: <CheckIsLoginPage component={<SignUpEndPage />} />,
       },
+      {
+        path: "logout",
+        element: <LogoutRedirectPage />,
+      },
     ],
   },
 ]);
@@ -130,7 +140,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </div>
     </QueryClientProvider>
   );
