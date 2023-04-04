@@ -38,7 +38,7 @@ export default function FriendSearchItems({
             className="text-base hover:font-bold hover:scale-105 mr-5"
             onClick={() => handletalkFriends(memberId)}
           >
-            <FontAwesomeIcon className="text-pink-400" icon={faMessage} />{" "}
+            <FontAwesomeIcon className="text-blue-400" icon={faMessage} />{" "}
             &nbsp; 말 걸기
           </button>
 

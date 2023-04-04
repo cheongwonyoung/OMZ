@@ -107,17 +107,17 @@ export default function FriendsCard({
       </div>
       <div className="flex justify-center gap-5">
         <button
-          className="text-white text-base opacity-95 hover:text-black"
+          className="text-base opacity-95 hover:font-bold hover:scale-105"
           onClick={() => handletalkFriends(info.memberId)}
         >
-          <FontAwesomeIcon className="text-pink-400 mr-2" icon={faMessage} />말
+          <FontAwesomeIcon className="text-blue-400 mr-2" icon={faMessage} />말
           걸기
         </button>
         <button
-          className="text-white text-base opacity-95 hover:text-black"
+          className="text-base opacity-95 hover:font-bold hover:scale-105"
           onClick={() => navigate(`/miniroom/${info.memberId}`)}
         >
-          <FontAwesomeIcon icon={faHome} className="mr-2" />
+          <FontAwesomeIcon icon={faHome} className="text-teal-400 mr-2" />
           놀러가기
         </button>
       </div>

@@ -34,14 +34,14 @@ export default function ListBottomBar({
         onClick={() => handletalkFriends(id)}
         className="flex items-center gap-2 cursor-pointer hover:scale-105 hover:font-bold"
       >
-        <FontAwesomeIcon icon={faMessage} className="text-pink-400" />
+        <FontAwesomeIcon icon={faMessage} className="text-blue-400" />
         <p>말 걸기</p>
       </div>
       <div
         className="flex items-center gap-2 cursor-pointer hover:scale-105 hover:font-bold"
         onClick={() => handleDeleteMember(name, id)}
       >
-        <FontAwesomeIcon icon={faHeartCrack} className="text-blue-400" />
+        <FontAwesomeIcon icon={faHeartCrack} />
         <p>친구 끊기</p>
       </div>
     </div>
