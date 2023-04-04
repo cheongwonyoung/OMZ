@@ -5,6 +5,8 @@ import { useMutation } from "react-query";
 import { changeStateMessage } from "../../api/miniRoom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Props = {
   handleMessage(e: any): void;
@@ -24,6 +26,10 @@ export default function StateMessage({ handleMessage, message }: Props) {
     () => changeStateMessage(memberId, message),
     {
       onSuccess(data) {
+        toast.success("상태메세지가 작성되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         console.log(data);
       },
     }
@@ -42,6 +48,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
   );
   return (
     <div className="relative flex justify-between w-full items-center bg-white h-12 rounded-lg shadow-xl">
+      <ToastContainer />
       <input
         id="message"
         type="text"

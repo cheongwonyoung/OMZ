@@ -18,15 +18,20 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus, userToken } from "../recoil/userAtom";
 import { useNavigate } from "react-router-dom";
-import { getStateMessage, getLikes, getMiniRoom, getBGM } from "../api/miniRoom";
+import {
+  getStateMessage,
+  getLikes,
+  getMiniRoom,
+  getBGM,
+} from "../api/miniRoom";
 import { getMyPageInfos } from "../api/myPage";
 // import { Scene } from "../assets/3DMiniRoom/Scene";
 // import { MiniroomBeta3 } from "../assets/3DMiniRoom/MiniroomBeta3";
 import { MiniroomBeta4 } from "../assets/3DMiniRoom/MiniroomBeta4";
 
 export default function MiniRoomPage() {
+  const navigate = useNavigate();
   const goBack = () => {
-    const navigate = useNavigate();
     navigate("/");
   };
 
@@ -127,13 +132,17 @@ export default function MiniRoomPage() {
   const [heart, setHeart] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
 
-  const { refetch } = useQuery("likes", () => getLikes(Number(id), Number(memberId)), {
-    onSuccess(data) {
-      // console.log("좋아요 수 조회 성공 >> " + data.data.likes + " " + data.data.isLiked);
-      setHeart(data.data.likes);
-      setIsLiked(data.data.isLiked);
-    },
-  });
+  const { refetch } = useQuery(
+    "likes",
+    () => getLikes(Number(id), Number(memberId)),
+    {
+      onSuccess(data) {
+        // console.log("좋아요 수 조회 성공 >> " + data.data.likes + " " + data.data.isLiked);
+        setHeart(data.data.likes);
+        setIsLiked(data.data.isLiked);
+      },
+    }
+  );
 
   useEffect(() => {
     refetch();
@@ -142,12 +151,24 @@ export default function MiniRoomPage() {
   return (
     <div className=" w-full flex flex-col items-center">
       {/* <div className=" w-full h-25 sm:h-5 flex flex-col items-center "> */}
-      {isMusic && <ModalBlackBg modal={<MusicModal message={message} closeMusic={closeMusic} />} />}
-      {isGuestBook && <ModalBlackBg modal={<GuestBookModal closeGuestBook={closeGuestBook} />} />}
+      {isMusic && (
+        <ModalBlackBg
+          modal={<MusicModal message={message} closeMusic={closeMusic} />}
+        />
+      )}
+      {isGuestBook && (
+        <ModalBlackBg
+          modal={<GuestBookModal closeGuestBook={closeGuestBook} />}
+        />
+      )}
       {/* <TitleBar icon={images.mini_room_img} title={nickName} goto={"/"} /> */}
       <div className="flex w-11/12 justify-between items-center p-2.5 mt-2 ">
         <div className="flex items-center">
-          <img src={images.mini_room_img} alt="" className="h-12 aspect-square mr-4" />
+          <img
+            src={images.mini_room_img}
+            alt=""
+            className="h-12 aspect-square mr-4"
+          />
           <p className="font-bold text-xl">{nickName}</p>
           <p className="title font-bold text-xl"> 's MiniRoom</p>
         </div>
@@ -166,7 +187,11 @@ export default function MiniRoomPage() {
           BGM 선택
         </button>
         <div className="relative">
-          <img src={images.player_img} alt="" className="w-72 pt-5 rounded-xl drop-shadow-2xl" />
+          <img
+            src={images.player_img}
+            alt=""
+            className="w-72 pt-5 rounded-xl drop-shadow-2xl"
+          />
           <div className="absolute top-10 bottom-0 opacity-75">
             <YoutubeBgm title={bgm} />
           </div>
