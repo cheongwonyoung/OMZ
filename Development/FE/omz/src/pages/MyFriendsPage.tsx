@@ -103,6 +103,7 @@ export default function MyFriendsPage() {
             handleRefuseModal={handleRefuseModal}
             proposals={proposals}
             refetch={refetch}
+            refetchFriend={refetchFriend}
           />
         ) : (
           <FriendsList

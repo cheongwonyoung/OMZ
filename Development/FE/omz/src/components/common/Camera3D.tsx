@@ -10,7 +10,10 @@ export default function CameraMiniroom({ Avatar, MiniRoom }: Props) {
   const pp = { position: [-15, 15, 15], fov: 60 };
 
   return (
-    <Canvas camera={{ position: [-15, 15, 15], fov: 60, zoom: 5 }} className="w-full h-full">
+    <Canvas
+      camera={{ position: [-15, 15, 15], fov: 60, zoom: 5 }}
+      className="w-full h-full"
+    >
       {/* <YoutubeBgm title={"hype boy"} /> */}
 
       <ambientLight intensity={0.4} />

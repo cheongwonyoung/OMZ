@@ -1,6 +1,6 @@
 import NextBtn from "./NextBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { useState } from "react";
 import { div } from "@tensorflow/tfjs";
@@ -55,7 +55,7 @@ export default function StepLikeAnimal({
   const lodingBtn = () => {
     if (isLoading)
       return (
-        <div>
+        <div className="flex gap-8 flex-col items-center">
           <svg
             aria-hidden="true"
             className="inline w-8 h-8 mr-2 text-gray-300 animate-spin dark:text-gray-600 fill-black"
@@ -72,7 +72,9 @@ export default function StepLikeAnimal({
               fill="currentFill"
             />
           </svg>
-          <p className="text-xl font-bold">쉿, 닮은 동물 찾는 중 &nbsp;</p>
+          <p className="text-xl font-bold">
+            쉿, 회원가입 중<FontAwesomeIcon icon={faHeart} />
+          </p>
         </div>
       );
     else
