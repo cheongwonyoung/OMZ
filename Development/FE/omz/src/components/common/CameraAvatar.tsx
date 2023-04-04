@@ -8,7 +8,7 @@ type Props = {
 export default function CameraAvatar({ Avatar, keepRender }: Props) {
   return (
     <Canvas
-      camera={{ position: [-10, 5, 10], zoom: 5.7 }}
+      camera={{ position: [-10, 5, 10], zoom: 5.5 }}
       className="w-full h-full"
       gl={{ preserveDrawingBuffer: keepRender }}
     >
