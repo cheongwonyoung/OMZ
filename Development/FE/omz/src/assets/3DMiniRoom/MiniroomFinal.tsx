@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.1.4 miniroomFinal.glb -t
 */
 
 import * as THREE from "three";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 
@@ -1891,6 +1891,8 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
     }
   };
 
+  const [isLamp, setIsLamp] = useState(true);
+
   const selectLamp = () => {
     switch (itemStatus?.lamp) {
       case "1":
@@ -1902,25 +1904,35 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
               position={[-0.3, 1.01, -1.35]}
               rotation={[-Math.PI / 2, 0, 0]}
               scale={4.7}
+              onClick={() => setIsLamp((prev) => !prev)}
             >
               <group name="root">
                 <group name="GLTF_SceneRootNode" rotation={[Math.PI / 2, 0, 0]}>
                   <group name="Lamp_01_3" scale={0.14}>
-                    <group name="���������_1">
-                      <mesh
-                        name="Object_8001"
-                        geometry={nodes.Object_8001.geometry}
-                        material={materials[".002"]}
-                        position={[0.64, 0.17, -1.14]}
-                        scale={0.5}
+                    <mesh
+                      name="Object_8001"
+                      geometry={nodes.Object_8001.geometry}
+                      material={materials[".002"]}
+                      position={[0.64, 0.17, -1.14]}
+                      scale={0.5}
+                      castShadow
+                      receiveShadow
+                    />
+                    {isLamp && (
+                      <pointLight
+                        castShadow
+                        position={[0.64, 3.5, -1.14]}
+                        power={4}
+                        color={"#ffe54f"}
                       />
-                    </group>
+                    )}
                     <mesh
                       name="Object_4002"
                       geometry={nodes.Object_4002.geometry}
                       material={materials[".001"]}
                       position={[0.64, 0.17, -1.14]}
                       scale={0.5}
+                      receiveShadow
                     />
                   </group>
                 </group>
@@ -3741,6 +3753,9 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
   };
 
   // const { actions } = useAnimations<GLTFActions>(animations, group);
+
+  const [isLight, setIsLight] = useState(true);
+
   const props: any = { position };
   return (
     <group ref={group} {...props} dispose={null}>
@@ -3751,6 +3766,10 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
           position={[0, 0, 0.41]}
           scale={0.88}
         />
+        {isLight && (
+          // <directionalLight intensity={0.7} castShadow position={[-50, 50, 50]} />
+          <pointLight castShadow position={[-15, 15, 15]} power={8} />
+        )}
         {/*  */}
         {/* 침대 */}
         <group
@@ -3910,6 +3929,7 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
           position={[4.27, 5.34, 4.14]}
           rotation={[0, 0, -Math.PI / 2]}
           scale={[0.16, 0.34, 0.13]}
+          onClick={() => setIsLight((prev) => !prev)}
         />
       </group>
       {/* 함수 써주기 */}

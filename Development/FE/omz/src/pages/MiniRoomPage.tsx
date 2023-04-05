@@ -1,4 +1,3 @@
-import { MiniRoom } from "../assets/3DMiniRoom/MiniRoom";
 import Camera3D from "../components/common/Camera3D";
 import BottomBar from "../components/miniRoom/BottomBar";
 import Heart from "../components/miniRoom/Heart";
@@ -25,11 +24,18 @@ import {
   getMiniRoom,
   getBGM,
 } from "../api/miniRoom";
-import { getMyPageInfos } from "../api/myPage";
+import { getMyCustomInfo, getMyPageInfos } from "../api/myPage";
 
-import { MiniroomBeta4 } from "../assets/3DMiniRoom/MiniroomBeta4";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
+import { Fox_move } from "../assets/3DAvatar/Fox_move";
+import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
+import { Custom_cat } from "../assets/3DAvatar/Custom_cat";
+import { Custom_dino } from "../assets/3DAvatar/Custom_dino";
+import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
+import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
+import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
+import TitleBar from "../components/common/TitleBar";
 
 export default function MiniRoomPage() {
   const navigate = useNavigate();
@@ -46,7 +52,7 @@ export default function MiniRoomPage() {
   // 닉네임 조회
   const memberId = useRecoilValue(userStatus).id;
   const miniRoomId = useParams().id;
-  const [nickName, setNickName] = useState("Cutie BBatie");
+  const [nickName, setNickName] = useState("");
 
   useQuery("info", () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
@@ -107,7 +113,7 @@ export default function MiniRoomPage() {
   });
 
   useQuery(
-    ["customUpdate", miniRoomId],
+    ["miniRoomInfo", miniRoomId],
     () => getMiniRoom(Number(miniRoomId)),
     {
       onSuccess(data) {
@@ -144,10 +150,52 @@ export default function MiniRoomPage() {
     refetch();
   }, []);
 
+  const [animal, setAnimal] = useState("");
+
+  const [customStatus, setCustomStatus] = useState<{ [key: string]: number }>({
+    hat: 0,
+    glasses: 0,
+    wing: 0,
+  });
+
+  useQuery(
+    ["customUpdate", miniRoomId],
+    () => getMyCustomInfo(Number(miniRoomId)),
+    {
+      onSuccess(data) {
+        setAnimal(data.data.faceName);
+        const existingCustom: { [key: string]: number } = {};
+        for (const custom of data.data.items) {
+          existingCustom[custom.name] = custom.state;
+        }
+        setCustomStatus(existingCustom);
+      },
+      staleTime: 0,
+    }
+  );
+
+  const showAvatar = () => {
+    switch (animal) {
+      case "토끼":
+        return <Custom_rabbit position={[0, 0, 0]} itemStatus={customStatus} />;
+      case "곰":
+        return <Custom_bear position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "여우":
+        return <Custom_fox position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "공룡":
+        return <Custom_dino position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "고양이":
+        return <Custom_cat position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "강아지":
+        return <Custom_dog position={[0, 0.3, 0]} itemStatus={customStatus} />;
+    }
+  };
+
   return (
     <div className=" w-full flex flex-col items-center">
       {isMusic && (
         <ModalBlackBg
+          closeModal={closeMusic}
           modal={
             <MusicModal
               message={message}
@@ -159,10 +207,10 @@ export default function MiniRoomPage() {
       )}
       {isGuestBook && (
         <ModalBlackBg
+          closeModal={closeGuestBook}
           modal={<GuestBookModal closeGuestBook={closeGuestBook} />}
         />
       )}
-      {/* <TitleBar icon={images.mini_room_img} title={nickName} goto={"/"} /> */}
       <div className="flex w-11/12 justify-between items-center p-2.5 mt-2 ">
         <div className="flex items-center">
           <img
@@ -177,7 +225,7 @@ export default function MiniRoomPage() {
           <BackBtn goBack={goBack} />
         </div>
       </div>
-      <div className="w-full max-w-3xl flex flex-col items-center px-4">
+      <div className="w-full max-w-3xl flex flex-col items-center mt-2.5 px-4">
         <div className="flex gap-8">
           <Heart heart={heart} isLiked={isLiked} refetch={refetch} />
           <BottomBar openGuestBook={openGuestBook} />
@@ -208,6 +256,7 @@ export default function MiniRoomPage() {
           </div>
           <div className="h-96 w-96 aspect-square mt-5">
             <Camera3D
+              Avatar={showAvatar()}
               MiniRoom={
                 // <MiniroomBeta4
                 <MiniroomFinal

@@ -16,10 +16,12 @@ export default function CameraMiniroom({ Avatar, MiniRoom }: Props) {
     >
       {/* <YoutubeBgm title={"hype boy"} /> */}
 
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.1} />
       {/* <ambientLight intensity={0.1} /> */}
-      <directionalLight intensity={0.8} />
-      {Avatar}
+      {/* <directionalLight intensity={0.8} /> */}
+      <group scale={0.5} position={[18, -24.2, -18]}>
+        {Avatar}
+      </group>
       {MiniRoom}
       <OrbitControls />
     </Canvas>
