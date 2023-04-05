@@ -49,10 +49,10 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
     <div className="flex flex-col w-full max-w-lg gap-[27px] px-8 items-center justify-center">
       <div className="w-full flex justify-between items-end">
         <div className="w-flex flex-col items-start justify-center gap-1 ml-2">
-          <p className="text-2xl font-bold text-purple-500">
+          <p className="text-2xl font-bold">
             {member?.nickname}
           </p>
-          <p className="text-2xl title">{member?.mbti}</p>
+          <p className="text-2xl title text-blue-300">{member?.mbti}</p>
         </div>
         {isOwner && (
           <button

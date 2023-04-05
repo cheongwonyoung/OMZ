@@ -97,7 +97,7 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
           <div className="flex justify-end " key={uuidv4()}>
             <ToastContainer />
             <div className="foot-print flex flex-col justify-self-start pt-5">
-              <span className="flex justify-center my-auto">
+              <span className="flex justify-center my-auto w-80">
                 {talk.content}
               </span>
               {myId === talk.memberId && (
@@ -110,8 +110,7 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
                 >
                   <FontAwesomeIcon
                     icon={faTrashCan}
-                    style={{ color: "#99a6bd" }}
-                    className="cursor-pointer"
+                    className="text-gray-500 cursor-pointer hover:text-black"
                   />
                 </button>
               )}
@@ -129,8 +128,7 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
                 <button className="mb-7" onClick={() => handleWrite()}>
                   <FontAwesomeIcon
                     icon={faTrashCan}
-                    style={{ color: "#99a6bd" }}
-                    className="cursor-pointer"
+                    className="text-gray-500 cursor-pointer hover:text-black"
                   />
                 </button>
               )}
@@ -141,41 +139,39 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
   });
 
   return (
-    <div className="bg-gray-900/0 w-96 h-[70vh] flex flex-col items-center pt-8">
+    <div className="bg-gray-900/0 w-fit h-[70vh] flex flex-col items-center pt-8">
       {/* // <div className="bg-gray-900/0 w-96 h-[60vh] flex flex-col items-center pt-8"> */}
-      <FontAwesomeIcon
-        icon={faXmark}
-        className="absolute right-4 top-4"
-        onClick={closeGuestBook}
-      />
+      <div className="w-11/12 flex items-center justify-between mb-5">
+        <div className="flex items-center gap-2">
+          <img src={images.foot_print_img} alt="" className="w-10"/>
+          <p className="text-xl">방명록</p>
+        </div>
+        <FontAwesomeIcon icon={faXmark} onClick={closeGuestBook} className="hover:text-red-600 cursor-pointer text-xl"/>
+      </div>
       {/* <p className="text-2xl text-purple-500">방명록</p> */}
 
-      <div className="flex flex-col p-5 gap-8 w-full xl:max-h-96 sm:max-h-full overflow-y-scroll scroll-bar">
-        <div className="flex">
-          <div className="foot-print flex flex-col justify-center">
-            <span className="flex justify-center my-auto ">
-              <input
-                type="text"
-                className="focus:outline-none bg-transparent text-center"
-                placeholder="발자국을 남겨보세요"
-                maxLength={140}
-                // ref={guestBookInputRef}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-              />
-            </span>
-            <button
-              className="flex justify-center mb-10"
-              onClick={() => handleWrite()}
-            >
-              <FontAwesomeIcon
-                icon={faPaperPlane}
-                beatFade
-                className="cursor-pointer pt-1"
-                style={{ color: "gray" }}
-              />
-            </button>
-          </div>
+      <div className="flex flex-col items-center gap-8 w-full xl:max-h-96 sm:max-h-full overflow-y-scroll scroll-bar">
+        <div className="foot-print flex flex-col justify-center">
+          <span className="flex justify-center my-auto ">
+            <textarea
+              className="focus:outline-none bg-transparent text-center mt-10"
+              placeholder="발자국을 남겨보세요"
+              maxLength={140}
+              cols={30}
+              rows={8}
+              // ref={guestBookInputRef}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </span>
+          <button className="flex justify-center" onClick={() => handleWrite()}>
+            <FontAwesomeIcon
+              icon={faPaperPlane}
+              beatFade
+              className="cursor-pointer pt-2"
+              style={{ color: "black" }}
+            />
+          </button>
         </div>
         {letter}
         {/* 방명록 등록하기 start*/}
