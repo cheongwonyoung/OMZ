@@ -43,10 +43,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   path: "",
-      //   element: <CheckIsLoginPage component={<EnterPage />} />,
-      // },
+      {
+        path: "",
+        element: <CheckIsLoginPage component={<EnterPage />} />,
+      },
       {
         path: "/main",
         element: <CheckIsLoginPage component={<MainPage />} />,

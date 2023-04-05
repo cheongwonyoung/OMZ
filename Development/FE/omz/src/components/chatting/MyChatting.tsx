@@ -7,7 +7,7 @@ type Props = {
 
 export default function MyChatting({ item, time }: Props) {
   // 일단 채팅 시간은 시간: 분으로만 표시해놓음
-  const chatTime = moment(time).format("HH:mm");
+  const chatTime = moment(time, "HH:mm").format("HH:mm");
 
   return (
     <div className="flex justify-end items-end relative gap-[5px] mr-4 m-5">
