@@ -11,18 +11,15 @@ export default function CameraMiniroom({ Avatar, MiniRoom }: Props) {
 
   return (
     <Canvas
-      camera={{ position: [-15, 15, 15], fov: 60, zoom: 5 }}
+      camera={{ position: [-15, 8, 15], fov: 70, zoom: 4 }}
       className="w-full h-full"
     >
-      {/* <YoutubeBgm title={"hype boy"} /> */}
-
       <ambientLight intensity={0.1} />
-      {/* <ambientLight intensity={0.1} /> */}
-      {/* <directionalLight intensity={0.8} /> */}
-      <group scale={0.5} position={[18, -24.2, -18]}>
-        {Avatar}
+
+      <group position={[-4, 11.5, 4]}>
+        <group position={[17, -24.2, -16.5]}>{Avatar}</group>
+        {MiniRoom}
       </group>
-      {MiniRoom}
       <OrbitControls />
     </Canvas>
   );

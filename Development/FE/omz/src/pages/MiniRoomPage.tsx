@@ -258,16 +258,12 @@ export default function MiniRoomPage() {
             <Camera3D
               Avatar={showAvatar()}
               MiniRoom={
-                // <MiniroomBeta4
                 <MiniroomFinal
                   position={[20, -25, -20]}
-                  // itemStatus={{ table: "2" }}
                   itemStatus={itemStatus}
                 />
               }
             />
-            {/* <Camera3D MiniRoom={<Scene position={[20, -25, -20]} />} /> */}
-            {/* <Camera3D MiniRoom={<MiniRoom position={[15, -15, -15]} />} /> */}
           </div>
         </div>
       </div>
