@@ -91,6 +91,7 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     public void updateBgm(long memberId, BgmRequestDto.Write musicInfo) {
         Bgm bgm = bgmRepository.findByMiniRoom_MiniRoomId(miniRoomRepository.findByMember_MemberId(memberId).getMiniRoomId());
         bgm.updateInfo(musicInfo.getTitle(), musicInfo.getSinger());
+        log.info("bgm update >> " + musicInfo.getTitle());
     }
 
     // miniroom의 bgm 정보 조회
