@@ -44,17 +44,16 @@ export default function MiniRoomPage() {
   };
 
   // 닉네임 조회
-  const id = useParams().id;
   const memberId = useRecoilValue(userStatus).id;
+  const miniRoomId = useParams().id;
+  // console.log(mmemberId);
   // const access_token = useRecoilValue(userToken).access_token;
   const [nickName, setNickName] = useState("Cutie BBatie");
-  const [miniRoomId, setMiniRoomId] = useState(0);
 
-  useQuery("info", () => getMyPageInfos(Number(memberId)), {
+  useQuery("info", () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
       setNickName(data.data.member.nickname);
       console.log(data.data.member.nickname, " : 닉넴 성공");
-      setMiniRoomId(data.data.miniRoomId);
       // takeBGM.mutate(data.data.miniRoomId);
       console.log(data.data.miniRoomId, "미니룸아이디 성공");
     },
@@ -71,7 +70,7 @@ export default function MiniRoomPage() {
 
   // Youtube 확인용 노래 제목
   const [bgm, setBgm] = useState("hype boy");
-  useQuery("setbgm", () => getBGM(Number(memberId)), {
+  useQuery("setbgm", () => getBGM(Number(miniRoomId)), {
     onSuccess(data) {
       console.log(data.data);
       // setBgm(data.data.title + " - " + data.data.singer);
@@ -95,7 +94,7 @@ export default function MiniRoomPage() {
     setMessage(e.target.value);
   };
 
-  useQuery("statemessage", () => getStateMessage(String(id)), {
+  useQuery("statemessage", () => getStateMessage(String(miniRoomId)), {
     onSuccess(data) {
       const msg = data.data.stateMessage;
       // console.log("상메 조회 성공  ", msg);
@@ -115,20 +114,24 @@ export default function MiniRoomPage() {
     sofa: "0",
   });
 
-  useQuery(["customUpdate", id], () => getMiniRoom(Number(id)), {
-    onSuccess(data) {
-      console.log(data.data);
+  useQuery(
+    ["customUpdate", miniRoomId],
+    () => getMiniRoom(Number(miniRoomId)),
+    {
+      onSuccess(data) {
+        console.log(data.data);
 
-      const existingMiniRoom: { [key: string]: string } = {};
-      for (const custom of data.data) {
-        console.log(custom.name);
-        existingMiniRoom[custom.name] = custom.state.toString();
-      }
-      setItemStatus(existingMiniRoom);
-      console.log(existingMiniRoom);
-    },
-    staleTime: 0,
-  });
+        const existingMiniRoom: { [key: string]: string } = {};
+        for (const custom of data.data) {
+          console.log(custom.name);
+          existingMiniRoom[custom.name] = custom.state.toString();
+        }
+        setItemStatus(existingMiniRoom);
+        console.log(existingMiniRoom);
+      },
+      staleTime: 0,
+    }
+  );
 
   // 좋아요 기능
   const [heart, setHeart] = useState(0);
@@ -136,7 +139,7 @@ export default function MiniRoomPage() {
 
   const { refetch } = useQuery(
     "likes",
-    () => getLikes(Number(id), Number(memberId)),
+    () => getLikes(Number(miniRoomId), Number(memberId)),
     {
       onSuccess(data) {
         // console.log("좋아요 수 조회 성공 >> " + data.data.likes + " " + data.data.isLiked);
