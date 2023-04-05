@@ -12,6 +12,7 @@ import { userStatus, userToken } from "../recoil/userAtom";
 import { useMutation, useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import { updateMiniRoom, getMiniRoom } from "../api/miniRoom";
+import BackBtn from "../components/common/BackBtn";
 
 export default function MiniRoomUpdatePage() {
   const navigate = useNavigate();
@@ -42,15 +43,17 @@ export default function MiniRoomUpdatePage() {
   });
 
   // 닉네임 조회
-  const access_token = useRecoilValue(userToken).access_token;
-  const [nickName, setNickName] = useState("Cutie");
-  useQuery("nickname", () => getMemberInfo(String(access_token)), {
-    onSuccess(data) {
-      // console.log(data.data.nickname);
-      setNickName(data.data.nickname + " ");
-    },
-    staleTime: 0,
-  });
+  // const access_token = useRecoilValue(userToken).access_token;
+  // const [nickName, setNickName] = useState("Cutie");
+  // useQuery("nickname", () => getMemberInfo(String(access_token)), {
+  //   onSuccess(data) {
+  //     // console.log(data.data.nickname);
+  //     setNickName(data.data.nickname + " ");
+  //   },
+  //   staleTime: 0,
+  // });
+
+  const nickName = useRecoilValue(userStatus).nickname;
 
   const submitChange = () => {
     const data = [];
@@ -78,14 +81,11 @@ export default function MiniRoomUpdatePage() {
     console.log(itemStatus);
     setItemStatus({ ...itemStatus, [variety]: num });
   };
-
+  const goBack = () => {
+    navigate(`/miniroom/${memberId}`);
+  };
   return (
     <div className="w-full px-4 flex flex-col items-center">
-      {/* <TitleBar
-        icon={images.mini_room_img}
-        title={"000님의 MiniRoom"}
-        goto={`/miniroom/${memberId}`}
-      /> */}
       <div className="flex w-11/12 justify-between items-center p-2.5 mt-2 ">
         <div className="flex items-center">
           <img
@@ -97,23 +97,12 @@ export default function MiniRoomUpdatePage() {
           <p className="title font-bold text-xl"> 's MiniRoom</p>
         </div>
         <div className="w-10 h-10 flex content-center">
-          {/* <BackBtn goBack={goBack} /> */}
+          <BackBtn goBack={goBack} />
         </div>
       </div>
-      <div className="h-72 w-72 aspect-square">
-        {/* <Camera3D
-          MiniRoom={
-            <MiniroomBeta position={[20, -25, -20]} itemStatus={itemStatus} />
-          }
-        /> */}
-        {/* <Camera3D
-          MiniRoom={
-            <MiniroomBeta2 position={[20, -25, -20]} itemStatus={itemStatus} />
-          }
-        /> */}
+      <div className="h-72 w-72 aspect-square my-8">
         <Camera3D
           MiniRoom={
-            // <MiniroomBeta4 position={[20, -25, -20]} itemStatus={itemStatus} />
             <MiniroomFinal position={[20, -25, -20]} itemStatus={itemStatus} />
           }
         />
