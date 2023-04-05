@@ -5,5 +5,5 @@ app_name = 'reco_friend'
 
 urlpatterns = [
     # path('', views.reco_friend, name='reco_friend'),
-    path('recommendation', views.recommendation, name='recommendation'),
+    path('', views.recommendation, name='recommendation'),
 ]

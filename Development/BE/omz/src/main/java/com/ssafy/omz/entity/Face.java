@@ -57,12 +57,12 @@ public class Face {
     }
 
     public Face updateFace(double dogProbability, double catProbability, double bearProbability,
-                      double rabbitProbability, double dinosaurProbability, double foxProbability){
+                      double rabbitProbability, double dinoProbability, double foxProbability){
         this.dogProbability = dogProbability;
         this.catProbability = catProbability;
         this.bearProbability = bearProbability;
         this.rabbitProbability = rabbitProbability;
-        this.dinoProbability = dinosaurProbability;
+        this.dinoProbability = dinoProbability;
         this.foxProbability = foxProbability;
 
         return this;

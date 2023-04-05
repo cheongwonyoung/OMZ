@@ -26,4 +26,19 @@ public class Bgm {
 
     @Column(length = 30)
     private String singer;
+
+    @Builder
+    private Bgm(MiniRoom miniRoom, String title, String singer){
+        this.miniRoom = miniRoom;
+        this.title = title;
+        this.singer = singer;
+    }
+
+    
+    public Bgm updateInfo(String title, String singer){
+        this.title = title;
+        this.singer = singer;
+        return this;
+    }
+
 }

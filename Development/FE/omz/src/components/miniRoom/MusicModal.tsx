@@ -7,8 +7,9 @@ import MusicModalRecommend from "./MusicModalRecommend";
 type Props = {
   closeMusic(): void;
   message: string;
+  bgmRefetch(): void;
 };
-export default function MusicModal({ closeMusic, message }: Props) {
+export default function MusicModal({ closeMusic, message, bgmRefetch }: Props) {
   const [page, setPage] = useState(0);
   const plusPage = () => {
     setPage((prev) => prev + 1);
@@ -38,13 +39,15 @@ export default function MusicModal({ closeMusic, message }: Props) {
           <MusicModalRecommend
             musicSelected={musicSelected}
             message={message}
+            closeMusic={closeMusic}
+            bgmRefetch={bgmRefetch}
           />
         );
     }
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center pt-8">
+    <div className="w-[80vw] h-full flex flex-col items-center pt-8">
       <FontAwesomeIcon
         icon={faXmark}
         className="absolute right-4 top-4"
@@ -55,9 +58,4 @@ export default function MusicModal({ closeMusic, message }: Props) {
       {step()}
     </div>
   );
-  // <div className="relative w-full h-full flex flex-col items-center pt-8">
-
-  {
-    /* </div> */
-  }
 }

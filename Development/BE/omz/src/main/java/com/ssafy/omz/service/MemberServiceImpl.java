@@ -54,6 +54,7 @@ public class MemberServiceImpl implements MemberService{
     private static final String SECRET_KEY  = "CREATEDBYWY";
     private final ItemTypeRepository itemTypeRepository;
     private final GuestBookRepository guestBookRepository;
+    private final BgmRepository bgmRepository;
 
 //    @Value("${spring.cloud.gcp.storage.bucket}") // application.yml에 써둔 bucket 이름
 //    private String bucketName;
@@ -146,7 +147,7 @@ public class MemberServiceImpl implements MemberService{
         String myFace = maxEntry.getKey();
 
         // 미니룸 저장
-        miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
+        MiniRoom miniRoom = miniRoomRepository.save(MiniRoom.builder().member(member).stateMessage("").build());
 
         // 아이템 정보 저장
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("avatar")).state(0).name("hat").build());
@@ -157,8 +158,10 @@ public class MemberServiceImpl implements MemberService{
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("bed").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("table").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("lamp").build());
-        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("drawer").build());
-        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("clock").build());
+        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("etc").build());
+
+        // Bgm 저장
+        bgmRepository.save(Bgm.builder().miniRoom(miniRoom).title("hype boy").singer("뉴진스").build());
 
         Member result = memberRepository.save(
                 memberRepository.findByEmail(email).get().updateMemberInfo(

@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+// import { ReactQueryDevtools } from "react-query/devtools";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import KakaoRedirectPage from "./pages/KakaoRedirectPage";
 import LoginPage from "./pages/LoginPage";
@@ -11,7 +11,7 @@ import MiniRoomPage from "./pages/MiniRoomPage";
 import CommunityPage from "./pages/CommunityPage";
 import ChattingPage from "./pages/ChattingPage";
 import ErrorPage from "./pages/ErrorPage";
-import SignUp from "./pages/SignUp";
+import SignUpPage from "./pages/SignUpPage";
 import CommunityLikePage from "./pages/CommunityLikePage";
 import CommunityMyPage from "./pages/CommunityMyPage";
 import MainPage from "./pages/MainPage";
@@ -23,6 +23,10 @@ import MiniRoomUpdatePage from "./pages/MiniRoomUpdatePage";
 import CommunityDetailPage from "./pages/CommunityDetailPage";
 import MyPageUpdatePage from "./pages/MyPageUpdatePage";
 import MyPageCustomPage from "./pages/MyPageCustomPage";
+import SignUpEndPage from "./pages/SignUpEndPage";
+import CheckIsLoginPage from "./pages/CheckIsLoginPage";
+import LogoutRedirectPage from "./pages/LogoutRedirectPage";
+import EnterPage from "./pages/EnterPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,39 +43,41 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      // {
+      //   path: "",
+      //   element: <CheckIsLoginPage component={<EnterPage />} />,
+      // },
       {
-        path: "",
-        element: <MainPage />,
+        path: "/main",
+        element: <CheckIsLoginPage component={<MainPage />} />,
       },
       {
         path: "/newfriends",
-        element: <NewFriendsPage />,
+        element: <CheckIsLoginPage component={<NewFriendsPage />} />,
       },
       {
-        path: "mypage",
-        element: <MyPage />,
+        path: "mypage/:id",
+        element: <CheckIsLoginPage component={<MyPage />} />,
       },
       {
         path: "myfriends",
-        element: <MyFriendsPage />,
+        element: <CheckIsLoginPage component={<MyFriendsPage />} />,
       },
       {
-        path: "miniroom",
-        element: <MiniRoomPage />,
+        path: "miniroom/:id",
+        element: <CheckIsLoginPage component={<MiniRoomPage />} />,
       },
       {
         path: "community",
-        element: <CommunityPage />,
+        element: <CheckIsLoginPage component={<CommunityPage />} />,
       },
       {
-        // 아마 useId
-        path: "chatting/1",
-        element: <ChattingPage />,
+        path: "chatting/:id",
+        element: <CheckIsLoginPage component={<ChattingPage />} />,
       },
       {
-        // 나중에 룸 넘버로?
-        path: "chatting/1/1",
-        element: <ChattingDetailPage />,
+        path: "chatting/:id/:roomId",
+        element: <CheckIsLoginPage component={<ChattingDetailPage />} />,
       },
       {
         path: "login",
@@ -83,39 +89,47 @@ const router = createBrowserRouter([
       },
       {
         path: "signup",
-        element: <SignUp />,
+        element: <SignUpPage />,
       },
       {
         path: "community/like",
-        element: <CommunityLikePage />,
+        element: <CheckIsLoginPage component={<CommunityLikePage />} />,
       },
       {
-        path: "community/mypage",
-        element: <CommunityMyPage />,
+        path: "community/mypage/:memberId",
+        element: <CheckIsLoginPage component={<CommunityMyPage />} />,
       },
       {
         path: "community/search",
-        element: <CommunitySearchPage />,
+        element: <CheckIsLoginPage component={<CommunitySearchPage />} />,
       },
       {
         path: "community/create",
-        element: <CommunityCreatePage />,
+        element: <CheckIsLoginPage component={<CommunityCreatePage />} />,
       },
       {
         path: "miniroom/update",
-        element: <MiniRoomUpdatePage />,
+        element: <CheckIsLoginPage component={<MiniRoomUpdatePage />} />,
       },
       {
         path: "community/:board_id",
-        element: <CommunityDetailPage />,
+        element: <CheckIsLoginPage component={<CommunityDetailPage />} />,
       },
       {
-        path: "mypage/1",
-        element: <MyPageUpdatePage />,
+        path: "mypage/update",
+        element: <CheckIsLoginPage component={<MyPageUpdatePage />} />,
       },
       {
-        path: "mypage/custom/1",
-        element: <MyPageCustomPage />,
+        path: "mypage/custom",
+        element: <CheckIsLoginPage component={<MyPageCustomPage />} />,
+      },
+      {
+        path: "signup/end",
+        element: <CheckIsLoginPage component={<SignUpEndPage />} />,
+      },
+      {
+        path: "logout",
+        element: <LogoutRedirectPage />,
       },
     ],
   },
@@ -126,7 +140,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </div>
     </QueryClientProvider>
   );

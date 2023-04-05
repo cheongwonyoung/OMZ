@@ -5,7 +5,7 @@ type Props = {
   handleItems(v: any): void;
 };
 export default function ItemBox({ handleItems }: Props) {
-  const itemNames: string[] = ["침대", "서랍", "시계", "조명", "책상"];
+  const itemNames: string[] = ["침대", "책상", "조명", "기타"];
   const [showedItem, setShowedItem] = useState("침대");
   const handleShowedItem = (e: any) => {
     setShowedItem(e.target.id);

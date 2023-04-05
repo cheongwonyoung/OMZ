@@ -46,7 +46,7 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
 //        // JPA DDL 설정 보고 실행 판단
         if (!DDL_CONFIG.equals("create")) return;
-//
+
 //        addMember();
 //        addBoard();
 //        addReply();

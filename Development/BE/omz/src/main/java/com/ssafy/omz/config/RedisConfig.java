@@ -54,7 +54,7 @@ public class RedisConfig {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
-                .entryTtl(Duration.ofMinutes(10)) // 채리랑 통신하다가 갑자기 타임아웃 예외 떠서 주석 지워봄
+                .entryTtl(Duration.ofMinutes(10))
                 ;
 
 
@@ -84,7 +84,6 @@ public class RedisConfig {
     @Bean
     public MessageListenerAdapter listenerAdapter(RedisSubscriber subscriber) {
         return new MessageListenerAdapter(subscriber, "sendMessage");
-        // return new MessageListenerAdapter(subscriber, "onMessage");
     }
 
     //  RedisTemplate 설정
@@ -101,7 +100,7 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String , String> roomRedisTemplate(RedisConnectionFactory connectionFactory){
+    public RedisTemplate<String, String> roomRedisTemplate(RedisConnectionFactory connectionFactory){
         RedisTemplate<String ,String> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(connectionFactory);
         redisTemplate.setKeySerializer(new StringRedisSerializer());

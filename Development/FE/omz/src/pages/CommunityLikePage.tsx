@@ -5,27 +5,66 @@ import { likeArticles } from "../api/community";
 import { useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 import CommunityArticleItem from "../components/communityPage/CommunityArticleItem";
+import Loading from "../components/common/Loading";
+import { useRecoilValue } from "recoil";
+import { userStatus } from "../recoil/userAtom";
+import Masonry from "react-masonry-css";
+
 type Article = {
   [key: string]: any;
 };
 
 export default function CommunityLikePage() {
-  const memberId = 1;
-
-  const { data, isLoading, isError, error, refetch } = useQuery(
+  const memberId = useRecoilValue(userStatus).id;
+  const membernickname = useRecoilValue(userStatus).nickname;
+  // 좋아요한 게시물 가져오기
+  const { data, isLoading, isError, refetch } = useQuery(
     "articlelike",
-    () => likeArticles(memberId)
+    () => likeArticles(memberId),
+    {
+      staleTime: 0,
+    }
   );
-  console.log(data);
-  if (isLoading) return <h3>Loading..</h3>;
-  if (isError) return <h3>Error...</h3>;
-
+  if (isLoading) return <Loading />;
+  if (isError) return <p className="title">Error...</p>;
   return (
     <div className="flex flex-col items-center">
-      <TitleBar title="Community" icon={images.community_img} goto="/" />
-      {data?.data.map((article: Article) => (
-        <CommunityArticleItem key={uuidv4()} item={article} />
-      ))}
+      <TitleBar
+        title="Community"
+        icon={images.community_img}
+        goto={`/community`}
+      />
+      <div className="w-11/12 flex flex-col justify-start p-5">
+        <div className="flex gap-3 my-2">
+          <span className="font-bold text-xl">
+            {membernickname}님이 좋아하는 게시물
+          </span>
+          <img src={images.heart_img} alt="" className="" />
+        </div>
+      </div>
+      {/* <div className="w-11/12 grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {data?.data.map((article: Article) => (
+          <CommunityArticleItem
+            key={uuidv4()}
+            item={article}
+            refetch={refetch}
+          />
+        ))}
+      </div> */}
+      <Masonry
+        breakpointCols={{ default: 1, 3000: 3, 1000: 2, 600: 1 }}
+        className="my-masonry-grid w-11/12 gap-4"
+        columnClassName="my-masonry-grid_column"
+      >
+        {data?.data.map((article: Article) => (
+          <CommunityArticleItem
+            key={uuidv4()}
+            item={article}
+            refetch={refetch}
+          />
+        ))}
+      </Masonry>
+      <div className="pb-20"></div>
       <CommunityNavbar />
     </div>
   );

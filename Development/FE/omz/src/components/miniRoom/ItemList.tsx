@@ -5,11 +5,10 @@ type Props = {
   handleItems(v: any): void;
 };
 export default function ItemList({ showedItem, handleItems }: Props) {
-  const bedList = ["bed_1", "bed_2", "bed_3"];
-  const tableList = ["table_1", "table_2", "table_3"];
-  const lampList = ["lamp_1", "lamp_2", "lamp_3"];
-  const drawerList = ["drawer_1", "drawer_2"];
-  const clockList = ["clock_1", "clock_2"];
+  const bedList = ["bed_0", "bed_1", "bed_2", "bed_3", "bed_4"];
+  const tableList = ["table_0", "table_1", "table_2", "table_3", "table_4"];
+  const lampList = ["lamp_0", "lamp_1", "lamp_2"];
+  const etcList = ["etc_0", "etc_1", "etc_2", "etc_3", "etc_4", "etc_5"];
 
   const itemList = () => {
     const structure = () => {
@@ -18,12 +17,10 @@ export default function ItemList({ showedItem, handleItems }: Props) {
           return bedList;
         case "책상":
           return tableList;
-        case "서랍":
-          return drawerList;
         case "조명":
           return lampList;
         default:
-          return clockList;
+          return etcList;
       }
     };
 
