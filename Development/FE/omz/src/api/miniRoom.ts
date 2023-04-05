@@ -9,16 +9,16 @@ export const getMusicRecommended = (data: {}) => {
 };
 
 // BGM 조회
-export const getBGM = (miniRoomId: number) => {
-  return instance.get(`/miniroom/music?miniRoomId=${miniRoomId}`);
+export const getBGM = (memberId: number) => {
+  return instance.get(`/miniroom/music?memberId=${memberId}`);
 };
 
 // BGM 업데이트
 export const updateBGM = (
-  miniRoomId: number,
-  info: { singer: string; title: string }[]
+  memberId: number,
+  info: { singer: string; title: string }
 ) => {
-  return instance.post(`/miniroom/music?miniRoomId=${miniRoomId}`, info);
+  return instance.post(`/miniroom/music?memberId=${memberId}`, info);
 };
 
 // 상태 메세지 조회

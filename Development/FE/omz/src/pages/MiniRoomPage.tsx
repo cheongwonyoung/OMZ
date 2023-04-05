@@ -58,14 +58,19 @@ export default function MiniRoomPage() {
 
   // Youtube 확인용 노래 제목
   const [bgm, setBgm] = useState("hype boy");
-  useQuery("setbgm", () => getBGM(Number(miniRoomId)), {
-    onSuccess(data) {
-      console.log(data.data);
-      setBgm(data.data.title + " - " + data.data.singer);
-    },
-    staleTime: 0,
-    // refetchOnMount: false,
-  });
+
+  const { refetch: bgmRefetch } = useQuery(
+    "setbgm",
+    () => getBGM(Number(memberId)),
+    {
+      onSuccess(data) {
+        console.log(data.data);
+        setBgm(data.data.title + " - " + data.data.singer);
+      },
+      staleTime: 0,
+      // refetchOnMount: false,
+    }
+  );
 
   // 방명록 모달
   const [isGuestBook, setIsGuestBook] = useState(false);
@@ -143,7 +148,13 @@ export default function MiniRoomPage() {
     <div className=" w-full flex flex-col items-center">
       {isMusic && (
         <ModalBlackBg
-          modal={<MusicModal message={message} closeMusic={closeMusic} />}
+          modal={
+            <MusicModal
+              message={message}
+              closeMusic={closeMusic}
+              bgmRefetch={bgmRefetch}
+            />
+          }
         />
       )}
       {isGuestBook && (

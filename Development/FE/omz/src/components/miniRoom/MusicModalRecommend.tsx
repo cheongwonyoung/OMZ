@@ -3,13 +3,16 @@ import { useRecoilValue } from "recoil";
 import { getMusicRecommended } from "../../api/miniRoom";
 import MusicModalItem from "./MusicModalItem";
 import { v4 as uuidv4 } from "uuid";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { userStatus } from "../../recoil/userAtom";
 import { updateBGM } from "../../api/miniRoom";
 
 type Props = {
   musicSelected: string[];
+  closeMusic(): void;
   message: string;
+  bgmRefetch(): void;
 };
 
 type music = {
@@ -23,20 +26,27 @@ type bgm = {
   singer: string;
 };
 
-export default function MusicModalRecommend({ musicSelected, message }: Props) {
-  const memberId = useRecoilValue(userStatus).id;
+export default function MusicModalRecommend({
+  musicSelected,
+  message,
+  closeMusic,
+  bgmRefetch,
+}: Props) {
+  const memberId = useParams().id;
 
   // BGM을 DB에 저장
   const handleClick = (bgm: any) => {
-    const info = [];
-    info.push({ title: bgm.Title, singer: bgm.Artist });
+    const info = { title: bgm.Title, singer: bgm.Artist };
     changeBGM.mutate(info);
   };
   const changeBGM = useMutation(
-    (body: { title: string; singer: string }[]) => updateBGM(memberId, body),
+    (body: { title: string; singer: string }) =>
+      updateBGM(Number(memberId), body),
     {
       onSuccess() {
-        console.log("비지엠 업뎃 성공");
+        console.log("bgm update 성공");
+        closeMusic();
+        bgmRefetch();
       },
     }
   );
