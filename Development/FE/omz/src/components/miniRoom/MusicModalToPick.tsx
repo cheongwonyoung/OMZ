@@ -22,7 +22,7 @@ export default function MusicModalToPick({
     <div className="flex flex-col w-full items-center">
       <p>듣고싶은 음악을 선택해주세요</p>
       <p>최대 3개</p>
-      <div className="flex flex-col gap-2 w-full mt-4">
+      <div className="flex flex-col items-center gap-2 w-full mt-4">
         {/* {data?.data.map((music: music) => ( */}
         {data?.data.map((music: Music) => (
           <MusicModalItem

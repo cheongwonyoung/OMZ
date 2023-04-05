@@ -49,15 +49,24 @@ export default function MusicModalRecommend({ musicSelected, message }: Props) {
   );
 
   const [bgm, setBgm] = useState({ Artist: "", Title: "" });
-  const selectBgm = (item: { Title: string; Artist: string; Genre?: string }) => {
+  const selectBgm = (item: {
+    Title: string;
+    Artist: string;
+    Genre?: string;
+  }) => {
     setBgm({ ...bgm, Title: item.Title, Artist: item.Artist });
   };
   return (
     <div className="flex flex-col w-full items-center">
       <p>배경음악을 선택해주세요</p>
-      <div className="flex flex-col gap-2 w-full mt-4">
+      <div className="flex flex-col gap-2 items-center w-full mt-4">
         {data?.data.map((music: music) => (
-          <MusicModalItem music={music} key={uuidv4()} selectBgm={selectBgm} bgm={bgm} />
+          <MusicModalItem
+            music={music}
+            key={uuidv4()}
+            selectBgm={selectBgm}
+            bgm={bgm}
+          />
         ))}
       </div>
       <button
