@@ -154,7 +154,7 @@ export default function MyPageUpdateForm() {
   );
   const updatePreference = changePreference.mutate;
   return (
-    <div className="max-w-3xl p-8">
+    <div className="max-w-3xl w-full p-8">
       <ToastContainer />
       <p className="font-bold text-2xl mb-8 ml-1">회원 정보 수정</p>
       <div className="flex flex-col gap-4">

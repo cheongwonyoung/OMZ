@@ -21,7 +21,7 @@ export default function FriendSearchList({
   handletalkFriends,
 }: Props) {
   return (
-    <div className="w-11/12 mt-8 flex flex-col gap-4">
+    <div className="w-11/12 mt-8 flex flex-col items-center gap-4">
       {searchList.map((search) => (
         <FriendSearchItems
           nickname={search.nickname}

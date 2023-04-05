@@ -28,7 +28,7 @@ export default function FriendSearchItems({
   const myId = useRecoilValue(userStatus).id;
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-3xl">
       <div className="flex justify-between p-3 items-center">
         <p className="font-bold text-lg text-justify align-middle">
           {nickname}
@@ -58,9 +58,9 @@ export default function FriendSearchItems({
           {/* {goBtn("마이페이지", () => navigate(`/mypage/${memberId}`))} */}
           <button
             className="text-base hover:font-bold hover:scale-105"
-            onClick={() => navigate(`/mypage/${memberId}`)}
+            onClick={() => navigate(`/miniroom/${memberId}`)}
           >
-            <FontAwesomeIcon icon={faHome} className="text-teal-400" /> &nbsp;
+            <FontAwesomeIcon icon={faHome} className="text-teal-300" /> &nbsp;
             놀러가기
           </button>
         </div>

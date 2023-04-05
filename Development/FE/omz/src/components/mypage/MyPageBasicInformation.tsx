@@ -72,14 +72,14 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
             기본 정보 수정
           </button>
         </div> */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-full">
         {animalList.map((item) => (
           <div className="flex gap-4 items-center" key={uuidv4()}>
-            <div className="w-[30%] flex flex-col h-full items-center">
+            <div className="w-[20%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""
-                className="w-full rounded-full object-cover aspect-square"
+                className="w-full rounded-fullobject-cover aspect-square"
               />
               <p>{item}</p>
             </div>

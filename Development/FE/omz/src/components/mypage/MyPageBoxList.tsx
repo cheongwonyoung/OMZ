@@ -1,3 +1,4 @@
+import { div } from "@tensorflow/tfjs";
 import { images } from "../../assets/images";
 
 type Props = {
@@ -33,14 +34,16 @@ export default function MyPageBoxList({ showedItem, handleItems }: Props) {
         key={item}
         id={item}
         onClick={() => handleItems(item)}
-        className="cursor-pointer"
+        className="cursor-pointer hover:scale-105 w-full flex justify-center"
       >
-        <img src={images[item]} alt="" id={item} />
+        <img src={images[item]} alt="" id={item} className="w-[70%]"/>
         {/* <img src={`/images.${item}`} alt="" /> */}
       </div>
     ));
   };
   return (
-    <div className="w-11/12 grid grid-cols-3 gap-4 mb-4">{itemList()}</div>
+    <div className="flex items-center justify-center">
+      <div className="w-11/12 grid grid-cols-3 gap-4 mb-4">{itemList()}</div>
+    </div>
   );
 }

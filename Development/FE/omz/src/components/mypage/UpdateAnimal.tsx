@@ -46,7 +46,7 @@ export default function UpdateAnimal({ animalPrefer, changePrefer }: Props) {
             <img
               src={images[imgsrc(item)]}
               alt=""
-              className="w-full rounded-full object-cover aspect-square"
+              className="w-full object-cover aspect-square"
             />
             <p>{item}</p>
           </div>
