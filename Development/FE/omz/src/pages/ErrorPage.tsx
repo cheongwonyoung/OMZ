@@ -13,7 +13,7 @@ export default function ErrorPage() {
         요청하신 페이지가 사라졌거나 잘못된 경로를 이용하셨어요.
       </p>
       <Link
-        to="/"
+        to="/main"
         className=" border-black border-2 px-6 py-3 hover:bg-black/20"
       >
         홈으로 이동

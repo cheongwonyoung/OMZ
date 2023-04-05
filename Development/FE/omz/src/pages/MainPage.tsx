@@ -42,7 +42,7 @@ export default function MainPage() {
             </div>
           </Link>
           <Link
-            to={`miniroom/${memberId}`}
+            to={`/miniroom/${memberId}`}
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img src={images.mini_room_img} className="w-[80%] mb-3" />
@@ -58,9 +58,7 @@ export default function MainPage() {
           >
             <img src={images.my_page_img} className="w-[80%] mb-3" />
             <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
-              <p className="title text-base text-black text-center">
-                My Page
-              </p>
+              <p className="title text-base text-black text-center">My Page</p>
             </div>
           </Link>
         </div>
@@ -81,7 +79,7 @@ export default function MainPage() {
             </div>
           </Link>
           <Link
-            to={`chatting/${memberId}`}
+            to={`/chatting/${memberId}`}
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img
@@ -90,9 +88,7 @@ export default function MainPage() {
             />
 
             <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
-              <p className="title text-base text-black text-center">
-                Chatting
-              </p>
+              <p className="title text-base text-black text-center">Chatting</p>
             </div>
           </Link>
           <Link

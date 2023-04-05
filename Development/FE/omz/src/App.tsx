@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       //   element: <CheckIsLoginPage component={<EnterPage />} />,
       // },
       {
-        path: "",
+        path: "/main",
         element: <CheckIsLoginPage component={<MainPage />} />,
       },
       {

@@ -12,7 +12,6 @@ export default function KakaoRedirectPage() {
   const [userState, setUserState] = useRecoilState(userStatus);
   const getInfo = useMutation((token: string) => getUserInfo(token), {
     onSuccess(data) {
-      console.log(data);
       if (data.data === false) {
         navigate("/signup");
       } else {
@@ -22,7 +21,7 @@ export default function KakaoRedirectPage() {
           nickname: data.data.nickname,
           profile_img: data.data.file,
         });
-        navigate("/");
+        navigate("/main");
       }
     },
   });
@@ -36,7 +35,6 @@ export default function KakaoRedirectPage() {
           access_token: data.data.accessToken,
           refresh_token: data.data.refreshToken,
         });
-        console.log(token);
         getInfo.mutate(data.data.accessToken);
       },
     }
@@ -47,7 +45,6 @@ export default function KakaoRedirectPage() {
   useQuery("kakao_token", () => getKakaoToken(AUTH_CODE), {
     retry: false,
     onSuccess(data) {
-      console.log(data);
       setUserKakao({ access_token: data.data.access_token });
       getTokken.mutate(data?.data.access_token);
     },

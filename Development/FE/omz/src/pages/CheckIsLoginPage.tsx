@@ -10,7 +10,6 @@ export default function CheckIsLoginPage({ component }: Props) {
   const noLogin = useRecoilValue(userToken).access_token === "";
   const noSignup = useRecoilValue(userStatus).nickname === "";
   const navigate = useNavigate();
-  console.log(noLogin);
   useEffect(() => {
     if (noLogin) {
       navigate("/login");

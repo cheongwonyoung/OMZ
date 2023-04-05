@@ -128,7 +128,6 @@ export default function MyPageCustomPage() {
     for (const name of itemNames) {
       data.push({ name: name, state: itemStatus[name] });
     }
-    console.log(data);
     changeCustom.mutate(data);
   };
 
@@ -159,7 +158,6 @@ export default function MyPageCustomPage() {
     (file: FormData) => changeProfileImg(file, access_token),
     {
       onSuccess(data) {
-        console.log(data);
         setProfile({ ...profile, profile_img: data.data });
       },
     }

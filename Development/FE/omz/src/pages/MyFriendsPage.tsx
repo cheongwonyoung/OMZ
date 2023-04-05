@@ -50,19 +50,13 @@ export default function MyFriendsPage() {
     getProposalList(memberId)
   );
 
-  const { data: friends, refetch: refetchFriend } = useQuery(
-    "friendlist",
-    () => getMyFriendsList(memberId),
-    {
-      onSuccess(data) {
-        console.log(data);
-      },
-    }
+  const { data: friends, refetch: refetchFriend } = useQuery("friendlist", () =>
+    getMyFriendsList(memberId)
   );
 
   return (
     <div className="w-full flex flex-col items-center">
-      <TitleBar goto="/" title="My Friends" icon={images.new_friends_img} />
+      <TitleBar goto="/main" title="My Friends" icon={images.new_friends_img} />
       {isDeleteModal && (
         <ModalBlackBg
           closeModal={closeModal}

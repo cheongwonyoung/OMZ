@@ -131,9 +131,6 @@ export default function ChattingDetailPage() {
         setConnected(true);
         subscribe();
       },
-      debug: function (str: any) {
-        // console.log("debug", str);
-      },
     });
     client.current.activate();
   };
@@ -156,7 +153,6 @@ export default function ChattingDetailPage() {
       }
     });
   };
-  console.log(chatMessages);
   const handler = (message: string) => {
     if (!client.current.connected) return;
     client.current.publish({

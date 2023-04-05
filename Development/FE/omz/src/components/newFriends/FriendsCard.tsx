@@ -29,7 +29,6 @@ export default function FriendsCard({
     "가능성",
     "짝꿍",
   ];
-  console.log(info);
   const goProposal = () => {
     handleModalFor(info.memberId, info.nickname);
     handleProposalModal();

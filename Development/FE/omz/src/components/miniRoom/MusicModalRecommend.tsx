@@ -73,8 +73,6 @@ export default function MusicModalRecommend({ musicSelected, message }: Props) {
         className="h-12 w-3/5 shadow shadow-pink-400 rounded-xl mt-4 font-bold text-xl"
         onClick={() => {
           handleClick(bgm);
-          // console.log("여기에 api로 bgm 저장");
-          // console.log(bgm);
         }}
       >
         선택 완료

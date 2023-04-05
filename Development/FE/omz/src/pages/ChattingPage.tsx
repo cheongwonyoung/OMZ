@@ -30,7 +30,7 @@ const ChattingPage = () => {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <TitleBar goto="/" title="Chatting" icon={images.chatting_img} />
+      <TitleBar goto="/main" title="Chatting" icon={images.chatting_img} />
       <div className="max-w-3xl w-full flex flex-col items-center">
         {data?.data !== "" &&
           data?.data.map((chat: Chat) => (
