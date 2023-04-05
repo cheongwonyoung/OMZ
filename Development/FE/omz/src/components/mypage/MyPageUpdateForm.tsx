@@ -66,12 +66,13 @@ export default function MyPageUpdateForm() {
 
   const memberId = useRecoilValue(userStatus).id;
 
-  const { refetch } = useQuery("mypageUpdate", () => getMyUserInfo(memberId), {
+  useQuery("mypageUpdate", () => getMyUserInfo(memberId), {
     onSuccess(data) {
       setName(data.data.nickname);
       setMbti(data.data.mbti);
       setAnimalPrefer(data.data.preferFace);
     },
+    staleTime: 0,
   });
 
   // useEffect(() => {

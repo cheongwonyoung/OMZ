@@ -1,6 +1,6 @@
 import NextBtn from "./NextBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { useState } from "react";
 import { div } from "@tensorflow/tfjs";
@@ -72,7 +72,9 @@ export default function StepLikeAnimal({
               fill="currentFill"
             />
           </svg>
-          <p className="text-xl font-bold">쉿, 회원 가입 중 &nbsp;</p>
+          <p className="text-xl font-bold">
+            쉿, 회원가입 중<FontAwesomeIcon icon={faHeart} />
+          </p>
         </div>
       );
     else
