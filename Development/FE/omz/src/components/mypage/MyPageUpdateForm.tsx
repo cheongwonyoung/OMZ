@@ -66,12 +66,13 @@ export default function MyPageUpdateForm() {
 
   const memberId = useRecoilValue(userStatus).id;
 
-  const { refetch } = useQuery("mypageUpdate", () => getMyUserInfo(memberId), {
+  useQuery("mypageUpdate", () => getMyUserInfo(memberId), {
     onSuccess(data) {
       setName(data.data.nickname);
       setMbti(data.data.mbti);
       setAnimalPrefer(data.data.preferFace);
     },
+    staleTime: 0,
   });
 
   // useEffect(() => {
@@ -154,7 +155,7 @@ export default function MyPageUpdateForm() {
   );
   const updatePreference = changePreference.mutate;
   return (
-    <div className="max-w-3xl p-8">
+    <div className="max-w-3xl w-full p-8">
       <ToastContainer />
       <p className="font-bold text-2xl mb-8 ml-1">회원 정보 수정</p>
       <div className="flex flex-col gap-4">

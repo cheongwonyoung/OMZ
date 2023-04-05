@@ -6,7 +6,8 @@ import MusicModal from "../components/miniRoom/MusicModal";
 import StateMessage from "../components/miniRoom/StateMessage";
 import { useEffect, useState } from "react";
 import { images } from "../assets/images";
-import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
+// import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
+import { MiniroomFinal } from "../assets/3DMiniRoom/MiniroomFinal";
 // import TitleBar from "../components/common/TitleBar";
 import BackBtn from "../components/common/BackBtn";
 import ModalBlackBg from "../components/common/ModalBlackBg";
@@ -28,6 +29,8 @@ import { getMyPageInfos } from "../api/myPage";
 // import { Scene } from "../assets/3DMiniRoom/Scene";
 // import { MiniroomBeta3 } from "../assets/3DMiniRoom/MiniroomBeta3";
 import { MiniroomBeta4 } from "../assets/3DMiniRoom/MiniroomBeta4";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMusic } from "@fortawesome/free-solid-svg-icons";
 
 export default function MiniRoomPage() {
   const navigate = useNavigate();
@@ -42,17 +45,16 @@ export default function MiniRoomPage() {
   };
 
   // 닉네임 조회
-  const id = useParams().id;
   const memberId = useRecoilValue(userStatus).id;
+  const miniRoomId = useParams().id;
+  // console.log(mmemberId);
   // const access_token = useRecoilValue(userToken).access_token;
   const [nickName, setNickName] = useState("Cutie BBatie");
-  const [miniRoomId, setMiniRoomId] = useState(0);
 
-  useQuery("info", () => getMyPageInfos(Number(memberId)), {
+  useQuery("info", () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
       setNickName(data.data.member.nickname);
       console.log(data.data.member.nickname, " : 닉넴 성공");
-      setMiniRoomId(data.data.miniRoomId);
       // takeBGM.mutate(data.data.miniRoomId);
       console.log(data.data.miniRoomId, "미니룸아이디 성공");
     },
@@ -69,7 +71,7 @@ export default function MiniRoomPage() {
 
   // Youtube 확인용 노래 제목
   const [bgm, setBgm] = useState("hype boy");
-  useQuery("setbgm", () => getBGM(Number(memberId)), {
+  useQuery("setbgm", () => getBGM(Number(miniRoomId)), {
     onSuccess(data) {
       console.log(data.data);
       // setBgm(data.data.title + " - " + data.data.singer);
@@ -93,7 +95,7 @@ export default function MiniRoomPage() {
     setMessage(e.target.value);
   };
 
-  useQuery("statemessage", () => getStateMessage(String(id)), {
+  useQuery("statemessage", () => getStateMessage(String(miniRoomId)), {
     onSuccess(data) {
       const msg = data.data.stateMessage;
       // console.log("상메 조회 성공  ", msg);
@@ -113,20 +115,24 @@ export default function MiniRoomPage() {
     sofa: "0",
   });
 
-  useQuery(["customUpdate", id], () => getMiniRoom(Number(id)), {
-    onSuccess(data) {
-      console.log(data.data);
+  useQuery(
+    ["customUpdate", miniRoomId],
+    () => getMiniRoom(Number(miniRoomId)),
+    {
+      onSuccess(data) {
+        console.log(data.data);
 
-      const existingMiniRoom: { [key: string]: string } = {};
-      for (const custom of data.data) {
-        console.log(custom.name);
-        existingMiniRoom[custom.name] = custom.state.toString();
-      }
-      setItemStatus(existingMiniRoom);
-      console.log(existingMiniRoom);
-    },
-    staleTime: 0,
-  });
+        const existingMiniRoom: { [key: string]: string } = {};
+        for (const custom of data.data) {
+          console.log(custom.name);
+          existingMiniRoom[custom.name] = custom.state.toString();
+        }
+        setItemStatus(existingMiniRoom);
+        console.log(existingMiniRoom);
+      },
+      staleTime: 0,
+    }
+  );
 
   // 좋아요 기능
   const [heart, setHeart] = useState(0);
@@ -134,7 +140,7 @@ export default function MiniRoomPage() {
 
   const { refetch } = useQuery(
     "likes",
-    () => getLikes(Number(id), Number(memberId)),
+    () => getLikes(Number(miniRoomId), Number(memberId)),
     {
       onSuccess(data) {
         // console.log("좋아요 수 조회 성공 >> " + data.data.likes + " " + data.data.isLiked);
@@ -170,50 +176,55 @@ export default function MiniRoomPage() {
             className="h-12 aspect-square mr-4"
           />
           <p className="font-bold text-xl">{nickName}</p>
-          <p className="title font-bold text-xl"> 's MiniRoom</p>
+          <p className="title text-xl"> 's MiniRoom</p>
         </div>
         <div className="w-10 h-10 flex content-center">
           <BackBtn goBack={goBack} />
         </div>
       </div>
-      <div className="w-full flex flex-col items-center px-4">
-        <div className="mt-8 w-full">
+      <div className="w-full max-w-3xl flex flex-col items-center px-4">
+        <div className="flex gap-8">
+          <Heart heart={heart} isLiked={isLiked} refetch={refetch} />
+          <BottomBar openGuestBook={openGuestBook} />
+        </div>
+        <div className="mt-5 w-10/12">
           <StateMessage handleMessage={handleMessage} message={message} />
         </div>
-        <button
-          onClick={() => setIsMusic(true)}
-          className="bg-pink-300 rounded-md w-40 h]-10 font-bold text-white mt-4 shadow-xl"
-        >
-          BGM 선택
-        </button>
-        <div className="relative">
-          <img
-            src={images.player_img}
-            alt=""
-            className="w-72 pt-5 rounded-xl drop-shadow-2xl"
-          />
-          <div className="absolute top-10 bottom-0 opacity-75">
-            <YoutubeBgm title={bgm} />
-          </div>
-        </div>
-        <div className="mt-8">
-          <Heart heart={heart} isLiked={isLiked} refetch={refetch} />
-        </div>
-        <div className="h-72 w-72 aspect-square">
-          <Camera3D
-            MiniRoom={
-              <MiniroomBeta4
-                position={[20, -25, -20]}
-                // itemStatus={{ table: "2" }}
-                itemStatus={itemStatus}
+        <div className="grid lg:grid-cols-2 xl:grid-cols-3 place-content-center gap-3 w-full">
+          <div className="gap-5 mt-5 flex flex-col items-center justify-center">
+            <div className="relative">
+              <img
+                src={images.player_img}
+                alt=""
+                className="w-72 rounded-xl drop-shadow-2xl"
               />
-            }
-          />
-          {/* <Camera3D MiniRoom={<Scene position={[20, -25, -20]} />} /> */}
-          {/* <Camera3D MiniRoom={<MiniRoom position={[15, -15, -15]} />} /> */}
-        </div>
-        <div className="mt-8">
-          <BottomBar openGuestBook={openGuestBook} />
+              <div className="absolute top-3 bottom-0 opacity-75">
+                <YoutubeBgm title={bgm} />
+              </div>
+            </div>
+            <div
+              onClick={() => setIsMusic(true)}
+              className="text-center hover:scale-105 cursor-pointer gap-3 py-2 w-72 rounded-[10px] bg-white/50 border border-black px-10 mt-1 flex items-center justify-center"
+            >
+              <FontAwesomeIcon icon={faMusic} className="text-xl" />
+              <p>bgm 추천</p>
+              <FontAwesomeIcon icon={faMusic} className="text-xl" />
+            </div>
+          </div>
+          <div className="h-96 w-96 aspect-square mt-5">
+            <Camera3D
+              MiniRoom={
+                // <MiniroomBeta4
+                <MiniroomFinal
+                  position={[20, -25, -20]}
+                  // itemStatus={{ table: "2" }}
+                  itemStatus={itemStatus}
+                />
+              }
+            />
+            {/* <Camera3D MiniRoom={<Scene position={[20, -25, -20]} />} /> */}
+            {/* <Camera3D MiniRoom={<MiniRoom position={[15, -15, -15]} />} /> */}
+          </div>
         </div>
       </div>
     </div>

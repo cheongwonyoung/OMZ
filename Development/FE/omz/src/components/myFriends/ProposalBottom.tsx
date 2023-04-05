@@ -8,6 +8,7 @@ type Props = {
   id: number;
   name: string;
   refetch(): void;
+  refetchFriend(): void;
 };
 
 export default function ProposalBottom({
@@ -15,10 +16,12 @@ export default function ProposalBottom({
   id,
   name,
   refetch,
+  refetchFriend,
 }: Props) {
   const acceptFriend = useMutation((id: number) => acceptProposal(id), {
     onSuccess() {
       refetch();
+      refetchFriend();
     },
   });
   const accept = () => {

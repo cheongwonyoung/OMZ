@@ -1,11 +1,11 @@
 import { djInstance, instance } from ".";
 
 export const getMusicToPick = () => {
-  return djInstance.get("/music_choice");
+  return djInstance.get("/music_choice/");
 };
 
 export const getMusicRecommended = (data: {}) => {
-  return djInstance.post("music_choice/recommendation", {}, { data });
+  return djInstance.post("/music_choice/recommendation", {}, { data });
 };
 
 // BGM 조회
@@ -14,7 +14,10 @@ export const getBGM = (memberId: number) => {
 };
 
 // BGM 업데이트
-export const updateBGM = (memberId: number, info: { singer: string; title: string }[]) => {
+export const updateBGM = (
+  memberId: number,
+  info: { singer: string; title: string }[]
+) => {
   return instance.post(`/miniroom/music?memberId=${memberId}`, info);
 };
 
@@ -25,7 +28,9 @@ export const getStateMessage = (id: string) => {
 
 // 상태 메시지 수정
 export const changeStateMessage = (memberId: number, stateMessage: string) => {
-  return instance.put(`/miniroom?memberId=${memberId}&stateMessage=${stateMessage}`);
+  return instance.put(
+    `/miniroom?memberId=${memberId}&stateMessage=${stateMessage}`
+  );
 };
 
 // 미니룸 불러오기
@@ -34,7 +39,10 @@ export const getMiniRoom = (memberId: number) => {
 };
 
 // 미니룸 커스텀
-export const updateMiniRoom = (memberId: number, info: { name: string; state: number }[]) => {
+export const updateMiniRoom = (
+  memberId: number,
+  info: { name: string; state: number }[]
+) => {
   return instance.put(`/miniroom/3d/${memberId}`, info);
 };
 
@@ -44,8 +52,14 @@ export const getLikes = (friendId: number, myId: number) => {
 };
 
 // 좋아요 클릭
-export const likeMiniroom = (isLiked: boolean, friendId: number, myId: number) => {
-  return instance.put(`/miniroom/like/?isLiked=${isLiked}&friendId=${friendId}&myId=${myId}`);
+export const likeMiniroom = (
+  isLiked: boolean,
+  friendId: number,
+  myId: number
+) => {
+  return instance.put(
+    `/miniroom/like/?isLiked=${isLiked}&friendId=${friendId}&myId=${myId}`
+  );
 };
 
 // 방명록 조회

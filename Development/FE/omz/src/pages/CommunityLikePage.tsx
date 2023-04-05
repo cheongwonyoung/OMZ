@@ -36,7 +36,7 @@ export default function CommunityLikePage() {
       />
       <div className="w-11/12 flex flex-col justify-start p-5">
         <div className="flex gap-3 my-2">
-          <span className="font-bold text-2xl">
+          <span className="font-bold text-xl">
             {membernickname}님이 좋아하는 게시물
           </span>
           <img src={images.heart_img} alt="" className="" />

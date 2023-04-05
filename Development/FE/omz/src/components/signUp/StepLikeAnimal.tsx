@@ -1,6 +1,6 @@
 import NextBtn from "./NextBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { useState } from "react";
 import { div } from "@tensorflow/tfjs";
@@ -55,7 +55,7 @@ export default function StepLikeAnimal({
   const lodingBtn = () => {
     if (isLoading)
       return (
-        <div>
+        <div className="flex flex-col items-center gap-3">
           <svg
             aria-hidden="true"
             className="inline w-8 h-8 mr-2 text-gray-300 animate-spin dark:text-gray-600 fill-black"
@@ -72,7 +72,9 @@ export default function StepLikeAnimal({
               fill="currentFill"
             />
           </svg>
-          <p className="text-xl font-bold">쉿, 닮은 동물 찾는 중 &nbsp;</p>
+          <p className="text-xl font-bold">
+            쉿, 회원가입 중<FontAwesomeIcon icon={faHeart} />
+          </p>
         </div>
       );
     else
@@ -96,16 +98,16 @@ export default function StepLikeAnimal({
           내가 좋아하는 동물상을 퍼센트로 표현해주세요
         </p>
       </div>
-      <div className="flex flex-col w-11/12 gap-2">
+      <div className="flex flex-col gap-2 w-full">
         {animalList.map((item) => (
           <div className="flex gap-4 items-center" key={item}>
-            <div className="w-[30%] flex flex-col h-full items-center">
+            <div className="w-[20%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""
-                className="w-full rounded-full object-cover aspect-square"
+                className="w-full rounded-fullobject-cover aspect-square"
               />
-              <p className="text-lg">{item}</p>
+              <p>{item}</p>
             </div>
             <input
               className="w-full bg-white accent-black"
@@ -117,7 +119,7 @@ export default function StepLikeAnimal({
               step={0.1}
               onChange={(e) => changePrefer(e)}
             />
-            <p className="min-w-[30px] text-xl font-bold text-center">
+            <p className="text-end">
               {animalPrefer[animalEng[item]] * 100}%
             </p>
           </div>

@@ -60,7 +60,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
         placeholder="상태메시지를 입력해주세요."
       />
       <button
-        className="text-[15px] rounded-full w-[30px] h-[30px] mr-2"
+        className="text-[15px] rounded-full w-[30px] h-[30px] mr-2 cursor-pointer hover:scale-105"
         onClick={changeReadOnly}
       >
         {btn}

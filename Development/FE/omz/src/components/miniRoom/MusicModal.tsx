@@ -44,7 +44,7 @@ export default function MusicModal({ closeMusic, message }: Props) {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center pt-8">
+    <div className="w-[80vw] h-full flex flex-col items-center pt-8">
       <FontAwesomeIcon
         icon={faXmark}
         className="absolute right-4 top-4"

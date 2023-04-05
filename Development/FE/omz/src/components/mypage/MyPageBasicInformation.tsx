@@ -46,11 +46,13 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
   };
 
   return (
-    <div className="flex flex-col w-full max-w-3xl gap-[27px] px-8 items-center justify-center">
+    <div className="flex flex-col w-full max-w-lg gap-[27px] px-8 items-center justify-center">
       <div className="w-full flex justify-between items-end">
-        <div className="flex flex-col items-start justify-center gap-1 ml-2">
-          <p className="text-2xl title">{member?.mbti}</p>
-          <p className="text-2xl font-bold ">{member?.nickname}</p>
+        <div className="w-flex flex-col items-start justify-center gap-1 ml-2">
+          <p className="text-2xl font-bold">
+            {member?.nickname}
+          </p>
+          <p className="text-2xl title text-blue-300">{member?.mbti}</p>
         </div>
         {isOwner && (
           <button
@@ -72,14 +74,14 @@ export default function MyPageBasicInformation({ member, isOwner }: Props) {
             기본 정보 수정
           </button>
         </div> */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 w-full">
         {animalList.map((item) => (
           <div className="flex gap-4 items-center" key={uuidv4()}>
-            <div className="w-[30%] flex flex-col h-full items-center">
+            <div className="w-[20%] flex flex-col h-full items-center">
               <img
                 src={images[imgsrc(item)]}
                 alt=""
-                className="w-full rounded-full object-cover aspect-square"
+                className="w-full rounded-fullobject-cover aspect-square"
               />
               <p>{item}</p>
             </div>
