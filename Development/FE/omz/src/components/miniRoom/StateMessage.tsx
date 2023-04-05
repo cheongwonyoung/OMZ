@@ -47,8 +47,13 @@ export default function StateMessage({ handleMessage, message }: Props) {
       작성
     </p>
   );
+
   return (
-    <div className="relative flex w-full bg-white h-12 rounded-lg shadow-xl">
+    <div
+      className={`relative flex w-full bg-white h-12 rounded-lg shadow-xl ${
+        miniRoomId == memberId && "justify-between"
+      }`}
+    >
       <ToastContainer />
       <input
         id="message"
@@ -62,7 +67,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
       />
       {miniRoomId == memberId && (
         <button
-          className="text-[15px] self-center rounded-full w-[30px] h-[30px] mr-2 cursor-pointer hover:scale-105"
+          className="text-[15px] self-center justify-self-end rounded-full w-[30px] h-[30px] mr-2 cursor-pointer hover:scale-105"
           onClick={changeReadOnly}
         >
           {btn}
