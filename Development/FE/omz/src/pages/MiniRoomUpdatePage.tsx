@@ -4,7 +4,7 @@ import TitleBar from "../components/common/TitleBar";
 import ItemBox from "../components/miniRoom/ItemBox";
 import NextBtn from "../components/signUp/NextBtn";
 import { useState } from "react";
-import { MiniroomBeta4 } from "../assets/3DMiniRoom/MiniroomBeta4";
+import { MiniroomFinal } from "../assets/3DMiniRoom/MiniroomFinal";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { getMemberInfo } from "../api/member";
@@ -113,7 +113,8 @@ export default function MiniRoomUpdatePage() {
         /> */}
         <Camera3D
           MiniRoom={
-            <MiniroomBeta4 position={[20, -25, -20]} itemStatus={itemStatus} />
+            // <MiniroomBeta4 position={[20, -25, -20]} itemStatus={itemStatus} />
+            <MiniroomFinal position={[20, -25, -20]} itemStatus={itemStatus} />
           }
         />
       </div>
