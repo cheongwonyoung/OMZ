@@ -16,7 +16,7 @@ export default function MainPage() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-[50px]">
+    <div className="flex flex-col justify-center items-center gap-10">
       <div className="flex flex-col justify-center items-center mt-10">
         <img
           src={images.main_logo}
@@ -28,15 +28,15 @@ export default function MainPage() {
         />
       </div>
 
-      <div className="flex flex-col justify-center items-center gap-[50px]">
-        <div className="w-full flex justify-around items-end gap-[25px]">
+      <div className="flex flex-col justify-center items-center gap-8">
+        <div className="w-full flex justify-around items-end gap-4">
           <Link
             to="/newfriends"
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img className="w-[80%] mb-3" src={images.new_friends_img} />
-            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
-              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+            <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
+              <p className="title text-base text-black text-center">
                 New Friends
               </p>
             </div>
@@ -46,8 +46,8 @@ export default function MainPage() {
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img src={images.mini_room_img} className="w-[80%] mb-3" />
-            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
-              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+            <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
+              <p className="title text-base text-black text-center">
                 Mini Room
               </p>
             </div>
@@ -57,14 +57,14 @@ export default function MainPage() {
             className="flex flex-col justify-center items-center hover:scale-105"
           >
             <img src={images.my_page_img} className="w-[80%] mb-3" />
-            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
-              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+            <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
+              <p className="title text-base text-black text-center">
                 My Page
               </p>
             </div>
           </Link>
         </div>
-        <div className="w-full flex justify-around items-end gap-[25px]">
+        <div className="w-full flex justify-around items-end gap-4">
           <Link
             to="/myfriends"
             className="flex flex-col justify-center items-center hover:scale-105"
@@ -74,8 +74,8 @@ export default function MainPage() {
               className="w-[80%] hover:scale-110 mb-3"
             />
 
-            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
-              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+            <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
+              <p className="title text-base text-black text-center">
                 My Friends
               </p>
             </div>
@@ -89,8 +89,8 @@ export default function MainPage() {
               className="w-[80%] hover:scale-110 mb-3"
             />
 
-            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
-              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+            <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
+              <p className="title text-base text-black text-center">
                 Chatting
               </p>
             </div>
@@ -103,17 +103,17 @@ export default function MainPage() {
               src={images.community_img}
               className="w-[80%] hover:scale-110 mb-3 "
             />
-            <div className="flex justify-center items-center flex-grow-0 flex-shrink-0 relative w-[100px] gap-2.5 p-2.5 rounded-[10px] bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black">
-              <p className="flex-grow-0 flex-shrink-0 text-base text-black text-center">
+            <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
+              <p className="title text-base text-black text-center">
                 Community
               </p>
             </div>
           </Link>
         </div>
       </div>
-      <div onClick={logOut} className="cursor-pointer">
-        <div className="flex justify-center items-center gap-2.5 p-2.5 rounded-[10px] bg-white/50 border border-black hover:bg-black/20">
-          <p className="text-base">LOGOUT</p>
+      <div onClick={logOut} className="cursor-pointer mt-10">
+        <div className="flex justify-center items-center gap-2.5 px-10 py-1.5 rounded-full bg-white/50 border border-black hover:bg-black/20">
+          <p className="title text-base">LOGOUT</p>
           <FontAwesomeIcon icon={faPowerOff} />
         </div>
       </div>

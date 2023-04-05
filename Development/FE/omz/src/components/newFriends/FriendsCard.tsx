@@ -104,7 +104,7 @@ export default function FriendsCard({
           className="text-base opacity-95 hover:font-bold hover:scale-105"
           onClick={() => navigate(`/miniroom/${info.memberId}`)}
         >
-          <FontAwesomeIcon icon={faHome} className="text-teal-400 mr-2" />
+          <FontAwesomeIcon icon={faHome} className="text-teal-300 mr-2" />
           놀러가기
         </button>
       </div>
