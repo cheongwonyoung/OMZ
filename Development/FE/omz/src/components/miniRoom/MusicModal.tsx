@@ -55,9 +55,4 @@ export default function MusicModal({ closeMusic, message }: Props) {
       {step()}
     </div>
   );
-  // <div className="relative w-full h-full flex flex-col items-center pt-8">
-
-  {
-    /* </div> */
-  }
 }

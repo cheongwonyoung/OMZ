@@ -30,7 +30,6 @@ export default function StateMessage({ handleMessage, message }: Props) {
           autoClose: 3000,
           position: toast.POSITION.TOP_RIGHT,
         });
-        console.log(data);
       },
     }
   );

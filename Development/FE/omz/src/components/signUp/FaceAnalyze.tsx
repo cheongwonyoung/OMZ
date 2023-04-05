@@ -23,7 +23,6 @@ export default function FaceAnalyze({ getFaceResult, plusPage }: Props) {
     model = await tmImage.load(modelURL, metadataURL);
     const image = document.getElementById("face-image");
     const prediction = await model.predict(image, false);
-    console.log(prediction);
     setLoding(false);
     getFaceResult(prediction);
     plusPage();
@@ -47,8 +46,9 @@ export default function FaceAnalyze({ getFaceResult, plusPage }: Props) {
             fill="currentFill"
           />
         </svg>
-        <p className="text-xl font-bold">쉿, 닮은 동물 찾는 중 &nbsp;
-        <FontAwesomeIcon icon={faHeart}/>
+        <p className="text-xl font-bold">
+          쉿, 닮은 동물 찾는 중 &nbsp;
+          <FontAwesomeIcon icon={faHeart} />
         </p>
       </div>
     );

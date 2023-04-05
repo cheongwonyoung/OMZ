@@ -5,7 +5,7 @@ import BackBtn from "../common/BackBtn";
 export default function UpperBar() {
   const navigate = useNavigate();
   const goBack = () => {
-    navigate("/");
+    navigate("/main");
   };
 
   return (

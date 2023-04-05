@@ -7,8 +7,8 @@ import html2canvas from "html2canvas";
 import { v4 as uuidv4 } from "uuid";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { userStatus, userToken } from "../recoil/userAtom";
-import { useMutation, useQuery } from "react-query";
-import { getUserInfo, signUp } from "../api/kakaoLogin";
+import { useMutation } from "react-query";
+import { signUp } from "../api/kakaoLogin";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUpPage() {
@@ -44,10 +44,8 @@ export default function SignUpPage() {
     setFaceResult(result);
     for (const res of result) {
       if (maxVal < res.probability) {
-        console.log(res.probability);
         maxVal = res.probability;
         maxAni = res.className;
-        console.log(maxAni);
       }
     }
     setAnimal(maxAni);
@@ -71,7 +69,6 @@ export default function SignUpPage() {
     const name = e.target.id;
     const value = e.target.value;
     setAnimalPrefer({ ...animalPrefer, [name]: value });
-    console.log(animalPrefer);
   };
 
   const [profileImg, setProfileImg] = useState<any>();

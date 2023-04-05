@@ -61,7 +61,7 @@ export default function CommunityPage() {
   return (
     <div className="flex flex-col items-center">
       <ToastContainer />
-      <TitleBar goto="/" title="Community" icon={images.community_img} />
+      <TitleBar goto="/main" title="Community" icon={images.community_img} />
       <div className="m-3"></div>
       <CommunityCreateSmall onArticleSubmit={handleArticleSubmit} />
       <div className="m-3"></div>
