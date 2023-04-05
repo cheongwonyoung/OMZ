@@ -1,10 +1,13 @@
-import { Model } from "../../assets/3DAvatar/Rabbit";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NextBtn from "./NextBtn";
 import CameraAvatar from "../common/CameraAvatar";
-import { Bear } from "../../assets/3DAvatar/Bear";
-import { Fox } from "../../assets/3DAvatar/Fox";
+import { Custom_rabbit } from "../../assets/3DAvatar/Custom_rabbit";
+import { Custom_bear } from "../../assets/3DAvatar/Custom_bear";
+import { Custom_fox } from "../../assets/3DAvatar/Custom_fox";
+import { Custom_dino } from "../../assets/3DAvatar/Custom_dino";
+import { Custom_cat } from "../../assets/3DAvatar/Custom_cat";
+import { Custom_dog } from "../../assets/3DAvatar/Custom_dog";
 
 type Props = {
   animal: string;
@@ -27,21 +30,72 @@ export default function StepFaceResult({
         return (
           <CameraAvatar
             keepRender={true}
-            Avatar={<Model position={[0, 0, 0]} />}
+            Avatar={
+              <Custom_rabbit
+                position={[0, 0, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
           />
         );
       case "곰":
         return (
           <CameraAvatar
             keepRender={true}
-            Avatar={<Bear position={[0, 0.3, 0]} />}
+            Avatar={
+              <Custom_bear
+                position={[0, 0.3, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
           />
         );
       case "여우":
         return (
           <CameraAvatar
             keepRender={true}
-            Avatar={<Fox position={[0, 0.3, 0]} />}
+            Avatar={
+              <Custom_fox
+                position={[0, 0.3, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "공룡":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_dino
+                position={[0, 0.3, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "고양이":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_cat
+                position={[0, 0.3, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
+          />
+        );
+      case "강아지":
+        return (
+          <CameraAvatar
+            keepRender={true}
+            Avatar={
+              <Custom_dog
+                position={[0, 0.3, 0]}
+                itemStatus={{ hat: 0, glasses: 0, wing: 0 }}
+              />
+            }
           />
         );
     }
@@ -55,6 +109,12 @@ export default function StepFaceResult({
         return "듬직한 매력의 곰!";
       case "여우":
         return "남을 홀리는 매력의 여우!";
+      case "공룡":
+        return "카리스마 넘치는 매력의 공룡!";
+      case "고양이":
+        return "앙큼상큼한 매력의 고양이!";
+      case "강아지":
+        return "올망졸망한 매력의 강아지!";
     }
   };
 

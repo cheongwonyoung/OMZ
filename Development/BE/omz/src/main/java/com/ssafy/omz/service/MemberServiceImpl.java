@@ -159,7 +159,6 @@ public class MemberServiceImpl implements MemberService{
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("table").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("lamp").build());
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("etc").build());
-//        itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("clock").build());
 
         // Bgm 저장
         bgmRepository.save(Bgm.builder().miniRoom(miniRoom).title("hype boy").singer("뉴진스").build());

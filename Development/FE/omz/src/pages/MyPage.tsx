@@ -1,6 +1,5 @@
 import MbtiUpdateModal from "../components/mypage/MbtiUpdateModal";
 import { useState } from "react";
-import { Model } from "../assets/3DAvatar/Rabbit";
 import MyPageMiniRoomBanner from "../components/mypage/MyPageMiniRoomBanner";
 import MyPageBasicInformation from "../components/mypage/MyPageBasicInformation";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -11,6 +10,12 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useQuery } from "react-query";
 import { getMyPageInfos } from "../api/myPage";
+import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
+import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
+import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
+import { Custom_dino } from "../assets/3DAvatar/Custom_dino";
+import { Custom_cat } from "../assets/3DAvatar/Custom_cat";
+import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
 
 export default function MyPage() {
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +35,47 @@ export default function MyPage() {
   const showAvatar = () => {
     switch (animal) {
       case "토끼":
-        return <CameraAvatar Avatar={<Model position={[0, 0, 0]} />} />;
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_rabbit position={[0, 0, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "곰":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_bear position={[0, 0.3, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "여우":
+        return (
+          <CameraAvatar
+            Avatar={<Custom_fox position={[0, 0, 0]} itemStatus={itemStatus} />}
+          />
+        );
+      case "공룡":
+        return (
+          <CameraAvatar
+            Avatar={
+              <Custom_dino position={[0, 0, 0]} itemStatus={itemStatus} />
+            }
+          />
+        );
+      case "고양이":
+        return (
+          <CameraAvatar
+            Avatar={<Custom_cat position={[0, 0, 0]} itemStatus={itemStatus} />}
+          />
+        );
+      case "강아지":
+        return (
+          <CameraAvatar
+            Avatar={<Custom_dog position={[0, 0, 0]} itemStatus={itemStatus} />}
+          />
+        );
     }
   };
 
@@ -68,7 +113,7 @@ export default function MyPage() {
     <div className="flex flex-col justify-center items-center w-full">
       <TitleBar goto="/" title="My Page" icon={images.my_page_img} />
       <MyPageMiniRoomBanner />
-      <div className="h-96 my-5">{showAvatar()}</div>
+      <div className="h-96 my-5 w-11/12 max-w-xl">{showAvatar()}</div>
       {isOwner && (
         <div
           className="flex max-w-sm w-8/12 justify-center mb-3 items-center flex-grow-0 flex-shrink-0 relative gap-2.5 p-2.5 rounded-[10px] bg-white/50 border border-black px-10 cursor-pointer hover:bg-black/20"
@@ -79,7 +124,6 @@ export default function MyPage() {
       )}
 
       <MyPageBasicInformation member={member} isOwner={isOwner} />
-      {/* <button onClick={() => setShowModal(true)}>모달 바로가기</button> */}
       {showModal && <MbtiUpdateModal onCancel={closeModalHandler} />}
     </div>
   );

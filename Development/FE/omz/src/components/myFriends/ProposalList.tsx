@@ -6,12 +6,14 @@ type Props = {
   handleRefuseModal(id: number, name: string): void;
   proposals: any;
   refetch(): void;
+  refetchFriend(): void;
 };
 
 export default function ProposalList({
   handleRefuseModal,
   proposals,
   refetch,
+  refetchFriend,
 }: Props) {
   return (
     <div className="w-full flex flex-col items-center">
@@ -32,6 +34,7 @@ export default function ProposalList({
                   id={proposal.friendId}
                   name={proposal.fromMember.nickname}
                   refetch={refetch}
+                  refetchFriend={refetchFriend}
                 />
               }
               key={uuidv4()}

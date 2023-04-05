@@ -6,6 +6,7 @@ import { friendProposal } from "../../api/newFriend";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
+
 type Props = {
   handleProposalModal(): void;
   modalFor: { memberId: number; nickname: string };
@@ -20,7 +21,6 @@ export default function FriendsProposalModal({
       friendProposal(friend),
     {
       onSuccess: () => {
-        alert("친구 신청 완료");
         handleProposalModal();
       },
     }

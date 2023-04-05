@@ -13,6 +13,7 @@ type Props = {
   requestPossible?: boolean;
   handleModalFor(memberId: number, nickname: string): void;
   handleProposalModal(): void;
+  handletalkFriends(id: number): void;
 };
 
 export default function FriendSearchItems({
@@ -21,32 +22,13 @@ export default function FriendSearchItems({
   requestPossible,
   handleModalFor,
   handleProposalModal,
+  handletalkFriends,
 }: Props) {
   const navigate = useNavigate();
   const myId = useRecoilValue(userStatus).id;
 
-  const { data, refetch } = useQuery(
-    "talkfriends",
-    () => talkToFriends(myId, memberId),
-    {
-      enabled: false,
-    }
-  );
-
-  useEffect(() => {
-    refetch();
-  }, []);
-
-  const onClick = () => {
-    refetch();
-    const roomId = data!.data;
-    navigate(`/chatting/${myId}/${roomId}`, {
-      state: { roomId },
-    });
-  };
-
   return (
-    <div className="w-full">
+    <div className="w-full max-w-3xl">
       <div className="flex justify-between p-3 items-center">
         <p className="font-bold text-lg text-justify align-middle">
           {nickname}
@@ -54,9 +36,9 @@ export default function FriendSearchItems({
         <div className="flex gap-2">
           <button
             className="text-base hover:font-bold hover:scale-105 mr-5"
-            onClick={onClick}
+            onClick={() => handletalkFriends(memberId)}
           >
-            <FontAwesomeIcon className="text-pink-400" icon={faMessage} />{" "}
+            <FontAwesomeIcon className="text-blue-400" icon={faMessage} />{" "}
             &nbsp; 말 걸기
           </button>
 
@@ -76,9 +58,9 @@ export default function FriendSearchItems({
           {/* {goBtn("마이페이지", () => navigate(`/mypage/${memberId}`))} */}
           <button
             className="text-base hover:font-bold hover:scale-105"
-            onClick={() => navigate(`/mypage/${memberId}`)}
+            onClick={() => navigate(`/miniroom/${memberId}`)}
           >
-            <FontAwesomeIcon icon={faHome} className="text-teal-400" /> &nbsp;
+            <FontAwesomeIcon icon={faHome} className="text-teal-300" /> &nbsp;
             놀러가기
           </button>
         </div>

@@ -14,6 +14,8 @@ import { imageUrl } from "../../api";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 import moment from "moment";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Article = {
   [key: string]: any;
@@ -75,7 +77,10 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
     }) => updateArticle(board),
     {
       onSuccess: () => {
-        console.log("board");
+        toast.success("게시글이 수정되었습니다.", {
+          autoClose: 3000,
+          position: toast.POSITION.TOP_RIGHT,
+        });
         refetch();
       },
     }
@@ -92,9 +97,13 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
       onSuccess: () => {
         setShowModal(false);
         refetch();
+        navigate("/community");
       },
     }
   );
+  const goDeleteArticle = async () => {
+    deleteArticleItem.mutate(boardId);
+  };
 
   // 게시글 좋아요
   const loveArticle = useMutation(
@@ -132,13 +141,13 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
   }
 
   function confirmModalHandler(boardId: number) {
-    deleteArticleItem.mutate(boardId);
-    navigate("/community");
+    goDeleteArticle();
   }
 
   return (
     <>
       <div className="w-11/12 max-w-3xl flex justify-center m-5">
+        <ToastContainer />
         <div className="w-full bg-white flex flex-col justify-center rounded-xl p-5">
           <div className="flex justify-start gap-5 items-center">
             <img
