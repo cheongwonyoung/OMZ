@@ -33,9 +33,9 @@ export default function MusicModalItem({
   };
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between">
-        <div className="w-10/12 flex">
+    <div className="w-full max-w-[80%]">
+      <div className="w-full flex justify-between">
+        <div className="w-10/12 flex ">
           <p className="truncate w-3/4 whitespace-nowrap">{music.Title}</p>
           <p className="w-1/4 truncate whitespace-nowrap">{music.Artist}</p>
         </div>
