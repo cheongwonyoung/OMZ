@@ -16,7 +16,7 @@ export const getBGM = (memberId: number) => {
 // BGM 업데이트
 export const updateBGM = (
   memberId: number,
-  info: { singer: string; title: string }[]
+  info: { singer: string; title: string }
 ) => {
   return instance.post(`/miniroom/music?memberId=${memberId}`, info);
 };

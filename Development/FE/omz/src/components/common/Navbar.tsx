@@ -15,7 +15,7 @@ export default function NavBar() {
       <div className="w-full flex justify-center">
         <div className="w-11/12 justify-between md:items-center md:flex md:px-8">
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
-            <Link to="/">
+            <Link to="/main">
               <img src={images.main_logo} alt="" className="h-10" />
             </Link>
 
@@ -40,7 +40,7 @@ export default function NavBar() {
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                 <li className="hover:text-[#9492ff]">
-                  <Link to="/" className="title">
+                  <Link to="/main" className="title">
                     Home
                   </Link>
                 </li>

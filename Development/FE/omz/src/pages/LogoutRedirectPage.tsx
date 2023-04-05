@@ -18,7 +18,7 @@ export default function LogoutRedirectPage() {
       refresh_token: "",
     });
     setKToken({ access_token: "" });
-    navigate("/");
+    navigate("/main");
   });
   return (
     <div>

@@ -12,7 +12,7 @@ export default function StepEnd() {
   };
 
   const goHome = () => {
-    navigate("/");
+    navigate("/main");
   };
   return (
     <div className="flex flex-col items-center pt-52 gap-16">

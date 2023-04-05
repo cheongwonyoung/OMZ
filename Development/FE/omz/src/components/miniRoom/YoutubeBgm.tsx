@@ -7,6 +7,7 @@ type Props = {
 };
 
 export default function YoutubeBgm({ title }: Props) {
+  console.log(title);
   const q = title + " official";
   const part = "snippet";
   const key = import.meta.env.VITE_YOUTUBE_API_KEY;
@@ -17,7 +18,6 @@ export default function YoutubeBgm({ title }: Props) {
     getVideoId(q, part, key, type, maxResult, regionCode)
   );
   const videoId = data?.data.items[0].id.videoId;
-  // console.log(videoId);
   return (
     <YouTube
       className=""

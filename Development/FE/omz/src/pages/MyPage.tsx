@@ -20,9 +20,6 @@ import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
 export default function MyPage() {
   const [showModal, setShowModal] = useState(false);
 
-  const ggg = useLocation();
-  console.log(ggg);
-
   const navigate = useNavigate();
   const [animal, setAnimal] = useState("");
 
@@ -96,7 +93,6 @@ export default function MyPage() {
     () => getMyPageInfos(Number(myPageId)),
     {
       onSuccess(data) {
-        console.log(data.data);
         setAnimal(data.data.member.faceName);
         const existingCustom: { [key: string]: number } = {};
         for (const custom of data.data.items) {
@@ -111,7 +107,7 @@ export default function MyPage() {
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <TitleBar goto="/" title="My Page" icon={images.my_page_img} />
+      <TitleBar goto="/main" title="My Page" icon={images.my_page_img} />
       <MyPageMiniRoomBanner />
       <div className="h-96 my-5 w-11/12 max-w-xl">{showAvatar()}</div>
       {isOwner && (
