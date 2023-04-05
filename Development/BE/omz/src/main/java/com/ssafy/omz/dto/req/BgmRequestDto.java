@@ -1,6 +1,8 @@
 package com.ssafy.omz.dto.req;
 
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
