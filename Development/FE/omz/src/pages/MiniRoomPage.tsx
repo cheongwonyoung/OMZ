@@ -6,6 +6,9 @@ import MusicModal from "../components/miniRoom/MusicModal";
 import StateMessage from "../components/miniRoom/StateMessage";
 import { useEffect, useState } from "react";
 import { images } from "../assets/images";
+// import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
+import { MiniroomFinal } from "../assets/3DMiniRoom/MiniroomFinal";
+// import TitleBar from "../components/common/TitleBar";
 import BackBtn from "../components/common/BackBtn";
 import ModalBlackBg from "../components/common/ModalBlackBg";
 import GuestBookModal from "../components/miniRoom/GuestBookModal";
@@ -195,7 +198,8 @@ export default function MiniRoomPage() {
           <div className="h-96 w-96 aspect-square mt-5">
             <Camera3D
               MiniRoom={
-                <MiniroomBeta4
+                // <MiniroomBeta4
+                <MiniroomFinal
                   position={[20, -25, -20]}
                   // itemStatus={{ table: "2" }}
                   itemStatus={itemStatus}
