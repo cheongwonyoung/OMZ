@@ -25,13 +25,20 @@ export default function ItemList({ showedItem, handleItems }: Props) {
     };
 
     return structure().map((item) => (
-      <div key={item} id={item} onClick={() => handleItems(item)}>
-        <img src={images[item + "_img"]} alt="" id={item} />
+      <div
+        key={item}
+        id={item}
+        onClick={() => handleItems(item)}
+        className="cursor-pointer hover:scale-105 w-full flex justify-center"
+      >
+        <img src={images[item + "_img"]} alt="" id={item} className="w-[70%]"/>
       </div>
     ));
   };
 
   return (
-    <div className="w-11/12 grid grid-cols-3 gap-4 mb-4">{itemList()}</div>
+    <div className="flex items-center justify-center">
+      <div className="w-11/12 grid grid-cols-3 gap-4 mb-4">{itemList()}</div>
+    </div>
   );
 }

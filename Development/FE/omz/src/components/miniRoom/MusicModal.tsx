@@ -4,6 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import MusicModalToPick from "./MusicModalToPick";
 import MusicModalRecommend from "./MusicModalRecommend";
+import { images } from "../../assets/images";
 type Props = {
   closeMusic(): void;
   message: string;
@@ -48,13 +49,18 @@ export default function MusicModal({ closeMusic, message, bgmRefetch }: Props) {
 
   return (
     <div className="w-[80vw] h-full flex flex-col items-center pt-8">
-      <FontAwesomeIcon
-        icon={faXmark}
-        className="absolute right-4 top-4"
-        onClick={closeMusic}
-      />
-      <p className="text-2xl text-purple-500">추천 BGM</p>
-      <div className="w-full p-4"></div>
+      <div className="flex items-center justify-between w-10/12">
+        <div className="flex items-top gap-2">
+        <img src={images.mini_room_img} alt="" className="w-10"/>
+        <p className="text-xl font-bold pt-0.5">오늘의 추천 BGM</p>
+        </div>
+        <FontAwesomeIcon
+          icon={faXmark}
+          size="lg"
+          className="hover:text-red-500 cursor-pointer"
+          onClick={closeMusic}
+        />
+      </div>
       {step()}
     </div>
   );

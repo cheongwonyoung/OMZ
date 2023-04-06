@@ -19,10 +19,9 @@ export default function MusicModalToPick({
   const { data } = useQuery("musicsToPick", getMusicToPick, { staleTime: 0 });
 
   return (
-    <div className="flex flex-col w-full items-center">
-      <p>듣고싶은 음악을 선택해주세요</p>
-      <p>최대 3개</p>
-      <div className="flex flex-col items-center gap-2 w-full mt-4">
+    <div className="flex flex-col w-full items-center gap-5">
+      <p className="mt-5">좋아하는 음악을 선택해주세요! (최대 3개)</p>
+      <div className="flex flex-col items-center gap-2 w-full ">
         {/* {data?.data.map((music: music) => ( */}
         {data?.data.map((music: Music) => (
           <MusicModalItem
@@ -34,7 +33,7 @@ export default function MusicModalToPick({
         ))}
       </div>
       <button
-        className="h-12 w-3/5 shadow shadow-pink-400 rounded-xl mt-4 font-bold text-xl"
+        className="w-[60%] max-w-sm flex justify-center items-center px-6 py-2 border border-black font-bold rounded-md bg-white/50 cursor-pointer hover:bg-black/20"
         onClick={plusPage}
       >
         선택 완료

@@ -170,7 +170,7 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
 
       <div className="flex flex-col items-center gap-8 w-full xl:max-h-96 sm:max-h-full overflow-y-scroll scroll-bar">
         <div className="foot-print flex flex-col justify-center">
-          <span className="flex justify-center my-auto ">
+          <span className="flex justify-center my-auto">
             <textarea
               className="focus:outline-none bg-transparent text-center mt-10"
               placeholder="발자국을 남겨보세요"

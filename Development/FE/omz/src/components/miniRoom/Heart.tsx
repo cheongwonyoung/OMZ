@@ -38,13 +38,13 @@ export default function Heart({ heart, isLiked, refetch }: Props) {
         handleClick();
       }}
     >
-      <button className="cursor-pointer hover:scale-105 flex">
+      <button className="cursor-pointer hover:scale-105 flex items-center">
         <img
           src={images.heart_img}
           alt=""
           className="h-8 w-8 first-letter"
         />
-      <p className="ml-2 text-xl">{heart}</p>
+      <p className="ml-2">{heart}</p>
       </button>
     </div>
   );

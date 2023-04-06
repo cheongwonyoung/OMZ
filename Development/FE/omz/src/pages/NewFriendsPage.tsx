@@ -94,7 +94,7 @@ export default function NewFriendsPage() {
         />
       )}
 
-      <TitleBar icon={images.my_friends_img} title="New Friends" goto="/main" />
+      <TitleBar icon={images.new_friends_img} title="New Friend" goto="/main" />
       <div className="w-10/12 max-w-2xl border border-solid rounded-lg border-black h-12 bg-white flex px-2 mt-4">
         <div className="h-full w-12 flex justify-center items-center">
           <FontAwesomeIcon icon={faMagnifyingGlass} />

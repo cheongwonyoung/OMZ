@@ -43,14 +43,13 @@ export default function StateMessage({ handleMessage, message }: Props) {
   const btn = update ? (
     <FontAwesomeIcon icon={faPen} />
   ) : (
-    <p className="font-bold text-purple-600" onClick={goupdate}>
+    <p className="font-bold" onClick={goupdate}>
       작성
     </p>
   );
-
   return (
     <div
-      className={`relative flex w-full bg-white h-12 rounded-lg shadow-xl ${
+      className={`flex w-full bg-white h-12 rounded-lg shadow-xl px-2 ${
         miniRoomId == memberId && "justify-between"
       }`}
     >
@@ -58,7 +57,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
       <input
         id="message"
         type="text"
-        className="w-10/12 h-11/12 outline-none ml-2"
+        className="w-11/12 h-11/12 outline-none ml-2"
         value={message}
         onChange={(e) => handleMessage(e)}
         readOnly={update}
@@ -67,7 +66,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
       />
       {miniRoomId == memberId && (
         <button
-          className="text-[15px] self-center justify-self-end rounded-full w-[30px] h-[30px] mr-2 cursor-pointer hover:scale-105"
+          className="text-[15px] self-center rounded-full w-1/12 h-[30px] cursor-pointer hover:scale-105"
           onClick={changeReadOnly}
         >
           {btn}
