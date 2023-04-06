@@ -63,15 +63,15 @@ export default function MiniRoomPage() {
   });
 
   // Youtube 확인용 노래 제목
-  const [bgm, setBgm] = useState("hype boy");
+  const [bgm, setBgm] = useState("11cta61wi0g");
 
   const { refetch: bgmRefetch } = useQuery(
     "setbgm",
     () => getBGM(Number(memberId)),
     {
       onSuccess(data) {
-        console.log(data.data);
-        setBgm(data.data.title + " - " + data.data.singer);
+        setBgm(data.data.title);
+        // setBgm(data.data.title + " - " + data.data.singer);
       },
       staleTime: 0,
       // refetchOnMount: false,
@@ -117,15 +117,11 @@ export default function MiniRoomPage() {
     () => getMiniRoom(Number(miniRoomId)),
     {
       onSuccess(data) {
-        console.log(data.data);
-
         const existingMiniRoom: { [key: string]: string } = {};
         for (const custom of data.data) {
-          console.log(custom.name);
           existingMiniRoom[custom.name] = custom.state.toString();
         }
         setItemStatus(existingMiniRoom);
-        console.log(existingMiniRoom);
       },
       staleTime: 0,
     }
@@ -225,7 +221,7 @@ export default function MiniRoomPage() {
           <BackBtn goBack={goBack} />
         </div>
       </div>
-      <div className="w-full max-w-3xl flex flex-col items-center mt-2.5 px-4">
+      <div className="w-full max-w-3xl flex flex-col items-center mt-2.5">
         <div className="flex gap-8">
           <Heart heart={heart} isLiked={isLiked} refetch={refetch} />
           <BottomBar openGuestBook={openGuestBook} />
@@ -234,24 +230,24 @@ export default function MiniRoomPage() {
           <StateMessage handleMessage={handleMessage} message={message} />
         </div>
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 place-content-center gap-3 w-full">
-          <div className="gap-5 mt-5 flex flex-col items-center justify-center">
+          <div className="gap-3 mt-5 flex items-center justify-center">
             <div className="relative">
               <img
                 src={images.player_img}
                 alt=""
                 className="w-72 rounded-xl drop-shadow-2xl"
               />
-              <div className="absolute top-3 bottom-0 opacity-75">
-                <YoutubeBgm title={bgm} />
+              <div
+                onClick={() => setIsMusic(true)}
+                className="animate-pulse absolute top-1 left-16 text-center hover:scale-105 cursor-pointer gap-3 py-2 rounded-[10px] mt-1 flex items-center justify-center"
+              >
+                <FontAwesomeIcon icon={faMusic} />
+                <p>음악 추천 click!</p>
+                <FontAwesomeIcon icon={faMusic} />
               </div>
-            </div>
-            <div
-              onClick={() => setIsMusic(true)}
-              className="text-center hover:scale-105 cursor-pointer gap-3 py-2 w-72 rounded-[10px] bg-white/50 border border-black px-10 mt-1 flex items-center justify-center"
-            >
-              <FontAwesomeIcon icon={faMusic} className="text-xl" />
-              <p>bgm 추천</p>
-              <FontAwesomeIcon icon={faMusic} className="text-xl" />
+              <div className="absolute top-10 left-5">
+                <YoutubeBgm videoId={bgm} />
+              </div>
             </div>
           </div>
           <div className="h-96 w-96 aspect-square mt-5">

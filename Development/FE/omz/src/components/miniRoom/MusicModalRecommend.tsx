@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { userStatus } from "../../recoil/userAtom";
 import { updateBGM } from "../../api/miniRoom";
+import { getVideoId } from "../../api/youtube";
 
 type Props = {
   musicSelected: string[];
@@ -39,12 +40,32 @@ export default function MusicModalRecommend({
     const info = { title: bgm.Title, singer: bgm.Artist };
     changeBGM.mutate(info);
   };
+  const [bgm, setBgm] = useState({ Artist: "", Title: "" });
+
+
+  const q = bgm.Title +  " " + bgm.Artist + " official";
+  const part = "snippet";
+  const key = import.meta.env.VITE_YOUTUBE_API_KEY;
+  const type = "video";
+  const maxResult = 1;
+  const regionCode = "KR";
+  const getMusicKey = useMutation(()=> getVideoId(q, part, key, type, maxResult, regionCode),{
+    onSuccess(data) {
+      const videoId = data?.data.items[0].id.videoId
+      const info = { title: videoId, singer: bgm.Artist }
+      changeBGM.mutate(info)
+    },
+  })
+
+  const handleClick2 = () => {
+    getMusicKey.mutate()
+  };
+
   const changeBGM = useMutation(
     (body: { title: string; singer: string }) =>
       updateBGM(Number(memberId), body),
     {
       onSuccess() {
-        console.log("bgm update 성공");
         closeMusic();
         bgmRefetch();
       },
@@ -58,7 +79,6 @@ export default function MusicModalRecommend({
     { staleTime: 0 }
   );
 
-  const [bgm, setBgm] = useState({ Artist: "", Title: "" });
   const selectBgm = (item: {
     Title: string;
     Artist: string;
@@ -67,8 +87,7 @@ export default function MusicModalRecommend({
     setBgm({ ...bgm, Title: item.Title, Artist: item.Artist });
   };
   return (
-    <div className="flex flex-col w-full items-center">
-      <p>배경음악을 선택해주세요</p>
+    <div className="flex flex-col w-full items-center gap-5 mt-5">
       <div className="flex flex-col gap-2 items-center w-full mt-4">
         {data?.data.map((music: music) => (
           <MusicModalItem
@@ -80,10 +99,9 @@ export default function MusicModalRecommend({
         ))}
       </div>
       <button
-        className="h-12 w-3/5 shadow shadow-pink-400 rounded-xl mt-4 font-bold text-xl"
-        onClick={() => {
-          handleClick(bgm);
-        }}
+        className="w-[60%] max-w-sm flex justify-center items-center px-6 py-2 border border-black font-bold rounded-md bg-white/50 cursor-pointer hover:bg-black/20"
+        onClick={
+          handleClick2}
       >
         선택 완료
       </button>
