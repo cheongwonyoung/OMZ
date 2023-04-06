@@ -1,5 +1,4 @@
 import { OrbitControls } from "@react-three/drei";
-import YoutubeBgm from "../../components/miniRoom/YoutubeBgm";
 import { Canvas } from "@react-three/fiber";
 
 type Props = {
@@ -15,12 +14,11 @@ export default function CameraMiniroom({ Avatar, MiniRoom }: Props) {
       className="w-full h-full"
     >
       <ambientLight intensity={0.1} />
-
       <group position={[-4, 11.5, 4]}>
         <group position={[17, -24.2, -16.5]}>{Avatar}</group>
         {MiniRoom}
       </group>
-      <OrbitControls />
+      <OrbitControls enableRotate={false} />
     </Canvas>
   );
 }
