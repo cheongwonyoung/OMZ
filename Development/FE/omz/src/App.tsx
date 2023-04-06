@@ -45,7 +45,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <CheckIsLoginPage component={<EnterPage />} />,
+        element: <EnterPage />,
       },
       {
         path: "/main",
