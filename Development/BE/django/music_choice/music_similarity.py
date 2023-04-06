@@ -23,12 +23,7 @@ def find_simi_song(seed_song,top_n=10):
 def user_song_simi(song_recom,total_array):
 
     song_emotion=np.array(song_recom[['분노혐오', '놀람공포', '슬픔', '행복']])
-
-    # total_array 문자열 -> numpy 배열
-    total_array_list=list(total_array[2:-2].split())
-    total_array_list=list(map(float,total_array_list))
-    total_array=np.array([total_array_list])
-
+   
     song_user_cosine_index=cosine_similarity(total_array,song_emotion).argsort()[:, ::-1]
     song_recom_index=song_user_cosine_index.reshape(-1)[:5]
 
