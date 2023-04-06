@@ -46,7 +46,10 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
   const profile = useRecoilValue(userStatus).profile_img;
   return (
     <>
-      <form onSubmit={submitHandler} className="w-full flex flex-col">
+      <form
+        onSubmit={submitHandler}
+        className="w-full flex flex-col justify-center items-center"
+      >
         <ToastContainer />
         <div className="w-full flex justify-center">
           <div className="w-11/12 max-w-3xl flex items-center justify-center">
