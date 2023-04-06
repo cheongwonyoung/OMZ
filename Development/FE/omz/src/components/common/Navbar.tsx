@@ -4,11 +4,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faXmark, faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { images } from "../../assets/images";
 import { useRecoilValue } from "recoil";
-import { userStatus } from "../../recoil/userAtom";
+import { userStatus, userToken } from "../../recoil/userAtom";
 
 export default function NavBar() {
   const [navbar, setNavbar] = useState(false);
   const memberId = useRecoilValue(userStatus).id;
+  const noLogin = useRecoilValue(userToken).access_token === "";
+
+  const logOut = () => {
+    const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+    const LOGOUT_REDIRECT_URI = import.meta.env.VITE_LOGOUT_URI;
+    const KAKAO_LOGOUT_URI = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
+    window.location.href = KAKAO_LOGOUT_URI;
+  };
 
   return (
     <nav className="w-full hidden sm:block">
@@ -75,9 +83,14 @@ export default function NavBar() {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/logout" className="title text-red-600">
-                    Logout
-                  </Link>
+                  {!noLogin && (
+                    <p onClick={logOut} className="title text-red-600">
+                      Logout
+                    </p>
+                    // <Link to="/logout" className="title text-red-600">
+                    //   Logout
+                    // </Link>
+                  )}
                 </li>
               </ul>
             </div>

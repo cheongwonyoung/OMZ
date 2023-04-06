@@ -12,7 +12,7 @@ export default function EnterPage() {
   }, [navigate]);
 
   return (
-    <div className="w-full h-screen bg-[#228186]">
+    <div className="w-full h-screen bg-black">
       <img
         className="w-full h-screen animate-fadeInOut"
         src={images.main_page}
