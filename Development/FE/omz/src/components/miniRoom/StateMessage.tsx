@@ -66,7 +66,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
       />
       {miniRoomId == memberId && (
         <button
-          className="text-[15px] self-center rounded-full w-1/12 h-[30px] cursor-pointer hover:scale-105"
+          className="text-[15px] self-center rounded-full w-2/12 h-[30px] cursor-pointer hover:scale-105"
           onClick={changeReadOnly}
         >
           {btn}
