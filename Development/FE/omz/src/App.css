@@ -1,5 +1,6 @@
-.App {
-  background: conic-gradient(
+.App { 
+  background: linear-gradient(
+      340deg,
       #e2edff,
       rgba(255, 214, 233, 0.81),
       #fdffae94,
