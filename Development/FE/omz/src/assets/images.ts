@@ -43,7 +43,6 @@ export const images: Images = {
   rug_2_img: "/images/rug_2.png",
   profile_img: "/images/pink_rabbit.png",
   loading_img: "/images/loading.png",
-  animate_star: "/images/meteor-rain.gif",
   glasses_0: "/images/x.png",
   glasses_1: "/images/heart_glasses.png",
   glasses_2: "/images/star_glasses.png",
@@ -63,4 +62,5 @@ export const images: Images = {
   wing_4: "/images/vampire_cape.png",
   wing_5: "/images/random.png",
   main_page: "/images/main.gif",
+  loading: "/images/dino_move.gif",
 };
