@@ -56,7 +56,6 @@ export default function StateMessage({ handleMessage, message }: Props) {
       }`}
     >
       <ToastContainer />
-      {miniRoomId == memberId && message == "" && (
         <input
           id="message"
           type="text"
@@ -67,20 +66,6 @@ export default function StateMessage({ handleMessage, message }: Props) {
           maxLength={20}
           placeholder="상태메시지를 입력해주세요."
         />
-      )}
-
-      {miniRoomId != memberId && (
-        <input
-          id="message"
-          type="text"
-          className="w-5/6 h-11/12 outline-none ml-2"
-          value={message}
-          onChange={(e) => handleMessage(e)}
-          readOnly={update}
-          maxLength={20}
-          placeholder=". . ."
-        />
-      )}
 
       {miniRoomId == memberId && (
         <button
