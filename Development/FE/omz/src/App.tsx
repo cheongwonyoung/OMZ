@@ -31,7 +31,7 @@ import EnterPage from "./pages/EnterPage";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 3,
+      staleTime: 0,
       refetchOnWindowFocus: false,
     },
   },

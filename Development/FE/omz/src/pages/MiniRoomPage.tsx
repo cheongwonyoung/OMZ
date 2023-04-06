@@ -94,7 +94,7 @@ export default function MiniRoomPage() {
   useQuery("statemessage", () => getStateMessage(String(miniRoomId)), {
     onSuccess(data) {
       const msg = data.data.stateMessage;
-      if (msg == null) setMessage(" . . . ");
+      if (msg == "") setMessage(" . . . ");
       else setMessage(msg);
     },
     staleTime: 0,
