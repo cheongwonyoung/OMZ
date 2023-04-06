@@ -218,7 +218,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
                 {!item.ilikeBoard ? (
                   <FontAwesomeIcon
                     icon={faHeart}
-                    className="hover:text-red-600 text-lg"
+                    className="text-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       goLoveArticle();
@@ -227,7 +227,7 @@ export default function CommunityDetailItem({ item, refetch }: Props) {
                 ) : (
                   <FontAwesomeIcon
                     icon={faHeart}
-                    className="text-red-600 hover:text-black text-lg"
+                    className="text-red-600 text-lg"
                     onClick={(e) => {
                       e.stopPropagation();
                       goDisloveArticle();
