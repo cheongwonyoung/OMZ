@@ -1,3 +1,6 @@
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 type Props = {
   music: {
     [key: string]: string;
@@ -21,7 +24,10 @@ export default function MusicModalItem({
   const clickRadio = () => {
     if (selectMusic && musicSelected)
       musicSelected.length === 3 && !musicSelected.includes(music.Title)
-        ? alert("최대 3개까지 선택해주세요.")
+        ? toast.warning("최대 3개까지 선택해주세요.", {
+            autoClose: 3000,
+            position: toast.POSITION.TOP_RIGHT,
+          })
         : selectMusic(music.Title);
     if (selectBgm) selectBgm(music);
   };
@@ -34,6 +40,7 @@ export default function MusicModalItem({
 
   return (
     <div className="w-full max-w-[80%]">
+      <ToastContainer />
       <div className="w-full flex justify-between border-b">
         <div className="w-10/12 flex ">
           <p className="truncate w-3/4 whitespace-nowrap">{music.Title}</p>
