@@ -61,10 +61,13 @@ def music_choice(request):
 @api_view(['POST'])
 def recommendation(request):
     # 사용자가 오늘 듣고 싶다고 선택한 노래
+    print("!!!")
     print(request.data)
-    print(request.data.get('message'))
-    print(request.data.get('songs'))
-    seed_song = request.data.get('songs')
+    print(request.data.get('data'))
+    data = request.data.get('data')
+    print(data.get('message'))
+    print(data.get('songs'))
+    seed_song = data.get('songs')
     # print(seed_song)
     # 사용자가 노래 선택 안 했을 때 랜덤 추천
     if seed_song == []:
@@ -76,7 +79,7 @@ def recommendation(request):
     
     # 듣고 싶은 노래 선택하면 상메 감정 + 노래 선택으로 추천
     # 1. 상태메세지 감정 분석
-    target_sentence = request.data.get('message')
+    target_sentence = data.get('message')
     user_input = str(target_sentence)
     # 문장 분리
     input_list = user_input.split(".")
