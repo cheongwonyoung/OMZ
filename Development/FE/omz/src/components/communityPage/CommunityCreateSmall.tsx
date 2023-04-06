@@ -39,45 +39,47 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
   const profile = useRecoilValue(userStatus).profile_img;
   return (
     <>
-      <form onSubmit={submitHandler} className="w-full flex justify-center">
-        <div className="w-11/12 max-w-3xl flex items-center justify-center">
-          <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2">
-            <img
-              src={IMAGE_ROOT + profile}
-              alt=""
-              className="w-[3rem] h-[3rem] object-cover rounded-full"
-            />
-            <div className="w-full flex justify-between items-center">
-              <input
-                type="text"
-                className="w-10/12 focus:outline-none bg-transparent ml-5"
-                placeholder="무슨 일이 일어나고 있나요?"
-                maxLength={140}
-                ref={articleInputRef}
+      <form onSubmit={submitHandler} className="w-full flex flex-col">
+        <div className="w-full flex justify-center">
+          <div className="w-11/12 max-w-3xl flex items-center justify-center">
+            <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2">
+              <img
+                src={IMAGE_ROOT + profile}
+                alt=""
+                className="w-[3rem] h-[3rem] object-cover rounded-full"
               />
-              <FontAwesomeIcon
-                icon={faImage}
-                className="text-xl mx-5 cursor-pointer hover:opacity-30"
-                onClick={() => {
-                  if (showUploader) {
-                    setShowUploader(false);
-                  } else {
-                    setShowUploader(true);
-                  }
-                }}
-              />
-              <button>
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  className="text-xl hover:opacity-30"
+              <div className="w-full flex justify-between items-center">
+                <input
+                  type="text"
+                  className="w-10/12 focus:outline-none bg-transparent ml-5"
+                  placeholder="무슨 일이 일어나고 있나요?"
+                  maxLength={140}
+                  ref={articleInputRef}
                 />
-              </button>
+                <FontAwesomeIcon
+                  icon={faImage}
+                  className="text-xl mx-5 cursor-pointer hover:opacity-30"
+                  onClick={() => {
+                    if (showUploader) {
+                      setShowUploader(false);
+                    } else {
+                      setShowUploader(true);
+                    }
+                  }}
+                />
+                <button>
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    className="text-xl hover:opacity-30"
+                  />
+                </button>
+              </div>
             </div>
           </div>
-          {showUploader && (
-            <ImageUploader file={file} onFile={onFile} shape={false} />
-          )}
         </div>
+        {showUploader && (
+          <ImageUploader file={file} onFile={onFile} shape={false} />
+        )}
       </form>
     </>
   );
