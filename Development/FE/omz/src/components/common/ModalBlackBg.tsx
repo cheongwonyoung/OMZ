@@ -6,7 +6,7 @@ export default function ModalBlackBg({ modal, closeModal }: Props) {
   return (
     <div
       onClick={closeModal}
-      className="w-screen h-full absolute bg-black/80 z-50 flex justify-center items-center"
+      className="w-screen h-full absolute bg-black/80 z-50 flex justify-center "
     >
       <div
         onClick={(e: any) => e.stopPropagation()}
