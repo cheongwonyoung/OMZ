@@ -26,8 +26,6 @@ export default function StateMessage({ handleMessage, message }: Props) {
     inp?.focus();
   };
 
-  const memberId = useRecoilValue(userStatus).id;
-  const miniRoomId = useParams().id;
   const updateMessage = useMutation(
     () => changeStateMessage(memberId, message),
     {
