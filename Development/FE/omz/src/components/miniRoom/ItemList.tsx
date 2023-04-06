@@ -5,10 +5,10 @@ type Props = {
   handleItems(v: any): void;
 };
 export default function ItemList({ showedItem, handleItems }: Props) {
-  const bedList = ["bed_0", "bed_1", "bed_2", "bed_3", "bed_4"];
-  const tableList = ["table_0", "table_1", "table_2", "table_3", "table_4"];
+  const bedList = ["bed_0", "bed_1", "bed_2", "bed_3"];
+  const tableList = ["table_0", "table_1", "table_2", "table_3"];
   const lampList = ["lamp_0", "lamp_1", "lamp_2"];
-  const etcList = ["etc_0", "etc_1", "etc_2", "etc_3", "etc_4", "etc_5"];
+  const etcList = ["etc_0", "etc_1", "etc_2", "etc_3", "etc_4"];
 
   const itemList = () => {
     const structure = () => {
@@ -31,7 +31,7 @@ export default function ItemList({ showedItem, handleItems }: Props) {
         onClick={() => handleItems(item)}
         className="cursor-pointer hover:scale-105 w-full flex justify-center"
       >
-        <img src={images[item + "_img"]} alt="" id={item} className="w-[70%]"/>
+        <img src={images[item + "_img"]} alt="" id={item} className="w-[70%]" />
       </div>
     ));
   };

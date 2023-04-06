@@ -6,7 +6,7 @@ import StateMessage from "../components/miniRoom/StateMessage";
 import { useEffect, useState } from "react";
 import { images } from "../assets/images";
 // import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
-import { MiniroomFinal } from "../assets/3DMiniRoom/MiniroomFinal";
+import { MiniroomBetaFinal } from "../assets/3DMiniRoom/MiniroomBetaFinal";
 // import TitleBar from "../components/common/TitleBar";
 import BackBtn from "../components/common/BackBtn";
 import ModalBlackBg from "../components/common/ModalBlackBg";
@@ -52,7 +52,7 @@ export default function MiniRoomPage() {
   const miniRoomId = useParams().id;
   const [nickName, setNickName] = useState("Cutie");
 
-  useQuery(["info",miniRoomId], () => getMyPageInfos(Number(miniRoomId)), {
+  useQuery(["info", miniRoomId], () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
       setNickName(data.data.member.nickname);
       // takeBGM.mutate(data.data.miniRoomId);
@@ -64,7 +64,7 @@ export default function MiniRoomPage() {
   const [bgm, setBgm] = useState("11cta61wi0g");
 
   const { refetch: bgmRefetch } = useQuery(
-    ["setbgm",miniRoomId],
+    ["setbgm", miniRoomId],
     () => getBGM(Number(miniRoomId)),
     {
       onSuccess(data) {
@@ -91,21 +91,25 @@ export default function MiniRoomPage() {
     setMessage(e.target.value);
   };
 
-  useQuery(["statemessage",miniRoomId], () => getStateMessage(String(miniRoomId)), {
-    onSuccess(data) {
-      const msg = data.data.stateMessage;
-      if (msg == "") setMessage(" . . . ");
-      else setMessage(msg);
-    },
-    staleTime: 0,
-  });
+  useQuery(
+    ["statemessage", miniRoomId],
+    () => getStateMessage(String(miniRoomId)),
+    {
+      onSuccess(data) {
+        const msg = data.data.stateMessage;
+        if (msg == "") setMessage(" . . . ");
+        else setMessage(msg);
+      },
+      staleTime: 0,
+    }
+  );
 
   // 미니룸 불러오기
   const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
     bed: "0",
     table: "0",
     lamp: "0",
-    etc: "0"
+    etc: "0",
   });
 
   useQuery(
@@ -128,7 +132,7 @@ export default function MiniRoomPage() {
   const [isLiked, setIsLiked] = useState(false);
 
   const { refetch } = useQuery(
-    ["likes",miniRoomId],
+    ["likes", miniRoomId],
     () => getLikes(Number(miniRoomId), Number(memberId)),
     {
       onSuccess(data) {
@@ -250,7 +254,7 @@ export default function MiniRoomPage() {
             <Camera3D
               Avatar={showAvatar()}
               MiniRoom={
-                <MiniroomFinal
+                <MiniroomBetaFinal
                   position={[20, -25, -20]}
                   itemStatus={itemStatus}
                 />
