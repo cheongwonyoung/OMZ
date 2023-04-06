@@ -28,7 +28,7 @@ public class JwtServiceImpl implements JwtService{
     @Override
     public <T> String createAccessToken(String key, T data) {
         // 유효시간 : 30분
-        return create(key, data, "access-token", 1000*60*30);
+        return create(key, data, "access-token", 1000*60*30*2);
     }
 
     // refresh token 생성
