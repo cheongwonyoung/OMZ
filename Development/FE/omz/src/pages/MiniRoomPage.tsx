@@ -28,14 +28,12 @@ import { getMyCustomInfo, getMyPageInfos } from "../api/myPage";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
-import { Fox_move } from "../assets/3DAvatar/Fox_move";
 import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
 import { Custom_cat } from "../assets/3DAvatar/Custom_cat";
 import { Custom_dino } from "../assets/3DAvatar/Custom_dino";
 import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
 import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
 import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
-import TitleBar from "../components/common/TitleBar";
 
 export default function MiniRoomPage() {
   const navigate = useNavigate();
