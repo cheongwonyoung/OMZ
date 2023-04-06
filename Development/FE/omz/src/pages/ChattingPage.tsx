@@ -7,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
+import { div } from "@tensorflow/tfjs";
 
 type Chat = {
   [key: string]: any;
@@ -32,14 +33,19 @@ const ChattingPage = () => {
     <div className="w-full flex flex-col items-center">
       <TitleBar goto="/main" title="Chatting" icon={images.chatting_img} />
       <div className="max-w-3xl w-full flex flex-col items-center">
-        {data?.data !== "" &&
+        {data?.data == "" ? (
+          <div>
+            <p>채팅 목록이 없습니다.</p>
+          </div>
+        ) : (
           data?.data.map((chat: Chat) => (
             <ChatListItem
               item={chat}
               key={chat.recentMessageCreatedTime}
               refetch={refetch}
             />
-          ))}
+          ))
+        )}
       </div>
     </div>
   );
