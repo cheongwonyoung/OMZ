@@ -242,7 +242,12 @@ export default function MiniRoomPage() {
                 className="animate-pulse absolute top-1 left-16 text-center hover:scale-105 cursor-pointer gap-3 py-2 rounded-[10px] mt-1 flex items-center justify-center"
               >
                 <FontAwesomeIcon icon={faMusic} />
-                <p>음악 추천 click!</p>
+               {miniRoomId == memberId && (
+                  <p>음악 추천 click!</p>
+                )}
+                {miniRoomId != memberId && (
+                  <p>BGM</p>
+                )}
                 <FontAwesomeIcon icon={faMusic} />
               </div>
               <div className="absolute top-10 left-5">

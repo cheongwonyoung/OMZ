@@ -1914,6 +1914,7 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
                       scale={0.5}
                       castShadow
                       receiveShadow
+              onClick={() => setIsLamp((prev) => !prev)}
                     />
                     {isLamp && (
                       <pointLight
@@ -1930,6 +1931,7 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
                       position={[0.64, 0.17, -1.14]}
                       scale={0.5}
                       receiveShadow
+              onClick={() => setIsLamp((prev) => !prev)}
                     />
                   </group>
                 </group>
