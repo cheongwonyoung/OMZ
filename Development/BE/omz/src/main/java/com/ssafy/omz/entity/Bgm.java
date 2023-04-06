@@ -33,4 +33,12 @@ public class Bgm {
         this.title = title;
         this.singer = singer;
     }
+
+    
+    public Bgm updateInfo(String title, String singer){
+        this.title = title;
+        this.singer = singer;
+        return this;
+    }
+
 }

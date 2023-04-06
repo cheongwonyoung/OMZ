@@ -50,7 +50,7 @@ export default function MiniRoomPage() {
   // 닉네임 조회
   const memberId = useRecoilValue(userStatus).id;
   const miniRoomId = useParams().id;
-  const [nickName, setNickName] = useState("");
+  const [nickName, setNickName] = useState("Cutie");
 
   useQuery("info", () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
@@ -65,7 +65,7 @@ export default function MiniRoomPage() {
 
   const { refetch: bgmRefetch } = useQuery(
     "setbgm",
-    () => getBGM(Number(memberId)),
+    () => getBGM(Number(miniRoomId)),
     {
       onSuccess(data) {
         console.log(data.data);
