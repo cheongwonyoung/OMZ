@@ -5,7 +5,7 @@ export const getMusicToPick = () => {
 };
 
 export const getMusicRecommended = (data: {}) => {
-  return djInstance.post("/music_choice/recommendation", {}, { data });
+  return djInstance.post("/music_choice/recommendation", { data });
 };
 
 // BGM 조회
