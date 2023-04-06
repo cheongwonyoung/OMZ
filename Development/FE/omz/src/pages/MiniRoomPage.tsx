@@ -105,9 +105,7 @@ export default function MiniRoomPage() {
     bed: "0",
     table: "0",
     lamp: "0",
-    drawer: "0",
-    clock: "0",
-    sofa: "0",
+    etc: "0"
   });
 
   useQuery(
