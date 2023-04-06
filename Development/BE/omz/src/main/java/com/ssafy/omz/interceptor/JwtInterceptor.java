@@ -33,8 +33,7 @@ public class JwtInterceptor implements HandlerInterceptor {
             return true;
         }else{
             logger.info("토큰 사용 불가능 : {}", token);
-            response.setStatus(400);
-            throw new UnAuthorizedException();
+            return false;
         }
 
     }
