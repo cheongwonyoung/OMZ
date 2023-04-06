@@ -61,18 +61,22 @@ def music_choice(request):
 @api_view(['POST'])
 def recommendation(request):
     # 사용자가 오늘 듣고 싶다고 선택한 노래
-    seed_song = request.POST.getlist("answer[]")
-
+    print(request.data)
+    print(request.data.get('message'))
+    print(request.data.get('songs'))
+    seed_song = request.data.get('songs')
+    # print(seed_song)
     # 사용자가 노래 선택 안 했을 때 랜덤 추천
     if seed_song == []:
         random_df = music_similarity.random_recom()
         refine_data = random_df[['Genre', 'Title','Artist']]
         df_to_json = refine_data.to_json(force_ascii=False, orient='records', indent=4)
+        print("랜덤")
         return HttpResponse(df_to_json)
     
     # 듣고 싶은 노래 선택하면 상메 감정 + 노래 선택으로 추천
     # 1. 상태메세지 감정 분석
-    target_sentence = request.POST.get('target_sentence')
+    target_sentence = request.data.get('message')
     user_input = str(target_sentence)
     # 문장 분리
     input_list = user_input.split(".")
@@ -87,7 +91,6 @@ def recommendation(request):
     model = settings.MODEL_KOBERT
 
     total_array = predict_sentiment_func.predict_sentiment_user(processed_input, tokenizer, model)
-
     # 2. 곡  추천
 
     song_recom = music_similarity.find_simi_song(seed_song,6)
