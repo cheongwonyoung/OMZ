@@ -31,16 +31,10 @@ export default function ChatListItem({ item, refetch }: Props) {
   // 지금 시각과 제일 최근에 보낸 채팅의 시각의 차이 를 구함
   const createdTime = item?.recentMessageCreatedTime;
 
-  const nowtime = new Date();
-  const chatTime = moment(createdTime);
-  const nowTime = moment(nowtime);
-
-  const timeGapMinute = Math.trunc(
-    moment.duration(nowTime.diff(chatTime)).asMinutes()
-  );
-  const timeGapHour = Math.trunc(
-    moment.duration(nowTime.diff(chatTime)).asHours()
-  );
+  const nowTime = moment();
+  const chatTime = moment(createdTime, "YYYY/MM/DD HH:mm:ss.SSS");
+  const timeGapMinute = nowTime.diff(chatTime, "minutes");
+  const timeGapHour = nowTime.diff(chatTime, "hours");
 
   // 친구가 아니라면 친구 추가 버튼이 뜸 (friendState가 0일 때)
   // 친구가 하고 싶으면 친구 추가하기
@@ -102,21 +96,10 @@ export default function ChatListItem({ item, refetch }: Props) {
             {/* friendState가 0일 때 친구 추가 버튼 띄워주기  */}
             {!item?.chatOtherInfo.friendState && (
               <p className="text-xs">친구가 아닌 사용자</p>
-              // <button
-              //   className="border-black border-2 p-2 hover:bg-black/20"
-              //   onClick={(e) => {
-              //     e?.stopPropagation();
-              //     handleFriend();
-              //   }}
-              // >
-              //   친구추가
-              // </button>
             )}
           </div>
           {/* </div> */}
-          <p className="text-sm">
-          {item?.recentMessage}
-          </p>
+          <p className="text-sm">{item?.recentMessage}</p>
         </div>
       </div>
     </>

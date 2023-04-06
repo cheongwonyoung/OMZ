@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import YouTube from "react-youtube";
 import { getVideoId } from "../../api/youtube";
+import { useEffect } from "react";
 
 type Props = {
   title: string;
@@ -14,9 +15,20 @@ export default function YoutubeBgm({ title }: Props) {
   const type = "video";
   const maxResult = 1;
   const regionCode = "KR";
-  const { data } = useQuery(["video", q], () =>
-    getVideoId(q, part, key, type, maxResult, regionCode)
+  const { data, refetch } = useQuery(
+    ["video", q],
+    () => getVideoId(q, part, key, type, maxResult, regionCode),
+    {
+      onError(err) {
+        console.log(err);
+      },
+      retry: 0,
+      enabled: false,
+    }
   );
+  useEffect(() => {
+    refetch();
+  }, [q]);
   const videoId = data?.data.items[0].id.videoId;
   return (
     <YouTube

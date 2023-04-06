@@ -332,7 +332,7 @@ export function Custom_dog({ position, itemStatus }: Props) {
   };
   const props: any = { position };
   return (
-    <group {...props} dispose={null} scale={1.3}>
+    <group {...props} dispose={null} scale={1.2}>
       {selectGlasses()}
       {selectHat()}
       {selectWing()}

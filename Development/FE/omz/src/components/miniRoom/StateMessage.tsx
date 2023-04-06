@@ -7,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useParams } from "react-router-dom";
 
 type Props = {
   handleMessage(e: any): void;
@@ -22,6 +23,7 @@ export default function StateMessage({ handleMessage, message }: Props) {
   };
 
   const memberId = useRecoilValue(userStatus).id;
+  const miniRoomId = useParams().id;
   const updateMessage = useMutation(
     () => changeStateMessage(memberId, message),
     {
@@ -45,8 +47,13 @@ export default function StateMessage({ handleMessage, message }: Props) {
       작성
     </p>
   );
+
   return (
-    <div className="relative flex justify-between w-full items-center bg-white h-12 rounded-lg shadow-xl">
+    <div
+      className={`relative flex w-full bg-white h-12 rounded-lg shadow-xl ${
+        miniRoomId == memberId && "justify-between"
+      }`}
+    >
       <ToastContainer />
       <input
         id="message"
@@ -58,15 +65,14 @@ export default function StateMessage({ handleMessage, message }: Props) {
         maxLength={20}
         placeholder="상태메시지를 입력해주세요."
       />
-      <button
-        className="text-[15px] rounded-full w-[30px] h-[30px] mr-2 cursor-pointer hover:scale-105"
-        onClick={changeReadOnly}
-      >
-        {btn}
-        {/* <FontAwesomeIcon icon={faPen} /> */}
-        {/* 작성 */}
-      </button>
-      {/* <button>작성 완료</button> */}
+      {miniRoomId == memberId && (
+        <button
+          className="text-[15px] self-center justify-self-end rounded-full w-[30px] h-[30px] mr-2 cursor-pointer hover:scale-105"
+          onClick={changeReadOnly}
+        >
+          {btn}
+        </button>
+      )}
     </div>
   );
 }

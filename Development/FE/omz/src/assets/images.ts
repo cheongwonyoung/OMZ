@@ -62,4 +62,5 @@ export const images: Images = {
   wing_3: "/images/balloon.png",
   wing_4: "/images/vampire_cape.png",
   wing_5: "/images/random.png",
+  main_page: "/images/main.gif",
 };

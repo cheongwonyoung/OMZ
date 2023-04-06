@@ -45,8 +45,8 @@ export default function MusicModalRecommend({
     {
       onSuccess() {
         console.log("bgm update 성공");
-        closeMusic();
         bgmRefetch();
+        closeMusic();
       },
     }
   );
