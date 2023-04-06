@@ -90,6 +90,8 @@ export default function ChatListItem({ item, refetch }: Props) {
                 {/* 60분 보다 많으면 시간으로 적으면 분으로 표시하기  */}
                 {timeGapMinute > 60
                   ? timeGapHour + "시간 전"
+                  : timeGapMinute === 0
+                  ? "방금 전"
                   : timeGapMinute + "분 전"}
               </p>
             </div>
