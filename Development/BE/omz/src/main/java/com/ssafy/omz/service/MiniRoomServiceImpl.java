@@ -83,14 +83,16 @@ public class MiniRoomServiceImpl implements MiniRoomService{
     @Transactional
     public void deleteStateMessage(long memberId) throws RollbackException {
         MiniRoom miniRoom = miniRoomRepository.findByMember_MemberId(memberId);
-        miniRoom.updateStateMessage("상메로 감정을 표현해봐! 이얏호 레쓰고");
+        miniRoom.updateStateMessage("");
     }
 
     // 음악정보 등록
     @Override
     public void updateBgm(long memberId, BgmRequestDto.Write musicInfo) {
-        bgmRepository.save(Bgm.builder().miniRoom(miniRoomRepository.findByMember_MemberId(memberId))
-                .title(musicInfo.getTitle()).singer(musicInfo.getSinger()).build());
+        Bgm bgm = bgmRepository.findByMiniRoom_MiniRoomId(miniRoomRepository.findByMember_MemberId(memberId).getMiniRoomId());
+        bgm.updateInfo(musicInfo.getTitle(), musicInfo.getSinger());
+        // log.info("bgm update >> " + musicInfo.getTitle());
+        bgmRepository.save(bgm);
     }
 
     // miniroom의 bgm 정보 조회

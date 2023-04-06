@@ -38,7 +38,7 @@ export default function Heart({ heart, isLiked, refetch }: Props) {
         handleClick();
       }}
     >
-      <button className="rotate-img cursor-pointer hover:scale-105 flex items-center">
+      <button className="cursor-pointer hover:scale-105 flex items-center">
         <img
           src={images.heart_img}
           alt=""

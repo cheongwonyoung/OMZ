@@ -48,7 +48,11 @@ export default function StateMessage({ handleMessage, message }: Props) {
     </p>
   );
   return (
-    <div className="flex w-full bg-white h-12 rounded-lg shadow-xl px-2">
+    <div
+      className={`flex w-full bg-white h-12 rounded-lg shadow-xl px-2 ${
+        miniRoomId == memberId && "justify-between"
+      }`}
+    >
       <ToastContainer />
       <input
         id="message"

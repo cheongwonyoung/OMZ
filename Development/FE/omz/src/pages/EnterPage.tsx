@@ -1,11 +1,22 @@
-import { OMZmain_with_png_logo } from "../assets/3DAvatar/OMZmain_with_png_logo";
-import Camera3D from "../components/common/Camera3D";
-
+import { images } from "../assets/images";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export default function EnterPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      navigate("/main");
+    }, 5700);
+    return () => clearTimeout(timeoutId);
+  }, [navigate]);
+
   return (
-    <div className="w-screen h-screen">
-      <Camera3D
-        MiniRoom={<OMZmain_with_png_logo position={[20, -25, -20]} />}
+    <div className="w-full h-screen bg-black">
+      <img
+        className="w-full h-screen animate-fadeInOut"
+        src={images.main_page}
+        alt=""
       />
     </div>
   );

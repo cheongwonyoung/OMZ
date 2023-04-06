@@ -28,14 +28,12 @@ import { getMyCustomInfo, getMyPageInfos } from "../api/myPage";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
-import { Fox_move } from "../assets/3DAvatar/Fox_move";
 import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
 import { Custom_cat } from "../assets/3DAvatar/Custom_cat";
 import { Custom_dino } from "../assets/3DAvatar/Custom_dino";
 import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
 import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
 import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
-import TitleBar from "../components/common/TitleBar";
 
 export default function MiniRoomPage() {
   const navigate = useNavigate();
@@ -52,7 +50,7 @@ export default function MiniRoomPage() {
   // 닉네임 조회
   const memberId = useRecoilValue(userStatus).id;
   const miniRoomId = useParams().id;
-  const [nickName, setNickName] = useState("");
+  const [nickName, setNickName] = useState("Cutie");
 
   useQuery("info", () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
@@ -67,7 +65,7 @@ export default function MiniRoomPage() {
 
   const { refetch: bgmRefetch } = useQuery(
     "setbgm",
-    () => getBGM(Number(memberId)),
+    () => getBGM(Number(miniRoomId)),
     {
       onSuccess(data) {
         setBgm(data.data.title);
@@ -254,16 +252,12 @@ export default function MiniRoomPage() {
             <Camera3D
               Avatar={showAvatar()}
               MiniRoom={
-                // <MiniroomBeta4
                 <MiniroomFinal
                   position={[20, -25, -20]}
-                  // itemStatus={{ table: "2" }}
                   itemStatus={itemStatus}
                 />
               }
             />
-            {/* <Camera3D MiniRoom={<Scene position={[20, -25, -20]} />} /> */}
-            {/* <Camera3D MiniRoom={<MiniRoom position={[15, -15, -15]} />} /> */}
           </div>
         </div>
       </div>
