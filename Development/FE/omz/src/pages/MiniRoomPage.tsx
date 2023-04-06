@@ -52,7 +52,7 @@ export default function MiniRoomPage() {
   const miniRoomId = useParams().id;
   const [nickName, setNickName] = useState("Cutie");
 
-  useQuery("info", () => getMyPageInfos(Number(miniRoomId)), {
+  useQuery(["info",miniRoomId], () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
       setNickName(data.data.member.nickname);
       // takeBGM.mutate(data.data.miniRoomId);
@@ -64,7 +64,7 @@ export default function MiniRoomPage() {
   const [bgm, setBgm] = useState("11cta61wi0g");
 
   const { refetch: bgmRefetch } = useQuery(
-    "setbgm",
+    ["setbgm",miniRoomId],
     () => getBGM(Number(miniRoomId)),
     {
       onSuccess(data) {
@@ -91,7 +91,7 @@ export default function MiniRoomPage() {
     setMessage(e.target.value);
   };
 
-  useQuery("statemessage", () => getStateMessage(String(miniRoomId)), {
+  useQuery(["statemessage",miniRoomId], () => getStateMessage(String(miniRoomId)), {
     onSuccess(data) {
       const msg = data.data.stateMessage;
       if (msg == "") setMessage(" . . . ");
@@ -130,7 +130,7 @@ export default function MiniRoomPage() {
   const [isLiked, setIsLiked] = useState(false);
 
   const { refetch } = useQuery(
-    "likes",
+    ["likes",miniRoomId],
     () => getLikes(Number(miniRoomId), Number(memberId)),
     {
       onSuccess(data) {
