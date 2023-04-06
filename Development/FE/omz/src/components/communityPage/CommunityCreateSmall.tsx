@@ -6,6 +6,9 @@ import ImageUploader from "../common/ImageUploader";
 import { useState } from "react";
 import { userStatus } from "../../recoil/userAtom";
 import { useRecoilValue } from "recoil";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 type Props = {
   onArticleSubmit: (article: string, image: File) => void;
 };
@@ -27,6 +30,10 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
     const enteredArticle = articleInputRef.current!.value;
 
     if (enteredArticle.trim().length === 0) {
+      toast.warning("글을 작성해주세요!", {
+        autoClose: 3000,
+        position: toast.POSITION.TOP_RIGHT,
+      });
       return;
     }
     onArticleSubmit(enteredArticle, file[0]);
@@ -40,6 +47,7 @@ export default function CommunityCreateSmall({ onArticleSubmit }: Props) {
   return (
     <>
       <form onSubmit={submitHandler} className="w-full flex flex-col">
+        <ToastContainer />
         <div className="w-full flex justify-center">
           <div className="w-11/12 max-w-3xl flex items-center justify-center">
             <div className="flex justify-between items-center w-11/12 relative border-black rounded-sm gap-2">
