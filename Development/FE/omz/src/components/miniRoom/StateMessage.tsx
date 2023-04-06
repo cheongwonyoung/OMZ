@@ -14,6 +14,10 @@ type Props = {
   message: string;
 };
 export default function StateMessage({ handleMessage, message }: Props) {
+  
+  const memberId = useRecoilValue(userStatus).id; // 로그인 유저 아이디
+  const miniRoomId = useParams().id; // 미니룸 아이디
+
   const [update, setUpdate] = useState(true);
 
   const changeReadOnly = () => {
@@ -54,19 +58,35 @@ export default function StateMessage({ handleMessage, message }: Props) {
       }`}
     >
       <ToastContainer />
-      <input
-        id="message"
-        type="text"
-        className="w-11/12 h-11/12 outline-none ml-2"
-        value={message}
-        onChange={(e) => handleMessage(e)}
-        readOnly={update}
-        maxLength={20}
-        placeholder="상태메시지를 입력해주세요."
-      />
+      {miniRoomId == memberId && message == "" && (
+        <input
+          id="message"
+          type="text"
+          className="w-5/6 h-11/12 outline-none ml-2"
+          value={message}
+          onChange={(e) => handleMessage(e)}
+          readOnly={update}
+          maxLength={20}
+          placeholder="상태메시지를 입력해주세요."
+        />
+      )}
+
+      {miniRoomId != memberId && (
+        <input
+          id="message"
+          type="text"
+          className="w-5/6 h-11/12 outline-none ml-2"
+          value={message}
+          onChange={(e) => handleMessage(e)}
+          readOnly={update}
+          maxLength={20}
+          placeholder=". . ."
+        />
+      )}
+
       {miniRoomId == memberId && (
         <button
-          className="text-[15px] self-center rounded-full w-1/12 h-[30px] cursor-pointer hover:scale-105"
+          className="text-[15px] self-center rounded-full w-2/12 h-[30px] cursor-pointer hover:scale-105"
           onClick={changeReadOnly}
         >
           {btn}

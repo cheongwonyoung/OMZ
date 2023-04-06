@@ -1888,7 +1888,7 @@ export function MiniroomFinal({ position, itemStatus }: Props) {
     }
   };
 
-  const [isLamp, setIsLamp] = useState(true);
+  const [isLamp, setIsLamp] = useState(false);
 
   const selectLamp = () => {
     switch (itemStatus?.lamp) {
