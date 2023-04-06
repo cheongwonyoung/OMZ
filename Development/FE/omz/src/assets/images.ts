@@ -69,5 +69,6 @@ export const images: Images = {
   wing_4: "/images/vampire_cape.png",
   wing_5: "/images/random.png",
   main_page: "/images/main.gif",
-  loading: "/images/dino_move.gif",
+  loading: "/images/dino_move.gif", 
+  cat_move: "/images/cat_move.gif", 
 };
