@@ -237,17 +237,17 @@ export default function MiniRoomPage() {
                 alt=""
                 className="w-72 rounded-xl drop-shadow-2xl"
               />
-              <div
-                onClick={() => setIsMusic(true)}
-                className="animate-pulse absolute top-1 left-16 text-center hover:scale-105 cursor-pointer gap-3 py-2 rounded-[10px] mt-1 flex items-center justify-center"
-              >
+              <div className="animate-pulse absolute top-1 left-16 text-center hover:scale-105 gap-3 py-2 rounded-[10px] mt-1 flex items-center justify-center">
                 <FontAwesomeIcon icon={faMusic} />
-               {miniRoomId == memberId && (
-                  <p>음악 추천 click!</p>
+                {miniRoomId == memberId && (
+                  <p
+                    onClick={() => setIsMusic(true)}
+                    className="cursor-pointer "
+                  >
+                    음악 추천 click!
+                  </p>
                 )}
-                {miniRoomId != memberId && (
-                  <p>BGM</p>
-                )}
+                {miniRoomId != memberId && <p>&nbsp;OH MY MUZIK&nbsp;</p>}
                 <FontAwesomeIcon icon={faMusic} />
               </div>
               <div className="absolute top-10 left-5">

@@ -98,7 +98,7 @@ export default function CommunityComment({ item, refetch, boardIdNum }: Props) {
   return (
     <div className="w-full flex justify-center mt-1">
       <ToastContainer />
-      <div className="w-11/12 m-3 max-w-3xl border-b border-black pb-1">
+      <div className="w-11/12 m-1 max-w-3xl border-b border-black pb-1">
         <div className="flex w-full justify-between items-start gap-3">
           {/* TODO: 나중에 member 나오면 찐 프사로 바꿔주기  */}
           <img

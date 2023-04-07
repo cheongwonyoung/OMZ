@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 import { images } from "../../assets/images";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
   getGuestBooks,
@@ -18,6 +19,7 @@ import {
 } from "../../api/miniRoom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 type GuestBook = {
   [key: string]: any;
@@ -30,6 +32,8 @@ type Props = {
 // const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
 
 export default function GuestBookModal({ closeGuestBook }: Props) {
+  const navigate = useNavigate();
+
   const friendId = useParams().id;
   const myId = useRecoilValue(userStatus).id;
 
@@ -93,6 +97,11 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
     }
   );
 
+  const clickHandle = (memberId: number) => {
+    navigate(`/miniroom/${memberId}`, { state: { memberId } });
+    closeGuestBook();
+  };
+
   useEffect(() => {
     refetch();
   }, []);
@@ -101,12 +110,19 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
     switch (index % 2) {
       case 1:
         return (
-          <div className="flex w-full justify-end " key={uuidv4()}>
+          <div
+            className="flex w-full justify-end cursor-pointer"
+            key={uuidv4()}
+          >
             <ToastContainer />
-            <div className="foot-print flex flex-col justify-self-start pt-5">
+            <div
+              className="foot-print flex flex-col1 flex pt-5  cursor-pointer"
+              onClick={() => clickHandle(talk.memberId)}
+            >
               <span className="flex justify-center my-auto w-80">
                 {talk.content}
               </span>
+
               {myId === talk.memberId && (
                 <button
                   className="mb-7"
@@ -126,9 +142,12 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
         );
       default:
         return (
-          <div className="flex w-full" key={uuidv4()}>
+          <div className="flex w-full " key={uuidv4()}>
             <ToastContainer />
-            <div className="foot-print flex flex-col justify-self-start pt-5">
+            <div
+              className="foot-print flex-col flex justify-around pt-5  cursor-pointer"
+              onClick={() => clickHandle(talk.memberId)}
+            >
               <span className="flex justify-center my-auto w-80">
                 {talk.content}
               </span>
