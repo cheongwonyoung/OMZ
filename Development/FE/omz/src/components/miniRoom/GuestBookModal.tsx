@@ -116,7 +116,7 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
           >
             <ToastContainer />
             <div
-              className="foot-print flex flex-col1 flex pt-5  cursor-pointer"
+              className="foot-print flex flex-col flex pt-5  cursor-pointer"
               onClick={() => clickHandle(talk.memberId)}
             >
               <span className="flex justify-center my-auto w-80">
