@@ -1,4 +1,3 @@
-import { MiniRoom } from "../assets/3DMiniRoom/MiniRoom";
 import Camera3D from "../components/common/Camera3D";
 import BottomBar from "../components/miniRoom/BottomBar";
 import Heart from "../components/miniRoom/Heart";
@@ -7,7 +6,7 @@ import StateMessage from "../components/miniRoom/StateMessage";
 import { useEffect, useState } from "react";
 import { images } from "../assets/images";
 // import { MiniroomBeta2 } from "../assets/3DMiniRoom/MiniroomBeta2";
-import { MiniroomFinal } from "../assets/3DMiniRoom/MiniroomFinal";
+import { MiniroomBetaFinal } from "../assets/3DMiniRoom/MiniroomBetaFinal";
 // import TitleBar from "../components/common/TitleBar";
 import BackBtn from "../components/common/BackBtn";
 import ModalBlackBg from "../components/common/ModalBlackBg";
@@ -25,11 +24,16 @@ import {
   getMiniRoom,
   getBGM,
 } from "../api/miniRoom";
-import { getMyPageInfos } from "../api/myPage";
+import { getMyCustomInfo, getMyPageInfos } from "../api/myPage";
 
-import { MiniroomBeta4 } from "../assets/3DMiniRoom/MiniroomBeta4";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
+import { Custom_dog } from "../assets/3DAvatar/Custom_dog";
+import { Custom_cat } from "../assets/3DAvatar/Custom_cat";
+import { Custom_dino } from "../assets/3DAvatar/Custom_dino";
+import { Custom_fox } from "../assets/3DAvatar/Custom_fox";
+import { Custom_bear } from "../assets/3DAvatar/Custom_bear";
+import { Custom_rabbit } from "../assets/3DAvatar/Custom_rabbit";
 
 export default function MiniRoomPage() {
   const navigate = useNavigate();
@@ -46,9 +50,9 @@ export default function MiniRoomPage() {
   // 닉네임 조회
   const memberId = useRecoilValue(userStatus).id;
   const miniRoomId = useParams().id;
-  const [nickName, setNickName] = useState("Cutie BBatie");
+  const [nickName, setNickName] = useState("Cutie");
 
-  useQuery("info", () => getMyPageInfos(Number(miniRoomId)), {
+  useQuery(["info", miniRoomId], () => getMyPageInfos(Number(miniRoomId)), {
     onSuccess(data) {
       setNickName(data.data.member.nickname);
       // takeBGM.mutate(data.data.miniRoomId);
@@ -57,15 +61,15 @@ export default function MiniRoomPage() {
   });
 
   // Youtube 확인용 노래 제목
-  const [bgm, setBgm] = useState("hype boy");
+  const [bgm, setBgm] = useState("11cta61wi0g");
 
   const { refetch: bgmRefetch } = useQuery(
-    "setbgm",
-    () => getBGM(Number(memberId)),
+    ["setbgm", miniRoomId],
+    () => getBGM(Number(miniRoomId)),
     {
       onSuccess(data) {
-        console.log(data.data);
-        setBgm(data.data.title + " - " + data.data.singer);
+        setBgm(data.data.title);
+        // setBgm(data.data.title + " - " + data.data.singer);
       },
       staleTime: 0,
       // refetchOnMount: false,
@@ -87,39 +91,37 @@ export default function MiniRoomPage() {
     setMessage(e.target.value);
   };
 
-  useQuery("statemessage", () => getStateMessage(String(miniRoomId)), {
-    onSuccess(data) {
-      const msg = data.data.stateMessage;
-      if (msg == null) setMessage(" . . . ");
-      else setMessage(msg);
-    },
-    staleTime: 0,
-  });
+  useQuery(
+    ["statemessage", miniRoomId],
+    () => getStateMessage(String(miniRoomId)),
+    {
+      onSuccess(data) {
+        const msg = data.data.stateMessage;
+        if (msg == "") setMessage(" . . . ");
+        else setMessage(msg);
+      },
+      staleTime: 0,
+    }
+  );
 
   // 미니룸 불러오기
   const [itemStatus, setItemStatus] = useState<{ [key: string]: string }>({
     bed: "0",
     table: "0",
     lamp: "0",
-    drawer: "0",
-    clock: "0",
-    sofa: "0",
+    etc: "0",
   });
 
   useQuery(
-    ["customUpdate", miniRoomId],
+    ["miniRoomInfo", miniRoomId],
     () => getMiniRoom(Number(miniRoomId)),
     {
       onSuccess(data) {
-        console.log(data.data);
-
         const existingMiniRoom: { [key: string]: string } = {};
         for (const custom of data.data) {
-          console.log(custom.name);
           existingMiniRoom[custom.name] = custom.state.toString();
         }
         setItemStatus(existingMiniRoom);
-        console.log(existingMiniRoom);
       },
       staleTime: 0,
     }
@@ -130,7 +132,7 @@ export default function MiniRoomPage() {
   const [isLiked, setIsLiked] = useState(false);
 
   const { refetch } = useQuery(
-    "likes",
+    ["likes", miniRoomId],
     () => getLikes(Number(miniRoomId), Number(memberId)),
     {
       onSuccess(data) {
@@ -144,10 +146,52 @@ export default function MiniRoomPage() {
     refetch();
   }, []);
 
+  const [animal, setAnimal] = useState("");
+
+  const [customStatus, setCustomStatus] = useState<{ [key: string]: number }>({
+    hat: 0,
+    glasses: 0,
+    wing: 0,
+  });
+
+  useQuery(
+    ["customUpdate", miniRoomId],
+    () => getMyCustomInfo(Number(miniRoomId)),
+    {
+      onSuccess(data) {
+        setAnimal(data.data.faceName);
+        const existingCustom: { [key: string]: number } = {};
+        for (const custom of data.data.items) {
+          existingCustom[custom.name] = custom.state;
+        }
+        setCustomStatus(existingCustom);
+      },
+      staleTime: 0,
+    }
+  );
+
+  const showAvatar = () => {
+    switch (animal) {
+      case "토끼":
+        return <Custom_rabbit position={[0, 0, 0]} itemStatus={customStatus} />;
+      case "곰":
+        return <Custom_bear position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "여우":
+        return <Custom_fox position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "공룡":
+        return <Custom_dino position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "고양이":
+        return <Custom_cat position={[0, 0.3, 0]} itemStatus={customStatus} />;
+      case "강아지":
+        return <Custom_dog position={[0, 0.3, 0]} itemStatus={customStatus} />;
+    }
+  };
+
   return (
     <div className=" w-full flex flex-col items-center">
       {isMusic && (
         <ModalBlackBg
+          closeModal={closeMusic}
           modal={
             <MusicModal
               message={message}
@@ -159,10 +203,10 @@ export default function MiniRoomPage() {
       )}
       {isGuestBook && (
         <ModalBlackBg
+          closeModal={closeGuestBook}
           modal={<GuestBookModal closeGuestBook={closeGuestBook} />}
         />
       )}
-      {/* <TitleBar icon={images.mini_room_img} title={nickName} goto={"/"} /> */}
       <div className="flex w-11/12 justify-between items-center p-2.5 mt-2 ">
         <div className="flex items-center">
           <img
@@ -177,7 +221,7 @@ export default function MiniRoomPage() {
           <BackBtn goBack={goBack} />
         </div>
       </div>
-      <div className="w-full max-w-3xl flex flex-col items-center px-4">
+      <div className="w-full max-w-3xl flex flex-col items-center mt-2.5">
         <div className="flex gap-8">
           <Heart heart={heart} isLiked={isLiked} refetch={refetch} />
           <BottomBar openGuestBook={openGuestBook} />
@@ -186,39 +230,41 @@ export default function MiniRoomPage() {
           <StateMessage handleMessage={handleMessage} message={message} />
         </div>
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 place-content-center gap-3 w-full">
-          <div className="gap-5 mt-5 flex flex-col items-center justify-center">
+          <div className="gap-3 mt-5 flex items-center justify-center">
             <div className="relative">
               <img
                 src={images.player_img}
                 alt=""
                 className="w-72 rounded-xl drop-shadow-2xl"
               />
-              <div className="absolute top-3 bottom-0 opacity-75">
-                <YoutubeBgm title={bgm} />
+              <div className="animate-pulse absolute top-1 left-16 text-center hover:scale-105 gap-3 py-2 rounded-[10px] mt-1 flex items-center justify-center">
+                <FontAwesomeIcon icon={faMusic} />
+                {miniRoomId == memberId && (
+                  <p
+                    onClick={() => setIsMusic(true)}
+                    className="cursor-pointer "
+                  >
+                    음악 추천 click!
+                  </p>
+                )}
+                {miniRoomId != memberId && <p>&nbsp;OH MY MUZIK&nbsp;</p>}
+                <FontAwesomeIcon icon={faMusic} />
               </div>
-            </div>
-            <div
-              onClick={() => setIsMusic(true)}
-              className="text-center hover:scale-105 cursor-pointer gap-3 py-2 w-72 rounded-[10px] bg-white/50 border border-black px-10 mt-1 flex items-center justify-center"
-            >
-              <FontAwesomeIcon icon={faMusic} className="text-xl" />
-              <p>bgm 추천</p>
-              <FontAwesomeIcon icon={faMusic} className="text-xl" />
+              <div className="absolute top-10 left-5">
+                <YoutubeBgm videoId={bgm} />
+              </div>
             </div>
           </div>
           <div className="h-96 w-96 aspect-square mt-5">
             <Camera3D
+              Avatar={showAvatar()}
               MiniRoom={
-                // <MiniroomBeta4
-                <MiniroomFinal
+                <MiniroomBetaFinal
                   position={[20, -25, -20]}
-                  // itemStatus={{ table: "2" }}
                   itemStatus={itemStatus}
                 />
               }
             />
-            {/* <Camera3D MiniRoom={<Scene position={[20, -25, -20]} />} /> */}
-            {/* <Camera3D MiniRoom={<MiniRoom position={[15, -15, -15]} />} /> */}
           </div>
         </div>
       </div>

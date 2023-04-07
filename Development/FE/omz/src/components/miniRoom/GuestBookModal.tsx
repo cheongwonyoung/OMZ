@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../../recoil/userAtom";
 import { images } from "../../assets/images";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import {
   getGuestBooks,
@@ -18,6 +19,7 @@ import {
 } from "../../api/miniRoom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import moment from "moment";
 
 type GuestBook = {
   [key: string]: any;
@@ -30,6 +32,8 @@ type Props = {
 // const IMAGE_ROOT = import.meta.env.VITE_APP_IMAGE_ROOT;
 
 export default function GuestBookModal({ closeGuestBook }: Props) {
+  const navigate = useNavigate();
+
   const friendId = useParams().id;
   const myId = useRecoilValue(userStatus).id;
 
@@ -68,7 +72,14 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
 
   const handleWrite = () => {
     const memberId = myId;
-    writeContent.mutate({ content, friendId, memberId });
+    if (friendId && content.length > 0) {
+      writeContent.mutate({ content, friendId: Number(friendId), memberId });
+    } else {
+      toast.warn("내용을 작성해주세요.", {
+        autoClose: 3000,
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
 
   const writeContent = useMutation(
@@ -86,6 +97,11 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
     }
   );
 
+  const clickHandle = (memberId: number) => {
+    navigate(`/miniroom/${memberId}`, { state: { memberId } });
+    closeGuestBook();
+  };
+
   useEffect(() => {
     refetch();
   }, []);
@@ -94,9 +110,44 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
     switch (index % 2) {
       case 1:
         return (
-          <div className="flex justify-end " key={uuidv4()}>
+          <div
+            className="flex w-full justify-end cursor-pointer"
+            key={uuidv4()}
+          >
             <ToastContainer />
-            <div className="foot-print flex flex-col justify-self-start pt-5">
+            <div
+              className="foot-print flex flex-col flex pt-5  cursor-pointer"
+              onClick={() => clickHandle(talk.memberId)}
+            >
+              <span className="flex justify-center my-auto w-80">
+                {talk.content}
+              </span>
+
+              {myId === talk.memberId && (
+                <button
+                  className="mb-7"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteTalk(talk.guestBookId);
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrashCan}
+                    className="text-gray-500 cursor-pointer hover:text-black"
+                  />
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div className="flex w-full " key={uuidv4()}>
+            <ToastContainer />
+            <div
+              className="foot-print flex-col flex justify-around pt-5  cursor-pointer"
+              onClick={() => clickHandle(talk.memberId)}
+            >
               <span className="flex justify-center my-auto w-80">
                 {talk.content}
               </span>
@@ -117,42 +168,28 @@ export default function GuestBookModal({ closeGuestBook }: Props) {
             </div>
           </div>
         );
-      default:
-        return (
-          <div className="flex" key={uuidv4()}>
-            <div className="foot-print flex flex-col justify-self-start pt-5">
-              <span className="flex justify-center my-auto">
-                {talk.content}
-              </span>
-              {myId === talk.memberId && (
-                <button className="mb-7" onClick={() => handleWrite()}>
-                  <FontAwesomeIcon
-                    icon={faTrashCan}
-                    className="text-gray-500 cursor-pointer hover:text-black"
-                  />
-                </button>
-              )}
-            </div>
-          </div>
-        );
     }
   });
 
   return (
-    <div className="bg-gray-900/0 w-fit h-[70vh] flex flex-col items-center pt-8">
+    <div className="bg-gray-900/0 w-[80vw] max-w-[780px] h-[70vh] flex flex-col items-center pt-8">
       {/* // <div className="bg-gray-900/0 w-96 h-[60vh] flex flex-col items-center pt-8"> */}
       <div className="w-11/12 flex items-center justify-between mb-5">
         <div className="flex items-center gap-2">
-          <img src={images.foot_print_img} alt="" className="w-10"/>
+          <img src={images.foot_print_img} alt="" className="w-10" />
           <p className="text-xl">방명록</p>
         </div>
-        <FontAwesomeIcon icon={faXmark} onClick={closeGuestBook} className="hover:text-red-600 cursor-pointer text-xl"/>
+        <FontAwesomeIcon
+          icon={faXmark}
+          onClick={closeGuestBook}
+          className="hover:text-red-600 cursor-pointer text-xl"
+        />
       </div>
       {/* <p className="text-2xl text-purple-500">방명록</p> */}
 
       <div className="flex flex-col items-center gap-8 w-full xl:max-h-96 sm:max-h-full overflow-y-scroll scroll-bar">
         <div className="foot-print flex flex-col justify-center">
-          <span className="flex justify-center my-auto ">
+          <span className="flex justify-center my-auto">
             <textarea
               className="focus:outline-none bg-transparent text-center mt-10"
               placeholder="발자국을 남겨보세요"

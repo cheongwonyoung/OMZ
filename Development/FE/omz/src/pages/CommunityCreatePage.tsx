@@ -10,6 +10,9 @@ import { createArticle } from "../api/community";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userStatus } from "../recoil/userAtom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function CommunityCreatePage() {
   const navigate = useNavigate();
   // 게시글 내용
@@ -43,6 +46,10 @@ export default function CommunityCreatePage() {
     const enteredContent = contentInputRef.current!.value;
 
     if (enteredContent.trim().length === 0) {
+      toast.warning("글을 작성해주세요!", {
+        autoClose: 3000,
+        position: toast.POSITION.TOP_RIGHT,
+      });
       return;
     }
     ArticleSubmit(enteredContent, file[0]);
@@ -53,9 +60,18 @@ export default function CommunityCreatePage() {
   const profile = useRecoilValue(userStatus).profile_img;
   return (
     <div className="flex flex-col items-center justify-center">
-      <TitleBar title="Community" icon={images.community_img} goto={`/community`} />
+      <ToastContainer />
+      <TitleBar
+        title="Community"
+        icon={images.community_img}
+        goto={`/community`}
+      />
       <div className="mb-5"></div>
-      <form action="" className="w-10/12 pb-10 max-w-3xl" onSubmit={submitHandler}>
+      <form
+        action=""
+        className="w-10/12 pb-10 max-w-3xl"
+        onSubmit={submitHandler}
+      >
         <div className="w-full flex justify-between items-start gap-2">
           <img
             src={IMAGE_ROOT + profile}

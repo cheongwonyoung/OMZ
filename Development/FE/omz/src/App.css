@@ -1,5 +1,6 @@
-.App {
-  background: conic-gradient(
+.App { 
+  background: linear-gradient(
+      340deg,
       #e2edff,
       rgba(255, 214, 233, 0.81),
       #fdffae94,
@@ -43,7 +44,7 @@
 
 /* 발자국 방명록 */
 .foot-print {
-  background-image: url(../public/images/footPrint.png);
+  background-image: url("https://storage.googleapis.com/omz-bucket/footPrint.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

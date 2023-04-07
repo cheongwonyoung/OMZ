@@ -161,7 +161,7 @@ public class MemberServiceImpl implements MemberService{
         itemRepository.save(Item.builder().member(member).itemType(itemTypeRepository.findByItemTypeName("miniRoom")).state(0).name("etc").build());
 
         // Bgm 저장
-        bgmRepository.save(Bgm.builder().miniRoom(miniRoom).title("hype boy").singer("뉴진스").build());
+        bgmRepository.save(Bgm.builder().miniRoom(miniRoom).title("11cta61wi0g").singer("뉴진스").build());
 
         Member result = memberRepository.save(
                 memberRepository.findByEmail(email).get().updateMemberInfo(

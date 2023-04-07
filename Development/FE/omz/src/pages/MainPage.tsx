@@ -29,23 +29,23 @@ export default function MainPage() {
       </div>
 
       <div className="flex flex-col justify-center items-center gap-8">
-        <div className="w-full flex justify-around items-end gap-4">
+        <div className="w-11/12 max-w-lg flex justify-around items-end gap-4">
           <Link
             to="/newfriends"
-            className="flex flex-col justify-center items-center hover:scale-105"
+            className="flex flex-col justify-center w-3/12 max-w-md items-center hover:scale-105"
           >
-            <img className="w-[80%] mb-3" src={images.new_friends_img} />
+            <img className="w-[80%] h-[50%] mb-3" src={images.main_new_friends_img} />
             <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
               <p className="title text-base text-black text-center">
-                New Friends
+                New Friend
               </p>
             </div>
           </Link>
           <Link
             to={`/miniroom/${memberId}`}
-            className="flex flex-col justify-center items-center hover:scale-105"
+            className="flex flex-col justify-center w-3/12 max-w-md items-center hover:scale-105"
           >
-            <img src={images.mini_room_img} className="w-[80%] mb-3" />
+            <img src={images.main_mini_room_img} className="w-[80%] mb-3" />
             <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
               <p className="title text-base text-black text-center">
                 Mini Room
@@ -54,21 +54,21 @@ export default function MainPage() {
           </Link>
           <Link
             to={`/mypage/${memberId}`}
-            className="flex flex-col justify-center items-center hover:scale-105"
+            className="flex flex-col justify-center w-3/12 max-w-md items-center hover:scale-105"
           >
-            <img src={images.my_page_img} className="w-[80%] mb-3" />
+            <img src={images.main_my_page_img} className="w-[80%] mb-3" />
             <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">
               <p className="title text-base text-black text-center">My Page</p>
             </div>
           </Link>
         </div>
-        <div className="w-full flex justify-around items-end gap-4">
+        <div className="w-11/12 max-w-lg flex justify-around items-end gap-4">
           <Link
             to="/myfriends"
-            className="flex flex-col justify-center items-center hover:scale-105"
+            className="flex flex-col justify-center w-3/12 max-w-md items-center hover:scale-105"
           >
             <img
-              src={images.my_friends_img}
+              src={images.main_my_friends_img}
               className="w-[80%] hover:scale-110 mb-3"
             />
 
@@ -80,10 +80,10 @@ export default function MainPage() {
           </Link>
           <Link
             to={`/chatting/${memberId}`}
-            className="flex flex-col justify-center items-center hover:scale-105"
+            className="flex flex-col justify-center w-3/12 max-w-md items-center hover:scale-105"
           >
             <img
-              src={images.chatting_img}
+              src={images.main_chatting_img}
               className="w-[80%] hover:scale-110 mb-3"
             />
 
@@ -93,10 +93,10 @@ export default function MainPage() {
           </Link>
           <Link
             to="/community"
-            className="flex flex-col justify-center items-center hover:scale-105"
+            className="flex flex-col justify-center w-3/12 max-w-md items-center hover:scale-105"
           >
             <img
-              src={images.community_img}
+              src={images.main_community_img}
               className="w-[80%] hover:scale-110 mb-3 "
             />
             <div className="flex justify-center items-center relative w-fit px-3 py-1 rounded-full bg-gradient-to-b from-[#7bdfff]/[0.88] to-[#fffee5]/0 border border-black min-w-[120px]">

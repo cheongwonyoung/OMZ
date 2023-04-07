@@ -3,28 +3,18 @@ import YouTube from "react-youtube";
 import { getVideoId } from "../../api/youtube";
 
 type Props = {
-  title: string;
+  videoId: string;
 };
 
-export default function YoutubeBgm({ title }: Props) {
-  console.log(title);
-  const q = title + " official";
-  const part = "snippet";
-  const key = import.meta.env.VITE_YOUTUBE_API_KEY;
-  const type = "video";
-  const maxResult = 1;
-  const regionCode = "KR";
-  const { data } = useQuery(["video", q], () =>
-    getVideoId(q, part, key, type, maxResult, regionCode)
-  );
-  const videoId = data?.data.items[0].id.videoId;
+export default function YoutubeBgm({ videoId }: Props) {
+
   return (
     <YouTube
       className=""
       videoId={videoId}
       opts={{
-        width: "100%",
-        height: "100%",
+        width: "246",
+        height: "120",
         playerVars: {
           autoplay: 1,
           rel: 0,

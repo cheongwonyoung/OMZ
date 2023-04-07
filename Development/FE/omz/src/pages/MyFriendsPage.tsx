@@ -56,7 +56,7 @@ export default function MyFriendsPage() {
 
   return (
     <div className="w-full flex flex-col items-center">
-      <TitleBar goto="/main" title="My Friends" icon={images.new_friends_img} />
+      <TitleBar goto="/main" title="My Friend" icon={images.my_friends_img} />
       {isDeleteModal && (
         <ModalBlackBg
           closeModal={closeModal}

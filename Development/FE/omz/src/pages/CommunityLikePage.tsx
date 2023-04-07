@@ -34,11 +34,9 @@ export default function CommunityLikePage() {
         icon={images.community_img}
         goto={`/community`}
       />
-      <div className="w-11/12 flex flex-col justify-start p-5">
-        <div className="flex gap-3 my-2">
-          <span className="font-bold text-xl">
-            {membernickname}님이 좋아하는 게시물
-          </span>
+      <div className="w-11/12 flex flex-col justify-center p-5">
+        <div className="flex gap-2 my-2 items-center">
+          <span className="font-bold text-xl">좋아요한 게시물</span>
           <img src={images.heart_img} alt="" className="" />
         </div>
       </div>

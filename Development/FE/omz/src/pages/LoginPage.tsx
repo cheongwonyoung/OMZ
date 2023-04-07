@@ -14,8 +14,16 @@ export default function LoginPage() {
   return (
     <div className="w-full h-screen flex flex-col justify-start items-center">
       <div className="mt-48">
-        <img src={images.main_logo} alt="" className="w-52" />
-        <img src={images.sub_logo} alt="" className="w-56" />
+        <img
+          src={images.main_logo}
+          alt=""
+          className="w-[205px] h-[101px] object-cover"
+        />
+        <img
+          src={images.sub_logo}
+          alt=""
+          className="w-[198px] h-[34px] object-cover"
+        />
       </div>
       <LoginBtn />
     </div>

@@ -31,7 +31,7 @@ const SubmitForm = (props: any) => {
   }, []);
 
   return (
-    <div className="max-w-3xl w-full flex justify-center bottom-0 fixed my-5">
+    <div className="max-w-3xl w-full flex justify-center bottom-0 fixed my-5 ">
       <ToastContainer />
       <button
         type={"button"}

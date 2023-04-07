@@ -31,7 +31,7 @@ import EnterPage from "./pages/EnterPage";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 3,
+      staleTime: 0,
       refetchOnWindowFocus: false,
     },
   },
@@ -43,10 +43,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   path: "",
-      //   element: <CheckIsLoginPage component={<EnterPage />} />,
-      // },
+      {
+        path: "",
+        element: <EnterPage />,
+      },
       {
         path: "/main",
         element: <CheckIsLoginPage component={<MainPage />} />,

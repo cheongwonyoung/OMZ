@@ -53,8 +53,8 @@ export default function FriendsProposalModal({
         <p className="font-bold mb-2 ml-4">To. {modalFor.nickname}</p>
         <textarea
           className="border-2 border-solid rounded-xl w-full focus:outline-none resize-none h-32 p-2"
-          maxLength={30}
-          placeholder="신청 메시지를 작성해주세요. (최대 30자)"
+          maxLength={20}
+          placeholder="신청 메시지를 작성해주세요. (최대 20자)"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         ></textarea>
