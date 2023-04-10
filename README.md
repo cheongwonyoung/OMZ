@@ -149,12 +149,19 @@ OMZ는 기본적으로 채팅과 커뮤니티를 통해 타인과 소통한다�
 
 # 👩‍💻 팀원 역할 분배
 
-|강윤주|배서연|정원영|정채린|최유태|한선희|
-|---|---|---|---|---|---|
-|![image](https://avatars.githubusercontent.com/u/63834758?v=4)|![image](https://avatars.githubusercontent.com/u/101535851?v=4)|![image](https://avatars.githubusercontent.com/u/86768006?v=4)|![image](https://avatars.githubusercontent.com/u/109324466?v=4)|![image](https://avatars.githubusercontent.com/u/109324458?v=4)|![image](https://avatars.githubusercontent.com/u/63505110?v=4)|
-|팀원|팀원|팀원|팀원|부팀장|팀장|
-|Backend, Frontend, Devops|Backend|Backend|Frontend|Frontend|Backend|
-|- 미니룸 정보 관리 및 아이템 커스텀 REST API 구현 <br> - 미니룸 정보 관리 및 아이템 커스텀 비동기 통신 <br> - Docker, Jenkins, Nginx를  이용한 EC2 서버 배포 <br> - CI/CD 파이프라인 구축 <br> - 와이어프레임 & ERD 설계 <br> - 발표 자료와 웹사이트에 쓰인 시각 자료 서치 | - 회원 정보와 친구 관리, 커뮤니티,  마이페이지 커스텀 REST API 구현 <br> - GCS를 이용한 커뮤니티 사진 관리  <br> - 미니룸 상태메세지 감정 분석 & 음악 추천 API 구현  <br> - UX/UI  <br> - Blender를  통한 동물 아바타 자체 제작  <br> - 와이어프레임 & ERD 설계  <br> - 발표 자료 제작| - 카카오톡 소셜 로그인 REST API 구현  <br> - selenium을 이용한 연예인 이미지 크롤링   <br> - Teachable Machine을 이용한 얼굴상 학습 및 동물상 분석   <br> - 회원 정보를 활용한 친구 추천 알고리즘 구현   <br> - GCS를 이용한 프로필 사진 관리   <br> - ERD 설계| - 와이어프레임 총괄  <br>  - 프로젝트 초기 구조 정립  <br>  - 3D 아바타 커스텀 및 모션 적용  <br>  - StopmJS를 이용한 채팅 서비스 구현 및 무한 스크롤 구현  <br>  - 실시간 커뮤니티 구현  <br>  - GCS를 이용한 커뮤니티 & 회원 사진 관리   <br>  - React 폴더 구조 설계 | - three.js, react-three-fiber 로직 구현   <br>  - 아이템 커스텀 로직    <br>  - 새로운 친구, 친구 목록   <br>  - 카카오톡 소셜 로그인   <br>  - 회원가입 단계 관상분석 Teachable Machine 연동   <br>  - 미니룸 아이템 자체 제작   <br>  - 아바타 프로필 사진 생성   <br>  - 와이어프레임   <br>  - React 폴더 구조 설계 | - Redis Pub/Sub 메세징 기반 채팅 서비스 구현  <br>  - 커서 페이지네이션 구현  <br>  - scheduler를 이용한 Redis 캐시 전략 설계  <br>  - Redis  운영 관리  <br>  - 메인 페이지 애니메이션 제작  <br>  - Blender를 통한 UCC 제작  <br>  - ERD 설계  <br>  - Spring 파일 초기 구조 생성
+|정채린|최유태|한선희|
+|---|---|---|
+|![image](https://avatars.githubusercontent.com/u/109324466?v=4)|![image](https://avatars.githubusercontent.com/u/109324458?v=4)|![image](https://avatars.githubusercontent.com/u/63505110?v=4)|
+|팀원|부팀장|팀장|
+|Frontend|Frontend|Backend|
+| - 와이어프레임 총괄  <br>  - 프로젝트 초기 구조 정립  <br>  - 3D 아바타 커스텀 및 모션 적용  <br>  - StopmJS를 이용한 채팅 서비스 구현 및 무한 스크롤 구현  <br>  - 실시간 커뮤니티 구현  <br>  - GCS를 이용한 커뮤니티 & 회원 사진 관리   <br>  - React 폴더 구조 설계 | - three.js, react-three-fiber 로직 구현   <br>  - 아이템 커스텀 로직    <br>  - 새로운 친구, 친구 목록   <br>  - 카카오톡 소셜 로그인   <br>  - 회원가입 단계 관상분석 Teachable Machine 연동   <br>  - 미니룸 아이템 자체 제작   <br>  - 아바타 프로필 사진 생성   <br>  - 와이어프레임   <br>  - React 폴더 구조 설계 | - Redis Pub/Sub 메세징 기반 채팅 서비스 구현  <br>  - 커서 페이지네이션 구현  <br>  - scheduler를 이용한 Redis 캐시 전략 설계  <br>  - Redis  운영 관리  <br>  - 메인 페이지 애니메이션 제작  <br>  - Blender를 통한 UCC 제작  <br>  - ERD 설계  <br>  - Spring 파일 초기 구조 생성|
+
+|강윤주|배서연|정원영|
+|---|---|---|
+|![image](https://avatars.githubusercontent.com/u/63834758?v=4)|![image](https://avatars.githubusercontent.com/u/101535851?v=4)|![image](https://avatars.githubusercontent.com/u/86768006?v=4)|
+|팀원|팀원|팀원|
+|Backend, Frontend, Devops|Backend|Backend|
+|- 미니룸 정보 관리 및 아이템 커스텀 REST API 구현 <br> - 미니룸 정보 관리 및 아이템 커스텀 비동기 통신 <br> - Docker, Jenkins, Nginx를  이용한 EC2 서버 배포 <br> - CI/CD 파이프라인 구축 <br> - 와이어프레임 & ERD 설계 <br> - 발표 자료와 웹사이트에 쓰인 시각 자료 서치 | - 회원 정보와 친구 관리, 커뮤니티,  마이페이지 커스텀 REST API 구현 <br> - GCS를 이용한 커뮤니티 사진 관리  <br> - 미니룸 상태메세지 감정 분석 & 음악 추천 API 구현  <br> - UX/UI  <br> - Blender를  통한 동물 아바타 자체 제작  <br> - 와이어프레임 & ERD 설계  <br> - 발표 자료 제작| - 카카오톡 소셜 로그인 REST API 구현  <br> - selenium을 이용한 연예인 이미지 크롤링   <br> - Teachable Machine을 이용한 얼굴상 학습 및 동물상 분석   <br> - 회원 정보를 활용한 친구 추천 알고리즘 구현   <br> - GCS를 이용한 프로필 사진 관리   <br> - ERD 설계|
 
 </br></br>
 
