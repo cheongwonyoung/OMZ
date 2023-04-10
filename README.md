@@ -4,7 +4,7 @@
 
 </br>
 
-# 📺 소개 영상 보기: [UCC 링크]([https://youtu.be/BpSWuHHP36s](https://youtu.be/BpSWuHHP36s))
+# 📺 소개 영상 보기: [UCC 링크](https://youtu.be/BpSWuHHP36s)
 
 </br>
 
