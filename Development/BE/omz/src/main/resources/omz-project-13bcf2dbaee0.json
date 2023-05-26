@@ -1,10 +1,10 @@
 {
   "type": "service_account",
   "project_id": "omz-project",
-  "private_key_id": "13bcf2dbaee0189f87aa8c5b6ebc6885c2ac1d3d",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCKBvy2DwDpx37c\niw1ZbTpiYeJaXEE/uBgBVQ+sUMQnfnwWeu1vRIcH2Bur8NifusA6EfYcyj/04EWM\nneBknp2AwecLbfK/7gXPeZpmROTa6AUDwdsBkQj48X7F62SObx9u5SE4vFVJkqnc\ngMF/JPnP5fu5JZZ5+Qyr6QWsvy526DptcrInCJIIDUwo+XQsoslhDW6MURfQ+V/F\n7Fyqcljgdd/nn14FDzwkydBlIeVPm/AfKJYnbXAkKNKst1E6gqqOEMCCDjJwcuJ2\nGhaCzMxMo07uAa8QqHdhW/8Zf48m7q1ARt5U1zhJp4muxXZGZ0nneod+/UjFMHTm\n2JTXF5TjAgMBAAECggEANO0c9gqmxP30TUkco0/Y9WSnURLTCkXjHo+pZN/Ld4Fu\nv4f/h4z1YjKh2bqOtiD8GMhOYRfEknd088iOBMc1ievQVnegf6wbmkT8yX5davtR\nAPHSsrUUhbDEdcwfUOaXXQSLSqAc7AtLCvxsNf7Ns8RyU7pwCvFOxJSj0mu0u28c\n3E5snM/Zr551vblc/XvldF7HzQsw71iXnldR7miG8kzGcNy2RCqhjUE5bjvicRor\nadjf2tAKKoD6Czxk8bCSogpL58X136AqAJqErd9NUYrKhAwYWVoqJDkOhjuoLG5M\n8Wwj1CiKY9rEEuIwny6IZKWBbkzYYsbEhEFdmfaqMQKBgQC+a/mTyCfCMHEo0eBZ\n4bafuOtl8MM66LWuYEnzWf1RD5JEk/7neafm4iWp+ifNwXHrn1Gc5cHUoT9Qc+nE\nXXU5n7goMBDVHaeDaiKKhEpEwGd8n4DnR1DhMTIK8c8RBsRa08lvfP8cdrIz4nrM\nh9UTHHCsIcqb/9HwH8yGRdEelQKBgQC5j8sNwM/A9EZUPHAC2pdgcJx63fvc1zdW\nIdHrwHLbaZhwdp4hAVw7aCRWLiBook7O0EYJIY/ZGLs2l1q9mO00wp0nfPCIUR+U\nvrQI16ggu1EnDd7Nefrel/UdvudgUUhHOIukLeu5KzozP0e2v90C8xMV5pPPt2GA\nHy+7u8CflwKBgAFPduk4cGWatbylLRkRP5N7z0rlTEKkhVOM4BVnoiGjrMsCBbgM\nE0a4ea/gw9NbqHAJqaMdxaaz8V6ZXZt3VS4vVjIYmpUM3jE+UryHSoeMl2m5I0b0\nK69RCloe7eDdHg7N9E3rG0pT2sgWn+e2a5X1FSVqGh3WtdgkL+Egq969AoGBAKlb\nibGltnee+slK19hi9SH55XdmPscSTdj4yQToAmwq9gw+1pe9DBbUN8XIF6An8tFi\n2WjgDs/PeJ6ciR7eAjDTJmex6j4f/DjfzKT9Xt9w1uJUEHNszwB1pCtf3wDTbqpB\n+4D+wFOiFl5LdQJgHjDg9RxZ87Hy5rPuwrwO4gFFAoGAYF8BEtac7ksTjUwHVY4k\nSR9Q+9gl/3jZEcT3aYQxYRquP7+CBU/mpe5IyKDmOcXF3VZFvXj2Qpla3++m3FsD\nHfkDdNF4OT7qmQKWq5Je1+9j79bA1Ilf3MUBzfyNn/3odKb2th5MLpyW0kQ5h/g7\nmoc7lF4wQ2DgH1n/qjd0TuM=\n-----END PRIVATE KEY-----\n",
+  "private_key_id": "****",
+  "private_key": "-----BEGIN PRIVATE KEY-----\n****\n-----END PRIVATE KEY-----\n",
   "client_email": "springboot-storage-access@omz-project.iam.gserviceaccount.com",
-  "client_id": "109418977676980799621",
+  "client_id": "****",
   "auth_uri": "https://accounts.google.com/o/oauth2/auth",
   "token_uri": "https://oauth2.googleapis.com/token",
   "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
