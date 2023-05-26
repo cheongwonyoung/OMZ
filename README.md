@@ -1,7 +1,6 @@
 # 🐾 OMZ - 3D 모델링을 접목한 차세대 SNS
 
-![zz](https://file.notion.so/f/s/64f841dd-5695-49a1-9ad8-f5272b70980a/zz.png?id=69279cae-ac6b-4f19-b2e9-3d4a9f5dd704&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681195951187&signature=zZ22u4LzzaOAmRuL2aER69pMDitmvjwgK1Yw_4VWL0g&downloadName=zz.png)
-
+![main_omz_banner](/exec/images/main_omz_banner.png)
 </br>
 
 # 📺 소개 영상 보기: [UCC 링크](https://youtu.be/BpSWuHHP36s)
@@ -92,8 +91,7 @@ OMZ는 기본적으로 채팅과 커뮤니티를 통해 타인과 소통한다�
 
 # ⚒ 서비스 아키텍처
 
-![image](https://file.notion.so/f/s/3530a10a-89a4-4ab4-ba35-208ad47e942a/Untitled.png?id=290479f1-d899-46fc-bd8c-16e3ba1b1262&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681200060656&signature=41EX0KsCrgDq6RxSZNV_ZXXBnohy--8wkNj3qFZ3abE&downloadName=Untitled.png)
-
+![service](/exec/images/service.png)
 
 </br></br>
 
@@ -103,47 +101,49 @@ OMZ는 기본적으로 채팅과 커뮤니티를 통해 타인과 소통한다�
 
 |메인 페이지|회원가입|
 |-|-|
-|![image](https://file.notion.so/f/s/f234579e-d579-49c7-a55c-108157753d97/newFriendsApplyMos.gif?id=a0b23296-ae11-482d-b55e-e70c81b835d7&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681195661057&signature=2upEVAlhOmWtXHNEi1OAfHmLKrTq96gqKFb4_4PaA3s&downloadName=newFriendsApplyMos.gif)|![image](https://file.notion.so/f/s/a9e2deb3-beae-4d6c-9bde-fa9b0e2b9892/EnterPage.gif?id=b62bafcb-eda1-4fce-a77f-334c15f2c5bd&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681195577060&signature=Rg8oOOZvKF10ZmZJJBKfIqM3hODgzU_qZqgHy3P2OvE&downloadName=EnterPage.gif)|
+|![enterpage](/exec/images/EnterPage.gif)|![signup](/exec/images/SignUp.gif)|
 
 ## 2. New Friend
 
-|친구 추천|친구 검색 및 신청|
+|친구 추천|                                                    |
 |-|-|
-|![image](https://file.notion.so/f/s/f5e0b0fa-fa25-4e09-a3a1-facebd6ecbdf/newFriendsEnter.gif?id=d38329b6-914f-4eda-87ad-c293d0a87776&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196160567&signature=pwrJNO90cwcfRDSfhYKpTefjy-aJKVSyzvAVNpuJah4&downloadName=newFriendsEnter.gif)|![image](https://file.notion.so/f/s/32eb360e-fbea-48d8-83db-e981eb33f40a/newFriendsApply.gif?id=c46f6481-a471-4d76-a430-287cf4905518&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196123902&signature=J2ovbAqyiFZiBb1advJhyMMNL9xOKsziPCr9hS6lTfI&downloadName=newFriendsApply.gif)|
+| ![recommend_friend](/exec/images/Recommend.gif) |![recommend_friend2](/exec/images/Recommend_2.gif)|
 
 ## 3. My Friends 
 
 |내 친구와 친구 신청 목록|친구 관리|
 |-|-|
-|![image](https://file.notion.so/f/s/41ae9c52-12eb-4d07-8313-b419da641e6f/myFriendsEnter.gif?id=aedce8e6-8bc5-42aa-86fc-7c5db19ec23c&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196258730&signature=wsSKSRxU35OJhOe0XT0IqXP5PZf3VoX5GLpicC0ILmg&downloadName=myFriendsEnter.gif)|![image](https://file.notion.so/f/s/5bb2fccf-eb4c-4113-a7eb-0b371efc15ee/myFriendsAcceptReject.gif?id=4c962764-6818-4b83-a176-7e5b52e8c788&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196261715&signature=FxlehGxn0w0kXmZhXxaHDqRYJTL9CqHm3sOhhtlxSPE&downloadName=myFriendsAcceptReject.gif)|
+|![my_friend](/exec/images/MyFriends.gif)|![my_friend_accept](/exec/images/MyFriendsAccept.gif)|
 
 ## 4. Chatting
 
 |친구와의 채팅|친구가 아닌 사람과의채팅|
 |-|-|
-|![image](https://file.notion.so/f/s/e2840a50-e57c-44a1-b051-a0534b5a1603/Chhatting2.gif?id=c59702cc-4ea2-4dad-a2d8-197bea4fe2ce&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196317513&signature=G3IhPwJS6haRaDd9x0mR5HJ8T34nV-7xhtjj2ZS7wMg&downloadName=Chhatting2.gif)|![image](https://file.notion.so/f/s/4eb780c2-ae0e-44b9-831d-cfc3ccb0573c/Chatting.gif?id=5c83df33-90ec-4e2f-b6ea-1d226d9a7352&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196378839&signature=CsOdOsD_QLiMX0jNvoJeoMrJyfq-cFqEN2x5jRDQsJo&downloadName=Chatting.gif)|
+|![chatting1](/exec/images/Chatting1.gif)|![chatting2](/exec/images/Chatting2.gif)|
 
 ## 5. Community
 
 |글 작성, 검색, 좋아요와 회원별 글 목록|작성 글 관리|댓글 작성 & 관리|
 |-|-|-|
-|![image](https://file.notion.so/f/s/87777a6b-dd7b-4f70-bb13-4d4d0b94b485/Community2.gif?id=4eefc62a-bfd9-4a1e-bb45-fa4ca0d73206&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196539198&signature=0E278B6W6HUR_NzLA-idC1uOGBKroVc0P_zUlky02mM&downloadName=Community2.gif)|![image](https://file.notion.so/f/s/d5247fe2-65a6-4e32-a2d5-4f7a0f53001f/CommunityUpdateNDelete.gif?id=6d4127ed-1e34-4d06-a955-d5623ace6432&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196609584&signature=oZYlxinyAtLHuT58m-ig_o5kht3S5kmNzDIWF2eKj3A&downloadName=CommunityUpdateNDelete.gif)|![image](https://file.notion.so/f/s/6e992c79-480a-4e91-89ed-affb22f61c61/CommentUD.gif?id=c6611087-0458-4eb4-a341-8275c2d46e08&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196612656&signature=DlWv_xj2sS_gZpH-TtdofBa-OBhbkaQqpD1GdDjRMZk&downloadName=CommentUD.gif)|
+|![community2](/exec/images/Community2.gif)|![community1](/exec/images/Community1.gif)|![community3](/exec/images/Community3.gif)|
 
 ## 6. MiniRoom
 
 |음악 추천|커스텀|메인|
 |-|-|-|
-|![image](https://file.notion.so/f/s/3326e77c-f099-41ce-86d0-baf9f458c0f7/Animation.gif?id=3beac029-3eeb-4f44-aad3-accf376cb079&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196825953&signature=v_NJeNadvcMXR2nUPdfMInpJzFennKEI75FkNYzmf2o&downloadName=Animation.gif)|![image](https://file.notion.so/f/s/1aa943f7-9630-4f93-864e-1fa3416d8658/Animation2.gif?id=bf3d5c5e-403f-4d5d-8a8e-84d14bc7dcab&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196867555&signature=eZNeWVpZ8O9uqmwoM21iO8majQ_wMqIvxsFTo2zRYHc&downloadName=Animation2.gif)|![image](https://file.notion.so/f/s/f4c4b535-823b-493c-8f57-696a4491836a/Animation.gif?id=b61e34ec-e18d-4111-b588-cbea0c623c50&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681196870709&signature=1qQgnhkGEtk0XJcCVQW12JP-mHS1FAClX9fwyRXey4M&downloadName=Animation.gif)|
+|![miniroom1](/exec/images/Miniroom1.gif)|![miniroom2](/exec/images/Miniroom2.gif)|![miniroom3](/exec/images/Miniroom3.gif)|
 
 ## 7. MyPage
 
 |메인|정보 수정|
 |-|-|
-|![image](https://file.notion.so/f/s/7da14033-ff61-4e14-8b53-776a8fca5a5f/mypageEnter.gif?id=0defc13e-44cb-43fe-9bd5-e3a14de4671e&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681197014124&signature=tGecc2dNvqSg_2d7LAnjQoPA57SY_Ze7RlvqCWIl8wA&downloadName=mypageEnter.gif)|![image](https://file.notion.so/f/s/dc86ebd0-d0b1-44fc-91c1-0a97b37abec5/mypageUpdateInfo.gif?id=3a91f11d-b7ab-4d20-99e7-211717ab5df4&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681197017954&signature=nIcz04PlH1pK28Qf-AdzlXqK5C47q2OjwEvEdYIDOfY&downloadName=mypageUpdateInfo.gif)|
+|![mypage1](/exec/images/MyPage1.gif)|![mypage2](/exec/images/MyPage2.gif)|
+
+
 
 |커스텀|프로필 사진 촬영|
 |-|-|
-|![image](https://file.notion.so/f/s/a9ff498f-210d-4b23-8d60-84d2bd935ac7/mypageUpdateCustom.gif?id=5ae5d19f-6de1-4133-ae79-bc693be98345&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681197049500&signature=xlV3huw1gUy7-9-DtU088dElfjN5UopRtarYe6smOzM&downloadName=mypageUpdateCustom.gif)|![image](https://file.notion.so/f/s/af8177d7-ab71-4623-866d-7054aac8c712/mypageUpdateProfileImg.gif?id=a17ce4c1-ad3d-4c9b-b90b-1edb79e08aff&table=block&spaceId=daeed313-af82-493c-8137-313dab46c0e4&expirationTimestamp=1681197053292&signature=KaljcRLe3hINJcj1q882OhQwFYAgkkLd9IzJz1Ia_o8&downloadName=mypageUpdateProfileImg.gif)|
+|![mypage3](/exec/images/MyPage3.gif)|![mypage4](/exec/images/MyPage4.gif)|
 
 </br></br>
 
